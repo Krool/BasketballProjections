@@ -574,7 +574,9 @@
     .search-box { width: 140px; }
 
     /* Hide columns on mobile to prevent horizontal scrolling */
-    .col-fav, .col-team, .col-region, .col-seed { display: none; }
+    .col-team, .col-region, .col-seed { display: none; }
+    .col-fav { padding: 0 2px; }
+    .fav-btn { font-size: 16px; padding: 4px 2px; }
 
     /* Compact player names on mobile */
     .player-cell {
@@ -673,7 +675,7 @@
           <th data-sort="seed" class="col-seed" title="Tournament seed (1 = best)">Seed</th>
           <th data-sort="ppg" title="Points per game — season average">PPG</th>
           <th data-sort="expected_games" title="Expected tournament games — simulated using KenPom efficiency ratings and bracket matchups">Exp.G</th>
-          <th data-sort="projected_points" title="Expected Points = PPG x Expected Games">Ex</th>
+          <th data-sort="projected_points" title="Projected Points = PPG x Expected Games — total expected scoring output across the tournament">Pts</th>
           <th title="Injury status">Inj</th>
           <th></th>
         </tr>
@@ -772,7 +774,7 @@ function injuryClass(status) {
   if (!status) return 'healthy';
   const s = status.toLowerCase();
   if (s.includes('out') || s.includes('season')) return 'out';
-  if (s.includes('question') || s.includes('day')) return 'questionable';
+  if (s.includes('question') || s.includes('day') || s.includes('return')) return 'questionable';
   return 'healthy';
 }
 
@@ -855,7 +857,7 @@ function updateMyTeamPanel() {
   const content = document.getElementById('my-team-content');
 
   if (myTeam.size === 0) {
-    content.innerHTML = '<div class="my-team-empty">Use "We Draft" to add players to your team.<br><br>"Draft" marks picks by other teams.</div>';
+    content.innerHTML = '<div class="my-team-empty">Use "Us" to add players to your team.<br><br>"Draft" marks picks by other teams.</div>';
     return;
   }
 
@@ -996,10 +998,10 @@ function render() {
         <td class="team-cell col-team">${p.team}</td>
         <td class="region-cell col-region">${region}</td>
         <td class="col-seed"><span class="seed-badge ${seedClass(p.seed)}">${p.seed}</span></td>
-        <td>${p.ppg.toFixed(1)}</td>
-        <td>${p.expected_games.toFixed(2)}</td>
-        <td class="pts-cell">${Math.round(p.projected_points)}</td>
-        <td><span class="injury-dot ${ic}"></span></td>
+        <td title="Season average: ${p.ppg.toFixed(1)} points per game">${p.ppg.toFixed(1)}</td>
+        <td title="KenPom bracket sim: ${p.team} projected to play ${p.expected_games.toFixed(2)} games">${p.expected_games.toFixed(2)}</td>
+        <td class="pts-cell" title="${p.ppg.toFixed(1)} PPG x ${p.expected_games.toFixed(2)} games = ${Math.round(p.projected_points)} pts">${Math.round(p.projected_points)}</td>
+        <td title="${p.injury_status || 'HEALTHY'}"><span class="injury-dot ${ic}"></span></td>
         <td style="white-space:nowrap;">${actionHtml}</td>
       </tr>`;
     }).join('');
