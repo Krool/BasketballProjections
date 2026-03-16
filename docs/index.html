@@ -1537,12 +1537,36 @@ function updateMockBanner() {
   pauseBtn.textContent = mockPaused ? 'Resume' : 'Pause';
 }
 
+function mockSmartPick() {
+  // Get top available players sorted by projected points
+  const available = players
+    .filter(p => !drafted.has(p.rank) && p.projected_points > 0)
+    .sort((a, b) => b.projected_points - a.projected_points);
+
+  if (available.length === 0) return null;
+
+  // Pool size varies — early rounds are tighter, later rounds have more chaos
+  const round = getMockRound();
+  const poolSize = Math.min(available.length, round <= 2 ? 4 : round <= 5 ? 6 : 10);
+  const pool = available.slice(0, poolSize);
+
+  // Weighted random: higher-ranked players get exponentially more weight
+  // Weight = pts^2 gives a strong but not absolute preference for the top pick
+  const totalWeight = pool.reduce((sum, p) => sum + p.projected_points * p.projected_points, 0);
+  let roll = Math.random() * totalWeight;
+  for (const p of pool) {
+    roll -= p.projected_points * p.projected_points;
+    if (roll <= 0) return p;
+  }
+  return pool[0]; // fallback
+}
+
 function mockAutoPick() {
   if (isMockComplete()) { updateMockBanner(); return; }
-  const best = getBestAvailable();
-  if (!best) { stopMockDraft(); return; }
-  drafted.add(best.rank);
-  draftOrder.push(best.rank);
+  const pick = mockSmartPick();
+  if (!pick) { stopMockDraft(); return; }
+  drafted.add(pick.rank);
+  draftOrder.push(pick.rank);
   mockPickIndex++;
   saveState();
   render();
