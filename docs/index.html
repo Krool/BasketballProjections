@@ -985,6 +985,9 @@
       <div class="stat">
         <span class="stat-label" id="generated-ts"></span>
       </div>
+      <div class="stat">
+        <button class="btn" id="mock-btn" style="color:var(--orange);border-color:rgba(251,191,36,0.3);">Mock Draft</button>
+      </div>
     </div>
   </div>
   <div class="controls">
@@ -994,12 +997,9 @@
     <select id="region-filter"><option value="">All Regions</option></select>
     <button class="toggle-btn active" id="hide-drafted">Hide Drafted</button>
     <button class="toggle-btn" id="show-favs">Favorites</button>
-    <button class="btn" id="clear-filters">Clear Filters</button>
-    <button class="btn" id="undo-btn">Undo</button>
+    <span style="flex:1"></span>
     <button class="btn" id="export-btn">Export Draft</button>
     <button class="btn" id="export-all-btn">Export All</button>
-    <button class="btn" id="mock-btn" style="color:var(--orange);border-color:rgba(251,191,36,0.3);">Mock Draft</button>
-    <span style="flex:1"></span>
     <button class="btn danger" id="reset-btn">Reset Draft</button>
   </div>
 </div>
@@ -1711,26 +1711,6 @@ function init() {
     render();
   });
 
-  document.getElementById('clear-filters').addEventListener('click', () => {
-    document.getElementById('search').value = '';
-    document.getElementById('team-filter').value = '';
-    document.getElementById('seed-filter').value = '';
-    document.getElementById('region-filter').value = '';
-    showFavsOnly = false;
-    document.getElementById('show-favs').classList.remove('active');
-    sortCol = 'rank';
-    sortAsc = true;
-    render();
-  });
-
-  document.getElementById('undo-btn').addEventListener('click', () => {
-    if (draftOrder.length === 0) return;
-    const last = draftOrder.pop();
-    drafted.delete(last);
-    myTeam.delete(last);
-    saveState();
-    render();
-  });
 
   document.getElementById('reset-btn').addEventListener('click', () => {
     if (!confirm('Reset the entire draft? This clears all picks, your team, and favorites.')) return;
@@ -1796,7 +1776,12 @@ function init() {
     if ((e.ctrlKey || e.metaKey) && e.key === 'z') {
       e.preventDefault();
       if (mockActive) return; // Don't undo during mock draft — would desync pick counter
-      document.getElementById('undo-btn').click();
+      if (draftOrder.length === 0) return;
+      const last = draftOrder.pop();
+      drafted.delete(last);
+      myTeam.delete(last);
+      saveState();
+      render();
     }
     if (e.key === '/' || (e.key === 'f' && (e.ctrlKey || e.metaKey))) {
       e.preventDefault();
