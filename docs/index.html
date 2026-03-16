@@ -330,7 +330,8 @@
 
   /* Focus styles for keyboard navigation */
   .fav-btn:focus-visible, .draft-btn:focus-visible, .we-draft-btn:focus-visible,
-  .toggle-btn:focus-visible, .btn:focus-visible {
+  .toggle-btn:focus-visible, .btn:focus-visible, .btn-primary:focus-visible,
+  .btn-cancel:focus-visible, .mock-banner button:focus-visible {
     outline: 2px solid var(--accent);
     outline-offset: 2px;
   }
@@ -871,8 +872,13 @@
     <h2>Mock Draft Setup</h2>
     <label>Number of Teams</label>
     <input type="number" id="mock-teams" value="20" min="2" max="30">
+    <label>Players Per Team</label>
+    <input type="number" id="mock-rounds" value="14" min="1" max="30">
     <label>Your Draft Position</label>
-    <input type="number" id="mock-position" value="1" min="1" max="30">
+    <div style="display:flex;gap:8px;align-items:center;">
+      <input type="number" id="mock-position" value="1" min="1" max="30" style="flex:1;">
+      <button class="btn-cancel" style="flex:0;padding:8px 12px;font-size:13px;" onclick="document.getElementById('mock-position').value=Math.floor(Math.random()*parseInt(document.getElementById('mock-teams').value||20))+1">Random</button>
+    </div>
     <label>Draft Type</label>
     <select id="mock-type">
       <option value="snake">Snake Draft</option>
@@ -1432,6 +1438,7 @@ function init() {
 
     if ((e.ctrlKey || e.metaKey) && e.key === 'z') {
       e.preventDefault();
+      if (mockActive) return; // Don't undo during mock draft — would desync pick counter
       document.getElementById('undo-btn').click();
     }
     if (e.key === '/' || (e.key === 'f' && (e.ctrlKey || e.metaKey))) {
@@ -1439,6 +1446,12 @@ function init() {
       document.getElementById('search').focus();
     }
     if (e.key === 'Escape') {
+      // Close mock modal if open
+      const modal = document.getElementById('mock-modal');
+      if (modal && modal.classList.contains('open')) {
+        modal.classList.remove('open');
+        return;
+      }
       document.getElementById('search').blur();
       document.getElementById('search').value = '';
       render();
@@ -1450,17 +1463,21 @@ function init() {
 let mockActive = false;
 let mockPaused = false;
 let mockTimer = null;
-let mockConfig = { teams: 20, position: 1, snake: true, speed: 1000 };
-let mockPickIndex = 0; // overall pick number (0-based)
+let mockConfig = { teams: 20, position: 1, snake: true, speed: 1000, rounds: 14 };
+let mockPickIndex = 0;
+
+function getMockTotalPicks() {
+  return mockConfig.teams * mockConfig.rounds;
+}
 
 function getMockCurrentTeam() {
   const { teams, snake } = mockConfig;
   const round = Math.floor(mockPickIndex / teams);
   const posInRound = mockPickIndex % teams;
   if (snake && round % 2 === 1) {
-    return teams - posInRound; // reverse order in even rounds (1-indexed)
+    return teams - posInRound;
   }
-  return posInRound + 1; // 1-indexed
+  return posInRound + 1;
 }
 
 function getMockRound() {
@@ -1473,6 +1490,10 @@ function getMockPickInRound() {
 
 function isMyMockPick() {
   return getMockCurrentTeam() === mockConfig.position;
+}
+
+function isMockComplete() {
+  return mockPickIndex >= getMockTotalPicks();
 }
 
 function updateMockBanner() {
@@ -1488,7 +1509,18 @@ function updateMockBanner() {
   }
 
   banner.classList.add('active');
-  roundEl.textContent = `Round ${getMockRound()}`;
+
+  if (isMockComplete()) {
+    roundEl.textContent = 'Draft Complete';
+    pickEl.textContent = `${getMockTotalPicks()} picks | ${myTeam.size} on your team`;
+    statusEl.textContent = 'Done!';
+    statusEl.className = 'mock-banner-status your-turn';
+    pauseBtn.style.display = 'none';
+    return;
+  }
+
+  pauseBtn.style.display = '';
+  roundEl.textContent = `Round ${getMockRound()} of ${mockConfig.rounds}`;
   pickEl.textContent = `Pick ${getMockPickInRound()} of ${mockConfig.teams} (Team #${getMockCurrentTeam()})`;
 
   if (isMyMockPick()) {
@@ -1506,6 +1538,7 @@ function updateMockBanner() {
 }
 
 function mockAutoPick() {
+  if (isMockComplete()) { updateMockBanner(); return; }
   const best = getBestAvailable();
   if (!best) { stopMockDraft(); return; }
   drafted.add(best.rank);
@@ -1518,7 +1551,6 @@ function mockAutoPick() {
 }
 
 function mockUserPicked() {
-  // Called when user clicks "Us" during their mock turn
   mockPickIndex++;
   updateMockBanner();
   scheduleMockNext();
@@ -1526,13 +1558,12 @@ function mockUserPicked() {
 
 function scheduleMockNext() {
   clearTimeout(mockTimer);
-  if (!mockActive || mockPaused) return;
+  if (!mockActive || mockPaused || isMockComplete()) return;
 
   const best = getBestAvailable();
   if (!best) { stopMockDraft(); return; }
 
   if (isMyMockPick()) {
-    // Wait for user — don't auto-pick
     updateMockBanner();
     return;
   }
@@ -1542,6 +1573,7 @@ function scheduleMockNext() {
 
 function startMockDraft() {
   const teams = parseInt(document.getElementById('mock-teams').value) || 20;
+  const rounds = parseInt(document.getElementById('mock-rounds').value) || 14;
   const position = parseInt(document.getElementById('mock-position').value) || 1;
   const type = document.getElementById('mock-type').value;
   const speed = parseInt(document.getElementById('mock-speed').value) || 1000;
@@ -1551,20 +1583,18 @@ function startMockDraft() {
     return;
   }
 
-  // Reset draft state
   drafted.clear();
   myTeam.clear();
   draftOrder = [];
   mockPickIndex = 0;
   saveState();
 
-  mockConfig = { teams, position, snake: type === 'snake', speed };
+  mockConfig = { teams, position, snake: type === 'snake', speed, rounds };
   mockActive = true;
   mockPaused = false;
 
   document.getElementById('mock-modal').classList.remove('open');
 
-  // Turn off hide-drafted so user can see picks happening
   hideDrafted = false;
   document.getElementById('hide-drafted').classList.remove('active');
   document.getElementById('hide-drafted').textContent = 'Show All';
@@ -1579,6 +1609,11 @@ function stopMockDraft() {
   mockPaused = false;
   clearTimeout(mockTimer);
   updateMockBanner();
+
+  hideDrafted = true;
+  document.getElementById('hide-drafted').classList.add('active');
+  document.getElementById('hide-drafted').textContent = 'Hide Drafted';
+  render();
 }
 
 // Patch toggleMyTeam to advance mock draft when user picks
@@ -1588,6 +1623,18 @@ toggleMyTeam = function(rank) {
   _origToggleMyTeam(rank);
   if (mockActive && !wasOnTeam && myTeam.has(rank)) {
     mockUserPicked();
+  }
+};
+
+// Patch toggleDraft — during mock, if it's your turn, treat "Draft" as a skip (other team took them)
+const _origToggleDraft = toggleDraft;
+toggleDraft = function(rank) {
+  const wasDrafted = drafted.has(rank);
+  _origToggleDraft(rank);
+  if (mockActive && !wasDrafted && drafted.has(rank) && isMyMockPick()) {
+    mockPickIndex++;
+    updateMockBanner();
+    scheduleMockNext();
   }
 };
 
