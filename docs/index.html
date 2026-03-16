@@ -1538,27 +1538,35 @@ function updateMockBanner() {
 }
 
 function mockSmartPick() {
-  // Get top available players sorted by projected points
   const available = players
     .filter(p => !drafted.has(p.rank) && p.projected_points > 0)
     .sort((a, b) => b.projected_points - a.projected_points);
 
   if (available.length === 0) return null;
 
-  // Pool size varies — early rounds are tighter, later rounds have more chaos
   const round = getMockRound();
-  const poolSize = Math.min(available.length, round <= 2 ? 4 : round <= 5 ? 6 : 10);
+  const totalRounds = mockConfig.rounds;
+  // Progress from 0 (round 1) to 1 (final round)
+  const progress = Math.min(1, (round - 1) / Math.max(1, totalRounds - 1));
+
+  // Pool grows: 3 in round 1 → up to 25+ in final rounds
+  const poolSize = Math.min(available.length, Math.round(3 + progress * 22));
   const pool = available.slice(0, poolSize);
 
-  // Weighted random: higher-ranked players get exponentially more weight
-  // Weight = pts^2 gives a strong but not absolute preference for the top pick
-  const totalWeight = pool.reduce((sum, p) => sum + p.projected_points * p.projected_points, 0);
+  // Exponent shrinks as draft progresses:
+  //   Round 1: exp=3 (very top-heavy, almost always best available)
+  //   Mid:     exp=1.5 (moderate variance)
+  //   Late:    exp=0.5 (nearly flat — wild reaches)
+  const exp = 3 - progress * 2.5;
+
+  const weights = pool.map(p => Math.pow(p.projected_points, exp));
+  const totalWeight = weights.reduce((a, b) => a + b, 0);
   let roll = Math.random() * totalWeight;
-  for (const p of pool) {
-    roll -= p.projected_points * p.projected_points;
-    if (roll <= 0) return p;
+  for (let i = 0; i < pool.length; i++) {
+    roll -= weights[i];
+    if (roll <= 0) return pool[i];
   }
-  return pool[0]; // fallback
+  return pool[0];
 }
 
 function mockAutoPick() {
