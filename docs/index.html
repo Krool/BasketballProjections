@@ -1118,13 +1118,87 @@ function getTeamRegion(team) {
   return p ? p.region || null : null;
 }
 
-function getConflictLevel(team1, team2) {
+// Standard 64-team bracket: seed positions in each region
+// Seeds that share a "pod" meet in each round:
+//   R1 matchups: 1v16, 8v9, 5v12, 4v13, 6v11, 3v14, 7v10, 2v15
+//   R2: {1,16,8,9}, {5,12,4,13}, {6,11,3,14}, {7,10,2,15}
+//   S16: {1,16,8,9,5,12,4,13}, {6,11,3,14,7,10,2,15}
+//   E8: all 16 seeds in region
+//   F4: same bracket side (East/West or South/Midwest)
+//   Finals: opposite sides
+const BRACKET_PODS = {
+  1: [1,16,8,9,5,12,4,13,6,11,3,14,7,10,2,15], // just for grouping
+};
+
+function getTeamSeed(team) {
+  for (const [region, teams] of Object.entries(REGIONS)) {
+    const idx = teams.indexOf(team);
+    if (idx === -1) continue;
+    // Players in REGIONS are stored in bracket order (from bracket.json)
+    // We need actual seed. Check players array.
+    const p = players.find(pl => pl.team === team);
+    return p ? p.seed : null;
+  }
+  return null;
+}
+
+function getEarliestMeetingRound(team1, team2) {
   if (team1 === team2) return null;
   const r1 = getTeamRegion(team1), r2 = getTeamRegion(team2);
   if (!r1 || !r2) return null;
-  if (r1 === r2) return 'region';
-  if (BRACKET_SIDES[r1] === BRACKET_SIDES[r2]) return 'semifinal';
-  return null;
+
+  if (r1 !== r2) {
+    if (BRACKET_SIDES[r1] === BRACKET_SIDES[r2]) return 5; // Final Four
+    return 6; // Championship
+  }
+
+  // Same region — determine round based on seeds
+  const s1 = getTeamSeed(team1), s2 = getTeamSeed(team2);
+  if (!s1 || !s2) return 4; // fallback: Elite 8
+
+  // R1 matchups: 1v16, 8v9, 5v12, 4v13, 6v11, 3v14, 7v10, 2v15
+  // R2 pods: {1,16,8,9}, {5,12,4,13}, {6,11,3,14}, {7,10,2,15}
+  // S16 pods: {1,16,8,9,5,12,4,13}, {6,11,3,14,7,10,2,15}
+  // E8: whole region
+
+  const r1pods = [[1,16],[8,9],[5,12],[4,13],[6,11],[3,14],[7,10],[2,15]];
+  const r2pods = [[1,16,8,9],[5,12,4,13],[6,11,3,14],[7,10,2,15]];
+  const s16pods = [[1,16,8,9,5,12,4,13],[6,11,3,14,7,10,2,15]];
+
+  // Check Round 1
+  for (const pod of r1pods) {
+    if (pod.includes(s1) && pod.includes(s2)) return 1;
+  }
+  // Check Round 2
+  for (const pod of r2pods) {
+    if (pod.includes(s1) && pod.includes(s2)) return 2;
+  }
+  // Check Sweet 16
+  for (const pod of s16pods) {
+    if (pod.includes(s1) && pod.includes(s2)) return 3;
+  }
+  // Must be Elite 8
+  return 4;
+}
+
+function getConflictLevel(team1, team2) {
+  const round = getEarliestMeetingRound(team1, team2);
+  if (!round || round >= 6) return null; // championship = negligible
+  if (round <= 4) return 'region';
+  return 'semifinal';
+}
+
+function getConflictColor(round) {
+  if (round === 1) return 'var(--red)';
+  if (round === 2) return 'var(--orange)';
+  if (round === 3) return '#eab308'; // yellow
+  if (round === 4) return 'var(--green)';
+  return 'var(--text-dim)'; // F4+
+}
+
+function getConflictLabel(round) {
+  const labels = { 1: 'Round of 64', 2: 'Round of 32', 3: 'Sweet 16', 4: 'Elite 8', 5: 'Final Four' };
+  return labels[round] || 'Later';
 }
 
 function getProspectiveConflicts(player) {
@@ -1132,9 +1206,9 @@ function getProspectiveConflicts(player) {
   for (const rank of myTeam) {
     const other = players.find(p => p.rank === rank);
     if (!other) continue;
-    const level = getConflictLevel(player.team, other.team);
-    if (level) {
-      conflicts.push({ player: other, level });
+    const round = getEarliestMeetingRound(player.team, other.team);
+    if (round && round <= 5) {
+      conflicts.push({ player: other, round });
     }
   }
   return conflicts;
@@ -1821,7 +1895,13 @@ function mockUserPicked() {
 
 function scheduleMockNext() {
   clearTimeout(mockTimer);
-  if (!mockActive || mockPaused || isMockComplete()) return;
+  if (!mockActive || mockPaused) return;
+  if (isMockComplete()) {
+    updateMockBanner();
+    // Auto-show analysis after a short delay so user sees the last pick
+    setTimeout(() => showAnalysis(), 600);
+    return;
+  }
 
   const best = getBestAvailable();
   if (!best) { stopMockDraft(); return; }
@@ -1945,32 +2025,72 @@ function ordinal(n) {
   return n + (s[(v - 20) % 10] || s[v] || s[0]);
 }
 
+function calcConflictPenalty(roster) {
+  // For each pair of players on teams that could meet in the bracket,
+  // penalize the overlap in expected value.
+  //
+  // Same region (~25%): these teams WILL meet if they both advance.
+  //   You can't get full value from both — one eliminates the other.
+  //
+  // Same bracket side (~8%): only conflict if both reach the Final Four.
+  //   Lower probability, smaller penalty.
+  //
+  // Penalty is applied to the weaker player's projected points.
+  let penalty = 0;
+  const conflicts = [];
+  for (let i = 0; i < roster.length; i++) {
+    for (let j = i + 1; j < roster.length; j++) {
+      const a = roster[i], b = roster[j];
+      if (a.collegeteam === b.collegeteam) continue;
+      const level = getConflictLevel(a.collegeteam, b.collegeteam);
+      if (!level) continue;
+      const weaker = Math.min(a.pts, b.pts);
+      const pct = level === 'region' ? 0.25 : 0.08;
+      const cost = Math.round(weaker * pct * 10) / 10;
+      penalty += cost;
+      conflicts.push({ p1: a.player, p2: b.player, t1: a.collegeteam, t2: b.collegeteam, level, cost });
+    }
+  }
+  return { penalty: Math.round(penalty), conflicts };
+}
+
 function buildAnalysis(config) {
   // Assign each pick in draftOrder to a team
-  const teamRosters = {}; // teamNum -> [{player, rank, pts}]
+  const teamRosters = {};
   for (let i = 0; i < draftOrder.length; i++) {
     const teamNum = getTeamForPick(i, config);
     const rank = draftOrder[i];
     const p = players.find(pl => pl.rank === rank);
     if (!p) continue;
     if (!teamRosters[teamNum]) teamRosters[teamNum] = [];
-    teamRosters[teamNum].push({ player: p.player, team: p.team, seed: p.seed, pts: p.projected_points, rank: p.rank });
+    teamRosters[teamNum].push({
+      player: p.player,
+      collegeteam: p.team,
+      seed: p.seed,
+      pts: p.projected_points,
+      rank: p.rank,
+      region: getTeamRegion(p.team)
+    });
   }
 
-  // Score each team
+  // Score each team with conflict adjustment
   const teamScores = [];
   for (let t = 1; t <= config.teams; t++) {
     const roster = teamRosters[t] || [];
-    const totalPts = roster.reduce((sum, p) => sum + p.pts, 0);
+    const rawPts = Math.round(roster.reduce((sum, p) => sum + p.pts, 0));
+    const { penalty, conflicts } = calcConflictPenalty(roster);
     teamScores.push({
       teamNum: t,
       isOurs: t === config.position,
       roster,
-      totalPts: Math.round(totalPts),
+      rawPts,
+      penalty,
+      adjPts: rawPts - penalty,
+      conflicts,
     });
   }
 
-  teamScores.sort((a, b) => b.totalPts - a.totalPts);
+  teamScores.sort((a, b) => b.adjPts - a.adjPts);
   teamScores.forEach((t, i) => t.finish = i + 1);
 
   return teamScores;
@@ -2045,17 +2165,33 @@ function renderAnalysis(config) {
 
   // Hero: our finish
   if (ours) {
+    const penaltyNote = ours.penalty > 0
+      ? ` &middot; <span style="color:var(--orange);">-${ours.penalty} conflict</span>`
+      : ' &middot; <span style="color:var(--green);">no conflicts</span>';
     html += `<div class="analysis-hero">
       <div class="analysis-hero-label">Your Team — Projected Finish</div>
       <div class="analysis-hero-finish">${ordinal(ours.finish)}</div>
-      <div class="analysis-hero-pts">${ours.totalPts} projected pts &middot; ${ours.roster.length} players</div>
+      <div class="analysis-hero-pts">${ours.adjPts} adj. pts ${penaltyNote} &middot; ${ours.roster.length} players</div>
     </div>`;
+
+    // Show our conflicts detail
+    if (ours.conflicts.length > 0) {
+      html += `<div style="background:rgba(251,191,36,0.06);border:1px solid rgba(251,191,36,0.2);border-radius:8px;padding:10px 14px;margin-bottom:16px;font-size:12px;">
+        <div style="font-weight:700;color:var(--orange);margin-bottom:6px;">Your Bracket Conflicts</div>`;
+      for (const c of ours.conflicts) {
+        const desc = c.level === 'region' ? 'same region — one eliminates the other' : 'same bracket side — could meet in Final Four';
+        html += `<div style="padding:3px 0;color:var(--text-dim);">
+          <strong>${c.t1}</strong> vs <strong>${c.t2}</strong> — ${desc} <span style="color:var(--orange);">(-${c.cost} pts)</span>
+        </div>`;
+      }
+      html += '</div>';
+    }
   }
 
   // Best team callout (if not us)
   if (best && !best.isOurs) {
     html += `<div style="font-size:12px;color:var(--text-dim);margin-bottom:12px;padding:0 4px;">
-      Best projected team: <strong>Team #${best.teamNum}</strong> with ${best.totalPts} pts
+      Best projected team: <strong>Team #${best.teamNum}</strong> with ${best.adjPts} adj. pts
     </div>`;
   }
 
@@ -2072,25 +2208,41 @@ function renderAnalysis(config) {
 
     const rankClass = t.finish === 1 ? 'analysis-rank top-1' : 'analysis-rank';
 
+    // Show penalty inline if nonzero
+    const penaltyHtml = t.penalty > 0
+      ? `<span style="font-size:11px;color:var(--orange);font-weight:600;margin-right:4px;" title="Bracket conflict penalty">-${t.penalty}</span>`
+      : '';
+
     html += `<div class="${classes.join(' ')}" onclick="this.classList.toggle('open')">
       <div class="analysis-team-header">
         <span class="${rankClass}">${t.finish}</span>
         <span class="analysis-team-name">Team #${t.teamNum} ${badges}</span>
-        <span class="analysis-team-pts">${t.totalPts}</span>
+        ${penaltyHtml}
+        <span class="analysis-team-pts">${t.adjPts}</span>
         <span class="analysis-team-expand">&#9660;</span>
       </div>
       <div class="analysis-team-players">
         ${t.roster.sort((a, b) => b.pts - a.pts).map(p =>
           `<div class="analysis-player-row">
-            <div><span class="analysis-player-name">${p.player}</span> <span class="analysis-player-team">${p.team} (${p.seed})</span></div>
+            <div><span class="analysis-player-name">${p.player}</span> <span class="analysis-player-team">${p.collegeteam} (${p.seed})</span></div>
             <span class="analysis-player-pts">${Math.round(p.pts)}</span>
           </div>`
         ).join('')}
+        ${t.conflicts.length > 0 ? `<div style="margin-top:6px;padding-top:6px;border-top:1px solid var(--border);font-size:11px;color:var(--orange);">
+          ${t.conflicts.map(c => `${c.t1} vs ${c.t2}: -${c.cost} pts (${c.level === 'region' ? 'same region' : 'same side'})`).join('<br>')}
+        </div>` : ''}
         ${t.roster.length === 0 ? '<div style="color:var(--text-dim);font-size:12px;padding:4px 0;">No players</div>' : ''}
       </div>
     </div>`;
   }
   html += '</div>';
+
+  // Scoring explanation
+  html += `<div style="font-size:11px;color:var(--text-dim);margin-top:12px;padding:10px;background:var(--surface2);border-radius:6px;line-height:1.5;">
+    <strong>How scoring works:</strong> Raw points = sum of each player's projected tournament points (PPG &times; expected games).
+    Conflict penalty: same region = &minus;25% of weaker player's points (teams will meet), same bracket side = &minus;8% (could meet in Final Four).
+    Teams that diversify across regions are rewarded.
+  </div>`;
 
   html += `<div class="modal-actions" style="margin-top:16px;">
     <button class="btn-cancel" onclick="document.getElementById('analysis-modal').classList.remove('open')">Close</button>
