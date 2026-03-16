@@ -416,21 +416,9 @@
     text-decoration: none !important;
   }
 
-  .conflict-warn {
-    color: var(--orange);
-    font-size: 11px;
-    margin-left: 4px;
-    cursor: help;
-    text-decoration: none !important;
-  }
-
-  .conflict-preview {
-    color: var(--orange);
-    font-size: 10px;
-    margin-left: 4px;
-    cursor: help;
-    opacity: 0.7;
-  }
+  /* Conflict icons use inline styles with round-specific colors:
+     Red = Round of 64, Orange = Round of 32,
+     Yellow = Sweet 16, Green = Elite 8 */
 
   .pick-number {
     font-size: 10px;
@@ -1444,23 +1432,19 @@ function render() {
       const ic = injuryClass(p.injury_status);
       const region = getTeamRegion(p.team) || '?';
 
-      // Conflict info
+      // Conflict info — colored by earliest round teams could meet
       let conflictHtml = '';
-      if (isMyTeam) {
-        const conflicts = getProspectiveConflicts(p);
-        const otherConflicts = conflicts.filter(c => c.player.rank !== p.rank);
-        if (otherConflicts.length > 0) {
-          const names = otherConflicts.map(c => c.player.team).join(', ');
-          const hasRegion = otherConflicts.some(c => c.level === 'region');
-          conflictHtml = `<span class="conflict-warn" title="Bracket conflict with your ${names}${hasRegion ? ' (same region!)' : ' (same bracket side)'}">&#9888;</span>`;
-        }
-      } else if (!isDrafted && myTeam.size > 0) {
-        const conflicts = getProspectiveConflicts(p);
+      if (isMyTeam || (!isDrafted && myTeam.size > 0)) {
+        const conflicts = getProspectiveConflicts(p).filter(c => c.player.rank !== p.rank);
         if (conflicts.length > 0) {
-          const names = conflicts.map(c => c.player.team).join(', ');
-          const hasRegion = conflicts.some(c => c.level === 'region');
-          const icon = hasRegion ? '&#9888;' : '&#9670;';
-          conflictHtml = `<span class="conflict-preview" title="Would conflict with your ${names}${hasRegion ? ' (same region!)' : ' (same bracket side)'}">${icon}</span>`;
+          // Use the worst (earliest) conflict for the icon color
+          const worst = Math.min(...conflicts.map(c => c.round));
+          const color = getConflictColor(worst);
+          const details = conflicts.map(c =>
+            `${c.player.team}: could meet in ${getConflictLabel(c.round)}`
+          ).join('\n');
+          const opacity = isMyTeam ? '1' : '0.7';
+          conflictHtml = `<span style="color:${color};font-size:11px;margin-left:4px;cursor:help;text-decoration:none !important;opacity:${opacity};" title="${details}">&#9888;</span>`;
         }
       }
 
