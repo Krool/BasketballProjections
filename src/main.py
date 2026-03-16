@@ -24,7 +24,7 @@ import pandas as pd
 # Add src to path
 sys.path.insert(0, os.path.dirname(__file__))
 
-from simulate_bracket import calculate_expected_games
+from simulate_bracket import calculate_expected_games, adjust_kenpom_for_injuries
 from scrape_players_espn import scrape_all_tournament_teams
 from scrape_injuries import get_combined_injuries
 from project_points import project_player_points, save_projections, print_draft_board
@@ -75,20 +75,8 @@ def main():
     bracket_teams = get_bracket_teams(bracket)
     print(f"  Loaded bracket with {len(bracket.get('regions', {}))} regions, {len(bracket_teams)} teams")
 
-    # Step 3: Calculate expected games
-    print("\n[3/5] Simulating bracket for expected games...")
-    expected_games = calculate_expected_games(kenpom_df, bracket)
-
-    # Print expected games summary
-    eg_df = pd.DataFrame([
-        {'team': team, 'expected_games': round(eg, 2)}
-        for team, eg in sorted(expected_games.items(), key=lambda x: -x[1])
-    ])
-    print(f"\n  Top 15 teams by expected games:")
-    print(eg_df.head(15).to_string(index=False))
-
-    # Step 4: Load player stats
-    print("\n[4/5] Loading player stats...")
+    # Step 3: Load player stats
+    print("\n[3/6] Loading player stats...")
     stats_path = os.path.join(DATA_DIR, 'all_player_stats.csv')
     if os.path.exists(stats_path):
         player_stats = pd.read_csv(stats_path)
@@ -114,9 +102,22 @@ def main():
     # Filter to bracket teams only
     player_stats = player_stats[player_stats['team'].isin(bracket_teams)]
 
-    # Step 5: Load injuries
-    print("\n[5/5] Loading injury data...")
+    # Step 4: Load injuries
+    print("\n[4/6] Loading injury data...")
     injuries = get_combined_injuries(tournament_teams=sorted(bracket_teams))
+
+    # Step 5: Adjust KenPom for injuries and simulate bracket
+    print("\n[5/6] Adjusting KenPom for injured players and simulating bracket...")
+    kenpom_adjusted = adjust_kenpom_for_injuries(kenpom_df, injuries, player_stats)
+    expected_games = calculate_expected_games(kenpom_adjusted, bracket)
+
+    # Print expected games summary
+    eg_df = pd.DataFrame([
+        {'team': team, 'expected_games': round(eg, 2)}
+        for team, eg in sorted(expected_games.items(), key=lambda x: -x[1])
+    ])
+    print(f"\n  Top 15 teams by expected games:")
+    print(eg_df.head(15).to_string(index=False))
 
     # Project points
     print("\n" + "=" * 60)

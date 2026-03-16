@@ -219,6 +219,110 @@ def _propagate_final_four(
 
 
 # ---------------------------------------------------------------------------
+# Injury-adjusted KenPom
+# ---------------------------------------------------------------------------
+
+# Approximate league-average AdjO for D-I (used as baseline)
+LEAGUE_AVG_ADJO = 107.0
+
+# What fraction of a missing player's production is truly lost.
+# The rest (~65%) gets backfilled by increased minutes for teammates,
+# but at lower efficiency. Higher-PPG players are harder to replace,
+# so we scale this: stars lose more of their production than role players.
+REPLACEMENT_LOSS_BASE = 0.35  # 35% of production truly lost for avg player
+REPLACEMENT_LOSS_STAR_BONUS = 0.10  # extra 10% for 20+ PPG players
+
+
+def adjust_kenpom_for_injuries(kenpom_df: pd.DataFrame,
+                                injuries_df: pd.DataFrame,
+                                player_stats_df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Reduce AdjO for teams with OUT players to reflect their weakened offense.
+
+    Only applies to players with status == 'OUT'. RETURNING and DAY-TO-DAY
+    players are expected to play and are handled by the injury multiplier
+    on their individual projections.
+
+    Formula:
+        loss_rate = 0.35 + (0.10 if ppg >= 20 else 0.0)
+        net_loss_ppg = player_ppg * loss_rate
+        adjO_reduction = (net_loss_ppg / team_total_ppg) * (team_adjO - 107)
+
+    Parameters
+    ----------
+    kenpom_df : DataFrame with Team, AdjO, AdjD columns
+    injuries_df : DataFrame with player, team, status columns
+    player_stats_df : DataFrame with player, team, ppg columns
+
+    Returns
+    -------
+    DataFrame  copy of kenpom_df with AdjO adjusted for OUT players
+    """
+    if injuries_df is None or injuries_df.empty:
+        return kenpom_df
+
+    df = kenpom_df.copy()
+
+    # Get OUT players only
+    out_players = injuries_df[injuries_df['status'].str.upper() == 'OUT']
+    if out_players.empty:
+        return df
+
+    # Calculate team total PPG from player stats
+    team_ppg = player_stats_df.groupby('team')['ppg'].sum().to_dict()
+
+    # Accumulate AdjO reductions per team
+    team_reductions = {}
+    adjustment_log = []
+
+    for _, inj in out_players.iterrows():
+        team = str(inj['team']).strip()
+        player = str(inj['player']).strip()
+
+        # Find player's PPG
+        matches = player_stats_df[
+            (player_stats_df['team'].str.lower() == team.lower()) &
+            (player_stats_df['player'].str.lower().str.contains(
+                player.split()[0].lower()
+            ))
+        ]
+        if matches.empty:
+            continue
+
+        ppg = matches.iloc[0]['ppg']
+        total_ppg = team_ppg.get(team, 70.0)  # fallback
+
+        # Get team's AdjO
+        team_row = df[df['Team'] == team]
+        if team_row.empty:
+            continue
+        adj_o = team_row['AdjO'].values[0]
+
+        # Calculate replacement-level loss
+        loss_rate = REPLACEMENT_LOSS_BASE
+        if ppg >= 20:
+            loss_rate += REPLACEMENT_LOSS_STAR_BONUS
+        net_loss = ppg * loss_rate
+        reduction = (net_loss / total_ppg) * (adj_o - LEAGUE_AVG_ADJO)
+
+        team_reductions[team] = team_reductions.get(team, 0) + reduction
+        adjustment_log.append((player, team, ppg, round(reduction, 1)))
+
+    # Apply reductions
+    for team, reduction in team_reductions.items():
+        mask = df['Team'] == team
+        old_val = df.loc[mask, 'AdjO'].values[0]
+        df.loc[mask, 'AdjO'] = old_val - reduction
+        print(f"  Injury adj: {team} AdjO {old_val:.1f} -> {old_val - reduction:.1f} "
+              f"(-{reduction:.1f})")
+
+    if adjustment_log:
+        print(f"  Applied {len(adjustment_log)} injury adjustments to KenPom ratings")
+
+    return df
+
+
+# ---------------------------------------------------------------------------
 # Public API
 # ---------------------------------------------------------------------------
 
