@@ -328,6 +328,13 @@
   @media (hover: hover) { .fav-btn:hover { color: var(--orange); } }
   .fav-btn.active { color: var(--orange); }
 
+  /* Focus styles for keyboard navigation */
+  .fav-btn:focus-visible, .draft-btn:focus-visible, .we-draft-btn:focus-visible,
+  .toggle-btn:focus-visible, .btn:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
   .draft-btn {
     background: transparent;
     border: 1px solid var(--border);
@@ -646,6 +653,112 @@
     .we-draft-btn .btn-short { display: none; }
     .draft-btn .btn-short { display: none; }
   }
+
+  /* Mock Draft Modal */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    z-index: 500;
+    align-items: center;
+    justify-content: center;
+  }
+  .modal-overlay.open { display: flex; }
+
+  .modal {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    width: 340px;
+    max-width: 90vw;
+  }
+
+  .modal h2 {
+    font-size: 16px;
+    margin-bottom: 16px;
+  }
+
+  .modal label {
+    display: block;
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-bottom: 4px;
+    margin-top: 12px;
+  }
+
+  .modal input, .modal select {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 8px 10px;
+    color: var(--text);
+    font-size: 14px;
+  }
+
+  .modal-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 20px;
+  }
+
+  .modal-actions button {
+    flex: 1;
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid var(--border);
+  }
+
+  .modal-actions .btn-primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+
+  .modal-actions .btn-cancel {
+    background: var(--surface2);
+    color: var(--text);
+  }
+
+  /* Mock Draft Banner */
+  .mock-banner {
+    display: none;
+    background: linear-gradient(135deg, rgba(251, 191, 36, 0.12) 0%, rgba(248, 113, 113, 0.08) 100%);
+    border: 1px solid rgba(251, 191, 36, 0.3);
+    border-radius: 8px;
+    padding: 10px 16px;
+    margin-bottom: 12px;
+    align-items: center;
+    gap: 12px;
+    font-size: 13px;
+  }
+
+  .mock-banner.active { display: flex; }
+
+  .mock-banner-info { flex: 1; }
+  .mock-banner-round { font-weight: 700; color: var(--orange); }
+  .mock-banner-pick { color: var(--text-dim); }
+  .mock-banner-status { font-weight: 700; font-size: 14px; }
+  .mock-banner-status.your-turn { color: var(--green); }
+  .mock-banner-status.waiting { color: var(--text-dim); }
+
+  .mock-banner button {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 6px 14px;
+    color: var(--text);
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .mock-banner .btn-stop { color: var(--red); }
 </style>
 </head>
 <body>
@@ -669,10 +782,13 @@
       <div class="stat">
         <span class="stat-value" id="pick-number">Pick 1</span>
       </div>
+      <div class="stat">
+        <span class="stat-label" id="generated-ts"></span>
+      </div>
     </div>
   </div>
   <div class="controls">
-    <input type="text" class="search-box" id="search" placeholder="Search player or team...">
+    <input type="text" class="search-box" id="search" placeholder="Search player or team..." aria-label="Search players or teams">
     <select id="team-filter"><option value="">All Teams</option></select>
     <select id="seed-filter"><option value="">All Seeds</option></select>
     <select id="region-filter"><option value="">All Regions</option></select>
@@ -680,7 +796,9 @@
     <button class="toggle-btn" id="show-favs">Favorites</button>
     <button class="btn" id="clear-filters">Clear Filters</button>
     <button class="btn" id="undo-btn">Undo</button>
-    <button class="btn" id="export-btn">Export</button>
+    <button class="btn" id="export-btn">Export Draft</button>
+    <button class="btn" id="export-all-btn">Export All</button>
+    <button class="btn" id="mock-btn" style="color:var(--orange);border-color:rgba(251,191,36,0.3);">Mock Draft</button>
     <span style="flex:1"></span>
     <button class="btn danger" id="reset-btn">Reset Draft</button>
   </div>
@@ -708,6 +826,16 @@
         <div class="best-available-details" id="ba-details">--</div>
       </div>
       <div class="best-available-pts" id="ba-pts">--</div>
+    </div>
+
+    <div class="mock-banner" id="mock-banner">
+      <div class="mock-banner-info">
+        <span class="mock-banner-round" id="mock-round">Round 1</span>
+        <span class="mock-banner-pick" id="mock-pick">Pick 1 of 20</span>
+        <div class="mock-banner-status" id="mock-status">Waiting...</div>
+      </div>
+      <button id="mock-pause">Pause</button>
+      <button id="mock-stop" class="btn-stop">Stop</button>
     </div>
 
     <table>
@@ -738,6 +866,31 @@
   </div>
 </div>
 
+<div class="modal-overlay" id="mock-modal">
+  <div class="modal">
+    <h2>Mock Draft Setup</h2>
+    <label>Number of Teams</label>
+    <input type="number" id="mock-teams" value="20" min="2" max="30">
+    <label>Your Draft Position</label>
+    <input type="number" id="mock-position" value="1" min="1" max="30">
+    <label>Draft Type</label>
+    <select id="mock-type">
+      <option value="snake">Snake Draft</option>
+      <option value="linear">Linear Draft</option>
+    </select>
+    <label>Pick Speed</label>
+    <select id="mock-speed">
+      <option value="500">Fast (0.5s)</option>
+      <option value="1000" selected>Normal (1s)</option>
+      <option value="2000">Slow (2s)</option>
+    </select>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="document.getElementById('mock-modal').classList.remove('open')">Cancel</button>
+      <button class="btn-primary" onclick="startMockDraft()">Start</button>
+    </div>
+  </div>
+</div>
+
 <script>
 let players = [];
 let drafted = new Set();
@@ -749,12 +902,7 @@ let sortAsc = true;
 let hideDrafted = true;
 let showFavsOnly = false;
 
-const REGIONS = {
-  "East": ["Duke","Siena","Ohio St.","TCU","St. John's","Northern Iowa","Kansas","Cal Baptist","Louisville","South Florida","Michigan St.","North Dakota St.","UCLA","UCF","Connecticut","Furman"],
-  "West": ["Arizona","LIU","Villanova","Utah St.","Wisconsin","High Point","Arkansas","Hawaii","BYU","N.C. State","Gonzaga","Kennesaw St.","Miami FL","Missouri","Purdue","Queens"],
-  "Midwest": ["Michigan","UMBC","Georgia","Saint Louis","Texas Tech","Akron","Alabama","Hofstra","Tennessee","SMU","Virginia","Wright St.","Kentucky","Santa Clara","Iowa St.","Tennessee St."],
-  "South": ["Florida","Lehigh","Clemson","Iowa","Vanderbilt","McNeese","Nebraska","Troy","North Carolina","VCU","Illinois","Penn","Saint Mary's","Texas A&M","Houston","Idaho"]
-};
+let REGIONS = {};
 
 const BRACKET_SIDES = { "East": "A", "West": "A", "South": "B", "Midwest": "B" };
 
@@ -762,7 +910,9 @@ function getTeamRegion(team) {
   for (const [region, teams] of Object.entries(REGIONS)) {
     if (teams.includes(team)) return region;
   }
-  return null;
+  // Fallback: check players array directly
+  const p = players.find(pl => pl.team === team);
+  return p ? p.region || null : null;
 }
 
 function getConflictLevel(team1, team2) {
@@ -1039,7 +1189,7 @@ function render() {
 
       return `<tr class="${rowClass}" data-rank="${p.rank}">
         <td class="rank-cell">${p.rank}</td>
-        <td class="col-fav" style="text-align:center;"><button class="fav-btn ${favorites.has(p.rank) ? 'active' : ''}" onclick="toggleFav(${p.rank})">&#9733;</button></td>
+        <td class="col-fav" style="text-align:center;"><button class="fav-btn ${favorites.has(p.rank) ? 'active' : ''}" onclick="toggleFav(${p.rank})" aria-label="${favorites.has(p.rank) ? 'Remove' : 'Add'} ${p.player} ${favorites.has(p.rank) ? 'from' : 'to'} favorites">&#9733;</button></td>
         <td class="player-cell">${p.player}${isDraftedByOthers ? ` <span class="pick-number">(#${pickIdx + 1})</span>` : ''}${isMyTeam ? '<span class="my-team-badge">OURS</span>' : ''}${conflictHtml}</td>
         <td class="team-cell col-team">${p.team}</td>
         <td class="region-cell col-region">${region}</td>
@@ -1106,9 +1256,34 @@ function init() {
   loadState();
 
   fetch('players.json')
-    .then(r => r.json())
+    .then(r => {
+      if (!r.ok) throw new Error(`HTTP ${r.status}`);
+      return r.json();
+    })
     .then(data => {
-      players = data;
+      // Support both new {generated_at, players} and legacy flat-array format
+      if (Array.isArray(data)) {
+        players = data;
+      } else {
+        players = data.players || [];
+        if (data.generated_at) {
+          const ts = document.getElementById('generated-ts');
+          if (ts) {
+            const d = new Date(data.generated_at);
+            ts.textContent = `Updated ${d.toLocaleDateString()} ${d.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}`;
+            ts.title = data.generated_at;
+          }
+        }
+      }
+
+      // Build REGIONS from player data
+      REGIONS = {};
+      for (const p of players) {
+        if (p.region) {
+          if (!REGIONS[p.region]) REGIONS[p.region] = [];
+          if (!REGIONS[p.region].includes(p.team)) REGIONS[p.region].push(p.team);
+        }
+      }
 
       const teams = [...new Set(players.map(p => p.team))].sort();
       const teamSelect = document.getElementById('team-filter');
@@ -1129,7 +1304,7 @@ function init() {
       });
 
       const regionSelect = document.getElementById('region-filter');
-      ['East', 'West', 'South', 'Midwest'].forEach(r => {
+      Object.keys(REGIONS).sort().forEach(r => {
         const opt = document.createElement('option');
         opt.value = r;
         opt.textContent = r;
@@ -1137,6 +1312,10 @@ function init() {
       });
 
       render();
+    })
+    .catch(err => {
+      document.getElementById('no-results').style.display = 'block';
+      document.getElementById('no-results').textContent = `Failed to load player data: ${err.message}. Make sure players.json is deployed.`;
     });
 
   document.getElementById('search').addEventListener('input', render);
@@ -1227,9 +1406,214 @@ function init() {
     a.download = 'draft_results_2026.csv';
     a.click();
   });
+
+  document.getElementById('export-all-btn').addEventListener('click', () => {
+    const lines = ['Rank,Player,Team,Region,Seed,PPG,Expected Games,Projected Points,Status,Drafted,Our Team'];
+    players.forEach(p => {
+      const status = drafted.has(p.rank) ? (myTeam.has(p.rank) ? 'Our Pick' : 'Drafted') : 'Available';
+      lines.push(`${p.rank},"${p.player}",${p.team},${getTeamRegion(p.team) || ''},${p.seed},${p.ppg},${p.expected_games},${p.projected_points},${p.injury_status},${status},${myTeam.has(p.rank) ? 'Yes' : 'No'}`);
+    });
+    const blob = new Blob([lines.join('\n')], { type: 'text/csv' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'all_projections_2026.csv';
+    a.click();
+  });
+
+  // Register service worker for offline support
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js').catch(() => {});
+  }
+
+  // Keyboard shortcuts
+  document.addEventListener('keydown', (e) => {
+    // Ignore if typing in search box
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') return;
+
+    if ((e.ctrlKey || e.metaKey) && e.key === 'z') {
+      e.preventDefault();
+      document.getElementById('undo-btn').click();
+    }
+    if (e.key === '/' || (e.key === 'f' && (e.ctrlKey || e.metaKey))) {
+      e.preventDefault();
+      document.getElementById('search').focus();
+    }
+    if (e.key === 'Escape') {
+      document.getElementById('search').blur();
+      document.getElementById('search').value = '';
+      render();
+    }
+  });
 }
 
+// === Mock Draft ===
+let mockActive = false;
+let mockPaused = false;
+let mockTimer = null;
+let mockConfig = { teams: 20, position: 1, snake: true, speed: 1000 };
+let mockPickIndex = 0; // overall pick number (0-based)
+
+function getMockCurrentTeam() {
+  const { teams, snake } = mockConfig;
+  const round = Math.floor(mockPickIndex / teams);
+  const posInRound = mockPickIndex % teams;
+  if (snake && round % 2 === 1) {
+    return teams - posInRound; // reverse order in even rounds (1-indexed)
+  }
+  return posInRound + 1; // 1-indexed
+}
+
+function getMockRound() {
+  return Math.floor(mockPickIndex / mockConfig.teams) + 1;
+}
+
+function getMockPickInRound() {
+  return (mockPickIndex % mockConfig.teams) + 1;
+}
+
+function isMyMockPick() {
+  return getMockCurrentTeam() === mockConfig.position;
+}
+
+function updateMockBanner() {
+  const banner = document.getElementById('mock-banner');
+  const roundEl = document.getElementById('mock-round');
+  const pickEl = document.getElementById('mock-pick');
+  const statusEl = document.getElementById('mock-status');
+  const pauseBtn = document.getElementById('mock-pause');
+
+  if (!mockActive) {
+    banner.classList.remove('active');
+    return;
+  }
+
+  banner.classList.add('active');
+  roundEl.textContent = `Round ${getMockRound()}`;
+  pickEl.textContent = `Pick ${getMockPickInRound()} of ${mockConfig.teams} (Team #${getMockCurrentTeam()})`;
+
+  if (isMyMockPick()) {
+    statusEl.textContent = 'YOUR PICK!';
+    statusEl.className = 'mock-banner-status your-turn';
+  } else if (mockPaused) {
+    statusEl.textContent = 'Paused';
+    statusEl.className = 'mock-banner-status waiting';
+  } else {
+    statusEl.textContent = 'Auto-picking...';
+    statusEl.className = 'mock-banner-status waiting';
+  }
+
+  pauseBtn.textContent = mockPaused ? 'Resume' : 'Pause';
+}
+
+function mockAutoPick() {
+  const best = getBestAvailable();
+  if (!best) { stopMockDraft(); return; }
+  drafted.add(best.rank);
+  draftOrder.push(best.rank);
+  mockPickIndex++;
+  saveState();
+  render();
+  updateMockBanner();
+  scheduleMockNext();
+}
+
+function mockUserPicked() {
+  // Called when user clicks "Us" during their mock turn
+  mockPickIndex++;
+  updateMockBanner();
+  scheduleMockNext();
+}
+
+function scheduleMockNext() {
+  clearTimeout(mockTimer);
+  if (!mockActive || mockPaused) return;
+
+  const best = getBestAvailable();
+  if (!best) { stopMockDraft(); return; }
+
+  if (isMyMockPick()) {
+    // Wait for user — don't auto-pick
+    updateMockBanner();
+    return;
+  }
+
+  mockTimer = setTimeout(mockAutoPick, mockConfig.speed);
+}
+
+function startMockDraft() {
+  const teams = parseInt(document.getElementById('mock-teams').value) || 20;
+  const position = parseInt(document.getElementById('mock-position').value) || 1;
+  const type = document.getElementById('mock-type').value;
+  const speed = parseInt(document.getElementById('mock-speed').value) || 1000;
+
+  if (position < 1 || position > teams) {
+    alert(`Position must be between 1 and ${teams}`);
+    return;
+  }
+
+  // Reset draft state
+  drafted.clear();
+  myTeam.clear();
+  draftOrder = [];
+  mockPickIndex = 0;
+  saveState();
+
+  mockConfig = { teams, position, snake: type === 'snake', speed };
+  mockActive = true;
+  mockPaused = false;
+
+  document.getElementById('mock-modal').classList.remove('open');
+
+  // Turn off hide-drafted so user can see picks happening
+  hideDrafted = false;
+  document.getElementById('hide-drafted').classList.remove('active');
+  document.getElementById('hide-drafted').textContent = 'Show All';
+
+  render();
+  updateMockBanner();
+  scheduleMockNext();
+}
+
+function stopMockDraft() {
+  mockActive = false;
+  mockPaused = false;
+  clearTimeout(mockTimer);
+  updateMockBanner();
+}
+
+// Patch toggleMyTeam to advance mock draft when user picks
+const _origToggleMyTeam = toggleMyTeam;
+toggleMyTeam = function(rank) {
+  const wasOnTeam = myTeam.has(rank);
+  _origToggleMyTeam(rank);
+  if (mockActive && !wasOnTeam && myTeam.has(rank)) {
+    mockUserPicked();
+  }
+};
+
 init();
+
+// Mock draft button
+document.getElementById('mock-btn').addEventListener('click', () => {
+  if (mockActive) {
+    if (confirm('Stop the current mock draft?')) stopMockDraft();
+    return;
+  }
+  document.getElementById('mock-modal').classList.add('open');
+});
+
+// Pause/resume
+document.getElementById('mock-pause').addEventListener('click', () => {
+  if (!mockActive) return;
+  mockPaused = !mockPaused;
+  updateMockBanner();
+  if (!mockPaused) scheduleMockNext();
+});
+
+// Stop
+document.getElementById('mock-stop').addEventListener('click', () => {
+  stopMockDraft();
+});
 </script>
 </body>
 </html>
