@@ -2,9 +2,16 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>March Madness 2026 Draft Board</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>MM 2026 Draft</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="MM Draft">
+<meta name="theme-color" content="#0f1117">
+<meta name="mobile-web-app-capable" content="yes">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏀</text></svg>">
+<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏀</text></svg>">
+<link rel="manifest" href="manifest.json">
 <style>
   :root {
     --bg: #0f1117;
@@ -30,12 +37,16 @@
     background: var(--bg);
     color: var(--text);
     min-height: 100vh;
+    min-height: 100dvh;
+    -webkit-text-size-adjust: 100%;
   }
 
   .header {
     background: linear-gradient(135deg, #1a1d27 0%, #242836 100%);
     border-bottom: 1px solid var(--border);
     padding: 12px 20px;
+    padding-left: max(20px, env(safe-area-inset-left));
+    padding-right: max(20px, env(safe-area-inset-right));
     position: sticky;
     top: 0;
     z-index: 100;
@@ -791,7 +802,7 @@ function getFiltered() {
   const regionFilter = document.getElementById('region-filter').value;
 
   let filtered = players.filter(p => {
-    if (hideDrafted && drafted.has(p.rank)) return false;
+    if (hideDrafted && drafted.has(p.rank) && !myTeam.has(p.rank) && !favorites.has(p.rank)) return false;
     if (showFavsOnly && !favorites.has(p.rank)) return false;
     if (search && !p.player.toLowerCase().includes(search) && !p.team.toLowerCase().includes(search)) return false;
     if (teamFilter && p.team !== teamFilter) return false;
