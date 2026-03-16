@@ -1206,27 +1206,29 @@ function getConflictLabel(round) {
   return labels[round] || 'Later';
 }
 
-function calcLivePenalty(player) {
-  // Calculate the conflict penalty this player would add to your team.
-  // Uses the same round factors as the post-draft analysis.
-  if (myTeam.size === 0) return 0;
-  const ROUND_FACTORS = { 1: 0.35, 2: 0.25, 3: 0.18, 4: 0.12, 5: 0.05 };
+// Precomputed map of college team -> total pts on our roster.
+// Rebuilt at the start of each render() call.
+let _myTeamPtsCache = {};
 
-  // Sum points we already have from each college team on our roster
-  const myTeamPts = {};
+function rebuildMyTeamPtsCache() {
+  _myTeamPtsCache = {};
   for (const rank of myTeam) {
     const p = players.find(pl => pl.rank === rank);
     if (!p) continue;
-    myTeamPts[p.team] = (myTeamPts[p.team] || 0) + p.projected_points;
+    _myTeamPtsCache[p.team] = (_myTeamPtsCache[p.team] || 0) + p.projected_points;
   }
+}
 
+const _LIVE_ROUND_FACTORS = { 1: 0.35, 2: 0.25, 3: 0.18, 4: 0.12, 5: 0.05 };
+
+function calcLivePenalty(player) {
+  if (myTeam.size === 0) return 0;
   let penalty = 0;
-  for (const [team, pts] of Object.entries(myTeamPts)) {
+  for (const [team, pts] of Object.entries(_myTeamPtsCache)) {
     if (team === player.team) continue;
     const round = getEarliestMeetingRound(player.team, team);
     if (!round || round >= 6) continue;
-    const factor = ROUND_FACTORS[round] || 0;
-    // Penalty is on the weaker side's points
+    const factor = _LIVE_ROUND_FACTORS[round] || 0;
     const weaker = Math.min(player.projected_points, pts);
     penalty += weaker * factor;
   }
@@ -1460,6 +1462,7 @@ function updateMyTeamPanel() {
 }
 
 function render() {
+  rebuildMyTeamPtsCache();
   const filtered = getFiltered();
   const tbody = document.getElementById('table-body');
 
