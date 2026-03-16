@@ -98,6 +98,7 @@ def main():
             print(f"  Missing stats for {len(missing)} teams, scraping: {missing}")
             new_stats = scrape_all_tournament_teams(sorted(missing), use_cache=True, delay=3.0)
             player_stats = pd.concat([player_stats, new_stats], ignore_index=True)
+            player_stats = player_stats.drop_duplicates(subset=['player', 'team'], keep='last')
             player_stats.to_csv(stats_path, index=False)
         print(f"  Loaded {len(player_stats)} player records")
     else:

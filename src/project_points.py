@@ -97,7 +97,7 @@ def project_player_points(player_stats_df, expected_games, injuries_df=None, min
             if status == 'OUT':
                 return 0.0
             elif status == 'RETURNING':
-                return 1.0  # They're expected to play
+                return 0.8  # Expected to play but may have limited minutes
             elif status == 'DAY-TO-DAY':
                 return 0.7  # Discount for uncertainty
             else:
