@@ -125,7 +125,7 @@ docs/
 
 - **Cal Baptist** (13-seed) is missing from player stats — ESPN scrape failed for this team. Low impact since 13-seeds rarely get drafted.
 - **First Four teams** are pre-filled in the bracket with one team per slot. After play-in results, use `update_first_four.py` to swap in the actual winners.
-- **Injury multipliers are coarse**: RETURNING gets full credit (1.0) even for players playing through nagging injuries (e.g. Philon's thigh/groin, Acuff's ankle). Use your judgment for tiebreakers.
+- **Injury multipliers are coarse**: RETURNING (0.8x) and DAY-TO-DAY (0.7x) are rough buckets. A player like Acuff who scored 37 in the SEC tourney gets the same 0.8x as someone barely cleared. Use your judgment for tiebreakers.
 - **No pace/style adjustment**: A player on a fast-paced team in a slow-paced matchup might score less than projected. The model only uses PPG and expected games.
 
 ## Current Injury Report (as of 3/16/2026)
