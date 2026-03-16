@@ -1402,13 +1402,15 @@ function updateMyTeamPanel() {
     byRegion[region].push(p);
   }
 
-  // Find all conflicts
-  const allConflicts = [];
-  for (let i = 0; i < myPlayers.length; i++) {
-    for (let j = i + 1; j < myPlayers.length; j++) {
-      const level = getConflictLevel(myPlayers[i].team, myPlayers[j].team);
-      if (level) {
-        allConflicts.push({ p1: myPlayers[i], p2: myPlayers[j], level });
+  // Find all conflicts — aggregate by college team pair
+  const ROUND_LABELS = { 1: 'R1 opponents', 2: 'meet in R2', 3: 'meet in Sweet 16', 4: 'meet in Elite 8', 5: 'meet in Final Four' };
+  const collegeTeams = [...new Set(myPlayers.map(p => p.team))];
+  const teamConflicts = [];
+  for (let i = 0; i < collegeTeams.length; i++) {
+    for (let j = i + 1; j < collegeTeams.length; j++) {
+      const round = getEarliestMeetingRound(collegeTeams[i], collegeTeams[j]);
+      if (round && round <= 5) {
+        teamConflicts.push({ t1: collegeTeams[i], t2: collegeTeams[j], round, label: ROUND_LABELS[round] });
       }
     }
   }
@@ -1416,15 +1418,12 @@ function updateMyTeamPanel() {
   let html = '';
 
   // Conflict warnings at the top
-  if (allConflicts.length > 0) {
+  if (teamConflicts.length > 0) {
     html += `<div class="my-team-conflicts">
       <div class="my-team-conflicts-title">&#9888; Bracket Conflicts</div>`;
-    for (const c of allConflicts) {
-      const desc = c.level === 'region'
-        ? `Same region — one eliminates the other`
-        : `Same side — could meet in Final Four`;
+    for (const c of teamConflicts) {
       html += `<div class="conflict-item">
-        <strong>${c.p1.team}</strong> vs <strong>${c.p2.team}</strong> — ${desc}
+        <strong>${c.t1}</strong> vs <strong>${c.t2}</strong> — ${c.label}
       </div>`;
     }
     html += '</div>';
