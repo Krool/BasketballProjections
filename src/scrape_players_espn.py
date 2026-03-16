@@ -116,10 +116,13 @@ def scrape_team_espn(team_name, use_cache=True):
     cache_file = os.path.join(CACHE_DIR, f"{team_name.replace(' ', '_').replace('.', '')}.json")
 
     if use_cache and os.path.exists(cache_file):
-        with open(cache_file, 'r') as f:
-            data = json.load(f)
-        if data:  # Only use cache if it has actual data
-            return data
+        try:
+            with open(cache_file, 'r') as f:
+                data = json.load(f)
+            if data:  # Only use cache if it has actual data
+                return data
+        except (json.JSONDecodeError, IOError):
+            pass  # Corrupted cache, re-scrape
 
     if team_name not in ESPN_TEAM_IDS:
         print(f"  WARNING: No ESPN ID for {team_name}")

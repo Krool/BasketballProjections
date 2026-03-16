@@ -64,8 +64,12 @@ def main():
         print("ERROR: bracket.json not found. Please create it first.")
         return
 
-    with open(bracket_path) as f:
-        bracket = json.load(f)
+    try:
+        with open(bracket_path) as f:
+            bracket = json.load(f)
+    except json.JSONDecodeError as e:
+        print(f"ERROR: bracket.json is malformed: {e}")
+        return
 
     bracket_teams = get_bracket_teams(bracket)
     print(f"  Loaded bracket with {len(bracket.get('regions', {}))} regions, {len(bracket_teams)} teams")
