@@ -324,6 +324,21 @@
     color: var(--green);
   }
 
+  .pts-penalty {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--orange);
+    margin-left: 2px;
+  }
+
+  .pts-adj {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--text-dim);
+    display: block;
+    line-height: 1;
+  }
+
   .fav-btn {
     background: transparent;
     border: none;
@@ -1191,6 +1206,33 @@ function getConflictLabel(round) {
   return labels[round] || 'Later';
 }
 
+function calcLivePenalty(player) {
+  // Calculate the conflict penalty this player would add to your team.
+  // Uses the same round factors as the post-draft analysis.
+  if (myTeam.size === 0) return 0;
+  const ROUND_FACTORS = { 1: 0.35, 2: 0.25, 3: 0.18, 4: 0.12, 5: 0.05 };
+
+  // Sum points we already have from each college team on our roster
+  const myTeamPts = {};
+  for (const rank of myTeam) {
+    const p = players.find(pl => pl.rank === rank);
+    if (!p) continue;
+    myTeamPts[p.team] = (myTeamPts[p.team] || 0) + p.projected_points;
+  }
+
+  let penalty = 0;
+  for (const [team, pts] of Object.entries(myTeamPts)) {
+    if (team === player.team) continue;
+    const round = getEarliestMeetingRound(player.team, team);
+    if (!round || round >= 6) continue;
+    const factor = ROUND_FACTORS[round] || 0;
+    // Penalty is on the weaker side's points
+    const weaker = Math.min(player.projected_points, pts);
+    penalty += weaker * factor;
+  }
+  return Math.round(penalty * 10) / 10;
+}
+
 function getProspectiveConflicts(player) {
   const conflicts = [];
   for (const rank of myTeam) {
@@ -1483,7 +1525,13 @@ function render() {
         <td class="col-seed"><span class="seed-badge ${seedClass(p.seed)}">${p.seed}</span></td>
         <td title="Season average: ${p.ppg.toFixed(1)} points per game">${p.ppg.toFixed(1)}</td>
         <td title="KenPom bracket sim: ${p.team} projected to play ${p.expected_games.toFixed(2)} games">${p.expected_games.toFixed(2)}</td>
-        <td class="pts-cell" title="${p.ppg.toFixed(1)} PPG x ${p.expected_games.toFixed(2)} games = ${Math.round(p.projected_points)} pts">${Math.round(p.projected_points)}</td>
+        <td class="pts-cell" title="${p.ppg.toFixed(1)} PPG x ${p.expected_games.toFixed(2)} games = ${Math.round(p.projected_points)} pts">${Math.round(p.projected_points)}${(() => {
+          if (isDrafted || myTeam.size === 0) return '';
+          const pen = calcLivePenalty(p);
+          if (pen <= 0) return '';
+          const adj = Math.round(p.projected_points - pen);
+          return `<span class="pts-penalty" title="Conflict penalty with your team: -${pen} pts">-${pen}</span><span class="pts-adj">${adj} eff.</span>`;
+        })()}</td>
         <td title="${p.injury_status || 'HEALTHY'}"><span class="injury-dot ${ic}"></span></td>
         <td style="white-space:nowrap;">${actionHtml}</td>
       </tr>`;
