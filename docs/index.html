@@ -576,6 +576,16 @@
     /* Hide columns on mobile to prevent horizontal scrolling */
     .col-fav, .col-team, .col-region, .col-seed { display: none; }
 
+    /* Compact player names on mobile */
+    .player-cell {
+      max-width: 110px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Hide sort arrows on mobile */
+    .sort-arrow { display: none !important; }
+
     /* Compact action buttons on mobile */
     .we-draft-btn .btn-full { display: none; }
     .we-draft-btn .btn-short { display: inline; }
