@@ -248,7 +248,7 @@
   }
 
   thead th {
-    background: var(--surface);
+    background: var(--bg);
     padding: 8px 8px;
     text-align: left;
     font-weight: 600;
@@ -1501,6 +1501,13 @@ function render() {
     const arrow = th.querySelector('.sort-arrow');
     if (arrow) arrow.textContent = col === sortCol ? (sortAsc ? '\u25B2' : '\u25BC') : '';
   });
+
+  // Pin thead below the sticky banner
+  const stickyBanner = document.querySelector('.col-center-sticky');
+  if (stickyBanner) {
+    const h = stickyBanner.offsetHeight;
+    document.querySelectorAll('thead th').forEach(th => th.style.top = h + 'px');
+  }
 }
 
 function toggleFav(rank) {
