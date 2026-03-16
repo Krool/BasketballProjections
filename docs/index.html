@@ -247,6 +247,20 @@
     color: var(--green);
   }
 
+  .fav-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 2px 6px;
+    opacity: 0.25;
+    transition: all 0.15s;
+    filter: grayscale(1);
+  }
+
+  .fav-btn:hover { opacity: 0.6; filter: grayscale(0); }
+  .fav-btn.active { opacity: 1; filter: grayscale(0); }
+
   .draft-btn {
     background: transparent;
     border: 1px solid var(--border);
@@ -373,6 +387,7 @@
     <select id="team-filter"><option value="">All Teams</option></select>
     <select id="seed-filter"><option value="">All Seeds</option></select>
     <button class="toggle-btn active" id="hide-drafted">Hide Drafted</button>
+    <button class="toggle-btn" id="show-favs">Favorites</button>
     <button class="btn" id="clear-filters">Clear Filters</button>
     <button class="btn" id="toggle-log">Draft Log</button>
     <button class="btn" id="undo-btn">Undo</button>
@@ -402,6 +417,7 @@
         <th data-sort="expected_games" title="Expected tournament games — simulated using KenPom efficiency ratings and bracket matchups">Exp. Games</th>
         <th data-sort="projected_points" title="Projected Points = PPG × Expected Games — total expected scoring output across the tournament">Proj. Pts</th>
         <th title="Injury status: healthy, questionable, or out">Status</th>
+        <th title="Favorite players for quick reference">Fav</th>
         <th></th>
       </tr>
     </thead>
@@ -418,10 +434,12 @@
 <script>
 let players = [];
 let drafted = new Set();
+let favorites = new Set();
 let draftOrder = [];
 let sortCol = 'rank';
 let sortAsc = true;
 let hideDrafted = true;
+let showFavsOnly = false;
 
 const STORAGE_KEY = 'mm2026_draft';
 
@@ -431,6 +449,7 @@ function loadState() {
     if (saved) {
       const state = JSON.parse(saved);
       drafted = new Set(state.drafted || []);
+      favorites = new Set(state.favorites || []);
       draftOrder = state.draftOrder || [];
     }
   } catch(e) {}
@@ -439,6 +458,7 @@ function loadState() {
 function saveState() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify({
     drafted: [...drafted],
+    favorites: [...favorites],
     draftOrder
   }));
 }
@@ -463,6 +483,7 @@ function getFiltered() {
 
   let filtered = players.filter(p => {
     if (hideDrafted && drafted.has(p.rank)) return false;
+    if (showFavsOnly && !favorites.has(p.rank)) return false;
     if (search && !p.player.toLowerCase().includes(search) && !p.team.toLowerCase().includes(search)) return false;
     if (teamFilter && p.team !== teamFilter) return false;
     if (seedFilter && p.seed !== parseInt(seedFilter)) return false;
@@ -540,6 +561,7 @@ function render() {
         <td title="Based on KenPom bracket simulation: ${p.team} is projected to play ${p.expected_games.toFixed(2)} games">${p.expected_games.toFixed(2)}</td>
         <td class="pts-cell" title="${p.ppg.toFixed(1)} PPG × ${p.expected_games.toFixed(2)} games = ${p.projected_points.toFixed(1)} projected points">${p.projected_points.toFixed(1)}</td>
         <td><span class="injury-dot ${ic}"></span>${p.injury_status || 'HEALTHY'}</td>
+        <td><button class="fav-btn ${favorites.has(p.rank) ? 'active' : ''}" onclick="toggleFav(${p.rank})">&#9733;</button></td>
         <td><button class="draft-btn" onclick="toggleDraft(${p.rank})">${isDrafted ? 'Undo' : 'Draft'}</button></td>
       </tr>`;
     }).join('');
@@ -555,6 +577,16 @@ function render() {
     const arrow = th.querySelector('.sort-arrow');
     if (arrow) arrow.textContent = col === sortCol ? (sortAsc ? '▲' : '▼') : '';
   });
+}
+
+function toggleFav(rank) {
+  if (favorites.has(rank)) {
+    favorites.delete(rank);
+  } else {
+    favorites.add(rank);
+  }
+  saveState();
+  render();
 }
 
 function toggleDraft(rank) {
@@ -626,11 +658,20 @@ function init() {
     });
   });
 
+  // Favorites filter
+  document.getElementById('show-favs').addEventListener('click', function() {
+    showFavsOnly = !showFavsOnly;
+    this.classList.toggle('active', showFavsOnly);
+    render();
+  });
+
   // Clear filters
   document.getElementById('clear-filters').addEventListener('click', () => {
     document.getElementById('search').value = '';
     document.getElementById('team-filter').value = '';
     document.getElementById('seed-filter').value = '';
+    showFavsOnly = false;
+    document.getElementById('show-favs').classList.remove('active');
     sortCol = 'rank';
     sortAsc = true;
     render();
@@ -652,9 +693,12 @@ function init() {
 
   // Reset
   document.getElementById('reset-btn').addEventListener('click', () => {
-    if (!confirm('Reset all draft picks? This cannot be undone.')) return;
+    if (!confirm('Reset all draft picks and favorites? This cannot be undone.')) return;
     drafted.clear();
+    favorites.clear();
     draftOrder = [];
+    showFavsOnly = false;
+    document.getElementById('show-favs').classList.remove('active');
     saveState();
     render();
   });
