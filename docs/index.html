@@ -176,7 +176,17 @@
   .col-center {
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
-    padding: 12px 16px;
+    padding: 0 16px 12px;
+  }
+
+  .col-center-sticky {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: var(--bg);
+    padding-top: 12px;
+    padding-bottom: 4px;
   }
 
   .col-title {
@@ -820,23 +830,26 @@
 
   <!-- Center: Draft board -->
   <div class="col-center mobile-active">
-    <div class="best-available" id="best-available">
-      <div>
-        <div class="best-available-label">Best Available</div>
-        <div class="best-available-player" id="ba-player">--</div>
-        <div class="best-available-details" id="ba-details">--</div>
+    <div class="col-center-sticky">
+      <div class="best-available" id="best-available">
+        <div>
+          <div class="best-available-label">Best Available</div>
+          <div class="best-available-player" id="ba-player">--</div>
+          <div class="best-available-details" id="ba-details">--</div>
+        </div>
+        <div class="best-available-pts" id="ba-pts">--</div>
+        <button class="we-draft-btn" id="ba-draft-btn" style="display:none;padding:8px 16px;font-size:13px;" onclick="draftBestAvailable()">Us</button>
       </div>
-      <div class="best-available-pts" id="ba-pts">--</div>
-    </div>
 
-    <div class="mock-banner" id="mock-banner">
-      <div class="mock-banner-info">
-        <span class="mock-banner-round" id="mock-round">Round 1</span>
-        <span class="mock-banner-pick" id="mock-pick">Pick 1 of 20</span>
-        <div class="mock-banner-status" id="mock-status">Waiting...</div>
+      <div class="mock-banner" id="mock-banner">
+        <div class="mock-banner-info">
+          <span class="mock-banner-round" id="mock-round">Round 1</span>
+          <span class="mock-banner-pick" id="mock-pick">Pick 1 of 20</span>
+          <div class="mock-banner-status" id="mock-status">Waiting...</div>
+        </div>
+        <button id="mock-pause">Pause</button>
+        <button id="mock-stop" class="btn-stop">Stop</button>
       </div>
-      <button id="mock-pause">Pause</button>
-      <button id="mock-stop" class="btn-stop">Stop</button>
     </div>
 
     <table>
@@ -1026,14 +1039,26 @@ function updateStats() {
   document.getElementById('pick-number').textContent = `Pick ${drafted.size + 1}`;
 
   const best = getBestAvailable();
+  const baDraftBtn = document.getElementById('ba-draft-btn');
   if (best) {
     document.getElementById('ba-player').textContent = best.player;
     document.getElementById('ba-details').textContent = `${best.team} (${best.seed}) | ${best.ppg} PPG | ${best.expected_games} exp. games`;
     document.getElementById('ba-pts').textContent = Math.round(best.projected_points);
+    // Show draft button on best available when it's our mock turn
+    const showBtn = mockActive && isMyMockPick() && !isMockComplete();
+    baDraftBtn.style.display = showBtn ? '' : 'none';
   } else {
     document.getElementById('ba-player').textContent = 'All players drafted';
     document.getElementById('ba-details').textContent = '';
     document.getElementById('ba-pts').textContent = '--';
+    baDraftBtn.style.display = 'none';
+  }
+}
+
+function draftBestAvailable() {
+  const best = getBestAvailable();
+  if (best && mockActive && isMyMockPick()) {
+    toggleMyTeam(best.rank);
   }
 }
 
