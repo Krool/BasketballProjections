@@ -1,5 +1,8 @@
 """
-Scrape player stats (PPG, MPG, GP) for tournament teams from sports-reference.com/cbb.
+DEPRECATED: Sports-reference scraper. Replaced by scrape_players_espn.py.
+
+Sports-reference aggressively rate-limits after ~30 requests. ESPN is used
+instead. This file is kept for reference only.
 """
 import os
 import json

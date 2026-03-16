@@ -1,13 +1,19 @@
 """
 Main pipeline: March Madness 2026 Player Scoring Projections
 
-Orchestrates:
-1. Parse KenPom data
-2. Load/build bracket
-3. Scrape player stats
-4. Scrape/load injury data
-5. Simulate bracket for expected games
-6. Project points and output draft board
+Usage:
+    python src/main.py
+
+Requires data/kenpom_tournament.csv and data/bracket.json to exist.
+Run src/parse_kenpom.py first if kenpom_tournament.csv is missing.
+
+Pipeline steps:
+1. Load KenPom team ratings (AdjO, AdjD)
+2. Load bracket (64 teams, 4 regions)
+3. Simulate bracket analytically to get expected games per team
+4. Load/scrape per-player season stats (PPG) from ESPN
+5. Load injury data (manual overrides + ESPN scrape)
+6. Compute projected points = PPG * expected_games * injury_multiplier
 """
 import os
 import sys

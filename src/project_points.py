@@ -1,5 +1,13 @@
 """
-Combine expected games per team with player PPG to project total tournament points.
+Project total tournament scoring for each player.
+
+Core formula: projected_points = PPG * expected_games * injury_multiplier
+
+Injury multipliers: OUT=0.0, RETURNING=1.0, DAY-TO-DAY=0.7, HEALTHY=1.0
+
+Player names are fuzzy-matched against injury data by stripping suffixes
+(Jr., Sr., II, III, etc.) so that "Patrick Ngongba II" in the injury file
+correctly matches "Patrick Ngongba" from ESPN.
 """
 import os
 import re

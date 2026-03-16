@@ -8,10 +8,8 @@ No Monte Carlo -- pure probability propagation through the bracket tree.
 """
 
 import json
-import math
 import pandas as pd
 from pathlib import Path
-from itertools import product
 
 
 # ---------------------------------------------------------------------------
@@ -56,9 +54,9 @@ ROUND1_SEEDS = [
     (7, 10),
     (2, 15),
 ]
-# After Round 1 the 8 winners form 4 Round-2 pairs (adjacent slots):
-#   slot0 vs slot1, slot2 vs slot3, slot4 vs slot5, slot6 vs slot7
-# Then 2 Sweet-16 pairs, then 1 Elite-8 pair.
+# Each tuple defines a first-round matchup. The bracket tree has 16 leaf
+# slots (one per team). Adjacent pairs play each other, and winners advance
+# through 4 rounds: 16 -> 8 -> 4 -> 2 -> 1 (region champion).
 
 
 # ---------------------------------------------------------------------------

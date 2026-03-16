@@ -1,6 +1,15 @@
 """
-Scrape player stats (PPG, MPG, GP) for tournament teams from ESPN.
-ESPN is more reliable and less aggressive with rate limiting than sports-reference.
+Scrape per-game player stats for tournament teams from ESPN.
+
+Usage:
+    python src/scrape_players_espn.py
+
+Fetches each team's stats page and parses the per-game table for GP, MIN, PTS,
+REB, AST per player. Results are cached as JSON files in data/player_stats/ to
+avoid redundant requests. The combined output is saved to data/all_player_stats.csv.
+
+ESPN team IDs are hardcoded for all 64 bracket teams. If the bracket changes,
+update ESPN_TEAM_IDS accordingly.
 """
 import os
 import json
@@ -271,9 +280,8 @@ def scrape_all_tournament_teams(tournament_teams, use_cache=True, delay=3.0):
 
 
 if __name__ == '__main__':
-    import json as jsonlib
     with open(os.path.join(DATA_DIR, 'bracket.json')) as f:
-        bracket = jsonlib.load(f)
+        bracket = json.load(f)
 
     bracket_teams = set()
     for region, seeds in bracket['regions'].items():

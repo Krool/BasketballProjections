@@ -1,5 +1,16 @@
 """
-Scrape injury data from ESPN and merge with manual overrides.
+Load injury data from manual overrides and (optionally) ESPN scraping.
+
+The primary injury source is data/injury_overrides.csv, which is maintained
+manually. The ESPN injury scraper is a best-effort supplement -- their injuries
+endpoint has been unreliable (404s) and the page is dynamically rendered, so
+manual overrides are the authoritative source.
+
+Override CSV format:
+    player,team,status,notes
+    "Player Name","Team","OUT","ACL tear - season ending"
+
+Status values: OUT, RETURNING, DAY-TO-DAY, HEALTHY
 """
 import os
 import json

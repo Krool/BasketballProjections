@@ -1,14 +1,17 @@
 """
-Parse raw KenPom data from a continuous string into structured CSV files.
+Parse raw KenPom data into structured CSV files.
 
-The raw data is tab-separated with carriage returns (\\r) separating team entries
-(no standard newlines between teams). Each team entry has 21 tab-separated fields:
-{rank}\\t{Team Name [Seed]}\\t{Conf}\\t{W-L}\\t{NetRtg}\\t{ORtg}\\t{ORtg_rank}\\t
-{DRtg}\\t{DRtg_rank}\\t{AdjT}\\t{AdjT_rank}\\t{Luck}\\t{Luck_rank}\\t
-{SOS_NetRtg}\\t{SOS_NetRtg_rank}\\t{SOS_ORtg}\\t{SOS_ORtg_rank}\\t
-{SOS_DRtg}\\t{SOS_DRtg_rank}\\t{NCSOS_NetRtg}\\t{NCSOS_rank}
+Usage:
+    python src/parse_kenpom.py
 
-Header rows repeat every ~40 teams and contain "Strength of Schedule".
+Input:  data/kenpom_raw.txt (paste KenPom rankings table from kenpom.com)
+Output: data/kenpom.csv              (all 365 D1 teams)
+        data/kenpom_tournament.csv   (68 tournament teams with seeds)
+
+The raw data is tab-separated with \\r (carriage return) separating team entries.
+Each team has 21 fields. Tournament teams have a seed number appended to their
+name (e.g., "Duke 1"). Header rows containing "Strength of Schedule" repeat
+every ~40 teams and are automatically skipped.
 """
 
 import csv
@@ -19,21 +22,6 @@ from pathlib import Path
 # Project paths
 PROJECT_DIR = Path(__file__).resolve().parent.parent
 DATA_DIR = PROJECT_DIR / "data"
-
-
-def extract_raw_from_answers_file(answers_path: str) -> str:
-    """Extract KenPom data from the Claude answers file."""
-    with open(answers_path, "r", encoding="utf-8", newline='') as f:
-        content = f.read()
-
-    # The KenPom data is the value of the first question, between =" and ", "What tech stack
-    start_marker = '="'
-    start_idx = content.index(start_marker) + len(start_marker)
-
-    end_marker = '", "What tech stack'
-    end_idx = content.index(end_marker)
-
-    return content[start_idx:end_idx]
 
 
 def parse_kenpom_raw(raw_text: str) -> list[dict]:
@@ -201,27 +189,10 @@ def main():
         with open(raw_path, 'r', encoding='utf-8', newline='') as f:
             raw_text = f.read()
     else:
-        # Try the answers file
-        answers_path = (
-            Path.home() / ".claude" / "projects"
-            / "C--Users-junk7-KroolWorld-BasketballProjections"
-            / "e3d2db19-accb-4835-9372-c0a6ee4cb9ae"
-            / "tool-results"
-            / "toolu_018HYk2MgXrihr7Lhmwubrrn.txt"
-        )
-        if answers_path.exists():
-            print(f"Extracting raw data from answers file: {answers_path}")
-            raw_text = extract_raw_from_answers_file(str(answers_path))
-            # Save it for future use
-            os.makedirs(DATA_DIR, exist_ok=True)
-            with open(raw_path, 'w', encoding='utf-8', newline='') as f:
-                f.write(raw_text)
-            print(f"Saved raw data to {raw_path}")
-        else:
-            print("Error: No raw data file found.")
-            print(f"  Expected: {raw_path}")
-            print(f"  Or: {answers_path}")
-            return
+        print("Error: No raw data file found.")
+        print(f"  Expected: {raw_path}")
+        print(f"  Paste KenPom data into {raw_path} and re-run.")
+        return
 
     # Parse the raw data
     teams = parse_kenpom_raw(raw_text)
