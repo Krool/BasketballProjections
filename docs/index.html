@@ -1100,6 +1100,7 @@
 
 <script>
 let players = [];
+let insights = {}; // player name -> insight text
 let drafted = new Set();
 let myTeam = new Set();
 let favorites = new Set();
@@ -1522,7 +1523,7 @@ function render() {
       return `<tr class="${rowClass}" data-rank="${p.rank}">
         <td class="rank-cell">${p.rank}</td>
         <td class="col-fav" style="text-align:center;"><button class="fav-btn ${favorites.has(p.rank) ? 'active' : ''}" onclick="toggleFav(${p.rank})" aria-label="${favorites.has(p.rank) ? 'Remove' : 'Add'} ${p.player} ${favorites.has(p.rank) ? 'from' : 'to'} favorites">&#9733;</button></td>
-        <td class="player-cell">${p.player}${isDraftedByOthers ? ` <span class="pick-number">(#${pickIdx + 1})</span>` : ''}${isMyTeam ? '<span class="my-team-badge">OURS</span>' : ''}${conflictHtml}</td>
+        <td class="player-cell">${p.player}${insights[p.player] ? ` <span style="color:#60a5fa;cursor:help;font-size:12px;" title="${insights[p.player].replace(/"/g, '&quot;')}">&#9670;</span>` : ''}${isDraftedByOthers ? ` <span class="pick-number">(#${pickIdx + 1})</span>` : ''}${isMyTeam ? '<span class="my-team-badge">OURS</span>' : ''}${conflictHtml}</td>
         <td class="team-cell col-team">${p.team}</td>
         <td class="region-cell col-region">${region}</td>
         <td class="col-seed"><span class="seed-badge ${seedClass(p.seed)}">${p.seed}</span></td>
@@ -1607,6 +1608,9 @@ function toggleMyTeam(rank) {
 
 function init() {
   loadState();
+
+  // Load insights alongside player data
+  fetch('insights.json').then(r => r.ok ? r.json() : {}).then(d => { insights = d || {}; }).catch(() => {});
 
   fetch('players.json')
     .then(r => {
