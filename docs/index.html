@@ -580,10 +580,16 @@
 
     /* Compact player names on mobile */
     .player-cell {
-      max-width: 110px;
+      max-width: 80px;
       overflow: hidden;
       text-overflow: ellipsis;
+      font-size: 11px;
     }
+
+    /* Tighten all table cells on mobile */
+    tbody td, thead th { padding: 5px 3px; font-size: 11px; }
+    .rank-cell { width: 20px; padding-right: 1px; }
+    .pts-cell { font-size: 12px; }
 
     /* Hide sort arrows on mobile */
     .sort-arrow { display: none !important; }
