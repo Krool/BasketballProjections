@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>March Madness 2026 Draft Board</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #1a1d27;
+    --surface2: #242836;
+    --border: #2e3345;
+    --text: #e4e6ed;
+    --text-dim: #8b8fa3;
+    --accent: #4f8cff;
+    --accent-dim: #2a4a8a;
+    --green: #34d399;
+    --red: #f87171;
+    --orange: #fbbf24;
+    --drafted-bg: #1a1d27;
+    --drafted-text: #4a4e5e;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  .header {
+    background: linear-gradient(135deg, #1a1d27 0%, #242836 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 24px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+
+  .header h1 {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+  }
+
+  .header h1 span { color: var(--accent); }
+
+  .stats-bar {
+    display: flex;
+    gap: 24px;
+    font-size: 13px;
+  }
+
+  .stat { display: flex; align-items: center; gap: 6px; }
+  .stat-value { font-weight: 700; font-size: 16px; }
+  .stat-label { color: var(--text-dim); }
+  .stat-value.green { color: var(--green); }
+  .stat-value.orange { color: var(--orange); }
+
+  .controls {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .search-box {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 7px 12px;
+    color: var(--text);
+    font-size: 13px;
+    width: 200px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .search-box:focus { border-color: var(--accent); }
+
+  select {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 7px 10px;
+    color: var(--text);
+    font-size: 13px;
+    outline: none;
+    cursor: pointer;
+  }
+
+  .toggle-btn {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 7px 14px;
+    color: var(--text-dim);
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+    user-select: none;
+  }
+
+  .toggle-btn.active {
+    background: var(--accent-dim);
+    border-color: var(--accent);
+    color: var(--text);
+  }
+
+  .btn {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 7px 14px;
+    color: var(--text);
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .btn:hover { background: var(--border); }
+  .btn.danger { color: var(--red); }
+  .btn.danger:hover { background: rgba(248, 113, 113, 0.15); }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 16px;
+  }
+
+  .best-available {
+    background: linear-gradient(135deg, rgba(79, 140, 255, 0.08) 0%, rgba(52, 211, 153, 0.06) 100%);
+    border: 1px solid var(--accent-dim);
+    border-radius: 10px;
+    padding: 14px 20px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .best-available-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .best-available-player {
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  .best-available-details {
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+
+  .best-available-pts {
+    margin-left: auto;
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--green);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  thead th {
+    background: var(--surface);
+    padding: 10px 12px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-dim);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 100px;
+    z-index: 10;
+    cursor: pointer;
+    user-select: none;
+    white-space: nowrap;
+  }
+
+  thead th:hover { color: var(--text); }
+  thead th.sorted { color: var(--accent); }
+  thead th .sort-arrow { margin-left: 4px; font-size: 10px; }
+
+  tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background 0.15s;
+  }
+
+  tbody tr:hover { background: var(--surface2); }
+
+  tbody td {
+    padding: 10px 12px;
+    white-space: nowrap;
+  }
+
+  tr.drafted {
+    background: var(--drafted-bg) !important;
+    opacity: 0.35;
+  }
+
+  tr.drafted td { text-decoration: line-through; color: var(--drafted-text); }
+
+  .rank-cell { font-weight: 700; color: var(--text-dim); width: 40px; }
+  .player-cell { font-weight: 600; }
+  .team-cell { color: var(--text-dim); }
+
+  .seed-badge {
+    display: inline-block;
+    background: var(--surface2);
+    border-radius: 4px;
+    padding: 2px 7px;
+    font-size: 11px;
+    font-weight: 700;
+    min-width: 28px;
+    text-align: center;
+  }
+
+  .seed-1 { background: rgba(52, 211, 153, 0.2); color: var(--green); }
+  .seed-2 { background: rgba(79, 140, 255, 0.2); color: var(--accent); }
+  .seed-3 { background: rgba(139, 92, 246, 0.2); color: #a78bfa; }
+  .seed-4 { background: rgba(251, 191, 36, 0.2); color: var(--orange); }
+
+  .pts-cell {
+    font-weight: 800;
+    font-size: 14px;
+    color: var(--green);
+  }
+
+  .draft-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding: 4px 12px;
+    color: var(--text-dim);
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .draft-btn:hover {
+    border-color: var(--red);
+    color: var(--red);
+    background: rgba(248, 113, 113, 0.1);
+  }
+
+  tr.drafted .draft-btn {
+    border-color: var(--green);
+    color: var(--green);
+    text-decoration: none;
+    opacity: 1;
+  }
+
+  tr.drafted .draft-btn:hover {
+    background: rgba(52, 211, 153, 0.1);
+  }
+
+  .pick-number {
+    font-size: 11px;
+    color: var(--orange);
+    font-weight: 600;
+  }
+
+  .injury-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-right: 6px;
+  }
+
+  .injury-dot.healthy { background: var(--green); }
+  .injury-dot.questionable { background: var(--orange); }
+  .injury-dot.out { background: var(--red); }
+
+  .draft-log {
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 280px;
+    height: 100vh;
+    background: var(--surface);
+    border-left: 1px solid var(--border);
+    overflow-y: auto;
+    z-index: 200;
+    transform: translateX(100%);
+    transition: transform 0.25s ease;
+    padding: 16px;
+  }
+
+  .draft-log.open { transform: translateX(0); }
+
+  .draft-log h3 {
+    font-size: 14px;
+    margin-bottom: 12px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .draft-log-item {
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+  }
+
+  .draft-log-item .pick-num { color: var(--orange); font-weight: 700; margin-right: 8px; }
+  .draft-log-item .pick-player { font-weight: 600; }
+  .draft-log-item .pick-team { color: var(--text-dim); font-size: 12px; }
+
+  .no-results {
+    text-align: center;
+    padding: 40px;
+    color: var(--text-dim);
+    font-size: 14px;
+  }
+
+  @media (max-width: 768px) {
+    .header { padding: 12px 16px; }
+    .stats-bar { gap: 16px; flex-wrap: wrap; }
+    .controls { gap: 6px; }
+    .search-box { width: 140px; }
+    .container { padding: 8px; }
+    .best-available { padding: 10px 14px; gap: 10px; flex-wrap: wrap; }
+    .best-available-pts { margin-left: 0; }
+    table { font-size: 12px; }
+    tbody td, thead th { padding: 8px 6px; }
+    .draft-log { width: 240px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-top">
+    <h1>March Madness <span>2026</span> Draft Board</h1>
+    <div class="stats-bar">
+      <div class="stat">
+        <span class="stat-value green" id="available-count">0</span>
+        <span class="stat-label">Available</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value orange" id="drafted-count">0</span>
+        <span class="stat-label">Drafted</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value" id="pick-number">Pick 1</span>
+      </div>
+    </div>
+  </div>
+  <div class="controls">
+    <input type="text" class="search-box" id="search" placeholder="Search player or team...">
+    <select id="team-filter"><option value="">All Teams</option></select>
+    <select id="seed-filter"><option value="">All Seeds</option></select>
+    <button class="toggle-btn active" id="hide-drafted">Hide Drafted</button>
+    <button class="btn" id="toggle-log">Draft Log</button>
+    <button class="btn" id="undo-btn">Undo</button>
+    <button class="btn danger" id="reset-btn">Reset</button>
+    <button class="btn" id="export-btn">Export</button>
+  </div>
+</div>
+
+<div class="container">
+  <div class="best-available" id="best-available">
+    <div>
+      <div class="best-available-label">Best Available</div>
+      <div class="best-available-player" id="ba-player">--</div>
+      <div class="best-available-details" id="ba-details">--</div>
+    </div>
+    <div class="best-available-pts" id="ba-pts">--</div>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th data-sort="rank" class="sorted">Rank <span class="sort-arrow">▲</span></th>
+        <th data-sort="player">Player</th>
+        <th data-sort="team">Team</th>
+        <th data-sort="seed">Seed</th>
+        <th data-sort="ppg">PPG</th>
+        <th data-sort="expected_games">Exp. Games</th>
+        <th data-sort="projected_points">Proj. Pts</th>
+        <th>Status</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody id="table-body"></tbody>
+  </table>
+  <div class="no-results" id="no-results" style="display:none;">No players match your filters.</div>
+</div>
+
+<div class="draft-log" id="draft-log">
+  <h3>Draft Log</h3>
+  <div id="draft-log-list"></div>
+</div>
+
+<script>
+let players = [];
+let drafted = new Set();
+let draftOrder = [];
+let sortCol = 'rank';
+let sortAsc = true;
+let hideDrafted = true;
+
+const STORAGE_KEY = 'mm2026_draft';
+
+function loadState() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const state = JSON.parse(saved);
+      drafted = new Set(state.drafted || []);
+      draftOrder = state.draftOrder || [];
+    }
+  } catch(e) {}
+}
+
+function saveState() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify({
+    drafted: [...drafted],
+    draftOrder
+  }));
+}
+
+function seedClass(seed) {
+  if (seed <= 4) return `seed-${seed}`;
+  return '';
+}
+
+function injuryClass(status) {
+  if (!status) return 'healthy';
+  const s = status.toLowerCase();
+  if (s.includes('out') || s.includes('season')) return 'out';
+  if (s.includes('question') || s.includes('day')) return 'questionable';
+  return 'healthy';
+}
+
+function getFiltered() {
+  const search = document.getElementById('search').value.toLowerCase();
+  const teamFilter = document.getElementById('team-filter').value;
+  const seedFilter = document.getElementById('seed-filter').value;
+
+  let filtered = players.filter(p => {
+    if (hideDrafted && drafted.has(p.rank)) return false;
+    if (search && !p.player.toLowerCase().includes(search) && !p.team.toLowerCase().includes(search)) return false;
+    if (teamFilter && p.team !== teamFilter) return false;
+    if (seedFilter && p.seed !== parseInt(seedFilter)) return false;
+    return true;
+  });
+
+  filtered.sort((a, b) => {
+    let va = a[sortCol], vb = b[sortCol];
+    if (typeof va === 'string') va = va.toLowerCase();
+    if (typeof vb === 'string') vb = vb.toLowerCase();
+    if (va < vb) return sortAsc ? -1 : 1;
+    if (va > vb) return sortAsc ? 1 : -1;
+    return 0;
+  });
+
+  return filtered;
+}
+
+function getBestAvailable() {
+  return players
+    .filter(p => !drafted.has(p.rank))
+    .sort((a, b) => b.projected_points - a.projected_points)[0];
+}
+
+function updateStats() {
+  const avail = players.length - drafted.size;
+  document.getElementById('available-count').textContent = avail;
+  document.getElementById('drafted-count').textContent = drafted.size;
+  document.getElementById('pick-number').textContent = `Pick ${drafted.size + 1}`;
+
+  const best = getBestAvailable();
+  if (best) {
+    document.getElementById('ba-player').textContent = best.player;
+    document.getElementById('ba-details').textContent = `${best.team} (${best.seed}) | ${best.ppg} PPG | ${best.expected_games} exp. games`;
+    document.getElementById('ba-pts').textContent = best.projected_points.toFixed(1);
+  } else {
+    document.getElementById('ba-player').textContent = 'All players drafted';
+    document.getElementById('ba-details').textContent = '';
+    document.getElementById('ba-pts').textContent = '--';
+  }
+}
+
+function updateDraftLog() {
+  const list = document.getElementById('draft-log-list');
+  list.innerHTML = draftOrder.map((rank, i) => {
+    const p = players.find(pl => pl.rank === rank);
+    if (!p) return '';
+    return `<div class="draft-log-item">
+      <span class="pick-num">#${i + 1}</span>
+      <span class="pick-player">${p.player}</span><br>
+      <span class="pick-team">${p.team} (${p.seed}) — ${p.projected_points.toFixed(1)} pts</span>
+    </div>`;
+  }).reverse().join('');
+}
+
+function render() {
+  const filtered = getFiltered();
+  const tbody = document.getElementById('table-body');
+
+  if (filtered.length === 0) {
+    tbody.innerHTML = '';
+    document.getElementById('no-results').style.display = 'block';
+  } else {
+    document.getElementById('no-results').style.display = 'none';
+    tbody.innerHTML = filtered.map(p => {
+      const isDrafted = drafted.has(p.rank);
+      const pickIdx = draftOrder.indexOf(p.rank);
+      const ic = injuryClass(p.injury_status);
+      return `<tr class="${isDrafted ? 'drafted' : ''}" data-rank="${p.rank}">
+        <td class="rank-cell">${p.rank}</td>
+        <td class="player-cell">${p.player}${isDrafted ? ` <span class="pick-number">(Pick ${pickIdx + 1})</span>` : ''}</td>
+        <td class="team-cell">${p.team}</td>
+        <td><span class="seed-badge ${seedClass(p.seed)}">${p.seed}</span></td>
+        <td>${p.ppg.toFixed(1)}</td>
+        <td>${p.expected_games.toFixed(2)}</td>
+        <td class="pts-cell">${p.projected_points.toFixed(1)}</td>
+        <td><span class="injury-dot ${ic}"></span>${p.injury_status || 'HEALTHY'}</td>
+        <td><button class="draft-btn" onclick="toggleDraft(${p.rank})">${isDrafted ? 'Undo' : 'Draft'}</button></td>
+      </tr>`;
+    }).join('');
+  }
+
+  updateStats();
+  updateDraftLog();
+
+  // Update sort indicators
+  document.querySelectorAll('thead th').forEach(th => {
+    const col = th.dataset.sort;
+    th.classList.toggle('sorted', col === sortCol);
+    const arrow = th.querySelector('.sort-arrow');
+    if (arrow) arrow.textContent = col === sortCol ? (sortAsc ? '▲' : '▼') : '';
+  });
+}
+
+function toggleDraft(rank) {
+  if (drafted.has(rank)) {
+    drafted.delete(rank);
+    draftOrder = draftOrder.filter(r => r !== rank);
+  } else {
+    drafted.add(rank);
+    draftOrder.push(rank);
+  }
+  saveState();
+  render();
+}
+
+function init() {
+  loadState();
+
+  fetch('players.json')
+    .then(r => r.json())
+    .then(data => {
+      players = data;
+
+      // Populate filters
+      const teams = [...new Set(players.map(p => p.team))].sort();
+      const teamSelect = document.getElementById('team-filter');
+      teams.forEach(t => {
+        const opt = document.createElement('option');
+        opt.value = t;
+        opt.textContent = t;
+        teamSelect.appendChild(opt);
+      });
+
+      const seeds = [...new Set(players.map(p => p.seed))].sort((a, b) => a - b);
+      const seedSelect = document.getElementById('seed-filter');
+      seeds.forEach(s => {
+        const opt = document.createElement('option');
+        opt.value = s;
+        opt.textContent = `#${s} Seed`;
+        seedSelect.appendChild(opt);
+      });
+
+      render();
+    });
+
+  // Search
+  document.getElementById('search').addEventListener('input', render);
+  document.getElementById('team-filter').addEventListener('change', render);
+  document.getElementById('seed-filter').addEventListener('change', render);
+
+  // Hide drafted toggle
+  document.getElementById('hide-drafted').addEventListener('click', function() {
+    hideDrafted = !hideDrafted;
+    this.classList.toggle('active', hideDrafted);
+    this.textContent = hideDrafted ? 'Hide Drafted' : 'Show All';
+    render();
+  });
+
+  // Sort
+  document.querySelectorAll('thead th[data-sort]').forEach(th => {
+    th.addEventListener('click', () => {
+      const col = th.dataset.sort;
+      if (sortCol === col) {
+        sortAsc = !sortAsc;
+      } else {
+        sortCol = col;
+        sortAsc = col === 'player' || col === 'team';
+      }
+      render();
+    });
+  });
+
+  // Draft log toggle
+  document.getElementById('toggle-log').addEventListener('click', () => {
+    document.getElementById('draft-log').classList.toggle('open');
+  });
+
+  // Undo
+  document.getElementById('undo-btn').addEventListener('click', () => {
+    if (draftOrder.length === 0) return;
+    const last = draftOrder.pop();
+    drafted.delete(last);
+    saveState();
+    render();
+  });
+
+  // Reset
+  document.getElementById('reset-btn').addEventListener('click', () => {
+    if (!confirm('Reset all draft picks? This cannot be undone.')) return;
+    drafted.clear();
+    draftOrder = [];
+    saveState();
+    render();
+  });
+
+  // Export
+  document.getElementById('export-btn').addEventListener('click', () => {
+    const lines = ['Pick,Rank,Player,Team,Seed,PPG,Projected Points'];
+    draftOrder.forEach((rank, i) => {
+      const p = players.find(pl => pl.rank === rank);
+      if (p) lines.push(`${i + 1},${p.rank},${p.player},${p.team},${p.seed},${p.ppg},${p.projected_points}`);
+    });
+    const blob = new Blob([lines.join('\n')], { type: 'text/csv' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'draft_results_2026.csv';
+    a.click();
+  });
+}
+
+init();
+</script>
+</body>
+</html>

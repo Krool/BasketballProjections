@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+.env
+data/player_stats/
+data/kenpom_raw.txt
+.claude/

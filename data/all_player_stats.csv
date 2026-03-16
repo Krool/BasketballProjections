@@ -1,0 +1,856 @@
+player,team,games_played,mpg,ppg,rpg,apg
+Tavari Johnson,Akron,34,32.0,20.1,3.0,5.0
+Amani Lyles,Akron,34,26.2,14.6,8.0,2.2
+Shammah Scott,Akron,34,26.5,12.7,2.6,2.9
+Evan Mahaffey,Akron,34,28.4,10.2,5.6,3.5
+Bowen Hardman,Akron,34,18.4,7.9,1.6,0.2
+Eric Mahaffey,Akron,33,22.1,7.8,5.7,1.6
+Sharron Young,Akron,33,19.0,7.3,2.7,1.6
+Halil Barre,Akron,17,6.8,3.3,2.1,0.1
+Zach Halligan,Akron,33,11.8,2.7,2.2,0.7
+Ognjen Stankovic,Akron,17,6.9,2.4,1.8,0.5
+Marvin Musiime-Kamali,Akron,34,8.9,2.1,2.0,0.5
+Rich Brisco,Akron,9,2.8,1.1,0.8,0.0
+Conner Groce,Akron,12,2.1,0.9,0.1,0.1
+Labaron Philon,Alabama,30,30.3,21.7,3.2,4.7
+Aden Holloway,Alabama,28,28.4,16.8,2.8,3.8
+Latrell Wrightsell Jr.,Alabama,24,26.9,12.8,3.1,2.0
+Amari Allen,Alabama,29,28.4,11.7,7.1,3.1
+Aiden Sherrell,Alabama,31,23.7,11.1,6.1,1.1
+Charles Bediako,Alabama,5,21.6,10.0,4.6,0.2
+Houston Mallette,Alabama,32,23.3,6.6,4.5,1.1
+Taylor Bol Bowen,Alabama,27,18.8,6.2,4.3,0.4
+London Jemison,Alabama,30,15.1,6.2,3.4,0.4
+Jalil Bethea,Alabama,23,8.5,4.4,1.7,0.6
+Keitenn Bristow,Alabama,10,12.6,3.6,4.0,0.5
+Davion Hannah,Alabama,10,12.8,3.3,1.9,0.8
+Noah Williamson,Alabama,30,8.4,1.1,1.5,0.3
+Collins Onyejiaka,Alabama,2,4.5,1.0,3.0,0.0
+Jacob Martin,Alabama,8,1.3,0.4,0.1,0.1
+Preston Murphy Jr.,Alabama,6,1.8,0.3,0.3,0.3
+Klark James,Alabama,1,1.0,0.0,0.0,0.0
+Jack Fagan,Alabama,1,1.0,0.0,0.0,0.0
+Brayden Burries,Arizona,34,29.5,15.9,4.7,2.5
+Koa Peat,Arizona,31,27.3,13.6,5.3,2.7
+Jaden Bradley,Arizona,34,30.4,13.3,3.6,4.5
+Motiejus Krivas,Arizona,34,25.0,10.5,8.1,1.0
+Ivan Kharchenkov,Arizona,34,27.7,10.1,4.1,2.3
+Tobe Awaka,Arizona,34,21.4,9.4,9.5,0.8
+Anthony Dell'Orso,Arizona,34,21.8,9.0,2.1,2.0
+Dwayne Aristode,Arizona,30,14.4,4.1,1.8,0.8
+Sidi Gueye,Arizona,24,3.4,1.2,0.7,0.2
+Evan Nelson,Arizona,22,3.6,0.6,0.5,0.3
+Sven Djopmo,Arizona,17,1.7,0.6,0.2,0.2
+Jackson Francois,Arizona,8,1.5,0.5,0.5,0.0
+Addison Arnold,Arizona,18,2.2,0.3,0.4,0.2
+Jackson Cook,Arizona,8,1.4,0.0,0.1,0.0
+Darius Acuff Jr.,Arkansas,32,35.0,22.7,3.2,6.4
+Meleek Thomas,Arkansas,33,30.2,15.6,3.8,2.5
+Trevon Brazile,Arkansas,32,31.4,13.1,7.3,1.6
+Billy Richmond III,Arkansas,33,26.8,10.8,4.0,2.0
+Malique Ewin,Arkansas,33,20.1,9.8,5.4,0.8
+Karter Knox,Arkansas,22,22.2,8.1,4.5,1.2
+D.J. Wagner,Arkansas,31,23.7,7.5,1.4,2.3
+Nick Pringle,Arkansas,33,18.9,4.7,3.9,0.6
+Isaiah Sealy,Arkansas,16,7.8,3.3,1.4,0.7
+Ayden Kelley,Arkansas,7,1.6,0.6,0.0,0.0
+Jaden Karuletwa,Arkansas,9,2.8,0.6,0.3,0.1
+Elmir Dzafic,Arkansas,7,2.3,0.4,0.1,0.0
+Amere Brown,Arkansas,7,1.9,0.1,0.0,0.0
+AJ Dybantsa,BYU,34,34.6,25.3,6.7,3.8
+Robert Wright III,BYU,34,34.8,18.2,3.5,4.7
+Richie Saunders,BYU,25,31.4,18.0,5.8,2.1
+Kennard Davis,BYU,31,29.3,8.5,2.7,1.3
+Dawson Baker,BYU,6,19.8,7.5,1.7,0.5
+Keba Keita,BYU,32,22.6,6.3,7.3,0.3
+Aleksej KostiÄ,BYU,26,11.7,4.2,0.9,0.4
+Mihailo Boskovic,BYU,33,12.3,3.1,1.9,0.6
+Khadim Mboup,BYU,33,15.6,2.3,5.1,0.4
+Dominique Diomande,BYU,23,7.1,2.0,1.3,0.1
+Tyler Mrus,BYU,27,9.6,2.0,0.9,0.3
+Abdullah Ahmed,BYU,19,12.4,1.3,2.8,0.4
+Xavion Staton,BYU,9,4.9,0.6,0.4,0.3
+Jared McGregor,BYU,7,1.3,0.0,0.3,0.3
+RJ Godfrey,Clemson,34,25.1,11.9,5.3,1.6
+Carter Welling,Clemson,32,20.8,10.2,5.4,1.1
+Jestin Porter,Clemson,34,27.1,9.6,1.8,1.3
+Nick Davidson,Clemson,34,21.7,9.1,4.1,1.1
+Ace Buckner,Clemson,34,19.5,8.4,2.8,1.8
+Dillon Hunter,Clemson,34,28.5,7.5,3.8,3.0
+Zac Foster,Clemson,12,18.7,6.9,2.8,2.5
+Efrem Johnson,Clemson,34,20.8,6.2,2.1,1.0
+Jake Wahlin,Clemson,34,20.6,5.4,3.9,0.7
+Chase Thompson,Clemson,34,8.8,2.3,1.1,0.3
+Dallas Thomas,Clemson,21,4.5,2.2,0.4,0.1
+Trent Steinour,Clemson,6,2.5,1.0,1.2,0.0
+Tarris Reed Jr.,Connecticut,29,26.1,13.7,8.1,2.3
+Solomon Ball,Connecticut,33,29.1,13.5,3.3,1.6
+Alex Karaban,Connecticut,34,33.7,12.6,5.2,2.3
+Braylon Mullins,Connecticut,27,27.4,12.0,3.5,1.4
+Silas Demary Jr.,Connecticut,34,29.1,10.9,4.5,6.2
+Eric Reibe,Connecticut,34,15.0,6.8,3.8,0.5
+Jayden Ross,Connecticut,32,16.9,4.7,2.4,0.8
+Jaylin Stewart,Connecticut,28,17.7,4.5,2.8,1.2
+Malachi Smith,Connecticut,34,15.0,3.5,1.5,2.7
+Dwayne Koroma,Connecticut,16,5.8,1.5,0.9,0.2
+Alec Millender,Connecticut,16,3.3,0.6,0.3,0.4
+Jacob Furphy,Connecticut,13,2.7,0.5,0.1,0.0
+UroÅ¡ PaunoviÄ,Connecticut,13,1.1,0.2,0.1,0.1
+Rrezon Elezaj,Connecticut,4,1.0,0.0,0.8,0.0
+Cameron Boozer,Duke,34,33.0,22.5,10.2,4.2
+Isaiah Evans,Duke,34,27.9,14.9,3.1,1.4
+Patrick Ngongba,Duke,29,22.4,10.7,6.0,1.9
+Caleb Foster,Duke,31,25.4,8.5,3.6,2.8
+Cayden Boozer,Duke,34,21.8,7.1,2.1,2.8
+Dame Sarr,Duke,34,22.9,6.3,3.7,1.0
+Nikolas Khamenia,Duke,34,19.6,5.8,3.4,1.1
+Maliq Brown,Duke,34,20.0,4.8,4.9,1.8
+Darren Harris,Duke,32,10.3,3.7,0.9,0.4
+Ifeanyi Ufochukwu,Duke,5,4.4,0.8,0.6,0.0
+Cameron Sheffield,Duke,14,2.9,0.6,0.5,0.1
+Jack Scott,Duke,14,2.9,0.6,0.9,0.1
+Thomas Haugh,Florida,32,33.5,17.1,6.2,2.0
+Alex Condon,Florida,32,30.6,15.0,7.7,3.5
+Boogie Fland,Florida,33,30.0,11.6,2.5,3.4
+Xaivian Lee,Florida,33,27.5,11.5,3.8,4.2
+Rueben Chinyelu,Florida,33,24.8,11.2,11.5,0.7
+Urban Klavzar,Florida,33,20.9,9.7,1.5,1.2
+Isaiah Brown,Florida,31,12.5,5.5,2.5,0.6
+Micah Handlogten,Florida,32,14.9,4.1,5.9,0.7
+CJ Ingram II,Florida,20,5.3,1.9,0.8,0.5
+Cooper Josefsberg,Florida,2,1.0,1.5,1.0,0.0
+Viktor Mikic,Florida,16,2.6,1.3,0.8,0.3
+Alex Lloyd,Florida,16,4.6,1.2,0.8,0.2
+Olivier Rioux,Florida,10,1.4,0.5,0.4,0.0
+Alex Kovatchev,Florida,14,3.1,0.2,0.3,0.1
+Alex Wilkins,Furman,34,29.6,17.7,2.0,4.7
+Cooper Bowser,Furman,24,29.5,14.0,6.0,1.7
+Asa Thomas,Furman,27,27.7,12.4,3.9,1.9
+Charles Johnston,Furman,34,28.6,9.8,9.1,1.8
+Tom House,Furman,32,24.8,8.1,2.8,1.7
+Ben VanderWal,Furman,33,28.2,7.3,5.5,2.3
+Eddrin Bronson,Furman,33,19.2,5.6,1.7,1.2
+Cole Bowser,Furman,19,22.8,5.1,5.5,0.6
+Abijah Franklin,Furman,23,11.3,4.6,1.9,1.0
+Mason Smith,Furman,7,9.6,3.0,4.6,0.1
+Collin O'Neal,Furman,17,10.4,2.9,1.4,0.5
+Gunnar Lewis,Furman,3,3.3,1.7,0.0,0.0
+Owen Ritger,Furman,17,7.6,1.7,1.1,0.4
+Thomas Tillman,Furman,6,1.3,0.7,0.0,0.0
+Jeremiah Wilkinson,Georgia,30,25.5,17.0,2.0,1.8
+Blue Cain,Georgia,32,27.9,13.3,5.1,2.7
+Kanon Catchings,Georgia,31,23.5,12.0,4.8,1.2
+Marcus Millender,Georgia,32,26.0,11.9,2.8,4.0
+Somto Cyril,Georgia,32,21.5,9.6,5.6,0.6
+Jordan Ross,Georgia,31,20.9,6.6,2.5,2.4
+Jake Wilkins,Georgia,31,10.2,4.9,1.7,0.4
+Kareem Stagg,Georgia,32,12.7,4.8,2.3,0.6
+Dylan James,Georgia,32,15.0,4.5,3.8,0.5
+Justin Bailey,Georgia,30,12.6,4.2,1.4,0.7
+Justin Abson,Georgia,30,11.4,2.9,3.6,0.4
+Brandon Klatsky,Georgia,7,1.6,1.1,0.1,0.0
+Jaden Newell,Georgia,9,1.3,0.2,0.1,0.0
+Markel Jennings,Georgia,1,1.0,0.0,0.0,0.0
+Graham Ike,Gonzaga,29,30.8,19.7,8.2,2.4
+Braden Huff,Gonzaga,18,25.4,17.8,5.6,1.5
+Tyon Grant-Foster,Gonzaga,33,21.5,11.2,5.0,1.2
+Mario Saint-Supery,Gonzaga,33,22.5,8.6,2.8,3.6
+Davis Fogle,Gonzaga,28,16.2,8.4,3.0,1.4
+Adam Miller,Gonzaga,33,19.9,7.6,1.6,1.1
+Jalen Warley,Gonzaga,31,21.4,6.8,4.5,1.9
+Emmanuel Innocenti,Gonzaga,33,23.6,5.8,3.7,1.7
+Braeden Smith,Gonzaga,33,17.8,5.4,2.3,3.8
+Steele Venters,Gonzaga,27,15.1,5.0,1.3,1.0
+Noah Haaland,Gonzaga,10,4.5,2.0,1.1,0.1
+Ismaila Diagne,Gonzaga,26,7.5,1.2,2.6,0.2
+Joaquim ArauzMoore,Gonzaga,8,2.4,0.8,0.4,0.1
+Cade Orness,Gonzaga,8,2.6,0.4,0.1,0.1
+Isaac Johnson,Hawaii,32,21.1,14.1,5.8,1.1
+Quandre Bullock,Hawaii,32,28.1,13.5,5.8,1.9
+Harry Rouhliadeff,Hawaii,30,25.3,10.8,5.0,1.4
+Gytis NemeikÅ¡a,Hawaii,32,23.9,9.3,4.9,1.0
+Isaac Finlinson,Hawaii,32,22.5,9.1,3.7,0.7
+Hunter Erickson,Hawaii,32,31.6,8.5,3.9,3.8
+Isaiah Kerr,Hawaii,30,20.4,6.3,2.4,1.2
+Aaron Hunkin-Claytor,Hawaii,17,28.1,6.0,2.8,3.9
+Yacine Toumi,Hawaii,29,10.5,4.4,2.6,0.4
+Jalen Myers,Hawaii,7,9.0,2.9,0.9,0.6
+AJ Economou,Hawaii,18,6.0,1.5,0.7,0.1
+Hunter Carter,Hawaii,13,4.2,1.1,0.7,0.2
+Terry Anderson,High Point,34,26.9,16.0,6.0,1.6
+Rob Martin,High Point,33,26.8,15.3,1.9,3.7
+Cam'Ron Fletcher,High Point,25,21.2,12.7,6.9,0.9
+Owen Aquino,High Point,34,26.1,9.4,5.9,2.4
+Conrad Martinez,High Point,34,22.6,9.3,1.5,3.4
+Scotty Washington,High Point,34,19.3,8.7,2.9,0.9
+Braden Hausen,High Point,34,20.5,6.8,3.0,1.2
+Chase Johnston,High Point,32,12.7,6.1,0.8,0.5
+Vincent Brady II,High Point,24,16.8,5.4,1.9,1.7
+Caden Miller,High Point,26,7.1,2.8,2.1,0.3
+Josh Ibukunoluwa,High Point,16,6.5,2.8,2.0,0.3
+Babacar Diallo,High Point,17,7.5,2.3,0.7,0.6
+Youssouf Singare,High Point,30,7.8,1.4,2.0,0.1
+David Fonville,High Point,11,3.3,0.5,0.3,0.2
+Birgir Irving,High Point,10,1.9,0.3,0.1,0.1
+Cruz Davis,Hofstra,34,37.9,20.2,3.7,4.6
+Preston Edmead,Hofstra,34,33.7,15.9,3.5,4.4
+James Patterson,Hofstra,30,20.9,9.5,5.6,0.4
+German Plotnikov,Hofstra,32,32.3,9.3,3.4,0.8
+Joshua DeCady,Hofstra,32,24.2,6.3,3.4,0.6
+Silas Sunday,Hofstra,34,19.7,5.2,6.9,0.7
+Victory Onuetu,Hofstra,34,17.9,4.7,6.9,0.4
+Jaeden Roberts,Hofstra,23,8.5,4.1,0.8,0.8
+A.J. Wills,Hofstra,18,10.1,3.2,0.3,0.7
+Josh Reaves,Hofstra,24,10.0,2.3,2.0,0.1
+Amir Williams,Hofstra,3,5.7,1.3,1.7,0.0
+Alex Tsynkevich,Hofstra,16,4.3,0.8,1.4,0.1
+Kingston Flemings,Houston,34,31.7,16.4,3.9,5.3
+Emanuel Sharp,Houston,34,29.5,15.3,2.9,1.8
+Milos Uzan,Houston,34,32.9,11.1,2.6,4.0
+Chris Cenac Jr.,Houston,34,24.8,9.5,7.5,0.8
+Joseph Tugler,Houston,34,23.4,8.4,5.4,1.2
+Mercy Miller,Houston,33,11.3,4.8,1.8,0.4
+Chase McCarty,Houston,32,12.0,4.0,2.4,0.2
+Isiah Harwell,Houston,30,14.5,3.8,2.1,0.6
+Kalifa Sakho,Houston,31,13.0,2.5,2.6,0.1
+Ramon Walker Jr.,Houston,27,11.0,2.5,2.0,0.5
+Kordelius Jefferson,Houston,3,4.0,1.3,0.7,0.3
+Cedric Lath,Houston,19,4.1,0.5,0.7,0.1
+Jacob McFarland,Houston,3,3.0,0.0,1.0,0.0
+Kristian Gonzalez,Idaho,1,18.0,18.0,1.0,0.0
+Jackson Rasmussen,Idaho,34,31.0,13.9,4.7,1.3
+Kolton Mitchell,Idaho,32,30.3,13.7,3.3,3.9
+Biko Johnson,Idaho,35,27.6,12.4,3.7,2.4
+Isaiah Brickner,Idaho,34,20.4,12.1,3.9,0.9
+Brody Rowbury,Idaho,35,24.4,7.8,5.2,1.0
+Jack Payne,Idaho,33,21.8,6.7,4.2,1.3
+Seth Joba,Idaho,35,17.3,5.3,3.6,0.4
+Miles Klapper,Idaho,29,12.1,3.8,1.9,0.8
+Trevon Blassingame,Idaho,34,16.8,3.7,2.6,0.6
+Aidan Sevilla,Idaho,22,6.0,1.8,0.9,0.8
+Ewan Steele,Idaho,14,6.9,1.6,1.6,0.5
+Keaton Wagler,Illinois,32,33.7,17.9,4.8,4.4
+Andrej Stojakovic,Illinois,29,26.4,13.4,4.6,1.0
+David Mirkovic,Illinois,32,29.3,13.4,7.8,2.6
+Kylan Boswell,Illinois,25,30.4,13.2,4.0,3.3
+Tomislav Ivisic,Illinois,29,25.2,10.0,5.5,1.6
+Zvonimir Ivisic,Illinois,32,17.8,7.0,4.8,0.3
+Ben Humrichous,Illinois,32,22.7,6.1,4.1,0.8
+Jake Davis,Illinois,32,20.3,5.8,2.2,0.8
+Mihailo Petrovic,Illinois,17,6.1,1.8,0.7,1.2
+Brandon Lee,Illinois,16,4.4,1.6,0.4,0.2
+AJ Redd,Illinois,9,2.8,1.4,0.4,0.0
+Jason Jakstys,Illinois,9,5.3,1.3,1.9,0.2
+Blake Fagbemi,Illinois,9,4.0,0.2,1.2,0.4
+Bennett Stirtz,Iowa,33,37.5,20.0,2.5,4.5
+Tavion Banks,Iowa,33,23.3,10.5,4.7,1.2
+Alvaro Folgueiras,Iowa,33,21.0,8.1,3.8,2.3
+Cooper Koch,Iowa,33,27.6,7.7,3.0,1.1
+Cam Manyawu,Iowa,33,18.9,7.1,4.5,1.0
+Kael Combs,Iowa,33,25.8,5.9,2.5,2.3
+Tate Sage,Iowa,33,15.9,5.7,1.9,0.7
+Isaia Howard,Iowa,33,18.8,5.4,2.8,1.2
+Brendan Hausen,Iowa,21,10.2,4.0,0.7,0.5
+Trevin Jirak,Iowa,16,8.3,3.6,1.0,1.2
+Joey Matteoni,Iowa,11,3.6,1.5,0.6,0.3
+Jacob Koch,Iowa,5,2.0,0.4,0.0,0.2
+Milan Momcilovic,Iowa St.,34,30.1,17.1,3.1,0.9
+Joshua Jefferson,Iowa St.,34,31.8,16.9,7.6,4.9
+Tamin Lipsey,Iowa St.,31,31.5,13.3,4.0,5.0
+Blake Buchanan,Iowa St.,34,24.1,8.4,5.7,1.5
+Killyan Toure,Iowa St.,34,24.7,8.1,3.2,2.2
+Jamarion Batemon,Iowa St.,34,15.3,6.9,1.2,0.4
+Nate Heise,Iowa St.,34,24.3,4.7,4.0,1.6
+Dominykas Pleta,Iowa St.,32,11.3,4.5,2.3,0.5
+Dominick Nelson,Iowa St.,21,8.4,3.7,1.0,0.3
+Xzavion Mitchell,Iowa St.,7,2.9,1.0,0.3,0.0
+Cade Kelderman,Iowa St.,17,4.1,0.9,0.2,0.8
+Eric Mulder,Iowa St.,19,3.8,0.9,1.5,0.2
+Anthony Rise,Iowa St.,10,1.3,0.2,0.6,0.0
+Darryn Peterson,Kansas,22,28.4,19.8,4.4,1.7
+Tre White,Kansas,33,31.4,13.8,6.7,1.8
+Flory Bidunga,Kansas,33,31.6,13.5,9.2,1.5
+Melvin Council Jr.,Kansas,33,34.8,12.9,4.8,5.1
+Bryson Tiller,Kansas,33,25.9,8.2,6.0,1.0
+Elmarko Jackson,Kansas,32,18.0,4.9,1.8,1.5
+Jamari McDowell,Kansas,33,17.8,3.5,1.6,1.2
+Kohl Rosario,Kansas,28,11.7,3.3,1.3,0.5
+Jayden Dawson,Kansas,24,9.6,2.1,0.6,0.6
+Nginyu Ngala,Kansas,12,3.3,1.3,0.6,0.3
+Wilder Evers,Kansas,7,2.7,1.1,0.3,0.0
+Paul Mbiya,Kansas,19,4.1,0.7,1.1,0.1
+Samis Calderon,Kansas,16,4.1,0.4,0.8,0.3
+Justin Cross,Kansas,6,2.2,0.0,0.3,0.2
+Will Thengvall,Kansas,6,1.5,0.0,0.2,0.0
+Otega Oweh,Kentucky,34,32.4,18.2,4.6,2.6
+Denzel Aberdeen,Kentucky,34,30.2,13.2,2.6,3.6
+Collin Chandler,Kentucky,34,26.6,9.9,2.8,2.2
+Mouhamed Dioubate,Kentucky,29,21.3,8.7,5.5,1.0
+Jaland Lowe,Kentucky,9,18.4,8.0,2.1,2.4
+Malachi Moreno,Kentucky,34,22.8,8.0,6.4,1.8
+Kam Williams,Kentucky,22,18.9,6.2,2.3,1.0
+Andrija Jelavic,Kentucky,30,15.8,5.8,3.9,0.6
+Jasper Johnson,Kentucky,33,12.5,5.2,1.1,1.7
+Jayden Quaintance,Kentucky,4,16.8,5.0,5.0,0.5
+Brandon Garrison,Kentucky,34,15.9,4.6,3.9,1.1
+Trent Noah,Kentucky,27,10.6,3.0,2.3,0.5
+Zach Tow,Kentucky,7,1.1,0.6,0.0,0.0
+Walker Horn,Kentucky,7,1.1,0.4,0.1,0.1
+Nasir Whitlock,Lehigh,34,34.9,21.0,3.5,3.4
+Hank Alvey,Lehigh,34,30.7,15.0,6.9,2.1
+Joshua Ingram,Lehigh,34,34.8,10.6,5.1,3.3
+Edouard Benoit,Lehigh,23,28.4,10.3,6.0,1.0
+Andrew Urosevic,Lehigh,28,18.9,7.3,1.3,0.6
+Caleb Thomas,Lehigh,22,21.6,5.0,1.4,2.0
+Peter Kramer,Lehigh,34,20.4,4.1,1.9,0.7
+Jalen Vazquez,Lehigh,30,21.8,3.9,2.5,2.0
+Alfredo Addesa,Lehigh,32,8.2,2.0,1.5,0.3
+Jake Pike,Lehigh,17,9.6,1.3,1.9,0.2
+Henri Adiassa,Lehigh,24,4.4,0.4,0.8,0.0
+Tommy Conniff,Lehigh,15,4.1,0.3,0.6,0.3
+Brendan Reed,Lehigh,11,1.0,0.0,0.2,0.0
+Ryan Conwell,Louisville,32,30.6,18.7,4.8,2.5
+Mikel Brown Jr.,Louisville,21,29.2,18.2,3.3,4.7
+J'Vonne Hadley,Louisville,32,27.8,11.8,5.2,1.7
+Isaac McKneely,Louisville,33,28.8,10.6,3.0,1.4
+Sananda Fru,Louisville,33,22.0,9.2,6.0,1.3
+Adrian Wooley,Louisville,33,22.1,8.5,4.0,1.8
+Khani Rooths,Louisville,29,16.5,5.5,4.4,1.0
+Kobe Rodgers,Louisville,32,13.8,3.3,2.4,1.4
+Aly Khalifa,Louisville,33,12.0,3.2,1.9,2.6
+Kasean Pryor,Louisville,22,6.7,2.3,1.9,0.3
+Vangelis Zougris,Louisville,25,8.9,2.3,2.3,0.7
+Cole Sherman,Louisville,10,1.2,1.2,0.0,0.1
+Spencer Legg,Louisville,9,1.0,0.8,0.4,0.2
+Will Hanke,Louisville,10,1.0,0.2,0.4,0.0
+Larry Johnson,McNeese,33,25.2,17.5,5.5,1.4
+Tyshawn Archie,McNeese,33,25.6,14.3,1.9,2.9
+Javohn Garcia,McNeese,29,29.4,12.0,3.1,1.6
+DJ Richards,McNeese,33,22.1,8.3,2.0,0.7
+Garwey Dual,McNeese,33,26.3,8.2,2.8,4.3
+Jerrell Colbert,McNeese,33,19.4,5.8,4.0,0.5
+Jacolb Cole,McNeese,33,18.9,5.5,4.1,1.5
+Carl Cherenfant,McNeese,32,16.7,4.3,3.1,0.9
+Peitok Machar,McNeese,33,12.8,3.6,3.2,0.1
+Yanis Ndjonga,McNeese,27,10.7,2.5,3.5,0.1
+JJ Rembert,McNeese,8,5.0,0.5,0.0,1.5
+Malik Reneau,Miami FL,33,28.5,18.8,6.6,2.0
+Tre Donaldson,Miami FL,33,33.9,16.5,3.5,5.8
+Shelton Henderson,Miami FL,33,30.8,13.7,4.8,2.0
+Tru Washington,Miami FL,29,27.6,12.1,3.9,1.7
+Ernest Udeh Jr.,Miami FL,31,27.8,6.9,9.3,0.5
+Dante Allen,Miami FL,28,23.8,6.4,2.8,2.2
+Marcus Allen,Miami FL,8,18.9,5.3,3.1,1.6
+Timotej Malovec,Miami FL,31,15.8,4.5,1.4,0.9
+Noam Dovrat,Miami FL,26,9.7,3.8,0.5,1.1
+Salih Altuntas,Miami FL,32,7.9,1.6,1.9,0.1
+John Laboy II,Miami FL,6,4.7,1.2,0.2,0.5
+Jordyn Kee,Miami FL,8,3.1,0.4,0.4,0.4
+Yaxel Lendeborg,Michigan,33,30.1,14.4,7.0,3.3
+Morez Johnson Jr.,Michigan,33,25.1,13.3,7.3,1.2
+Aday Mara,Michigan,33,23.0,11.6,6.9,2.3
+Elliot Cadeau,Michigan,33,26.0,10.2,2.6,5.4
+Trey McKenney,Michigan,33,21.5,9.7,2.5,0.8
+L.J. Cason,Michigan,28,18.6,8.4,1.9,2.4
+Nimari Burnett,Michigan,33,19.2,8.2,2.4,1.2
+Roddy Gayle Jr.,Michigan,32,20.7,7.2,3.3,1.4
+Will Tschetter,Michigan,33,13.9,4.0,1.8,0.6
+Winters Grady,Michigan,9,6.0,2.9,1.1,0.2
+Malick Kordel,Michigan,11,5.0,1.4,1.8,0.2
+Oscar Goodman,Michigan,12,6.4,1.4,1.5,0.5
+Charlie May,Michigan,4,3.3,1.0,0.3,0.3
+Howard Eisley Jr.,Michigan,5,1.4,0.6,0.0,0.0
+Jeremy Fears Jr.,Michigan St.,32,32.2,15.7,2.4,9.2
+Jaxon Kohler,Michigan St.,32,27.7,12.7,9.0,1.3
+Coen Carr,Michigan St.,32,29.0,11.6,5.4,1.3
+Carson Cooper,Michigan St.,32,26.4,10.8,7.1,1.4
+Kur Teng,Michigan St.,32,17.5,7.7,2.1,1.0
+Jordan Scott,Michigan St.,32,20.7,5.9,3.1,1.2
+Divine Ugochukwu,Michigan St.,22,16.1,5.1,1.5,1.5
+Cameron Ward,Michigan St.,31,15.1,5.0,4.3,0.3
+Trey Fort,Michigan St.,30,10.0,3.8,1.2,0.6
+Jesse McCulloch,Michigan St.,27,7.5,2.4,1.3,0.2
+Brennan Walton,Michigan St.,11,1.4,0.5,0.4,0.0
+Nick Sanders,Michigan St.,13,1.6,0.5,0.1,0.1
+Denham Wojcik,Michigan St.,28,5.6,0.4,0.3,1.2
+Colin Walton,Michigan St.,11,1.3,0.3,0.3,0.0
+Mark Mitchell,Missouri,32,33.7,18.3,5.3,3.6
+Jayden Stone,Missouri,25,29.9,13.2,5.0,1.9
+Trent Pierce,Missouri,19,28.5,10.6,3.8,1.1
+T.O. Barrett,Missouri,32,23.0,8.9,2.7,3.1
+Anthony Robinson II,Missouri,32,27.0,8.8,3.1,2.9
+Jacob Crews,Missouri,32,20.7,8.6,3.7,0.3
+Shawn Phillips Jr.,Missouri,30,20.3,7.7,5.1,0.7
+Sebastian Mack,Missouri,18,16.3,7.0,1.3,0.6
+Jevon Porter,Missouri,12,17.5,6.2,4.0,1.6
+Luke Northweather,Missouri,19,13.1,3.1,2.5,0.6
+Annor Boateng,Missouri,15,11.5,2.7,1.8,0.3
+Trent Burns,Missouri,21,8.0,2.0,1.9,0.1
+Nicholas Randall,Missouri,21,5.7,0.7,1.0,0.1
+Paul McNeil Jr.,N.C. State,33,28.5,13.9,3.6,0.8
+Quadir Copeland,N.C. State,33,28.7,13.9,3.5,6.6
+Ven-Allen Lubin,N.C. State,33,28.3,13.9,7.2,0.8
+Darrion Williams,N.C. State,32,29.7,13.8,4.6,2.8
+Tre Holloman,N.C. State,31,25.6,9.3,1.8,2.0
+Matt Able,N.C. State,33,21.7,9.0,3.5,1.0
+Jerry Deng,N.C. State,8,12.5,6.1,2.1,0.4
+Alyn Breed,N.C. State,21,14.9,4.5,1.9,1.3
+Terrance Arceneaux,N.C. State,29,16.1,3.9,2.7,0.5
+Musa Sagnia,N.C. State,33,12.5,2.4,2.8,0.2
+Scottie Ebube,N.C. State,16,4.3,1.2,1.0,0.0
+Jordan Snell,N.C. State,8,2.4,0.8,0.3,0.3
+Colt Langdon,N.C. State,6,3.0,0.3,0.2,0.0
+Zuby Ejiofor,St. John's,34,29.6,16.3,7.1,3.5
+Bryce Hopkins,St. John's,34,28.5,13.5,6.2,2.0
+Oziyah Sellers,St. John's,34,28.9,10.7,2.9,1.7
+Ian Jackson,St. John's,33,18.6,9.6,2.3,1.2
+Joson Sanon,St. John's,34,21.3,8.3,2.6,0.6
+Dillon Mitchell,St. John's,34,27.7,8.2,7.0,3.1
+Dylan Darling,St. John's,32,21.0,7.0,2.5,2.5
+RubÃ©n Prey,St. John's,34,10.6,3.9,1.9,0.9
+Lefteris Liotopoulos,St. John's,27,8.1,3.1,1.0,0.4
+Sadiku Ibine Ayo,St. John's,28,8.2,1.9,1.1,0.5
+Kelvin Odih,St. John's,10,5.6,1.5,1.9,0.2
+Handje Tamba,St. John's,7,2.4,0.7,0.3,0.3
+Fotis Konstantinidis,St. John's,7,1.1,0.4,0.1,0.1
+Casper Pohto,St. John's,6,4.5,0.3,0.7,0.2
+Nasir Mann,Queens,34,30.4,13.4,5.8,2.7
+Yoav Berman,Queens,34,29.3,12.6,3.9,3.7
+Jordan Watford,Queens,34,20.6,11.9,2.6,3.8
+Chris Ashby,Queens,34,30.6,11.7,2.0,1.5
+Avantae Parker,Queens,34,22.1,11.3,5.3,1.1
+Carson Schwieger,Queens,33,24.5,10.2,3.2,0.8
+Maban Jabriel,Queens,34,19.8,7.6,3.8,1.0
+Gus Larson,Queens,34,11.8,3.1,2.1,0.6
+Isaiah Henry,Queens,25,8.0,2.9,1.7,0.4
+Kam Clark,Queens,26,7.2,1.7,1.0,0.3
+Reid Celestin,Queens,16,2.5,0.2,0.6,0.2
+Jacob Brandly,Queens,1,1.0,0.0,0.0,0.0
+Colby Christiansen,Queens,1,0.0,0.0,0.0,0.0
+Tyler Crider,Queens,9,1.0,0.0,0.0,0.1
+Boopie Miller,SMU,32,35.2,19.2,3.9,6.4
+Jaron Pierre Jr.,SMU,33,33.0,17.6,4.9,2.0
+B.J. Edwards,SMU,28,33.2,12.7,5.9,4.9
+Corey Washington,SMU,33,27.5,11.3,4.9,0.8
+Samet Yigitoglu,SMU,33,28.9,10.8,7.9,1.6
+Jaden Toombs,SMU,26,19.4,7.8,4.3,1.2
+Jermaine O'Neal Jr.,SMU,33,15.2,4.6,2.1,0.4
+Sam Walters,SMU,23,9.0,2.5,0.9,0.3
+Mitchell Holmes,SMU,25,5.4,1.7,0.9,0.2
+B.J. Davis-Ray,SMU,31,7.2,1.3,0.7,0.4
+Chance Puryear,SMU,13,2.8,0.3,0.5,0.0
+Nigel Walls,SMU,9,3.4,0.0,0.2,0.2
+Trey Utter,SMU,2,2.0,0.0,0.0,0.0
+Niccolo Kalischer-Stork,SMU,2,0.5,0.0,0.0,0.0
+Robbie Avila,Saint Louis,33,26.2,12.9,4.5,4.1
+Trey Green,Saint Louis,32,23.7,11.1,2.8,1.7
+Dion Brown,Saint Louis,33,23.5,11.1,5.5,1.5
+Amari McCottry,Saint Louis,32,22.6,10.3,5.2,2.8
+Kellen Thames,Saint Louis,31,17.3,9.9,4.8,1.9
+Quentin Jones,Saint Louis,33,26.5,9.2,3.9,2.9
+Ishan Sharma,Saint Louis,33,22.2,9.1,2.6,1.6
+Brady Dunlap,Saint Louis,32,16.9,6.8,2.1,0.8
+Paul Otieno,Saint Louis,33,15.5,5.2,3.9,0.9
+Jax Kerr,Saint Louis,17,6.6,2.9,1.9,0.2
+Cam Hutson,Saint Louis,17,5.5,1.9,1.0,0.2
+Isaac Holmes,Saint Louis,13,2.8,0.8,0.7,0.3
+Jaden Schertz,Saint Louis,12,3.0,0.7,0.5,0.1
+Paulius Murauskas,Saint Mary's,32,32.4,18.8,7.7,2.2
+Mikey Lewis,Saint Mary's,32,26.9,14.2,2.8,2.2
+Joshua Dent,Saint Mary's,32,36.2,13.0,2.4,5.7
+Andrew McKeever,Saint Mary's,32,23.0,8.4,9.2,1.7
+Dillan Shaw,Saint Mary's,32,27.3,7.5,5.3,1.6
+Harry Wessels,Saint Mary's,31,16.8,4.9,5.2,0.6
+Liam Campbell,Saint Mary's,32,14.3,4.6,1.7,0.5
+Tony Duckett,Saint Mary's,21,6.8,3.3,0.5,0.4
+Rory Hawke,Saint Mary's,31,10.7,2.5,1.2,0.4
+Mantas Juzenas,Saint Mary's,25,5.8,2.2,1.5,0.3
+Kevin Gad,Saint Mary's,7,10.0,1.4,1.3,0.7
+Cade Bennett,Saint Mary's,8,4.5,1.0,1.0,0.5
+Oliver Faubert,Saint Mary's,10,1.9,0.2,0.0,0.0
+Christian Hammond,Santa Clara,33,30.0,15.8,2.9,2.4
+Elijah Mahi,Santa Clara,34,30.2,13.9,4.7,2.6
+Allen Graves,Santa Clara,34,22.4,11.6,6.5,1.8
+Sash Gavalyugov,Santa Clara,34,19.7,8.8,1.7,2.6
+Bukky Oboye,Santa Clara,33,17.8,8.0,4.2,0.6
+Brenton Knapper,Santa Clara,32,21.8,7.7,1.8,2.3
+Jake Ensminger,Santa Clara,31,28.4,6.3,5.5,2.9
+Thierry Darlan,Santa Clara,34,18.2,6.3,3.6,0.9
+KJ Cochran,Santa Clara,33,12.0,4.8,1.4,0.5
+Brendan Yarusso,Santa Clara,8,1.3,2.0,0.3,0.0
+Francis Chukwudebelu,Santa Clara,23,7.0,1.5,1.3,0.7
+Juan Reyna,Santa Clara,1,2.0,0.0,2.0,0.0
+Gavin Doty,Siena,34,36.7,17.9,7.0,2.2
+Justice Shoats,Siena,34,35.4,13.2,2.5,4.4
+Francis Folefac,Siena,34,27.7,11.1,5.2,2.2
+Tasman Goodrick,Siena,9,23.3,9.7,7.3,1.3
+Brendan Coyle,Siena,34,30.3,8.6,4.6,1.0
+Antonio Chandler,Siena,29,22.1,7.3,5.6,0.4
+Christian Jones,Siena,34,17.5,4.3,0.8,1.2
+Riley Mulvey,Siena,25,17.2,3.8,3.9,1.5
+Isaiah Henderson,Siena,28,13.7,3.8,0.8,0.5
+Owen Schlager,Siena,5,10.0,2.8,1.2,0.6
+Tajae Jones,Siena,3,5.0,1.3,0.7,0.0
+Marcus Jackson,Siena,6,7.5,0.5,2.0,0.7
+Chris Torres,Siena,6,1.7,0.3,0.0,0.2
+Mosi Clayton,Siena,3,2.3,0.0,0.0,0.0
+Cooper Nadler,Siena,2,3.5,0.0,1.0,0.0
+Danny Murray,Siena,4,1.5,0.0,0.0,0.0
+Wes Enis,South Florida,30,33.9,16.7,3.6,2.5
+Izaiyah Nelson,South Florida,32,26.9,15.8,9.7,1.2
+Joseph Pinion,South Florida,32,30.2,14.5,3.8,2.3
+Josh Omojafo,South Florida,32,27.2,11.5,5.3,1.8
+CJ Brown,South Florida,32,26.9,11.2,3.9,4.8
+Isaiah Jones,South Florida,32,15.1,4.4,2.8,0.4
+Daimion Collins,South Florida,31,14.6,4.3,3.3,0.4
+Adriel Nyorha,South Florida,26,10.9,3.7,1.7,2.0
+Gavin Hightower,South Florida,24,9.5,3.7,1.5,1.6
+Devin Haid,South Florida,23,10.0,3.3,2.0,0.8
+Caleb Sanders,South Florida,11,7.5,2.8,1.5,0.7
+Xavier Brown,South Florida,3,12.3,2.7,0.7,1.7
+Tristan Beckford,South Florida,21,7.2,2.6,1.7,0.3
+Onyx Nnani,South Florida,1,1.0,0.0,1.0,0.0
+David Punch,TCU,32,29.7,14.3,6.7,2.1
+Xavier Edmonds,TCU,33,22.9,12.6,6.6,1.2
+Jayden Pierre,TCU,33,30.2,10.5,2.2,2.7
+Micah Robinson,TCU,33,26.3,10.5,4.7,1.7
+Liutauras Lelevicius,TCU,32,23.8,8.4,3.3,0.7
+Brock Harding,TCU,33,31.7,8.0,2.8,5.7
+Tanner Toolson,TCU,33,21.3,8.0,3.2,0.9
+Jace Posey,TCU,26,11.7,4.6,2.4,0.2
+Kayden Edwards,TCU,13,6.7,3.5,0.7,0.6
+RJ Jones,TCU,8,6.8,2.9,0.5,0.9
+Ashton Simmons,TCU,4,4.3,1.3,0.8,0.3
+Vianney Salatchoum,TCU,21,5.4,1.1,0.9,0.1
+Adam Stewart,TCU,4,1.0,0.5,0.3,0.0
+Malick Diallo,TCU,1,7.0,0.0,1.0,0.0
+Trey Stuart,TCU,5,1.0,0.0,0.2,0.0
+Drew McElroy,TCU,3,1.0,0.0,0.0,0.0
+Ja'Kobi Gillespie,Tennessee,33,34.5,18.0,2.8,5.5
+Nate Ament,Tennessee,31,30.2,17.5,6.6,2.5
+J.P. Estrella,Tennessee,29,17.7,10.1,5.2,0.8
+Felix Okpara,Tennessee,31,26.7,7.7,6.2,0.5
+Jaylen Carey,Tennessee,33,18.9,7.4,6.2,1.3
+Bishop Boswell,Tennessee,30,26.2,6.2,4.5,2.9
+DeWayne Brown II,Tennessee,31,15.4,4.9,3.8,0.9
+Amari Evans,Tennessee,31,14.1,4.2,3.1,0.7
+Cade Phillips,Tennessee,10,16.9,3.8,4.0,0.4
+Amaree Abram,Tennessee,23,11.3,3.5,1.5,0.8
+Ethan Burg,Tennessee,27,10.1,2.6,0.9,1.1
+Troy Henderson,Tennessee,25,7.5,2.0,0.5,1.2
+Clarence Massamba,Tennessee,10,3.8,0.4,0.2,0.3
+Grant Hurst,Tennessee,1,2.0,0.0,0.0,0.0
+Gavin Paull,Tennessee,1,2.0,0.0,0.0,0.0
+Campbell Duncan,Tennessee,1,2.0,0.0,1.0,0.0
+Aaron Nkrumah,Tennessee St.,32,31.4,17.6,5.5,3.0
+Travis Harper II,Tennessee St.,32,31.3,17.3,4.3,1.2
+Dante Harris,Tennessee St.,32,32.2,11.7,3.7,4.5
+Antoine Lorick III,Tennessee St.,32,21.1,9.5,5.0,1.0
+Jalen Pitre,Tennessee St.,32,24.2,6.5,6.6,0.9
+Khalil London,Tennessee St.,24,15.3,6.4,1.6,1.1
+Carlous Williams,Tennessee St.,31,19.5,5.7,3.2,0.5
+Jabrion Spikes,Tennessee St.,30,10.6,2.9,1.3,0.3
+Kavien Jones,Tennessee St.,29,10.8,2.8,2.4,0.2
+Jayden Jones,Tennessee St.,4,3.3,1.8,0.3,0.0
+JC Brooks,Tennessee St.,18,7.9,1.7,2.0,0.3
+Damon Howard Jr.,Tennessee St.,20,7.4,1.7,0.7,0.9
+Jean Yvens Lafleur,Tennessee St.,2,6.0,1.0,2.5,0.0
+Alex Garcia,Tennessee St.,9,2.4,0.8,0.1,0.0
+Rashaun Agee,Texas A&M,32,26.8,14.7,8.9,2.4
+Rylan Griffen,Texas A&M,30,26.0,11.6,2.8,2.6
+Marcus Hill,Texas A&M,32,23.0,10.8,3.2,1.6
+Mackenzie Mgbako,Texas A&M,7,18.7,10.4,4.9,1.3
+Rubén Dominguez,Texas A&M,32,23.3,10.3,2.4,1.4
+Pop Isaacs,Texas A&M,31,22.3,10.1,2.6,2.6
+Zach Clemence,Texas A&M,32,16.5,7.1,3.1,0.8
+Jacari Lane,Texas A&M,31,19.9,6.4,1.8,3.2
+Ali Dibba,Texas A&M,32,15.5,5.6,2.7,0.8
+Josh Holloway,Texas A&M,32,13.1,4.5,1.7,1.8
+Jamie Vinson,Texas A&M,28,6.4,3.4,2.2,0.4
+Federiko Federiko,Texas A&M,31,8.6,1.8,1.9,0.5
+Noah Shelby,Texas A&M,9,2.4,1.1,0.2,0.0
+Jeremiah Green,Texas A&M,8,4.0,0.9,0.1,0.5
+Chris McDermott,Texas A&M,15,2.5,0.7,0.7,0.2
+JT Toppin,Texas Tech,25,34.8,21.8,10.8,2.1
+Christian Anderson,Texas Tech,31,38.4,18.9,3.6,7.6
+Donovan Atwell,Texas Tech,32,34.7,13.5,3.3,0.8
+LeJuan Watts,Texas Tech,31,27.5,11.5,6.0,2.5
+Jaylen Petty,Texas Tech,31,30.0,9.5,3.9,2.2
+Luke Bamgboye,Texas Tech,19,16.5,4.7,3.3,0.5
+Josiah Moseley,Texas Tech,12,12.8,4.6,3.7,0.5
+Tyeree Bryan,Texas Tech,31,17.5,3.7,2.6,0.6
+Leon Horner,Texas Tech,22,8.3,2.4,1.9,0.2
+Marial Akuentok,Texas Tech,13,6.6,1.3,1.8,0.2
+Nolan Groves,Texas Tech,21,6.1,1.0,1.2,0.2
+Jazz Henderson,Texas Tech,11,3.9,0.8,0.5,0.4
+Jack Francis,Texas Tech,13,1.2,0.0,0.3,0.0
+Victor Valdes,Troy,32,29.3,14.8,4.0,4.6
+Thomas Dowd,Troy,33,36.1,14.8,10.1,2.2
+Theo Seng,Troy,27,28.9,12.9,5.8,1.1
+Cooper Campbell,Troy,33,33.8,12.7,3.5,4.2
+Cobi Campbell,Troy,32,27.9,9.0,1.8,1.5
+Jerrell Bellamy,Troy,33,16.7,8.2,3.5,0.4
+Kerrington Kiel,Troy,33,16.2,3.9,3.7,1.1
+Austin Cross,Troy,33,16.0,3.7,1.6,0.4
+Evan Griffin,Troy,12,6.7,2.4,1.8,0.5
+Javen Colbert,Troy,18,5.7,2.1,0.7,0.7
+Emmanuel Clarton,Troy,13,3.7,1.6,1.0,0.4
+Corbin Green,Troy,13,4.3,1.5,1.2,0.3
+Kameryn Mitchell,Troy,8,3.4,0.6,0.6,0.1
+Hikaru Awata,Troy,5,1.2,0.2,0.2,0.0
+Riley Kugel,UCF,30,28.9,14.4,3.1,2.5
+Themus Fulks,UCF,32,32.8,14.1,3.0,6.7
+Jordan Burks,UCF,32,28.0,13.0,4.8,0.6
+Jamichael Stillwell,UCF,30,28.4,11.7,8.0,2.2
+Chris Johnson,UCF,31,15.7,6.4,1.4,1.9
+John Bol,UCF,32,18.7,6.0,5.5,0.3
+Devan Cambridge,UCF,32,17.4,5.4,3.5,0.8
+Carmelo Pacheco,UCF,30,15.5,4.7,1.3,0.4
+George Beale Jr.,UCF,24,8.1,3.7,0.9,0.3
+Jeremy Foumena,UCF,26,9.5,3.5,2.3,0.2
+Kris Parker,UCF,22,5.8,1.7,0.7,0.2
+Elijah Hulsewe,UCF,16,4.9,1.1,1.5,0.1
+Poohpha Warakulnukroh,UCF,4,1.5,0.5,0.5,0.0
+Zach Johnson,UCF,7,1.7,0.0,0.3,0.0
+Tyler Bilodeau,UCLA,31,30.2,17.6,5.6,1.1
+Donovan Dent,UCLA,33,34.2,13.5,2.9,7.6
+Trent Perry,UCLA,33,29.6,12.7,2.9,2.9
+Skyy Clark,UCLA,24,28.7,11.7,2.3,2.1
+Eric Dailey Jr.,UCLA,33,27.5,11.3,5.8,1.3
+Xavier Booker,UCLA,34,19.6,6.9,3.3,0.8
+Jamar Brown,UCLA,34,16.1,3.9,2.8,0.5
+Brandon Williams,UCLA,32,12.3,2.7,1.8,0.3
+Eric Freeny,UCLA,26,10.8,2.2,1.6,0.4
+Steven Jamerson II,UCLA,33,9.6,1.8,2.0,0.5
+Jack Seidler,UCLA,6,1.2,0.3,0.7,0.0
+Anthony Peoples Jr.,UCLA,6,1.7,0.3,0.8,0.0
+Christian Horry,UCLA,4,1.8,0.0,0.0,0.3
+Jah'Likai King,UMBC,31,32.1,13.9,3.4,1.5
+DJ Armstrong Jr.,UMBC,32,32.3,13.2,2.8,2.1
+Ace Valentine,UMBC,31,32.5,12.0,4.1,4.0
+Caden Diggs,UMBC,31,22.5,9.8,3.6,0.9
+Josh Odunowo,UMBC,29,23.1,8.6,5.2,0.9
+Jose Roberto Tanchyn,UMBC,31,19.1,6.5,5.7,0.7
+Daylon Dickerson,UMBC,21,13.9,5.6,3.3,1.3
+Devin Ceaser,UMBC,3,7.7,4.3,1.0,0.3
+Riley Jacobs,UMBC,31,15.6,4.3,3.8,0.6
+Cougar Downing,UMBC,30,12.4,3.7,0.9,0.6
+Paul Greene,UMBC,19,7.8,2.1,2.3,0.2
+Tim Eze,UMBC,15,5.7,1.8,1.1,0.1
+Jake Stout,UMBC,10,3.4,1.3,0.3,0.2
+Saahil Thakkar,UMBC,6,1.7,0.5,0.2,0.0
+MJ Collins Jr.,Utah St.,34,30.4,17.6,2.4,1.6
+Mason Falslev,Utah St.,34,31.9,16.1,5.8,3.1
+Karson Templin,Utah St.,34,18.7,9.1,4.2,0.8
+Drake Allen,Utah St.,33,25.2,7.7,3.0,4.7
+Kolby King,Utah St.,34,19.7,7.6,3.4,1.5
+Garry Clark,Utah St.,34,16.5,6.8,4.3,0.6
+Adlan Elamin,Utah St.,33,19.0,6.5,3.0,0.8
+Elijah Perryman,Utah St.,34,14.2,4.6,1.6,3.1
+Zach Keller,Utah St.,33,13.8,3.5,2.1,0.5
+Tucker Anderson,Utah St.,25,11.6,3.4,1.2,0.7
+Luke Kearney,Utah St.,12,4.0,1.7,0.4,0.3
+Jordy Barnes,Utah St.,17,5.5,0.9,0.6,0.7
+Terrence Hill Jr.,VCU,33,24.0,14.4,2.5,2.8
+Lazar Djokovic,VCU,32,27.8,13.8,5.4,1.0
+Jadrian Tracey,VCU,33,22.2,10.1,2.9,1.8
+Brandon Jennings,VCU,33,24.7,8.9,3.5,2.2
+Nyk Lewis,VCU,32,23.8,8.5,4.3,1.7
+Michael Belle,VCU,33,22.1,7.3,5.0,1.0
+Barry Evans,VCU,33,26.2,7.3,5.0,2.2
+Tyrell Ward,VCU,28,13.0,5.7,2.0,0.5
+Ahmad Nowell,VCU,27,10.6,4.7,1.2,0.6
+Jordan Tillery,VCU,11,7.2,4.5,1.5,0.5
+Keyshawn Mitchell,VCU,19,11.1,3.4,2.6,0.5
+Jordann Dumont,VCU,8,2.4,1.0,0.1,0.0
+Christian Fermin,VCU,4,13.0,0.8,2.5,0.8
+Tyler Tanner,Vanderbilt,33,33.2,19.2,3.5,5.3
+Duke Miles,Vanderbilt,25,29.2,16.4,3.2,4.3
+Tyler Nickel,Vanderbilt,33,30.4,13.3,3.0,1.2
+AK Okereke,Vanderbilt,33,25.8,9.8,3.5,2.0
+Devin McGlockton,Vanderbilt,33,25.0,9.7,6.7,1.3
+Jalen Washington,Vanderbilt,33,20.9,9.2,5.7,0.9
+Frankie Collins,Vanderbilt,9,20.9,7.8,4.2,4.7
+Tyler Harris,Vanderbilt,30,12.7,5.5,2.3,0.3
+Chandler Bing,Vanderbilt,33,14.2,3.7,1.6,0.3
+Mike James,Vanderbilt,22,10.6,1.5,2.0,0.7
+Jayden Leverett,Vanderbilt,25,4.1,1.0,1.2,0.0
+Jaylon Dean-Vines,Vanderbilt,10,2.4,0.9,0.4,0.2
+Miles Keeffe,Vanderbilt,12,1.7,0.4,0.3,0.1
+Mason Nicholson,Vanderbilt,5,4.0,0.4,1.0,0.0
+Coleson Messer,Vanderbilt,7,1.1,0.0,0.0,0.0
+Tyler Perkins,Villanova,32,29.6,13.7,5.4,1.6
+Duke Brennan,Villanova,31,30.9,12.4,10.3,2.0
+Acaden Lewis,Villanova,32,30.3,12.3,3.1,5.3
+Bryce Lindsay,Villanova,32,28.3,11.9,2.1,2.0
+Devin Askew,Villanova,32,23.1,10.0,2.6,2.1
+Matt Hodge,Villanova,29,27.6,9.2,3.6,0.7
+Malachi Palmer,Villanova,32,18.2,4.4,1.7,0.6
+Chris Jeffrey,Villanova,21,8.5,3.2,1.1,1.0
+Tafara Gapare,Villanova,9,16.3,2.9,2.9,0.4
+Wade Chiddick,Villanova,2,1.5,1.5,0.0,0.0
+Zion Stanford,Villanova,10,5.1,1.3,0.5,0.4
+Braden Pierce,Villanova,29,6.5,1.2,0.9,0.5
+Malcolm Flaggs,Villanova,1,2.0,0.0,1.0,0.0
+Thijs De Ridder,Virginia,34,27.6,15.5,6.2,1.6
+Malik Thomas,Virginia,34,22.9,12.4,3.9,1.6
+Sam Lewis,Virginia,34,25.4,10.8,3.6,1.4
+Chance Mallory,Virginia,34,24.1,9.5,3.7,3.6
+Jacari White,Virginia,29,17.3,8.8,2.3,1.2
+Johann Grunloh,Virginia,34,21.1,7.2,5.2,0.7
+Ugonna Onyenso,Virginia,34,18.6,6.7,5.0,0.6
+Dallin Hall,Virginia,34,28.4,5.9,3.6,4.3
+Devin Tillis,Virginia,29,16.3,4.3,2.8,1.4
+Elijah Gertrude,Virginia,17,6.2,1.7,0.8,0.6
+Martin Carrere,Virginia,16,3.9,0.8,0.5,0.3
+Carter Lang,Virginia,12,2.2,0.4,0.5,0.3
+Owen Odom,Virginia,11,1.0,0.4,0.2,0.0
+Desmond Roberts,Virginia,13,1.2,0.0,0.4,0.0
+Nick Boyd,Wisconsin,34,31.8,20.6,3.8,4.2
+John Blackwell,Wisconsin,33,33.7,19.0,4.9,2.3
+Nolan Winter,Wisconsin,30,31.0,13.3,8.6,1.5
+Austin Rapp,Wisconsin,29,22.8,9.6,4.0,1.6
+Braeden Carrington,Wisconsin,33,18.1,8.4,2.5,1.1
+Andrew Rohde,Wisconsin,33,26.3,5.7,2.1,2.8
+Aleksas Bieliauskas,Wisconsin,34,20.0,5.0,4.3,0.9
+Jack Janicki,Wisconsin,26,16.5,2.2,2.0,1.1
+Hayden Jones,Wisconsin,27,7.1,1.7,1.0,0.4
+Zach Kinziger,Wisconsin,16,4.8,1.3,0.3,0.6
+Will Garlock,Wisconsin,30,6.6,1.1,1.1,0.7
+Jack Robison,Wisconsin,17,1.8,1.0,0.5,0.1
+Isaac Gard,Wisconsin,14,1.1,0.8,0.2,0.1
+Riccardo Greppi,Wisconsin,14,1.2,0.0,0.4,0.1
+Michael Cooper,Wright St.,30,26.2,13.4,2.8,2.2
+TJ Burch,Wright St.,33,24.5,12.3,2.4,3.5
+Michael Imariagbe,Wright St.,33,24.0,11.8,7.0,1.8
+Solomon Callaghan,Wright St.,32,28.1,9.9,1.9,1.1
+Dominic Pangonis,Wright St.,33,27.4,9.0,2.6,1.2
+Kellen Pickett,Wright St.,34,22.6,8.7,5.4,1.1
+Andrea Holden,Wright St.,34,14.3,6.3,4.0,0.4
+Logan Woods,Wright St.,34,18.6,5.4,2.0,1.6
+Ayden Davis,Wright St.,3,8.7,5.0,1.3,0.0
+Alex Bruskotter,Wright St.,15,8.3,4.5,1.5,0.2
+Bryan Etumnu,Wright St.,17,11.5,3.4,2.4,0.5
+Sam Alamutu,Wright St.,33,12.1,2.9,2.4,1.1
+Rob Lee Jr.,Kennesaw St.,31,28.2,16.0,3.2,2.0
+Braden East,Kennesaw St.,30,24.0,12.8,9.1,0.7
+Andrew Holifield,Kennesaw St.,31,28.6,11.7,4.6,1.5
+Cody Pennebaker,Kennesaw St.,31,27.5,7.1,4.3,2.5
+King-Njhsanni Wilhite,Kennesaw St.,29,21.0,5.8,1.1,2.5
+Errol White,Kennesaw St.,31,22.3,5.0,4.9,1.2
+Eian Lowe,Kennesaw St.,30,17.9,4.3,1.5,2.5
+Jayden Gambrell,Kennesaw St.,30,11.2,4.0,0.8,0.4
+Jayden Barrs,Kennesaw St.,7,11.7,3.1,1.3,1.1
+B.B. Knight,Kennesaw St.,20,8.1,2.7,0.6,0.4
+Janko Bulajic,Kennesaw St.,31,11.7,1.5,3.1,0.9
+Spencer Ezewiro,Kennesaw St.,20,5.6,0.5,1.7,0.3
+Elijah Tucker,LIU,32,26.3,12.5,6.8,1.1
+Jacoi Hutchinson,LIU,31,28.4,12.3,3.3,3.2
+Johan Nziemi,LIU,29,26.0,10.6,6.0,1.8
+Redd Thompson Jr.,LIU,32,22.1,10.3,1.6,2.0
+Emanuel Richards,LIU,32,25.9,9.7,3.4,1.1
+Alphonzo Billups III,LIU,32,23.1,8.1,2.8,1.3
+Jaylen Benard,LIU,32,19.9,7.3,3.7,0.9
+Elijah Jones,LIU,27,17.3,3.9,3.6,0.7
+Elijah Kelly,LIU,31,10.9,2.3,1.7,0.4
+KJ McClurg,LIU,4,14.0,2.0,2.3,0.5
+Jaylin Payne,LIU,29,7.9,1.8,1.7,0.2
+Jerome Williams,LIU,10,4.5,1.2,0.2,0.5
+Isaiah Kalala,LIU,15,3.3,0.9,0.8,0.1
+Pryce Sandfort,Nebraska,32,33.3,17.8,4.8,2.0
+Rienk Mast,Nebraska,31,28.9,13.5,5.8,2.9
+Braden Frager,Nebraska,30,23.3,11.6,3.8,0.9
+Jamarques Lawrence,Nebraska,32,28.2,9.7,2.5,4.0
+Sam Hoiberg,Nebraska,32,32.1,9.6,5.3,4.3
+Ugnius Jarusevicius,Nebraska,1,11.0,7.0,2.0,0.0
+Berke Buyuktuncel,Nebraska,30,24.0,6.4,5.4,1.9
+Connor Essegian,Nebraska,7,14.0,5.4,1.3,0.9
+Cale Jacobsen,Nebraska,32,20.3,4.8,2.9,1.4
+Jared Garcia,Nebraska,27,8.5,3.1,2.2,0.3
+Leo Curtis,Nebraska,15,3.9,1.7,0.6,0.3
+Kendall Blue,Nebraska,18,3.6,0.7,0.3,0.2
+Justin Bolis,Nebraska,16,1.4,0.2,0.3,0.1
+Caleb Wilson,North Carolina,24,31.3,19.8,9.4,2.7
+Henri Veesaar,North Carolina,30,31.1,16.7,8.7,2.0
+Seth Trimble,North Carolina,23,32.0,14.0,3.6,2.8
+Luka Bogavac,North Carolina,32,24.1,9.8,2.5,2.2
+Jarin Stevenson,North Carolina,32,25.6,8.0,4.4,0.9
+Derek Dixon,North Carolina,32,21.7,6.4,2.3,2.6
+Jonathan Powell,North Carolina,32,16.2,4.8,2.3,0.8
+Kyan Evans,North Carolina,32,18.0,4.1,1.2,2.6
+Zayden High,North Carolina,28,9.1,3.4,2.8,0.5
+Isaiah Denis,North Carolina,10,3.4,1.9,0.6,0.1
+Jaydon Young,North Carolina,30,7.3,1.8,0.9,0.4
+Evan Smith,North Carolina,5,1.6,1.4,1.0,0.6
+James Brown,North Carolina,9,5.6,1.2,1.4,0.3
+Elijah Davis,North Carolina,6,1.7,0.5,0.2,0.0
+Ivan Matlekovic,North Carolina,4,1.3,0.5,0.0,0.0
+John Holbrook,North Carolina,5,1.6,0.2,0.6,0.0
+Damari Wheeler-Thomas,North Dakota St.,31,30.5,14.4,3.5,2.8
+Trevian Carson,North Dakota St.,34,31.5,12.0,6.4,2.8
+Markhi Strickland,North Dakota St.,34,24.5,11.8,3.5,1.3
+Treyson Anderson,North Dakota St.,34,18.2,10.4,5.4,0.8
+Noah Feddersen,North Dakota St.,34,21.2,9.4,5.1,1.0
+Andy Stefonowicz,North Dakota St.,34,32.4,9.2,3.1,4.9
+Tay Smith,North Dakota St.,34,19.9,7.7,2.6,0.9
+Emil Skytta,North Dakota St.,25,12.0,3.7,1.8,0.7
+Carson Smith,North Dakota St.,23,10.3,3.1,1.4,0.2
+Riley Saunders,North Dakota St.,8,2.0,1.9,0.3,0.3
+Riley Massey,North Dakota St.,32,8.3,1.4,1.0,0.5
+Max Majerle,North Dakota St.,17,5.7,1.1,0.9,0.5
+Caleb Schoenrock,North Dakota St.,8,2.1,0.3,0.5,0.1
+Trey Campbell,Northern Iowa,35,33.4,13.7,3.8,3.9
+Leon Bond III,Northern Iowa,35,32.8,11.9,4.8,1.5
+Will Hornseth,Northern Iowa,34,26.3,11.2,4.6,2.2
+Ben Schwieger,Northern Iowa,35,27.7,9.9,4.6,1.9
+Tristan Smith,Northern Iowa,27,20.8,9.1,5.1,1.9
+Max Weisbrod,Northern Iowa,31,27.8,6.5,2.5,2.0
+Kyle Pock,Northern Iowa,33,13.0,3.8,1.0,0.2
+Ismael Diouf,Northern Iowa,34,10.8,3.1,1.3,1.0
+RJ Taylor,Northern Iowa,29,11.1,2.7,1.0,1.2
+Geon Hutchins,Northern Iowa,34,7.7,1.5,1.2,0.2
+Chase Courbat,Northern Iowa,16,3.1,1.0,0.6,0.1
+Hunter Jacobson,Northern Iowa,11,1.5,0.3,0.1,0.0
+Bruce Thornton,Ohio St.,33,36.5,20.2,5.1,3.9
+John Mobley Jr.,Ohio St.,30,31.4,15.7,2.4,2.7
+Devin Royal,Ohio St.,31,32.3,13.7,5.7,1.7
+Christoph Tilly,Ohio St.,31,25.9,11.0,4.7,2.2
+Amare Bynum,Ohio St.,33,28.3,9.7,4.8,1.1
+Brandon Noel,Ohio St.,15,20.0,7.1,3.9,0.9
+Taison Chatman,Ohio St.,27,13.2,4.5,1.2,0.9
+Ivan Njegovan,Ohio St.,29,11.8,2.7,3.1,0.7
+Puff Johnson,Ohio St.,9,11.4,2.3,1.1,0.1
+Gabe Cupps,Ohio St.,32,12.5,1.6,1.2,1.1
+Mathieu Grujicic,Ohio St.,6,5.3,1.0,0.8,0.3
+Colin White,Ohio St.,29,8.7,0.9,1.0,0.4
+Braylen Nash,Ohio St.,6,1.2,0.0,0.0,0.2
+Ethan Roberts,Penn,23,30.5,16.9,3.9,2.3
+TJ Power,Penn,28,35.0,15.8,7.6,2.4
+Michael Zanoni,Penn,28,28.4,11.7,2.0,0.6
+AJ Levine,Penn,28,24.4,8.3,3.3,3.9
+Dalton Scantlebury,Penn,27,15.9,6.2,4.1,0.6
+Augustus Gerhart,Penn,28,19.5,5.6,4.9,1.0
+Cam Thrower,Penn,25,16.2,5.2,1.4,1.3
+Jay Jones,Penn,25,13.8,4.0,2.4,1.1
+Lucas Lueth,Penn,27,15.5,3.1,2.9,0.6
+William Kruse,Penn,2,4.0,2.5,2.5,0.0
+Dylan Williams,Penn,7,8.7,2.1,1.0,1.6
+Michelangelo Oberti,Penn,11,4.0,2.0,1.1,0.1
+Alex Massung,Penn,9,5.8,1.7,0.7,0.6
+Niklas Polonowski,Penn,21,5.8,1.3,0.5,0.2
+Payton Kamin,Penn,4,3.5,1.0,0.3,0.3
+Johnnie Walter,Penn,4,5.3,0.5,0.8,0.0
+Bradyn Foster,Penn,1,3.0,0.0,0.0,0.0
+Braden Smith,Purdue,34,34.2,14.0,3.6,9.0
+Fletcher Loyer,Purdue,34,28.9,13.8,2.3,2.0
+Trey Kaufman-Renn,Purdue,32,27.9,13.4,8.7,2.7
+Oscar Cluff,Purdue,34,24.1,10.3,7.4,1.7
+C.J. Cox,Purdue,34,24.3,8.4,2.6,1.3
+Daniel Jacobsen,Purdue,34,13.9,6.2,3.3,0.4
+Omer Mayer,Purdue,34,14.6,5.9,1.1,1.2
+Gicarri Harris,Purdue,34,16.0,4.8,1.6,0.9
+Jack Benter,Purdue,33,14.7,4.7,2.8,0.8
+Liam Murphy,Purdue,11,7.5,2.3,1.0,0.3
+Aaron Fine,Purdue,9,2.3,1.2,0.0,0.3
+Jace Rayl,Purdue,8,2.0,0.0,0.0,0.0
+Jack Lusk,Purdue,9,1.9,0.0,0.3,0.0
