@@ -572,6 +572,21 @@
     .stats-bar { gap: 12px; flex-wrap: wrap; }
     .controls { gap: 5px; }
     .search-box { width: 140px; }
+
+    /* Hide columns on mobile to prevent horizontal scrolling */
+    .col-fav, .col-team, .col-region, .col-seed { display: none; }
+
+    /* Compact action buttons on mobile */
+    .we-draft-btn .btn-full { display: none; }
+    .we-draft-btn .btn-short { display: inline; }
+    .draft-btn .btn-full { display: none; }
+    .draft-btn .btn-short { display: inline; }
+  }
+
+  /* Desktop: show full text, hide short text */
+  @media (min-width: 901px) {
+    .we-draft-btn .btn-short { display: none; }
+    .draft-btn .btn-short { display: none; }
   }
 </style>
 </head>
@@ -640,15 +655,15 @@
     <table>
       <thead>
         <tr>
-          <th data-sort="rank" class="sorted" title="Overall rank by projected tournament points">Rank <span class="sort-arrow">&#9650;</span></th>
-          <th title="Favorite players for quick reference" style="width:30px;text-align:center;cursor:default;">&#9733;</th>
+          <th data-sort="rank" class="sorted" title="Overall rank by projected tournament points"># <span class="sort-arrow">&#9650;</span></th>
+          <th class="col-fav" title="Favorite players for quick reference" style="width:30px;text-align:center;cursor:default;">&#9733;</th>
           <th data-sort="player" title="Player name">Player</th>
-          <th data-sort="team" title="College team">Team</th>
-          <th data-sort="region" title="Bracket region">Region</th>
-          <th data-sort="seed" title="Tournament seed (1 = best)">Seed</th>
+          <th data-sort="team" class="col-team" title="College team">Team</th>
+          <th data-sort="region" class="col-region" title="Bracket region">Region</th>
+          <th data-sort="seed" class="col-seed" title="Tournament seed (1 = best)">Seed</th>
           <th data-sort="ppg" title="Points per game — season average">PPG</th>
           <th data-sort="expected_games" title="Expected tournament games — simulated using KenPom efficiency ratings and bracket matchups">Exp.G</th>
-          <th data-sort="projected_points" title="Projected Points = PPG x Expected Games">Proj.</th>
+          <th data-sort="projected_points" title="Expected Points = PPG x Expected Games">Ex</th>
           <th title="Injury status">Inj</th>
           <th></th>
         </tr>
@@ -800,7 +815,7 @@ function updateStats() {
   if (best) {
     document.getElementById('ba-player').textContent = best.player;
     document.getElementById('ba-details').textContent = `${best.team} (${best.seed}) | ${best.ppg} PPG | ${best.expected_games} exp. games`;
-    document.getElementById('ba-pts').textContent = best.projected_points.toFixed(1);
+    document.getElementById('ba-pts').textContent = Math.round(best.projected_points);
   } else {
     document.getElementById('ba-player').textContent = 'All players drafted';
     document.getElementById('ba-details').textContent = '';
@@ -821,7 +836,7 @@ function updateDraftLog() {
     return `<div class="draft-log-item">
       <span class="pick-num">#${i + 1}</span>
       <span class="pick-player">${p.player}</span>${isOurs ? '<span class="my-team-badge">OURS</span>' : ''}<br>
-      <span class="pick-team">${p.team} (${p.seed}) — ${p.projected_points.toFixed(1)} pts</span>
+      <span class="pick-team">${p.team} (${p.seed}) — ${Math.round(p.projected_points)} pts</span>
     </div>`;
   }).reverse().join('');
 }
@@ -893,7 +908,7 @@ function updateMyTeamPanel() {
           <div class="my-team-player-team">${p.team} (#${p.seed})</div>
         </div>
         <div style="display:flex;align-items:center;gap:3px;">
-          <span class="my-team-player-pts">${p.projected_points.toFixed(1)}</span>
+          <span class="my-team-player-pts">${Math.round(p.projected_points)}</span>
           <button class="my-team-player-remove" onclick="toggleMyTeam(${p.rank})" title="Remove from team">&times;</button>
         </div>
       </div>`;
@@ -906,7 +921,7 @@ function updateMyTeamPanel() {
   const totalPts = myPlayers.reduce((sum, p) => sum + p.projected_points, 0);
   html += `<div class="my-team-total">
     <span>${myPlayers.length} player${myPlayers.length !== 1 ? 's' : ''}</span>
-    <span class="my-team-total-pts">${totalPts.toFixed(1)} pts</span>
+    <span class="my-team-total-pts">${Math.round(totalPts)} pts</span>
   </div>`;
 
   content.innerHTML = html;
@@ -956,24 +971,24 @@ function render() {
       // Action buttons: contextual
       let actionHtml = '';
       if (isMyTeam) {
-        actionHtml = `<button class="we-draft-btn" onclick="toggleMyTeam(${p.rank})" title="Remove from your team">Ours</button>`;
+        actionHtml = `<button class="we-draft-btn" onclick="toggleMyTeam(${p.rank})" title="Remove from your team"><span class="btn-full">Ours</span><span class="btn-short">Us</span></button>`;
       } else if (isDraftedByOthers) {
-        actionHtml = `<button class="draft-btn" onclick="toggleDraft(${p.rank})" title="Undo — mark as available again">Undo</button>`;
+        actionHtml = `<button class="draft-btn" onclick="toggleDraft(${p.rank})" title="Undo — mark as available again"><span class="btn-full">Undo</span><span class="btn-short">&#8630;</span></button>`;
       } else {
-        actionHtml = `<button class="we-draft-btn" onclick="toggleMyTeam(${p.rank})" title="We drafted this player">We Draft</button>
-          <button class="draft-btn" onclick="toggleDraft(${p.rank})" title="Someone else drafted this player">Draft</button>`;
+        actionHtml = `<button class="we-draft-btn" onclick="toggleMyTeam(${p.rank})" title="We drafted this player"><span class="btn-full">Us</span><span class="btn-short">Us</span></button>
+          <button class="draft-btn" onclick="toggleDraft(${p.rank})" title="Someone else drafted this player"><span class="btn-full">Draft</span><span class="btn-short">&#128683;</span></button>`;
       }
 
       return `<tr class="${rowClass}" data-rank="${p.rank}">
         <td class="rank-cell">${p.rank}</td>
-        <td style="text-align:center;"><button class="fav-btn ${favorites.has(p.rank) ? 'active' : ''}" onclick="toggleFav(${p.rank})">&#9733;</button></td>
+        <td class="col-fav" style="text-align:center;"><button class="fav-btn ${favorites.has(p.rank) ? 'active' : ''}" onclick="toggleFav(${p.rank})">&#9733;</button></td>
         <td class="player-cell">${p.player}${isDraftedByOthers ? ` <span class="pick-number">(#${pickIdx + 1})</span>` : ''}${isMyTeam ? '<span class="my-team-badge">OURS</span>' : ''}${conflictHtml}</td>
-        <td class="team-cell">${p.team}</td>
-        <td class="region-cell">${region}</td>
-        <td><span class="seed-badge ${seedClass(p.seed)}">${p.seed}</span></td>
+        <td class="team-cell col-team">${p.team}</td>
+        <td class="region-cell col-region">${region}</td>
+        <td class="col-seed"><span class="seed-badge ${seedClass(p.seed)}">${p.seed}</span></td>
         <td>${p.ppg.toFixed(1)}</td>
         <td>${p.expected_games.toFixed(2)}</td>
-        <td class="pts-cell">${p.projected_points.toFixed(1)}</td>
+        <td class="pts-cell">${Math.round(p.projected_points)}</td>
         <td><span class="injury-dot ${ic}"></span></td>
         <td style="white-space:nowrap;">${actionHtml}</td>
       </tr>`;
