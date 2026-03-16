@@ -791,7 +791,7 @@ function getFiltered() {
   const regionFilter = document.getElementById('region-filter').value;
 
   let filtered = players.filter(p => {
-    if (hideDrafted && drafted.has(p.rank) && !myTeam.has(p.rank)) return false;
+    if (hideDrafted && drafted.has(p.rank)) return false;
     if (showFavsOnly && !favorites.has(p.rank)) return false;
     if (search && !p.player.toLowerCase().includes(search) && !p.team.toLowerCase().includes(search)) return false;
     if (teamFilter && p.team !== teamFilter) return false;
