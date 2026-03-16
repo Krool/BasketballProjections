@@ -999,7 +999,6 @@
     <button class="btn" id="export-btn">Export Draft</button>
     <button class="btn" id="export-all-btn">Export All</button>
     <button class="btn" id="mock-btn" style="color:var(--orange);border-color:rgba(251,191,36,0.3);">Mock Draft</button>
-    <button class="btn" id="analysis-btn" style="color:var(--green);border-color:rgba(52,211,153,0.3);">Analysis</button>
     <span style="flex:1"></span>
     <button class="btn danger" id="reset-btn">Reset Draft</button>
   </div>
@@ -2324,8 +2323,6 @@ function renderAnalysis(config) {
 
   content.innerHTML = html;
 }
-
-document.getElementById('analysis-btn').addEventListener('click', showAnalysis);
 
 // Close analysis modal on overlay click
 document.getElementById('analysis-modal').addEventListener('click', function(e) {
