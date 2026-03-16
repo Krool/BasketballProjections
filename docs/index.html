@@ -1184,13 +1184,19 @@ function render() {
 
       // Action buttons: contextual
       let actionHtml = '';
+      const myMockTurn = mockActive && isMyMockPick();
       if (isMyTeam) {
-        actionHtml = `<button class="we-draft-btn" onclick="toggleMyTeam(${p.rank})" title="Remove from your team"><span class="btn-full">Ours</span><span class="btn-short">Us</span></button>`;
+        const canRemove = !mockActive || mockPaused;
+        actionHtml = canRemove ? `<button class="we-draft-btn" onclick="toggleMyTeam(${p.rank})" title="Remove from your team"><span class="btn-full">Ours</span><span class="btn-short">Us</span></button>` : `<span class="my-team-badge">OURS</span>`;
       } else if (isDraftedByOthers) {
         actionHtml = mockActive ? '' : `<button class="draft-btn" onclick="toggleDraft(${p.rank})" title="Undo — mark as available again"><span class="btn-full">Undo</span><span class="btn-short">&#8630;</span></button>`;
       } else if (mockActive) {
-        // During mock: only show "Us" button — computer handles other teams
-        actionHtml = `<button class="we-draft-btn" onclick="toggleMyTeam(${p.rank})" title="Draft this player for your team"><span class="btn-full">Us</span><span class="btn-short">Us</span></button>`;
+        // During mock: "Us" only enabled on your turn
+        if (myMockTurn) {
+          actionHtml = `<button class="we-draft-btn" onclick="toggleMyTeam(${p.rank})" title="Draft this player for your team"><span class="btn-full">Us</span><span class="btn-short">Us</span></button>`;
+        } else {
+          actionHtml = `<button class="we-draft-btn" disabled style="opacity:0.25;cursor:default;" title="Wait for your pick"><span class="btn-full">Us</span><span class="btn-short">Us</span></button>`;
+        }
       } else {
         actionHtml = `<button class="we-draft-btn" onclick="toggleMyTeam(${p.rank})" title="We drafted this player"><span class="btn-full">Us</span><span class="btn-short">Us</span></button>
           <button class="draft-btn" onclick="toggleDraft(${p.rank})" title="Someone else drafted this player"><span class="btn-full">Draft</span><span class="btn-short">&#128683;</span></button>`;
