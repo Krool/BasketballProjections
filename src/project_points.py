@@ -2,10 +2,60 @@
 Combine expected games per team with player PPG to project total tournament points.
 """
 import os
+import re
 import pandas as pd
 
 DATA_DIR = os.path.join(os.path.dirname(__file__), '..', 'data')
 OUTPUT_DIR = os.path.join(os.path.dirname(__file__), '..', 'output')
+
+# Suffixes that vary between data sources (ESPN vs news articles vs manual entry)
+_SUFFIX_RE = re.compile(r'\s+(jr\.?|sr\.?|ii|iii|iv|v)\s*$', re.IGNORECASE)
+
+
+def _normalize_name(name):
+    """
+    Normalize a player name for matching across data sources.
+    Strips suffixes like Jr., Sr., II, III, etc. and lowercases.
+    """
+    name = str(name).strip().lower()
+    name = _SUFFIX_RE.sub('', name)
+    return name.strip()
+
+
+def _build_injury_lookup(injuries_df):
+    """
+    Build an injury lookup dict that can match on both exact and
+    suffix-stripped names. Exact matches take priority.
+    """
+    exact_lookup = {}   # (player_lower, team_lower) -> status
+    fuzzy_lookup = {}   # (normalized_name, team_lower) -> status
+
+    for _, row in injuries_df.iterrows():
+        player = str(row['player']).strip()
+        team = str(row['team']).strip().lower()
+        status = str(row['status']).strip().upper()
+
+        exact_lookup[(player.lower(), team)] = status
+        fuzzy_lookup[(_normalize_name(player), team)] = status
+
+    return exact_lookup, fuzzy_lookup
+
+
+def _get_injury_status(player_name, team_name, exact_lookup, fuzzy_lookup):
+    """Look up injury status, trying exact match first, then normalized."""
+    team = team_name.lower()
+
+    # Try exact match
+    status = exact_lookup.get((player_name.lower(), team))
+    if status:
+        return status
+
+    # Try normalized (suffix-stripped) match
+    status = fuzzy_lookup.get((_normalize_name(player_name), team))
+    if status:
+        return status
+
+    return 'HEALTHY'
 
 
 def project_player_points(player_stats_df, expected_games, injuries_df=None, min_mpg=10.0):
@@ -32,15 +82,10 @@ def project_player_points(player_stats_df, expected_games, injuries_df=None, min
 
     # Apply injury adjustments
     if injuries_df is not None and not injuries_df.empty:
-        # Create a lookup for injury status
-        injury_lookup = {}
-        for _, row in injuries_df.iterrows():
-            key = (str(row['player']).strip().lower(), str(row['team']).strip().lower())
-            injury_lookup[key] = str(row['status']).strip().upper()
+        exact_lookup, fuzzy_lookup = _build_injury_lookup(injuries_df)
 
         def get_injury_multiplier(row):
-            key = (row['player'].lower(), row['team'].lower())
-            status = injury_lookup.get(key, 'HEALTHY')
+            status = _get_injury_status(row['player'], row['team'], exact_lookup, fuzzy_lookup)
             if status == 'OUT':
                 return 0.0
             elif status == 'RETURNING':
@@ -52,9 +97,8 @@ def project_player_points(player_stats_df, expected_games, injuries_df=None, min
 
         df['injury_multiplier'] = df.apply(get_injury_multiplier, axis=1)
         df['injury_status'] = df.apply(
-            lambda row: injury_lookup.get(
-                (row['player'].lower(), row['team'].lower()), 'HEALTHY'
-            ), axis=1
+            lambda row: _get_injury_status(row['player'], row['team'], exact_lookup, fuzzy_lookup),
+            axis=1
         )
     else:
         df['injury_multiplier'] = 1.0

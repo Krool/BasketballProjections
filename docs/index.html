@@ -373,6 +373,7 @@
     <select id="team-filter"><option value="">All Teams</option></select>
     <select id="seed-filter"><option value="">All Seeds</option></select>
     <button class="toggle-btn active" id="hide-drafted">Hide Drafted</button>
+    <button class="btn" id="clear-filters">Clear Filters</button>
     <button class="btn" id="toggle-log">Draft Log</button>
     <button class="btn" id="undo-btn">Undo</button>
     <button class="btn danger" id="reset-btn">Reset</button>
@@ -623,6 +624,16 @@ function init() {
       }
       render();
     });
+  });
+
+  // Clear filters
+  document.getElementById('clear-filters').addEventListener('click', () => {
+    document.getElementById('search').value = '';
+    document.getElementById('team-filter').value = '';
+    document.getElementById('seed-filter').value = '';
+    sortCol = 'rank';
+    sortAsc = true;
+    render();
   });
 
   // Draft log toggle
