@@ -34,6 +34,7 @@ data/
   kenpom_tournament.csv    # Parsed: 68 tournament teams with seeds
   bracket.json             # 64-team bracket with region assignments
   injury_overrides.csv     # Manual injury statuses (primary source)
+  injuries_combined.csv    # Generated: merged ESPN + manual injuries
   all_player_stats.csv     # Combined player stats from ESPN
   player_stats/            # Per-team JSON cache from ESPN scraping
 
@@ -44,7 +45,6 @@ src/
   scrape_players_espn.py   # Scrape player per-game stats from ESPN
   scrape_injuries.py       # Load injuries (manual overrides + ESPN)
   project_points.py        # Combine data into final projections
-  scrape_players.py        # (Deprecated) Sports-reference scraper
 
 output/
   projections.csv          # Final ranked player projections

@@ -18,6 +18,7 @@
     --green: #34d399;
     --red: #f87171;
     --orange: #fbbf24;
+    --purple: #a78bfa;
     --drafted-bg: #1a1d27;
     --drafted-text: #4a4e5e;
   }
@@ -66,6 +67,7 @@
   .stat-label { color: var(--text-dim); }
   .stat-value.green { color: var(--green); }
   .stat-value.orange { color: var(--orange); }
+  .stat-value.purple { color: var(--purple); }
 
   .controls {
     display: flex;
@@ -221,6 +223,12 @@
 
   tr.drafted td { text-decoration: line-through; color: var(--drafted-text); }
 
+  tr.my-team {
+    background: rgba(167, 139, 250, 0.08) !important;
+  }
+
+  tr.my-team td { text-decoration: none; }
+
   .rank-cell { font-weight: 700; color: var(--text-dim); width: 40px; }
   .player-cell { font-weight: 600; }
   .team-cell { color: var(--text-dim); }
@@ -278,6 +286,23 @@
     background: rgba(248, 113, 113, 0.1);
   }
 
+  .we-draft-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding: 4px 8px;
+    color: var(--purple);
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-weight: 600;
+  }
+
+  .we-draft-btn:hover {
+    border-color: var(--purple);
+    background: rgba(167, 139, 250, 0.15);
+  }
+
   tr.drafted .draft-btn {
     border-color: var(--green);
     color: var(--green);
@@ -287,6 +312,35 @@
 
   tr.drafted .draft-btn:hover {
     background: rgba(52, 211, 153, 0.1);
+  }
+
+  tr.my-team .we-draft-btn {
+    border-color: var(--purple);
+    background: rgba(167, 139, 250, 0.2);
+    color: var(--purple);
+    text-decoration: none;
+    opacity: 1;
+  }
+
+  tr.drafted .we-draft-btn {
+    text-decoration: none;
+    opacity: 1;
+  }
+
+  .my-team-badge {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--purple);
+    margin-left: 6px;
+    text-decoration: none !important;
+  }
+
+  .conflict-warn {
+    color: var(--orange);
+    font-size: 11px;
+    margin-left: 6px;
+    cursor: help;
+    text-decoration: none !important;
   }
 
   .pick-number {
@@ -342,6 +396,109 @@
   .draft-log-item .pick-player { font-weight: 600; }
   .draft-log-item .pick-team { color: var(--text-dim); font-size: 12px; }
 
+  /* My Team Panel */
+  .my-team-panel {
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 360px;
+    height: 100vh;
+    background: var(--surface);
+    border-left: 1px solid var(--border);
+    overflow-y: auto;
+    z-index: 200;
+    transform: translateX(100%);
+    transition: transform 0.25s ease;
+    padding: 16px;
+  }
+
+  .my-team-panel.open { transform: translateX(0); }
+
+  .my-team-panel h3 {
+    font-size: 14px;
+    margin-bottom: 16px;
+    color: var(--purple);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .my-team-region {
+    margin-bottom: 16px;
+  }
+
+  .my-team-region-header {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-dim);
+    padding: 6px 0;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 6px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .region-conflict-badge {
+    color: var(--orange);
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  .my-team-player {
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(46, 51, 69, 0.5);
+    font-size: 13px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .my-team-player-name { font-weight: 600; }
+  .my-team-player-team { color: var(--text-dim); font-size: 12px; }
+  .my-team-player-pts { color: var(--green); font-weight: 700; }
+
+  .my-team-total {
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: 2px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    font-weight: 700;
+    font-size: 15px;
+  }
+
+  .my-team-total-pts { color: var(--green); }
+
+  .my-team-conflicts {
+    margin-top: 16px;
+    padding: 12px;
+    background: rgba(251, 191, 36, 0.08);
+    border: 1px solid rgba(251, 191, 36, 0.2);
+    border-radius: 8px;
+    font-size: 12px;
+  }
+
+  .my-team-conflicts-title {
+    font-weight: 700;
+    color: var(--orange);
+    margin-bottom: 8px;
+    font-size: 13px;
+  }
+
+  .conflict-item {
+    padding: 4px 0;
+    color: var(--text-dim);
+    line-height: 1.4;
+  }
+
+  .my-team-empty {
+    color: var(--text-dim);
+    font-size: 13px;
+    padding: 20px 0;
+    text-align: center;
+  }
+
   .no-results {
     text-align: center;
     padding: 40px;
@@ -360,6 +517,7 @@
     table { font-size: 12px; }
     tbody td, thead th { padding: 8px 6px; }
     .draft-log { width: 240px; }
+    .my-team-panel { width: 280px; }
   }
 </style>
 </head>
@@ -378,6 +536,10 @@
         <span class="stat-label">Drafted</span>
       </div>
       <div class="stat">
+        <span class="stat-value purple" id="my-team-count">0</span>
+        <span class="stat-label">My Team</span>
+      </div>
+      <div class="stat">
         <span class="stat-value" id="pick-number">Pick 1</span>
       </div>
     </div>
@@ -390,9 +552,11 @@
     <button class="toggle-btn" id="show-favs">Favorites</button>
     <button class="btn" id="clear-filters">Clear Filters</button>
     <button class="btn" id="toggle-log">Draft Log</button>
+    <button class="btn" id="toggle-my-team" style="color: var(--purple);">My Team</button>
     <button class="btn" id="undo-btn">Undo</button>
-    <button class="btn danger" id="reset-btn">Reset</button>
     <button class="btn" id="export-btn">Export</button>
+    <span style="flex:1"></span>
+    <button class="btn danger" id="reset-btn">Reset Draft</button>
   </div>
 </div>
 
@@ -409,13 +573,13 @@
   <table>
     <thead>
       <tr>
-        <th data-sort="rank" class="sorted" title="Overall rank by projected tournament points">Rank <span class="sort-arrow">▲</span></th>
+        <th data-sort="rank" class="sorted" title="Overall rank by projected tournament points">Rank <span class="sort-arrow">&#9650;</span></th>
         <th data-sort="player" title="Player name">Player</th>
         <th data-sort="team" title="College team">Team</th>
         <th data-sort="seed" title="Tournament seed (1 = best)">Seed</th>
         <th data-sort="ppg" title="Points per game — season average">PPG</th>
         <th data-sort="expected_games" title="Expected tournament games — simulated using KenPom efficiency ratings and bracket matchups">Exp. Games</th>
-        <th data-sort="projected_points" title="Projected Points = PPG × Expected Games — total expected scoring output across the tournament">Proj. Pts</th>
+        <th data-sort="projected_points" title="Projected Points = PPG x Expected Games — total expected scoring output across the tournament">Proj. Pts</th>
         <th title="Injury status: healthy, questionable, or out">Status</th>
         <th title="Favorite players for quick reference">Fav</th>
         <th></th>
@@ -431,15 +595,48 @@
   <div id="draft-log-list"></div>
 </div>
 
+<div class="my-team-panel" id="my-team-panel">
+  <h3>My Team</h3>
+  <div id="my-team-content"></div>
+</div>
+
 <script>
 let players = [];
 let drafted = new Set();
+let myTeam = new Set();
 let favorites = new Set();
 let draftOrder = [];
 let sortCol = 'rank';
 let sortAsc = true;
 let hideDrafted = true;
 let showFavsOnly = false;
+
+// Bracket region data (from bracket.json)
+const REGIONS = {
+  "East": ["Duke","Siena","Ohio St.","TCU","St. John's","Northern Iowa","Kansas","Cal Baptist","Louisville","South Florida","Michigan St.","North Dakota St.","UCLA","UCF","Connecticut","Furman"],
+  "West": ["Arizona","LIU","Villanova","Utah St.","Wisconsin","High Point","Arkansas","Hawaii","BYU","N.C. State","Gonzaga","Kennesaw St.","Miami FL","Missouri","Purdue","Queens"],
+  "Midwest": ["Michigan","UMBC","Georgia","Saint Louis","Texas Tech","Akron","Alabama","Hofstra","Tennessee","SMU","Virginia","Wright St.","Kentucky","Santa Clara","Iowa St.","Tennessee St."],
+  "South": ["Florida","Lehigh","Clemson","Iowa","Vanderbilt","McNeese","Nebraska","Troy","North Carolina","VCU","Illinois","Penn","Saint Mary's","Texas A&M","Houston","Idaho"]
+};
+
+// East vs West in semis, South vs Midwest in semis
+const BRACKET_SIDES = { "East": "A", "West": "A", "South": "B", "Midwest": "B" };
+
+function getTeamRegion(team) {
+  for (const [region, teams] of Object.entries(REGIONS)) {
+    if (teams.includes(team)) return region;
+  }
+  return null;
+}
+
+function getConflictLevel(team1, team2) {
+  if (team1 === team2) return null; // same team, no conflict
+  const r1 = getTeamRegion(team1), r2 = getTeamRegion(team2);
+  if (!r1 || !r2) return null;
+  if (r1 === r2) return 'region'; // same region — will definitely meet
+  if (BRACKET_SIDES[r1] === BRACKET_SIDES[r2]) return 'semifinal'; // could meet in Final Four
+  return null; // opposite sides — only meet in championship
+}
 
 const STORAGE_KEY = 'mm2026_draft';
 
@@ -449,6 +646,7 @@ function loadState() {
     if (saved) {
       const state = JSON.parse(saved);
       drafted = new Set(state.drafted || []);
+      myTeam = new Set(state.myTeam || []);
       favorites = new Set(state.favorites || []);
       draftOrder = state.draftOrder || [];
     }
@@ -458,6 +656,7 @@ function loadState() {
 function saveState() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify({
     drafted: [...drafted],
+    myTeam: [...myTeam],
     favorites: [...favorites],
     draftOrder
   }));
@@ -476,13 +675,27 @@ function injuryClass(status) {
   return 'healthy';
 }
 
+function getMyTeamConflicts(player) {
+  const conflicts = [];
+  for (const rank of myTeam) {
+    if (rank === player.rank) continue;
+    const other = players.find(p => p.rank === rank);
+    if (!other) continue;
+    const level = getConflictLevel(player.team, other.team);
+    if (level) {
+      conflicts.push({ player: other, level });
+    }
+  }
+  return conflicts;
+}
+
 function getFiltered() {
   const search = document.getElementById('search').value.toLowerCase();
   const teamFilter = document.getElementById('team-filter').value;
   const seedFilter = document.getElementById('seed-filter').value;
 
   let filtered = players.filter(p => {
-    if (hideDrafted && drafted.has(p.rank)) return false;
+    if (hideDrafted && drafted.has(p.rank) && !myTeam.has(p.rank)) return false;
     if (showFavsOnly && !favorites.has(p.rank)) return false;
     if (search && !p.player.toLowerCase().includes(search) && !p.team.toLowerCase().includes(search)) return false;
     if (teamFilter && p.team !== teamFilter) return false;
@@ -512,6 +725,7 @@ function updateStats() {
   const avail = players.length - drafted.size;
   document.getElementById('available-count').textContent = avail;
   document.getElementById('drafted-count').textContent = drafted.size;
+  document.getElementById('my-team-count').textContent = myTeam.size;
   document.getElementById('pick-number').textContent = `Pick ${drafted.size + 1}`;
 
   const best = getBestAvailable();
@@ -531,12 +745,96 @@ function updateDraftLog() {
   list.innerHTML = draftOrder.map((rank, i) => {
     const p = players.find(pl => pl.rank === rank);
     if (!p) return '';
+    const isOurs = myTeam.has(rank);
     return `<div class="draft-log-item">
       <span class="pick-num">#${i + 1}</span>
-      <span class="pick-player">${p.player}</span><br>
+      <span class="pick-player">${p.player}</span>${isOurs ? '<span class="my-team-badge">OURS</span>' : ''}<br>
       <span class="pick-team">${p.team} (${p.seed}) — ${p.projected_points.toFixed(1)} pts</span>
     </div>`;
   }).reverse().join('');
+}
+
+function updateMyTeamPanel() {
+  const content = document.getElementById('my-team-content');
+
+  if (myTeam.size === 0) {
+    content.innerHTML = '<div class="my-team-empty">Use "We Draft" to add players to your team.</div>';
+    return;
+  }
+
+  const myPlayers = players.filter(p => myTeam.has(p.rank));
+
+  // Group by region
+  const byRegion = {};
+  for (const p of myPlayers) {
+    const region = getTeamRegion(p.team) || 'Unknown';
+    if (!byRegion[region]) byRegion[region] = [];
+    byRegion[region].push(p);
+  }
+
+  // Find all conflicts
+  const allConflicts = [];
+  for (let i = 0; i < myPlayers.length; i++) {
+    for (let j = i + 1; j < myPlayers.length; j++) {
+      const level = getConflictLevel(myPlayers[i].team, myPlayers[j].team);
+      if (level) {
+        allConflicts.push({ p1: myPlayers[i], p2: myPlayers[j], level });
+      }
+    }
+  }
+
+  let html = '';
+
+  // Region sections
+  for (const region of ['East', 'West', 'South', 'Midwest', 'Unknown']) {
+    const rPlayers = byRegion[region];
+    if (!rPlayers || rPlayers.length === 0) continue;
+
+    const regionTeams = [...new Set(rPlayers.map(p => p.team))];
+    const hasConflict = region !== 'Unknown' && regionTeams.length > 1;
+
+    html += `<div class="my-team-region">
+      <div class="my-team-region-header">
+        <span>${region} Region</span>
+        ${hasConflict ? `<span class="region-conflict-badge">&#9888; ${regionTeams.length} teams</span>` : ''}
+      </div>`;
+
+    for (const p of rPlayers.sort((a, b) => b.projected_points - a.projected_points)) {
+      html += `<div class="my-team-player">
+        <div>
+          <div class="my-team-player-name">${p.player}</div>
+          <div class="my-team-player-team">${p.team} (#${p.seed})</div>
+        </div>
+        <div class="my-team-player-pts">${p.projected_points.toFixed(1)}</div>
+      </div>`;
+    }
+
+    html += '</div>';
+  }
+
+  // Total
+  const totalPts = myPlayers.reduce((sum, p) => sum + p.projected_points, 0);
+  html += `<div class="my-team-total">
+    <span>${myPlayers.length} players</span>
+    <span class="my-team-total-pts">${totalPts.toFixed(1)} total pts</span>
+  </div>`;
+
+  // Conflict warnings
+  if (allConflicts.length > 0) {
+    html += `<div class="my-team-conflicts">
+      <div class="my-team-conflicts-title">&#9888; Bracket Conflicts</div>`;
+    for (const c of allConflicts) {
+      const desc = c.level === 'region'
+        ? `Same region — one team eliminates the other`
+        : `Same bracket side — could meet in Final Four`;
+      html += `<div class="conflict-item">
+        <strong>${c.p1.team}</strong> vs <strong>${c.p2.team}</strong><br>${desc}
+      </div>`;
+    }
+    html += '</div>';
+  }
+
+  content.innerHTML = html;
 }
 
 function render() {
@@ -550,32 +848,53 @@ function render() {
     document.getElementById('no-results').style.display = 'none';
     tbody.innerHTML = filtered.map(p => {
       const isDrafted = drafted.has(p.rank);
+      const isMyTeam = myTeam.has(p.rank);
       const pickIdx = draftOrder.indexOf(p.rank);
       const ic = injuryClass(p.injury_status);
-      return `<tr class="${isDrafted ? 'drafted' : ''}" data-rank="${p.rank}">
+
+      // Check for conflicts with existing team
+      let conflictHtml = '';
+      if (isMyTeam) {
+        const conflicts = getMyTeamConflicts(p);
+        if (conflicts.length > 0) {
+          const names = conflicts.map(c => c.player.team).join(', ');
+          const label = conflicts.some(c => c.level === 'region') ? '&#9888;' : '&#9670;';
+          conflictHtml = `<span class="conflict-warn" title="Bracket conflict with your players on: ${names}">${label}</span>`;
+        }
+      }
+
+      let rowClass = '';
+      if (isMyTeam) rowClass = 'my-team';
+      else if (isDrafted) rowClass = 'drafted';
+
+      return `<tr class="${rowClass}" data-rank="${p.rank}">
         <td class="rank-cell">${p.rank}</td>
-        <td class="player-cell">${p.player}${isDrafted ? ` <span class="pick-number">(Pick ${pickIdx + 1})</span>` : ''}</td>
+        <td class="player-cell">${p.player}${isDrafted && !isMyTeam ? ` <span class="pick-number">(Pick ${pickIdx + 1})</span>` : ''}${isMyTeam ? '<span class="my-team-badge">OURS</span>' : ''}${conflictHtml}</td>
         <td class="team-cell">${p.team}</td>
         <td><span class="seed-badge ${seedClass(p.seed)}" title="#${p.seed} seed — lower seeds are expected to advance further">${p.seed}</span></td>
         <td title="Season average: ${p.ppg.toFixed(1)} points per game">${p.ppg.toFixed(1)}</td>
         <td title="Based on KenPom bracket simulation: ${p.team} is projected to play ${p.expected_games.toFixed(2)} games">${p.expected_games.toFixed(2)}</td>
-        <td class="pts-cell" title="${p.ppg.toFixed(1)} PPG × ${p.expected_games.toFixed(2)} games = ${p.projected_points.toFixed(1)} projected points">${p.projected_points.toFixed(1)}</td>
+        <td class="pts-cell" title="${p.ppg.toFixed(1)} PPG x ${p.expected_games.toFixed(2)} games = ${p.projected_points.toFixed(1)} projected points">${p.projected_points.toFixed(1)}</td>
         <td><span class="injury-dot ${ic}"></span>${p.injury_status || 'HEALTHY'}</td>
         <td><button class="fav-btn ${favorites.has(p.rank) ? 'active' : ''}" onclick="toggleFav(${p.rank})">&#9733;</button></td>
-        <td><button class="draft-btn" onclick="toggleDraft(${p.rank})">${isDrafted ? 'Undo' : 'Draft'}</button></td>
+        <td style="white-space:nowrap;">
+          <button class="we-draft-btn" onclick="toggleMyTeam(${p.rank})" title="${isMyTeam ? 'Remove from your team' : 'Add to your team'}">${isMyTeam ? 'Ours' : 'We Draft'}</button>
+          <button class="draft-btn" onclick="toggleDraft(${p.rank})">${isDrafted ? 'Undo' : 'Draft'}</button>
+        </td>
       </tr>`;
     }).join('');
   }
 
   updateStats();
   updateDraftLog();
+  updateMyTeamPanel();
 
   // Update sort indicators
   document.querySelectorAll('thead th').forEach(th => {
     const col = th.dataset.sort;
     th.classList.toggle('sorted', col === sortCol);
     const arrow = th.querySelector('.sort-arrow');
-    if (arrow) arrow.textContent = col === sortCol ? (sortAsc ? '▲' : '▼') : '';
+    if (arrow) arrow.textContent = col === sortCol ? (sortAsc ? '\u25B2' : '\u25BC') : '';
   });
 }
 
@@ -592,10 +911,27 @@ function toggleFav(rank) {
 function toggleDraft(rank) {
   if (drafted.has(rank)) {
     drafted.delete(rank);
+    myTeam.delete(rank);
     draftOrder = draftOrder.filter(r => r !== rank);
   } else {
     drafted.add(rank);
     draftOrder.push(rank);
+  }
+  saveState();
+  render();
+}
+
+function toggleMyTeam(rank) {
+  if (myTeam.has(rank)) {
+    myTeam.delete(rank);
+    drafted.delete(rank);
+    draftOrder = draftOrder.filter(r => r !== rank);
+  } else {
+    myTeam.add(rank);
+    if (!drafted.has(rank)) {
+      drafted.add(rank);
+      draftOrder.push(rank);
+    }
   }
   saveState();
   render();
@@ -680,6 +1016,13 @@ function init() {
   // Draft log toggle
   document.getElementById('toggle-log').addEventListener('click', () => {
     document.getElementById('draft-log').classList.toggle('open');
+    document.getElementById('my-team-panel').classList.remove('open');
+  });
+
+  // My Team panel toggle
+  document.getElementById('toggle-my-team').addEventListener('click', () => {
+    document.getElementById('my-team-panel').classList.toggle('open');
+    document.getElementById('draft-log').classList.remove('open');
   });
 
   // Undo
@@ -687,14 +1030,16 @@ function init() {
     if (draftOrder.length === 0) return;
     const last = draftOrder.pop();
     drafted.delete(last);
+    myTeam.delete(last);
     saveState();
     render();
   });
 
   // Reset
   document.getElementById('reset-btn').addEventListener('click', () => {
-    if (!confirm('Reset all draft picks and favorites? This cannot be undone.')) return;
+    if (!confirm('Reset all draft picks, your team, and favorites? This cannot be undone.')) return;
     drafted.clear();
+    myTeam.clear();
     favorites.clear();
     draftOrder = [];
     showFavsOnly = false;
@@ -705,10 +1050,10 @@ function init() {
 
   // Export
   document.getElementById('export-btn').addEventListener('click', () => {
-    const lines = ['Pick,Rank,Player,Team,Seed,PPG,Projected Points'];
+    const lines = ['Pick,Rank,Player,Team,Seed,PPG,Projected Points,Our Team'];
     draftOrder.forEach((rank, i) => {
       const p = players.find(pl => pl.rank === rank);
-      if (p) lines.push(`${i + 1},${p.rank},${p.player},${p.team},${p.seed},${p.ppg},${p.projected_points}`);
+      if (p) lines.push(`${i + 1},${p.rank},${p.player},${p.team},${p.seed},${p.ppg},${p.projected_points},${myTeam.has(rank) ? 'Yes' : 'No'}`);
     });
     const blob = new Blob([lines.join('\n')], { type: 'text/csv' });
     const a = document.createElement('a');
