@@ -393,14 +393,14 @@
   <table>
     <thead>
       <tr>
-        <th data-sort="rank" class="sorted">Rank <span class="sort-arrow">▲</span></th>
-        <th data-sort="player">Player</th>
-        <th data-sort="team">Team</th>
-        <th data-sort="seed">Seed</th>
-        <th data-sort="ppg">PPG</th>
-        <th data-sort="expected_games">Exp. Games</th>
-        <th data-sort="projected_points">Proj. Pts</th>
-        <th>Status</th>
+        <th data-sort="rank" class="sorted" title="Overall rank by projected tournament points">Rank <span class="sort-arrow">▲</span></th>
+        <th data-sort="player" title="Player name">Player</th>
+        <th data-sort="team" title="College team">Team</th>
+        <th data-sort="seed" title="Tournament seed (1 = best)">Seed</th>
+        <th data-sort="ppg" title="Points per game — season average">PPG</th>
+        <th data-sort="expected_games" title="Expected tournament games — simulated using KenPom efficiency ratings and bracket matchups">Exp. Games</th>
+        <th data-sort="projected_points" title="Projected Points = PPG × Expected Games — total expected scoring output across the tournament">Proj. Pts</th>
+        <th title="Injury status: healthy, questionable, or out">Status</th>
         <th></th>
       </tr>
     </thead>
@@ -534,10 +534,10 @@ function render() {
         <td class="rank-cell">${p.rank}</td>
         <td class="player-cell">${p.player}${isDrafted ? ` <span class="pick-number">(Pick ${pickIdx + 1})</span>` : ''}</td>
         <td class="team-cell">${p.team}</td>
-        <td><span class="seed-badge ${seedClass(p.seed)}">${p.seed}</span></td>
-        <td>${p.ppg.toFixed(1)}</td>
-        <td>${p.expected_games.toFixed(2)}</td>
-        <td class="pts-cell">${p.projected_points.toFixed(1)}</td>
+        <td><span class="seed-badge ${seedClass(p.seed)}" title="#${p.seed} seed — lower seeds are expected to advance further">${p.seed}</span></td>
+        <td title="Season average: ${p.ppg.toFixed(1)} points per game">${p.ppg.toFixed(1)}</td>
+        <td title="Based on KenPom bracket simulation: ${p.team} is projected to play ${p.expected_games.toFixed(2)} games">${p.expected_games.toFixed(2)}</td>
+        <td class="pts-cell" title="${p.ppg.toFixed(1)} PPG × ${p.expected_games.toFixed(2)} games = ${p.projected_points.toFixed(1)} projected points">${p.projected_points.toFixed(1)}</td>
         <td><span class="injury-dot ${ic}"></span>${p.injury_status || 'HEALTHY'}</td>
         <td><button class="draft-btn" onclick="toggleDraft(${p.rank})">${isDrafted ? 'Undo' : 'Draft'}</button></td>
       </tr>`;
