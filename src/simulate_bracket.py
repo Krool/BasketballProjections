@@ -313,15 +313,11 @@ def calculate_expected_games(kenpom_df: pd.DataFrame, bracket: dict) -> dict[str
     ff_probs = _propagate_final_four(region_champions, ff_matchups)
 
     # --- Combine into expected games ---
-    # P(play round k) = P(won all previous rounds)
-    #   = product of p_win for rounds 1..k-1
-    # Every team plays round 1, so games = 1 + sum_{k=2..6} P(play round k)
-    # But P(play round k) = P(win round k-1) which we already computed
-    # (since winning round k-1 is required to play round k).
+    # EG = 1 + P(win R1) + P(win R2) + P(win S16) + P(win E8) + P(win F4 semi)
     #
-    # Actually: expected games = 1 + P(win R1) + P(win R2) + P(win R3)
-    #                              + P(win R4) + P(win R5)
-    # (You play R1 always = 1 game. If you win R1 you play R2 = +P(win R1) games, etc.)
+    # Each P(win round k) = P(you advance to round k+1) = P(you play round k+1).
+    # You always play R1 (= 1 game). Winning the championship does NOT add a game
+    # (there's no game after the final), so we exclude P(win CG).
 
     expected: dict[str, float] = {}
     for tname, r14 in region_round_probs.items():
@@ -329,10 +325,11 @@ def calculate_expected_games(kenpom_df: pd.DataFrame, bracket: dict) -> dict[str
         eg = 1.0  # always play round 1
         for p in r14:
             eg += p  # each win means you play the next round
-        # Add Final Four rounds if this team has any
+        # Add Final Four semifinal only (not championship win)
+        # ff_probs[tname] = [p_win_semifinal, p_win_championship]
         if tname in ff_probs:
-            for p in ff_probs[tname]:
-                eg += p
+            eg += ff_probs[tname][0]  # semifinal win = play championship
+            # ff_probs[tname][1] is P(win CG) -- excluded, no next game
         expected[tname] = eg
 
     return expected
