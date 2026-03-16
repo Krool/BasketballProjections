@@ -18,6 +18,7 @@ Pipeline steps:
 import os
 import sys
 import json
+from datetime import datetime, timezone
 import pandas as pd
 
 # Add src to path
@@ -130,8 +131,23 @@ def main():
     )
 
     # Save and display
-    output_df = save_projections(projections, kenpom_df=kenpom_df)
+    output_df = save_projections(projections, kenpom_df=kenpom_df, bracket=bracket)
     print_draft_board(projections, top_n=50)
+
+    # Deploy to docs/ for the web draft board
+    docs_dir = os.path.join(os.path.dirname(__file__), '..', 'docs')
+    if os.path.isdir(docs_dir):
+        docs_path = os.path.join(docs_dir, 'players.json')
+        output_df_rounded = output_df.copy()
+        output_df_rounded['expected_games'] = output_df_rounded['expected_games'].round(2)
+        records = output_df_rounded.to_dict('records')
+        payload = {
+            'generated_at': datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ'),
+            'players': records,
+        }
+        with open(docs_path, 'w') as f:
+            json.dump(payload, f)
+        print(f"\nDeployed {len(records)} players to {docs_path}")
 
 
 if __name__ == '__main__':

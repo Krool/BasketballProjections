@@ -3,7 +3,7 @@ Project total tournament scoring for each player.
 
 Core formula: projected_points = PPG * expected_games * injury_multiplier
 
-Injury multipliers: OUT=0.0, RETURNING=1.0, DAY-TO-DAY=0.7, HEALTHY=1.0
+Injury multipliers: OUT=0.0, RETURNING=0.8, DAY-TO-DAY=0.7, HEALTHY=1.0
 
 Player names are fuzzy-matched against injury data by stripping suffixes
 (Jr., Sr., II, III, etc.) so that "Patrick Ngongba II" in the injury file
@@ -123,7 +123,7 @@ def project_player_points(player_stats_df, expected_games, injuries_df=None, min
     return df
 
 
-def save_projections(df, kenpom_df=None):
+def save_projections(df, kenpom_df=None, bracket=None):
     """Save projections to CSV and print summary."""
     os.makedirs(OUTPUT_DIR, exist_ok=True)
 
@@ -132,17 +132,29 @@ def save_projections(df, kenpom_df=None):
         seed_map = dict(zip(kenpom_df['Team'], kenpom_df['Seed']))
         df['seed'] = df['team'].map(seed_map)
 
-    # Select output columns
-    output_cols = ['player', 'team']
+    # Add region info if bracket is available
+    if bracket is not None:
+        region_map = {}
+        for region, seeds in bracket.get('regions', {}).items():
+            for seed, team in seeds.items():
+                if team:
+                    region_map[team] = region
+        df['region'] = df['team'].map(region_map)
+
+    # Select output columns — include rank from index
+    df['rank'] = df.index
+    output_cols = ['rank', 'player', 'team']
     if 'seed' in df.columns:
         output_cols.append('seed')
+    if 'region' in df.columns:
+        output_cols.append('region')
     output_cols.extend(['ppg', 'expected_games', 'injury_status', 'projected_points'])
 
     output_df = df[output_cols].copy()
 
     # Save full list
     output_path = os.path.join(OUTPUT_DIR, 'projections.csv')
-    output_df.to_csv(output_path)
+    output_df.to_csv(output_path, index=False)
     print(f"Saved {len(output_df)} player projections to {output_path}")
 
     return output_df
