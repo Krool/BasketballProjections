@@ -435,6 +435,14 @@
      Red = Round of 64, Orange = Round of 32,
      Yellow = Sweet 16, Green = Elite 8 */
 
+  .insight-diamond {
+    color: #60a5fa;
+    cursor: help;
+    font-size: 12px;
+    margin-left: 2px;
+    -webkit-tap-highlight-color: transparent;
+  }
+
   .pick-number {
     font-size: 10px;
     color: var(--orange);
@@ -1523,7 +1531,7 @@ function render() {
       return `<tr class="${rowClass}" data-rank="${p.rank}">
         <td class="rank-cell">${p.rank}</td>
         <td class="col-fav" style="text-align:center;"><button class="fav-btn ${favorites.has(p.rank) ? 'active' : ''}" onclick="toggleFav(${p.rank})" aria-label="${favorites.has(p.rank) ? 'Remove' : 'Add'} ${p.player} ${favorites.has(p.rank) ? 'from' : 'to'} favorites">&#9733;</button></td>
-        <td class="player-cell">${p.player}${insights[p.player] ? ` <span style="color:#60a5fa;cursor:help;font-size:12px;" title="${insights[p.player].replace(/"/g, '&quot;')}">&#9670;</span>` : ''}${isDraftedByOthers ? ` <span class="pick-number">(#${pickIdx + 1})</span>` : ''}${isMyTeam ? '<span class="my-team-badge">OURS</span>' : ''}${conflictHtml}</td>
+        <td class="player-cell">${p.player}${insights[p.player] ? ` <span class="insight-diamond" title="${insights[p.player].replace(/"/g, '&quot;')}" onclick="alert('${p.player.replace(/'/g, "\\'")}:\\n\\n' + insights['${p.player.replace(/'/g, "\\'")}'])">&#9670;</span>` : ''}${isDraftedByOthers ? ` <span class="pick-number">(#${pickIdx + 1})</span>` : ''}${isMyTeam ? '<span class="my-team-badge">OURS</span>' : ''}${conflictHtml}</td>
         <td class="team-cell col-team">${p.team}</td>
         <td class="region-cell col-region">${region}</td>
         <td class="col-seed"><span class="seed-badge ${seedClass(p.seed)}">${p.seed}</span></td>
@@ -1609,15 +1617,14 @@ function toggleMyTeam(rank) {
 function init() {
   loadState();
 
-  // Load insights alongside player data
-  fetch('insights.json').then(r => r.ok ? r.json() : {}).then(d => { insights = d || {}; }).catch(() => {});
+  // Load player data and insights in parallel, render when both ready
+  const insightsPromise = fetch('insights.json').then(r => r.ok ? r.json() : {}).catch(() => ({}));
 
-  fetch('players.json')
-    .then(r => {
-      if (!r.ok) throw new Error(`HTTP ${r.status}`);
-      return r.json();
-    })
-    .then(data => {
+  Promise.all([
+    fetch('players.json').then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); }),
+    insightsPromise
+  ]).then(([data, insightsData]) => {
+    insights = insightsData || {};
       // Support both new {generated_at, players} and legacy flat-array format
       if (Array.isArray(data)) {
         players = data;
