@@ -772,6 +772,182 @@
   }
 
   .mock-banner .btn-stop { color: var(--red); }
+
+  /* Analysis Modal */
+  .analysis-modal {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    width: 600px;
+    max-width: 95vw;
+    max-height: 85vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .analysis-modal h2 {
+    font-size: 16px;
+    margin-bottom: 4px;
+  }
+
+  .analysis-subtitle {
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-bottom: 16px;
+  }
+
+  .analysis-hero {
+    background: linear-gradient(135deg, rgba(52, 211, 153, 0.1) 0%, rgba(79, 140, 255, 0.08) 100%);
+    border: 1px solid rgba(52, 211, 153, 0.25);
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 16px;
+    text-align: center;
+  }
+
+  .analysis-hero-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-dim);
+    margin-bottom: 4px;
+  }
+
+  .analysis-hero-finish {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--green);
+  }
+
+  .analysis-hero-pts {
+    font-size: 14px;
+    color: var(--text-dim);
+    margin-top: 2px;
+  }
+
+  .analysis-team {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 8px;
+    overflow: hidden;
+  }
+
+  .analysis-team.is-ours {
+    border-color: rgba(167, 139, 250, 0.4);
+    background: rgba(167, 139, 250, 0.05);
+  }
+
+  .analysis-team.is-best {
+    border-color: rgba(52, 211, 153, 0.4);
+  }
+
+  .analysis-team-header {
+    display: flex;
+    align-items: center;
+    padding: 10px 14px;
+    cursor: pointer;
+    gap: 10px;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .analysis-team-header:hover { background: rgba(255,255,255,0.03); }
+
+  .analysis-rank {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--text-dim);
+    min-width: 28px;
+  }
+
+  .analysis-team.is-ours .analysis-rank { color: var(--purple); }
+  .analysis-rank.top-1 { color: var(--green); }
+
+  .analysis-team-name {
+    font-weight: 700;
+    font-size: 13px;
+    flex: 1;
+  }
+
+  .analysis-team-badge {
+    font-size: 9px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .badge-ours {
+    background: rgba(167, 139, 250, 0.2);
+    color: var(--purple);
+  }
+
+  .badge-best {
+    background: rgba(52, 211, 153, 0.2);
+    color: var(--green);
+  }
+
+  .analysis-team-pts {
+    font-weight: 800;
+    font-size: 15px;
+    color: var(--green);
+  }
+
+  .analysis-team-expand {
+    color: var(--text-dim);
+    font-size: 11px;
+    transition: transform 0.15s;
+  }
+
+  .analysis-team.open .analysis-team-expand { transform: rotate(180deg); }
+
+  .analysis-team-players {
+    display: none;
+    padding: 0 14px 10px;
+  }
+
+  .analysis-team.open .analysis-team-players { display: block; }
+
+  .analysis-player-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 3px 0;
+    font-size: 12px;
+    border-bottom: 1px solid rgba(46, 51, 69, 0.3);
+  }
+
+  .analysis-player-row:last-child { border-bottom: none; }
+
+  .analysis-player-name { font-weight: 600; }
+  .analysis-player-team { color: var(--text-dim); font-size: 11px; }
+  .analysis-player-pts { color: var(--green); font-weight: 700; }
+
+  .analysis-no-config {
+    text-align: center;
+    padding: 20px;
+    color: var(--text-dim);
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .analysis-setup-form label {
+    display: block;
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-bottom: 4px;
+    margin-top: 12px;
+  }
+
+  .analysis-setup-form input, .analysis-setup-form select {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 8px 10px;
+    color: var(--text);
+    font-size: 14px;
+  }
 </style>
 </head>
 <body>
@@ -812,6 +988,7 @@
     <button class="btn" id="export-btn">Export Draft</button>
     <button class="btn" id="export-all-btn">Export All</button>
     <button class="btn" id="mock-btn" style="color:var(--orange);border-color:rgba(251,191,36,0.3);">Mock Draft</button>
+    <button class="btn" id="analysis-btn" style="color:var(--green);border-color:rgba(52,211,153,0.3);">Analysis</button>
     <span style="flex:1"></span>
     <button class="btn danger" id="reset-btn">Reset Draft</button>
   </div>
@@ -912,12 +1089,17 @@
   </div>
 </div>
 
+<div class="modal-overlay" id="analysis-modal">
+  <div class="analysis-modal" id="analysis-content"></div>
+</div>
+
 <script>
 let players = [];
 let drafted = new Set();
 let myTeam = new Set();
 let favorites = new Set();
 let draftOrder = [];
+let draftConfig = null; // {teams, position, snake, rounds}
 let sortCol = 'rank';
 let sortAsc = true;
 let hideDrafted = true;
@@ -969,6 +1151,7 @@ function loadState() {
       myTeam = new Set(state.myTeam || []);
       favorites = new Set(state.favorites || []);
       draftOrder = state.draftOrder || [];
+      draftConfig = state.draftConfig || null;
     }
   } catch(e) {}
 }
@@ -978,7 +1161,8 @@ function saveState() {
     drafted: [...drafted],
     myTeam: [...myTeam],
     favorites: [...favorites],
-    draftOrder
+    draftOrder,
+    draftConfig
   }));
 }
 
@@ -1002,7 +1186,7 @@ function getFiltered() {
   const regionFilter = document.getElementById('region-filter').value;
 
   let filtered = players.filter(p => {
-    if (hideDrafted && drafted.has(p.rank) && !myTeam.has(p.rank) && !favorites.has(p.rank)) return false;
+    if (hideDrafted && drafted.has(p.rank)) return false;
     if (showFavsOnly && !favorites.has(p.rank)) return false;
     if (search && !p.player.toLowerCase().includes(search) && !p.team.toLowerCase().includes(search)) return false;
     if (teamFilter && p.team !== teamFilter) return false;
@@ -1427,6 +1611,7 @@ function init() {
     myTeam.clear();
     favorites.clear();
     draftOrder = [];
+    draftConfig = null;
     showFavsOnly = false;
     document.getElementById('show-favs').classList.remove('active');
     saveState();
@@ -1491,11 +1676,13 @@ function init() {
       document.getElementById('search').focus();
     }
     if (e.key === 'Escape') {
-      // Close mock modal if open
-      const modal = document.getElementById('mock-modal');
-      if (modal && modal.classList.contains('open')) {
-        modal.classList.remove('open');
-        return;
+      // Close any open modal
+      for (const id of ['analysis-modal', 'mock-modal']) {
+        const modal = document.getElementById(id);
+        if (modal && modal.classList.contains('open')) {
+          modal.classList.remove('open');
+          return;
+        }
       }
       document.getElementById('search').blur();
       document.getElementById('search').value = '';
@@ -1558,8 +1745,7 @@ function updateMockBanner() {
   if (isMockComplete()) {
     roundEl.textContent = 'Draft Complete';
     pickEl.textContent = `${getMockTotalPicks()} picks | ${myTeam.size} on your team`;
-    statusEl.textContent = 'Done!';
-    statusEl.className = 'mock-banner-status your-turn';
+    statusEl.innerHTML = '<a href="#" onclick="showAnalysis();return false;" style="color:var(--green);text-decoration:underline;font-weight:700;">View Analysis</a>';
     pauseBtn.style.display = 'none';
     return;
   }
@@ -1667,8 +1853,10 @@ function startMockDraft() {
   saveState();
 
   mockConfig = { teams, position, snake: type === 'snake', speed, rounds };
+  draftConfig = { teams, position, snake: type === 'snake', rounds };
   mockActive = true;
   mockPaused = false;
+  saveState();
 
   document.getElementById('mock-modal').classList.remove('open');
 
@@ -1737,6 +1925,185 @@ document.getElementById('mock-pause').addEventListener('click', () => {
 // Stop
 document.getElementById('mock-stop').addEventListener('click', () => {
   stopMockDraft();
+});
+
+// === Draft Analysis ===
+
+function getTeamForPick(pickIndex, config) {
+  const { teams, snake } = config;
+  const round = Math.floor(pickIndex / teams);
+  const posInRound = pickIndex % teams;
+  if (snake && round % 2 === 1) {
+    return teams - posInRound; // 1-indexed, reversed
+  }
+  return posInRound + 1; // 1-indexed
+}
+
+function ordinal(n) {
+  const s = ['th','st','nd','rd'];
+  const v = n % 100;
+  return n + (s[(v - 20) % 10] || s[v] || s[0]);
+}
+
+function buildAnalysis(config) {
+  // Assign each pick in draftOrder to a team
+  const teamRosters = {}; // teamNum -> [{player, rank, pts}]
+  for (let i = 0; i < draftOrder.length; i++) {
+    const teamNum = getTeamForPick(i, config);
+    const rank = draftOrder[i];
+    const p = players.find(pl => pl.rank === rank);
+    if (!p) continue;
+    if (!teamRosters[teamNum]) teamRosters[teamNum] = [];
+    teamRosters[teamNum].push({ player: p.player, team: p.team, seed: p.seed, pts: p.projected_points, rank: p.rank });
+  }
+
+  // Score each team
+  const teamScores = [];
+  for (let t = 1; t <= config.teams; t++) {
+    const roster = teamRosters[t] || [];
+    const totalPts = roster.reduce((sum, p) => sum + p.pts, 0);
+    teamScores.push({
+      teamNum: t,
+      isOurs: t === config.position,
+      roster,
+      totalPts: Math.round(totalPts),
+    });
+  }
+
+  teamScores.sort((a, b) => b.totalPts - a.totalPts);
+  teamScores.forEach((t, i) => t.finish = i + 1);
+
+  return teamScores;
+}
+
+function showAnalysis() {
+  const modal = document.getElementById('analysis-modal');
+  const content = document.getElementById('analysis-content');
+
+  if (draftOrder.length === 0) {
+    content.innerHTML = `
+      <h2>Draft Analysis</h2>
+      <div class="analysis-no-config">No picks have been made yet.<br>Run a draft first, then come back here.</div>
+      <div class="modal-actions" style="margin-top:16px;">
+        <button class="btn-cancel" onclick="document.getElementById('analysis-modal').classList.remove('open')">Close</button>
+      </div>`;
+    modal.classList.add('open');
+    return;
+  }
+
+  // If no config, prompt for setup
+  if (!draftConfig) {
+    content.innerHTML = `
+      <h2>Draft Analysis</h2>
+      <div class="analysis-no-config">Set up your draft format so we can assign picks to teams.</div>
+      <div class="analysis-setup-form">
+        <label>Number of Teams</label>
+        <input type="number" id="analysis-teams" value="20" min="2" max="30">
+        <label>Your Draft Position</label>
+        <input type="number" id="analysis-position" value="1" min="1" max="30">
+        <label>Draft Type</label>
+        <select id="analysis-type">
+          <option value="snake">Snake Draft</option>
+          <option value="linear">Linear Draft</option>
+        </select>
+      </div>
+      <div class="modal-actions" style="margin-top:16px;">
+        <button class="btn-cancel" onclick="document.getElementById('analysis-modal').classList.remove('open')">Cancel</button>
+        <button class="btn-primary" onclick="applyAnalysisConfig()">Analyze</button>
+      </div>`;
+    modal.classList.add('open');
+    return;
+  }
+
+  renderAnalysis(draftConfig);
+  modal.classList.add('open');
+}
+
+function applyAnalysisConfig() {
+  const teams = parseInt(document.getElementById('analysis-teams').value) || 20;
+  const position = parseInt(document.getElementById('analysis-position').value) || 1;
+  const type = document.getElementById('analysis-type').value;
+  if (position < 1 || position > teams) {
+    alert(`Position must be between 1 and ${teams}`);
+    return;
+  }
+  const rounds = Math.ceil(draftOrder.length / teams);
+  draftConfig = { teams, position, snake: type === 'snake', rounds };
+  saveState();
+  renderAnalysis(draftConfig);
+}
+
+function renderAnalysis(config) {
+  const content = document.getElementById('analysis-content');
+  const teamScores = buildAnalysis(config);
+
+  const ours = teamScores.find(t => t.isOurs);
+  const best = teamScores[0];
+
+  let html = `<h2>Draft Analysis</h2>
+    <div class="analysis-subtitle">${draftOrder.length} picks across ${config.teams} teams (${config.snake ? 'snake' : 'linear'} draft)</div>`;
+
+  // Hero: our finish
+  if (ours) {
+    html += `<div class="analysis-hero">
+      <div class="analysis-hero-label">Your Team — Projected Finish</div>
+      <div class="analysis-hero-finish">${ordinal(ours.finish)}</div>
+      <div class="analysis-hero-pts">${ours.totalPts} projected pts &middot; ${ours.roster.length} players</div>
+    </div>`;
+  }
+
+  // Best team callout (if not us)
+  if (best && !best.isOurs) {
+    html += `<div style="font-size:12px;color:var(--text-dim);margin-bottom:12px;padding:0 4px;">
+      Best projected team: <strong>Team #${best.teamNum}</strong> with ${best.totalPts} pts
+    </div>`;
+  }
+
+  // All teams ranked
+  html += '<div>';
+  for (const t of teamScores) {
+    const classes = ['analysis-team'];
+    if (t.isOurs) classes.push('is-ours');
+    if (t.finish === 1) classes.push('is-best');
+
+    let badges = '';
+    if (t.isOurs) badges += '<span class="analysis-team-badge badge-ours">Your Team</span>';
+    if (t.finish === 1) badges += '<span class="analysis-team-badge badge-best">Best</span>';
+
+    const rankClass = t.finish === 1 ? 'analysis-rank top-1' : 'analysis-rank';
+
+    html += `<div class="${classes.join(' ')}" onclick="this.classList.toggle('open')">
+      <div class="analysis-team-header">
+        <span class="${rankClass}">${t.finish}</span>
+        <span class="analysis-team-name">Team #${t.teamNum} ${badges}</span>
+        <span class="analysis-team-pts">${t.totalPts}</span>
+        <span class="analysis-team-expand">&#9660;</span>
+      </div>
+      <div class="analysis-team-players">
+        ${t.roster.sort((a, b) => b.pts - a.pts).map(p =>
+          `<div class="analysis-player-row">
+            <div><span class="analysis-player-name">${p.player}</span> <span class="analysis-player-team">${p.team} (${p.seed})</span></div>
+            <span class="analysis-player-pts">${Math.round(p.pts)}</span>
+          </div>`
+        ).join('')}
+        ${t.roster.length === 0 ? '<div style="color:var(--text-dim);font-size:12px;padding:4px 0;">No players</div>' : ''}
+      </div>
+    </div>`;
+  }
+  html += '</div>';
+
+  html += `<div class="modal-actions" style="margin-top:16px;">
+    <button class="btn-cancel" onclick="document.getElementById('analysis-modal').classList.remove('open')">Close</button>
+  </div>`;
+
+  content.innerHTML = html;
+}
+
+document.getElementById('analysis-btn').addEventListener('click', showAnalysis);
+
+// Close analysis modal on overlay click
+document.getElementById('analysis-modal').addEventListener('click', function(e) {
+  if (e.target === this) this.classList.remove('open');
 });
 </script>
 </body>
