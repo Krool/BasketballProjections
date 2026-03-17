@@ -7,14 +7,14 @@ Then re-run main.py to regenerate projections.
 First Four matchups (2026):
   West 11-seed:    N.C. State vs Texas       → winner plays BYU
   Midwest 16-seed: UMBC vs Howard            → winner plays Michigan
-  Midwest 11-seed: SMU vs Miami (OH)         → winner plays Tennessee
+  Midwest 11-seed: SMU vs Miami OH            → winner plays Tennessee
   South 16-seed:   Lehigh vs Prairie View A&M → winner plays Florida
 
 Usage:
     python src/update_first_four.py
 
 Then follow prompts to enter winners, or pass them as arguments:
-    python src/update_first_four.py --west11 "Texas" --mw16 "Howard" --mw11 "SMU" --south16 "Lehigh"
+    python src/update_first_four.py --west11 "Texas" --mw16 "Howard" --mw11 "Miami OH" --south16 "Lehigh"
 """
 import os
 import sys
@@ -44,8 +44,8 @@ FIRST_FOUR = [
         'region': 'Midwest',
         'seed': '11',
         'current': 'SMU',
-        'opponent': 'Miami (OH)',
-        'label': 'Midwest 11-seed: SMU vs Miami (OH)',
+        'opponent': 'Miami OH',
+        'label': 'Midwest 11-seed: SMU vs Miami OH',
     },
     {
         'region': 'South',
@@ -61,7 +61,7 @@ def main():
     parser = argparse.ArgumentParser(description='Update bracket with First Four results')
     parser.add_argument('--west11', help='Winner of N.C. State vs Texas')
     parser.add_argument('--mw16', help='Winner of UMBC vs Howard')
-    parser.add_argument('--mw11', help='Winner of SMU vs Miami (OH)')
+    parser.add_argument('--mw11', help='Winner of SMU vs Miami OH')
     parser.add_argument('--south16', help='Winner of Lehigh vs Prairie View A&M')
     args = parser.parse_args()
 
