@@ -86,7 +86,7 @@ ESPN_TEAM_IDS = {
     "High Point": 2272,
     # 13-seeds
     "Hofstra": 2275,
-    "Cal Baptist": 16517,
+    "Cal Baptist": 2856,
     "Hawaii": 62,
     "Troy": 2653,
     # 14-seeds
@@ -104,6 +104,11 @@ ESPN_TEAM_IDS = {
     "Siena": 2561,
     "LIU": 2344,  # Long Island University
     "Lehigh": 2329,
+    # First Four play-in teams (not in bracket.json until winners resolved)
+    "Howard": 47,
+    "Prairie View A&M": 2504,
+    "Texas": 251,
+    "Miami OH": 193,
 }
 
 
