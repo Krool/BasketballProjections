@@ -265,6 +265,11 @@ def scrape_all_tournament_teams(tournament_teams, use_cache=True, delay=3.0):
 
     for i, team in enumerate(tournament_teams):
         print(f"[{i+1}/{len(tournament_teams)}] Scraping {team}...", end=" ", flush=True)
+
+        # Check if we'll hit the network (cache miss)
+        cache_file = os.path.join(CACHE_DIR, f"{team.replace(' ', '_').replace('.', '')}.json")
+        will_fetch = not use_cache or not os.path.exists(cache_file)
+
         players = scrape_team_espn(team, use_cache=use_cache)
         all_players.extend(players)
 
@@ -274,8 +279,8 @@ def scrape_all_tournament_teams(tournament_teams, use_cache=True, delay=3.0):
         else:
             print("NO DATA")
 
-        # Rate limit
-        if not use_cache:
+        # Rate limit when we actually hit the network
+        if will_fetch:
             time.sleep(delay)
 
     df = pd.DataFrame(all_players)

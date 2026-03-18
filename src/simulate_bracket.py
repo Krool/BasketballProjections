@@ -8,6 +8,7 @@ No Monte Carlo -- pure probability propagation through the bracket tree.
 """
 
 import json
+import re
 import pandas as pd
 from pathlib import Path
 
@@ -33,8 +34,10 @@ def win_probability(adj_o_a, adj_d_a, adj_o_b, adj_d_b):
     """
     # Positive margin means A is better
     # margin = NetRtg_A - NetRtg_B = (AdjO_A - AdjD_A) - (AdjO_B - AdjD_B)
+    # Divisor of 17 calibrated to match historical single-elimination upset rates:
+    #   1-seeds ~99% R1, ~25-30% F4; 5v12 upsets ~35%; 8v9 ~50/50
     margin = (adj_o_a - adj_d_a) - (adj_o_b - adj_d_b)
-    return 1.0 / (1.0 + 10.0 ** (-margin / 11.0))
+    return 1.0 / (1.0 + 10.0 ** (-margin / 17.0))
 
 
 # ---------------------------------------------------------------------------
@@ -65,14 +68,15 @@ ROUND1_SEEDS = [
 
 class Team:
     """Lightweight container for a tournament team."""
-    __slots__ = ("name", "seed", "region", "adj_o", "adj_d")
+    __slots__ = ("name", "seed", "region", "adj_o", "adj_d", "adj_t")
 
-    def __init__(self, name, seed, region, adj_o, adj_d):
+    def __init__(self, name, seed, region, adj_o, adj_d, adj_t=67.0):
         self.name = name
         self.seed = seed
         self.region = region
         self.adj_o = adj_o
         self.adj_d = adj_d
+        self.adj_t = adj_t
 
     def __repr__(self):
         return f"Team({self.name}, {self.seed}, {self.region})"
@@ -279,13 +283,26 @@ def adjust_kenpom_for_injuries(kenpom_df: pd.DataFrame,
         team = str(inj['team']).strip()
         player = str(inj['player']).strip()
 
-        # Find player's PPG
-        matches = player_stats_df[
-            (player_stats_df['team'].str.lower() == team.lower()) &
-            (player_stats_df['player'].str.lower().str.contains(
-                player.split()[0].lower()
-            ))
-        ]
+        # Find player's PPG — try exact match first, then suffix-stripped
+        player_lower = player.lower()
+        # Strip suffixes like Jr., Sr., II, III for fuzzy matching
+        normalized = re.sub(r'\s+(jr\.?|sr\.?|ii|iii|iv|v)\s*$', '', player_lower, flags=re.IGNORECASE).strip()
+
+        team_mask = player_stats_df['team'].str.lower() == team.lower()
+        team_players = player_stats_df[team_mask]
+
+        # Exact match
+        matches = team_players[team_players['player'].str.lower() == player_lower]
+        if matches.empty:
+            # Suffix-stripped match
+            matches = team_players[team_players['player'].str.lower().apply(
+                lambda n: re.sub(r'\s+(jr\.?|sr\.?|ii|iii|iv|v)\s*$', '', n, flags=re.IGNORECASE).strip()
+            ) == normalized]
+        if matches.empty:
+            # Last resort: last-name match (more reliable than first-name substring)
+            last_name = normalized.split()[-1] if normalized.split() else ''
+            if last_name and len(last_name) > 2:
+                matches = team_players[team_players['player'].str.lower().str.split().str[-1] == last_name]
         if matches.empty:
             continue
 
@@ -348,10 +365,11 @@ def build_teams(kenpom_df: pd.DataFrame, bracket: dict) -> dict[str, dict[int, T
     -------
     dict  {region_name: {seed_int: Team}}
     """
-    # Build lookup from team name -> (AdjO, AdjD)
+    # Build lookup from team name -> (AdjO, AdjD, AdjT)
     stats = {}
     for _, row in kenpom_df.iterrows():
-        stats[row["Team"]] = (float(row["AdjO"]), float(row["AdjD"]))
+        adj_t = float(row["AdjT"]) if "AdjT" in row.index else 67.0
+        stats[row["Team"]] = (float(row["AdjO"]), float(row["AdjD"]), adj_t)
 
     regions: dict[str, dict[int, Team]] = {}
     missing = []
@@ -368,8 +386,8 @@ def build_teams(kenpom_df: pd.DataFrame, bracket: dict) -> dict[str, dict[int, T
                     f"Team '{team_name}' (seed {seed}, {region_name}) "
                     f"not found in KenPom data. Check name spelling."
                 )
-            adj_o, adj_d = stats[team_name]
-            region_teams[seed] = Team(team_name, seed, region_name, adj_o, adj_d)
+            adj_o, adj_d, adj_t = stats[team_name]
+            region_teams[seed] = Team(team_name, seed, region_name, adj_o, adj_d, adj_t)
         regions[region_name] = region_teams
 
     if missing:
@@ -485,7 +503,8 @@ def calculate_round_probabilities(kenpom_df: pd.DataFrame, bracket: dict) -> dic
         for i, rname in enumerate(round_names):
             rp_dict[rname] = full[i] if i < len(full) else 0.0
 
-        eg = 1.0 + sum(full)
+        # Exclude P(win championship) — winning the final doesn't add a game
+        eg = 1.0 + sum(full[:5])
         seed, region = team_meta[tname]
         results[tname] = {
             "seed": seed,
@@ -495,6 +514,116 @@ def calculate_round_probabilities(kenpom_df: pd.DataFrame, bracket: dict) -> dic
         }
 
     return results
+
+
+# ---------------------------------------------------------------------------
+# Per-round context (opponent quality, pace, margin) for scoring adjustments
+# ---------------------------------------------------------------------------
+
+def _process_matchup(slot_a, slot_b, context):
+    """
+    Process one bracket matchup between two slots.
+
+    Records per-round context (opponent DRtg, AdjT, expected margin) for each
+    team, and returns the list of possible winners with their advance probabilities.
+    """
+    total_prob_a = sum(pa for _, pa in slot_a)
+    total_prob_b = sum(pb for _, pb in slot_b)
+    winners = []
+
+    for team_a, prob_a in slot_a:
+        if prob_a < 1e-15:
+            continue
+        opp_drtg = sum(pb * tb.adj_d for tb, pb in slot_b) / total_prob_b
+        opp_adjt = sum(pb * tb.adj_t for tb, pb in slot_b) / total_prob_b
+        opp_net = sum(pb * (tb.adj_o - tb.adj_d) for tb, pb in slot_b) / total_prob_b
+        margin = (team_a.adj_o - team_a.adj_d) - opp_net
+
+        context[team_a.name]['rounds'].append({
+            'p_play': prob_a,
+            'opp_drtg': opp_drtg,
+            'opp_adjt': opp_adjt,
+            'margin': margin,
+        })
+
+        p_win = sum(pb * _wp(team_a, tb) for tb, pb in slot_b)
+        if prob_a * p_win > 1e-15:
+            winners.append((team_a, prob_a * p_win))
+
+    for team_b, prob_b in slot_b:
+        if prob_b < 1e-15:
+            continue
+        opp_drtg = sum(pa * ta.adj_d for ta, pa in slot_a) / total_prob_a
+        opp_adjt = sum(pa * ta.adj_t for ta, pa in slot_a) / total_prob_a
+        opp_net = sum(pa * (ta.adj_o - ta.adj_d) for ta, pa in slot_a) / total_prob_a
+        margin = (team_b.adj_o - team_b.adj_d) - opp_net
+
+        context[team_b.name]['rounds'].append({
+            'p_play': prob_b,
+            'opp_drtg': opp_drtg,
+            'opp_adjt': opp_adjt,
+            'margin': margin,
+        })
+
+        p_win = sum(pa * _wp(team_b, ta) for ta, pa in slot_a)
+        if prob_b * p_win > 1e-15:
+            winners.append((team_b, prob_b * p_win))
+
+    return winners
+
+
+def calculate_round_context(kenpom_df: pd.DataFrame, bracket: dict) -> dict:
+    """
+    Compute per-team per-round context for matchup-adjusted scoring.
+
+    For each team, returns their tempo and a list of round dicts containing:
+    - p_play: probability of playing this round
+    - opp_drtg: weighted avg opponent defensive efficiency
+    - opp_adjt: weighted avg opponent tempo
+    - margin: expected efficiency margin over opponents
+
+    Returns
+    -------
+    dict  {team_name: {'adj_t': float, 'rounds': [round_dicts]}}
+    """
+    regions = build_teams(kenpom_df, bracket)
+    ff_matchups = bracket.get("final_four_matchups", [["East", "West"], ["South", "Midwest"]])
+
+    context: dict[str, dict] = {}
+    region_champions: dict[str, list] = {}
+
+    # Rounds 1-4 (within each region)
+    for region_name, seed_map in regions.items():
+        slots = []
+        for hi_seed, lo_seed in ROUND1_SEEDS:
+            slots.append([(seed_map[hi_seed], 1.0)])
+            slots.append([(seed_map[lo_seed], 1.0)])
+
+        for t in seed_map.values():
+            context[t.name] = {'adj_t': t.adj_t, 'rounds': []}
+
+        current_slots = slots
+        for _ in range(4):
+            next_slots = []
+            for i in range(0, len(current_slots), 2):
+                winners = _process_matchup(current_slots[i], current_slots[i + 1], context)
+                next_slots.append(winners)
+            current_slots = next_slots
+
+        region_champions[region_name] = current_slots[0]
+
+    # Round 5: Final Four semifinals
+    semifinal_winners = []
+    for reg_a_name, reg_b_name in ff_matchups:
+        winners = _process_matchup(
+            region_champions[reg_a_name], region_champions[reg_b_name], context
+        )
+        semifinal_winners.append(winners)
+
+    # Round 6: Championship
+    _process_matchup(semifinal_winners[0], semifinal_winners[1], context)
+
+    return context
 
 
 # ---------------------------------------------------------------------------

@@ -24,7 +24,7 @@ import pandas as pd
 # Add src to path
 sys.path.insert(0, os.path.dirname(__file__))
 
-from simulate_bracket import calculate_expected_games, adjust_kenpom_for_injuries
+from simulate_bracket import calculate_expected_games, calculate_round_context, adjust_kenpom_for_injuries
 from scrape_players_espn import scrape_all_tournament_teams
 from scrape_injuries import get_combined_injuries
 from project_points import project_player_points, save_projections, print_draft_board
@@ -48,7 +48,7 @@ def main():
     print("=" * 60)
 
     # Step 1: Load KenPom data
-    print("\n[1/5] Loading KenPom data...")
+    print("\n[1/6] Loading KenPom data...")
     kenpom_path = os.path.join(DATA_DIR, 'kenpom_tournament.csv')
     if not os.path.exists(kenpom_path):
         print("ERROR: kenpom_tournament.csv not found. Run parse_kenpom.py first.")
@@ -59,7 +59,7 @@ def main():
     print(f"  Loaded {len(kenpom_df)} tournament teams from KenPom")
 
     # Step 2: Load bracket
-    print("\n[2/5] Loading bracket...")
+    print("\n[2/6] Loading bracket...")
     bracket_path = os.path.join(DATA_DIR, 'bracket.json')
     if not os.path.exists(bracket_path):
         print("ERROR: bracket.json not found. Please create it first.")
@@ -110,6 +110,7 @@ def main():
     print("\n[5/6] Adjusting KenPom for injured players and simulating bracket...")
     kenpom_adjusted = adjust_kenpom_for_injuries(kenpom_df, injuries, player_stats)
     expected_games = calculate_expected_games(kenpom_adjusted, bracket)
+    round_context = calculate_round_context(kenpom_adjusted, bracket)
 
     # Print expected games summary
     eg_df = pd.DataFrame([
@@ -127,6 +128,7 @@ def main():
     projections = project_player_points(
         player_stats_df=player_stats,
         expected_games=expected_games,
+        round_context=round_context,
         injuries_df=injuries,
         min_mpg=10.0
     )

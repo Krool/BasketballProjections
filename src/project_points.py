@@ -1,9 +1,15 @@
 """
 Project total tournament scoring for each player.
 
-Core formula: projected_points = PPG * expected_games * injury_multiplier
+Scoring model per round:
+    round_pts = PPG * pace_factor * defense_factor * blowout_factor * injury_mult
+    projected_points = sum(p_play_round * round_pts for each round)
 
-Injury multipliers: OUT=0.0, RETURNING=0.8, DAY-TO-DAY=0.7, HEALTHY=1.0
+Adjustments:
+    - Pace: normalize PPG to expected matchup tempo vs team's season tempo
+    - Defense: scale scoring by opponent DRtg vs D1 average (100.0)
+    - Blowout: reduce minutes (and scoring) in expected blowouts
+    - Injury: OUT=0.0, DAY-TO-DAY=0.7, PROBABLE=0.9, RETURNING=0.8, HEALTHY=1.0
 
 Player names are fuzzy-matched against injury data by stripping suffixes
 (Jr., Sr., II, III, etc.) so that "Patrick Ngongba II" in the injury file
@@ -18,6 +24,18 @@ OUTPUT_DIR = os.path.join(os.path.dirname(__file__), '..', 'output')
 
 # Suffixes that vary between data sources (ESPN vs news articles vs manual entry)
 _SUFFIX_RE = re.compile(r'\s+(jr\.?|sr\.?|ii|iii|iv|v)\s*$', re.IGNORECASE)
+
+# D-I average defensive efficiency (KenPom centers on ~100)
+D1_AVG_DRTG = 100.0
+
+# Injury multipliers
+INJURY_MULTIPLIERS = {
+    'OUT': 0.0,
+    'DAY-TO-DAY': 0.7,      # Truly uncertain — missed recent games, status unknown
+    'PROBABLE': 0.9,         # Expected to play, minor lingering issue
+    'RETURNING': 0.8,        # Back from injury but may have limited minutes / rust
+    'HEALTHY': 1.0,
+}
 
 
 def _normalize_name(name):
@@ -66,13 +84,34 @@ def _get_injury_status(player_name, team_name, exact_lookup, fuzzy_lookup):
     return 'HEALTHY'
 
 
-def project_player_points(player_stats_df, expected_games, injuries_df=None, min_mpg=10.0):
+def _blowout_factor(expected_margin):
+    """
+    Reduce scoring in expected blowouts where starters sit early.
+
+    Uses absolute margin — both the team winning by 30 AND the team losing
+    by 30 see reduced starter minutes in garbage time.
+
+    In a close game (|margin| <= 5), full minutes. As margin grows, starters
+    sit earlier: ~30 min at +/-15, ~26 min at +/-25, ~23 min at +/-35.
+    """
+    abs_margin = abs(expected_margin)
+    if abs_margin <= 5:
+        return 1.0
+    return max(0.70, 1.0 - (abs_margin - 5) * 0.008)
+
+
+def project_player_points(player_stats_df, expected_games, round_context=None,
+                          injuries_df=None, min_mpg=10.0):
     """
     Project total tournament points for each player.
+
+    Uses per-round matchup context (opponent defense, pace, blowout potential)
+    when available, otherwise falls back to flat PPG * expected_games.
 
     Args:
         player_stats_df: DataFrame with columns [player, team, ppg, mpg, games_played]
         expected_games: dict of {team_name: expected_games_float}
+        round_context: dict from calculate_round_context() (optional)
         injuries_df: DataFrame with columns [player, team, status] (optional)
         min_mpg: minimum minutes per game to include player
 
@@ -94,14 +133,7 @@ def project_player_points(player_stats_df, expected_games, injuries_df=None, min
 
         def get_injury_multiplier(row):
             status = _get_injury_status(row['player'], row['team'], exact_lookup, fuzzy_lookup)
-            if status == 'OUT':
-                return 0.0
-            elif status == 'RETURNING':
-                return 0.8  # Expected to play but may have limited minutes
-            elif status == 'DAY-TO-DAY':
-                return 0.7  # Discount for uncertainty
-            else:
-                return 1.0  # Healthy
+            return INJURY_MULTIPLIERS.get(status, 1.0)
 
         df['injury_multiplier'] = df.apply(get_injury_multiplier, axis=1)
         df['injury_status'] = df.apply(
@@ -113,7 +145,39 @@ def project_player_points(player_stats_df, expected_games, injuries_df=None, min
         df['injury_status'] = 'HEALTHY'
 
     # Calculate projected points
-    df['projected_points'] = (df['ppg'] * df['expected_games'] * df['injury_multiplier']).round(1)
+    if round_context:
+        # Per-round matchup-adjusted scoring
+        def compute_adjusted(row):
+            tc = round_context.get(row['team'])
+            if not tc:
+                return row['ppg'] * row['expected_games'] * row['injury_multiplier']
+
+            ppg = row['ppg']
+            team_adjt = tc['adj_t']
+            injury_mult = row['injury_multiplier']
+            total = 0.0
+
+            for rd in tc['rounds']:
+                # Pace: tournament game pace = avg of both teams' tempo
+                matchup_pace = (team_adjt + rd['opp_adjt']) / 2
+                pace_factor = matchup_pace / team_adjt
+
+                # Defense: opponent allows more/fewer points than D1 average
+                defense_factor = rd['opp_drtg'] / D1_AVG_DRTG
+
+                # Blowout: starters sit in blowouts
+                blowout = _blowout_factor(rd['margin'])
+
+                # Expected points this round
+                round_pts = ppg * pace_factor * defense_factor * blowout * injury_mult
+                total += rd['p_play'] * round_pts
+
+            return round(total, 1)
+
+        df['projected_points'] = df.apply(compute_adjusted, axis=1)
+    else:
+        # Fallback: flat PPG * expected_games
+        df['projected_points'] = (df['ppg'] * df['expected_games'] * df['injury_multiplier']).round(1)
 
     # Sort by projected points
     df = df.sort_values('projected_points', ascending=False).reset_index(drop=True)
