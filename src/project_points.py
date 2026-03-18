@@ -2,13 +2,13 @@
 Project total tournament scoring for each player.
 
 Scoring model per round:
-    round_pts = PPG * pace_factor * defense_factor * blowout_factor * injury_mult
+    round_pts = PPG * pace_factor * defense_factor * injury_mult
     projected_points = sum(p_play_round * round_pts for each round)
 
 Adjustments:
+    - Recent form: PPG blended 60% season + 40% last 5 games
     - Pace: normalize PPG to expected matchup tempo vs team's season tempo
     - Defense: scale scoring by opponent DRtg vs D1 average (100.0)
-    - Blowout: reduce minutes (and scoring) in expected blowouts
     - Injury: OUT=0.0, DAY-TO-DAY=0.7, PROBABLE=0.9, RETURNING=0.8, HEALTHY=1.0
 
 Player names are fuzzy-matched against injury data by stripping suffixes
