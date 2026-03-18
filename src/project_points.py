@@ -103,19 +103,12 @@ def _get_injury_status(player_name, team_name, exact_lookup, fuzzy_lookup):
 
 def _blowout_factor(expected_margin):
     """
-    Reduce scoring in expected blowouts where starters sit early.
-
-    Uses absolute margin — both the team winning by 30 AND the team losing
-    by 30 see reduced starter minutes in garbage time.
-
-    Calibrated against historical data: even in 30-point blowouts, stars
-    still produce ~80% of normal (e.g. Edey scored 30 in 23 min vs a 16-seed).
-    Floor at 0.80 prevents over-penalizing dominant matchups.
+    Removed: historical data shows stars score MORE in blowouts, not less.
+    Edey scored 30 (vs 22.3 avg) in R1 blowout, Clingan 19 in 20 min (vs 13 avg).
+    High efficiency against weak opponents compensates for reduced minutes.
+    The opponent defense factor already captures matchup quality correctly.
     """
-    abs_margin = abs(expected_margin)
-    if abs_margin <= 7:
-        return 1.0
-    return max(0.80, 1.0 - (abs_margin - 7) * 0.006)
+    return 1.0
 
 
 def _tournament_surge(ppg):
