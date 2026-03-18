@@ -1068,20 +1068,6 @@
   <!-- Right column: Draft Log -->
   <div class="col-right">
     <div class="col-title">Draft Log</div>
-    <div style="display:flex;gap:6px;margin-bottom:10px;font-size:11px;align-items:center;">
-      <label style="color:var(--text-dim);">Teams</label>
-      <select id="draft-log-teams" style="width:50px;font-size:11px;padding:3px 4px;">
-        <option value="8">8</option>
-        <option value="10">10</option>
-        <option value="12">12</option>
-        <option value="14" selected>14</option>
-        <option value="16">16</option>
-        <option value="18">18</option>
-        <option value="20">20</option>
-      </select>
-      <label style="color:var(--text-dim);">Your Pick</label>
-      <select id="draft-log-position" style="width:50px;font-size:11px;padding:3px 4px;"></select>
-    </div>
     <div id="draft-log-list"></div>
   </div>
 </div>
@@ -1406,11 +1392,15 @@ function draftBestAvailable() {
 }
 
 function getDraftLogTeams() {
-  return parseInt(document.getElementById('draft-log-teams').value) || 14;
+  if (liveActive) return liveConfig.teams;
+  if (draftConfig) return draftConfig.teams;
+  return 14;
 }
 
 function getDraftLogPosition() {
-  return parseInt(document.getElementById('draft-log-position').value) || 1;
+  if (liveActive) return liveConfig.position;
+  if (draftConfig) return draftConfig.position;
+  return 1;
 }
 
 function getSnakeTeam(pickIndex) {
@@ -1426,19 +1416,6 @@ function isOurPick(pickIndex) {
   return getSnakeTeam(pickIndex) === getDraftLogPosition();
 }
 
-function populatePositionDropdown() {
-  const sel = document.getElementById('draft-log-position');
-  const numTeams = getDraftLogTeams();
-  const current = parseInt(sel.value) || 1;
-  sel.innerHTML = '';
-  for (let i = 1; i <= numTeams; i++) {
-    const opt = document.createElement('option');
-    opt.value = i;
-    opt.textContent = i;
-    if (i === Math.min(current, numTeams)) opt.selected = true;
-    sel.appendChild(opt);
-  }
-}
 
 function updateDraftLog() {
   const list = document.getElementById('draft-log-list');
@@ -1775,19 +1752,12 @@ function init() {
         regionSelect.appendChild(opt);
       });
 
-      populatePositionDropdown();
       render();
     })
     .catch(err => {
       document.getElementById('no-results').style.display = 'block';
       document.getElementById('no-results').textContent = `Failed to load player data: ${err.message}. Make sure players.json is deployed.`;
     });
-
-  document.getElementById('draft-log-teams').addEventListener('change', function() {
-    populatePositionDropdown();
-    updateDraftLog();
-  });
-  document.getElementById('draft-log-position').addEventListener('change', updateDraftLog);
 
   document.getElementById('search').addEventListener('input', render);
   document.getElementById('team-filter').addEventListener('change', render);
@@ -2186,11 +2156,6 @@ function startLiveDraft() {
   liveConfig = { teams, position, rounds };
   draftConfig = { teams, position, snake: true, rounds };
   liveActive = true;
-
-  // Sync draft log dropdowns
-  document.getElementById('draft-log-teams').value = teams;
-  populatePositionDropdown();
-  document.getElementById('draft-log-position').value = position;
 
   document.getElementById('live-draft-modal').classList.remove('open');
 
