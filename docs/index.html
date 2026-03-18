@@ -1067,6 +1067,20 @@
   <!-- Right column: Draft Log -->
   <div class="col-right">
     <div class="col-title">Draft Log</div>
+    <div style="display:flex;gap:6px;margin-bottom:10px;font-size:11px;align-items:center;">
+      <label style="color:var(--text-dim);">Teams</label>
+      <select id="draft-log-teams" style="width:50px;font-size:11px;padding:3px 4px;">
+        <option value="8">8</option>
+        <option value="10">10</option>
+        <option value="12">12</option>
+        <option value="14" selected>14</option>
+        <option value="16">16</option>
+        <option value="18">18</option>
+        <option value="20">20</option>
+      </select>
+      <label style="color:var(--text-dim);">Your Pick</label>
+      <select id="draft-log-position" style="width:50px;font-size:11px;padding:3px 4px;"></select>
+    </div>
     <div id="draft-log-list"></div>
   </div>
 </div>
@@ -1367,21 +1381,63 @@ function draftBestAvailable() {
   }
 }
 
+function getDraftLogTeams() {
+  return parseInt(document.getElementById('draft-log-teams').value) || 14;
+}
+
+function getDraftLogPosition() {
+  return parseInt(document.getElementById('draft-log-position').value) || 1;
+}
+
+function getSnakeTeam(pickIndex) {
+  // Snake draft: round 1 goes 1→N, round 2 goes N→1, etc.
+  const numTeams = getDraftLogTeams();
+  const round = Math.floor(pickIndex / numTeams);
+  const posInRound = pickIndex % numTeams;
+  const isEvenRound = round % 2 === 0;
+  return isEvenRound ? posInRound + 1 : numTeams - posInRound;
+}
+
+function isOurPick(pickIndex) {
+  return getSnakeTeam(pickIndex) === getDraftLogPosition();
+}
+
+function populatePositionDropdown() {
+  const sel = document.getElementById('draft-log-position');
+  const numTeams = getDraftLogTeams();
+  const current = parseInt(sel.value) || 1;
+  sel.innerHTML = '';
+  for (let i = 1; i <= numTeams; i++) {
+    const opt = document.createElement('option');
+    opt.value = i;
+    opt.textContent = i;
+    if (i === Math.min(current, numTeams)) opt.selected = true;
+    sel.appendChild(opt);
+  }
+}
+
 function updateDraftLog() {
   const list = document.getElementById('draft-log-list');
   if (draftOrder.length === 0) {
     list.innerHTML = '<div style="color:var(--text-dim);font-size:12px;padding:12px 0;text-align:center;">No picks yet.</div>';
     return;
   }
+  const numTeams = getDraftLogTeams();
   list.innerHTML = draftOrder.map((rank, i) => {
     const p = players.find(pl => pl.rank === rank);
     if (!p) return '';
     const isOurs = myTeam.has(rank);
-    return `<div class="draft-log-item">
+    const teamNum = getSnakeTeam(i);
+    const ourPick = isOurPick(i);
+    const round = Math.floor(i / numTeams) + 1;
+    const teamLabel = ourPick ? '<span style="color:var(--purple);font-weight:700;">You</span>' : `Team ${teamNum}`;
+    const logo = p.espn_team_id ? `<img src="https://a.espncdn.com/i/teamlogos/ncaa/500/${p.espn_team_id}.png" alt="" style="width:14px;height:14px;vertical-align:middle;margin-right:3px;">` : '';
+    return `<div class="draft-log-item" style="${ourPick ? 'background:rgba(167,139,250,0.08);border-radius:4px;padding:5px 4px;' : ''}">
       <span class="pick-num">#${i + 1}</span>
+      <span style="color:var(--text-dim);font-size:10px;">R${round}</span>
       <span class="pick-player">${p.player}</span>${isOurs ? '<span class="my-team-badge">OURS</span>' : ''}
       <button class="my-team-player-remove" onclick="undoPick(${rank})" title="Remove this pick">&times;</button><br>
-      <span class="pick-team">${p.team} (${p.seed}) — ${Math.round(p.projected_points)} pts</span>
+      <span class="pick-team">${logo}${p.team} (${p.seed}) — ${Math.round(p.projected_points)} pts — ${teamLabel}</span>
     </div>`;
   }).reverse().join('');
 }
@@ -1681,12 +1737,19 @@ function init() {
         regionSelect.appendChild(opt);
       });
 
+      populatePositionDropdown();
       render();
     })
     .catch(err => {
       document.getElementById('no-results').style.display = 'block';
       document.getElementById('no-results').textContent = `Failed to load player data: ${err.message}. Make sure players.json is deployed.`;
     });
+
+  document.getElementById('draft-log-teams').addEventListener('change', function() {
+    populatePositionDropdown();
+    updateDraftLog();
+  });
+  document.getElementById('draft-log-position').addEventListener('change', updateDraftLog);
 
   document.getElementById('search').addEventListener('input', render);
   document.getElementById('team-filter').addEventListener('change', render);
