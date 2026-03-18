@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mm-draft-2026-v1';
+const CACHE_NAME = 'mm-draft-2026-v2';
 const ASSETS = [
   './',
   './index.html',
@@ -25,7 +25,7 @@ self.addEventListener('activate', (e) => {
 
 self.addEventListener('fetch', (e) => {
   // Network-first for players.json (get fresh data), cache-first for everything else
-  if (e.request.url.includes('players.json')) {
+  if (e.request.url.includes('players.json') || e.request.url.includes('insights.json')) {
     e.respondWith(
       fetch(e.request)
         .then(res => {
