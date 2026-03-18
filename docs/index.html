@@ -993,7 +993,9 @@
   <div class="controls">
     <input type="text" class="search-box" id="search" placeholder="Search player or team..." aria-label="Search players or teams">
     <select id="team-filter"><option value="">All Teams</option></select>
-    <select id="seed-filter"><option value="">All Seeds</option></select>
+    <select id="seed-min"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option></select>
+    <span style="color:var(--text-dim);font-size:12px;">to</span>
+    <select id="seed-max"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16" selected>16</option></select>
     <select id="region-filter"><option value="">All Regions</option></select>
     <button class="toggle-btn active" id="hide-drafted">Hide Drafted</button>
     <button class="toggle-btn" id="show-favs">Favorites</button>
@@ -1298,7 +1300,8 @@ function injuryClass(status) {
 function getFiltered() {
   const search = document.getElementById('search').value.toLowerCase();
   const teamFilter = document.getElementById('team-filter').value;
-  const seedFilter = document.getElementById('seed-filter').value;
+  const seedMin = parseInt(document.getElementById('seed-min').value) || 1;
+  const seedMax = parseInt(document.getElementById('seed-max').value) || 16;
   const regionFilter = document.getElementById('region-filter').value;
 
   let filtered = players.filter(p => {
@@ -1306,7 +1309,7 @@ function getFiltered() {
     if (showFavsOnly && !favorites.has(p.rank)) return false;
     if (search && !p.player.toLowerCase().includes(search) && !p.team.toLowerCase().includes(search)) return false;
     if (teamFilter && p.team !== teamFilter) return false;
-    if (seedFilter && p.seed !== parseInt(seedFilter)) return false;
+    if (p.seed < seedMin || p.seed > seedMax) return false;
     if (regionFilter && getTeamRegion(p.team) !== regionFilter) return false;
     return true;
   });
@@ -1668,14 +1671,7 @@ function init() {
         teamSelect.appendChild(opt);
       });
 
-      const seeds = [...new Set(players.map(p => p.seed))].sort((a, b) => a - b);
-      const seedSelect = document.getElementById('seed-filter');
-      seeds.forEach(s => {
-        const opt = document.createElement('option');
-        opt.value = s;
-        opt.textContent = `#${s} Seed`;
-        seedSelect.appendChild(opt);
-      });
+      // Seed range filter is static HTML (1-16), no dynamic population needed
 
       const regionSelect = document.getElementById('region-filter');
       Object.keys(REGIONS).sort().forEach(r => {
@@ -1694,7 +1690,8 @@ function init() {
 
   document.getElementById('search').addEventListener('input', render);
   document.getElementById('team-filter').addEventListener('change', render);
-  document.getElementById('seed-filter').addEventListener('change', render);
+  document.getElementById('seed-min').addEventListener('change', render);
+  document.getElementById('seed-max').addEventListener('change', render);
   document.getElementById('region-filter').addEventListener('change', render);
 
   document.getElementById('hide-drafted').addEventListener('click', function() {
