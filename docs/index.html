@@ -1535,7 +1535,19 @@ function render() {
         <td class="col-seed"><span class="seed-badge ${seedClass(p.seed)}">${p.seed}</span></td>
         <td title="Season average: ${p.ppg.toFixed(1)} points per game">${p.ppg.toFixed(1)}</td>
         <td title="KenPom bracket sim: ${p.team} projected to play ${p.expected_games.toFixed(2)} games">${p.expected_games.toFixed(2)}</td>
-        <td class="pts-cell" title="${p.ppg.toFixed(1)} PPG x ${p.expected_games.toFixed(2)} games = ${Math.round(p.projected_points)} pts">${Math.round(p.projected_points)}${(() => {
+        <td class="pts-cell" title="${(() => {
+          const base = p.ppg * p.expected_games;
+          const adj = p.projected_points;
+          const injMult = p.injury_status === 'OUT' ? 0 : p.injury_status === 'DAY-TO-DAY' ? 0.7 : p.injury_status === 'PROBABLE' ? 0.9 : p.injury_status === 'RETURNING' ? 0.8 : 1.0;
+          const factors = [];
+          if (p.ppg >= 20) factors.push('+8% star surge');
+          else if (p.ppg >= 15) factors.push('+4% starter surge');
+          factors.push('pace-adjusted per matchup');
+          factors.push('opponent defense adjusted');
+          if (p.seed <= 4) factors.push('blowout minutes reduction');
+          if (injMult < 1.0) factors.push(p.injury_status + ' (' + (injMult*100).toFixed(0) + '%)');
+          return 'Projected: ' + Math.round(adj) + ' pts\nBase: ' + p.ppg.toFixed(1) + ' PPG × ' + p.expected_games.toFixed(2) + ' games = ' + Math.round(base) + '\nAdjusted for: ' + factors.join(', ');
+        })()}">${Math.round(p.projected_points)}${(() => {
           if (isDrafted || myTeam.size === 0) return '';
           const pen = calcLivePenalty(p);
           if (pen <= 0) return '';
