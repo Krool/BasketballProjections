@@ -1387,8 +1387,8 @@ function updateStats() {
     document.getElementById('ba-player').textContent = best.player;
     document.getElementById('ba-details').textContent = `${best.team} (${best.seed}) | ${best.ppg} PPG | ${best.expected_games} exp. games`;
     document.getElementById('ba-pts').textContent = Math.round(best.projected_points);
-    // Show draft button on best available when it's our mock turn
-    const showBtn = mockActive && isMyMockPick() && !isMockComplete();
+    // Show draft button on best available when it's our turn (mock or live)
+    const showBtn = (mockActive && isMyMockPick() && !isMockComplete()) || (liveActive && isLiveMyPick() && !isLiveComplete());
     baDraftBtn.style.display = showBtn ? '' : 'none';
   } else {
     document.getElementById('ba-player').textContent = 'All players drafted';
@@ -1400,7 +1400,7 @@ function updateStats() {
 
 function draftBestAvailable() {
   const best = getBestAvailable();
-  if (best && mockActive && isMyMockPick()) {
+  if (best && ((mockActive && isMyMockPick()) || (liveActive && isLiveMyPick()))) {
     toggleMyTeam(best.rank);
   }
 }
@@ -1680,6 +1680,7 @@ function toggleFav(rank) {
 }
 
 function undoPick(rank) {
+  if (liveActive) return; // No undo during live draft
   drafted.delete(rank);
   myTeam.delete(rank);
   draftOrder = draftOrder.filter(r => r !== rank);
