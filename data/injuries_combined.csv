@@ -1,34 +1,34 @@
-player,team,status,notes,source
-JT Toppin,Texas Tech,OUT,ACL tear Feb 17 - season ending. Was averaging 21.8 PPG,manual
-Richie Saunders,BYU,OUT,ACL tear Feb 14 - season ending. Was averaging 18.0 PPG,manual
-Dawson Baker,BYU,OUT,ACL tear plus MCL/PCL damage - season ending,manual
-Nate Pickens,BYU,OUT,Knee injury - season ending (preseason),manual
-Caleb Wilson,North Carolina,OUT,Fractured left hand then fractured right thumb - season ending surgery,manual
-James Brown,North Carolina,OUT,Foot surgery Feb 18 - season ending. Reserve center,manual
-L.J. Cason,Michigan,OUT,ACL tear late February - season ending. Was averaging 8.4 PPG,manual
-Carter Welling,Clemson,OUT,ACL tear in ACC tournament - season ending. Was averaging 10.2 PPG,manual
-Matt Hodge,Villanova,OUT,ACL tear - season ending. Freshman averaging 9.2 PPG,manual
-Caleb Foster,Duke,OUT,Fractured foot in regular season finale vs UNC - surgery required. Out for foreseeable future,manual
-Braden Huff,Gonzaga,OUT,Left knee injury since Jan 15 - ruled out for first weekend per coach Few. Jogging and shooting but not game-ready. Was averaging 17.8 PPG,manual
-Jayden Quaintance,Kentucky,OUT,Swelling in surgically repaired knee - played only 4 games this season. Not returning,manual
-Patrick Ngongba II,Duke,DAY-TO-DAY,Right foot soreness - Scheyer says very unlikely to play R1 vs Siena March 18. Not a fracture but comfort not there yet. Maliq Brown starting in his place,manual
-Mikel Brown Jr.,Louisville,OUT,Back injury - ruled out for first weekend of tournament March 18. Missed 10 regular season games and entire ACC tournament. Averaging 18.2 PPG,manual
-Jaylin Stewart,Connecticut,DAY-TO-DAY,Right knee inflammation - missed last 3 regular season games and Big East tournament. Hurley says it will be close for first round,manual
-Labaron Philon,Alabama,PROBABLE,Nagging thigh/groin injury all season - coach Oats says won't be 100% but has been playing through it all year. Leading scorer at 21.7 PPG,manual
-John Bol,UCF,DAY-TO-DAY,Collapsed clutching chest during Big 12 tourney vs Arizona March 12. No official diagnosis released,manual
-Silas Demary Jr.,Connecticut,PROBABLE,Ankle sprain in Big East championship March 14 - Hurley called it very mild with no swelling. Precautionary X-rays taken,manual
-Nolan Winter,Wisconsin,RETURNING,Ankle sprain final week of season - sat out Big Ten tournament. Coach Gard says definitely ready for NCAAs,manual
-Donovan Dent,UCLA,HEALTHY,Calf strain in Big Ten semifinal March 14. School spokesman confirmed available for Friday vs UCF,manual
-Tyler Bilodeau,UCLA,HEALTHY,Mild right knee strain in Big Ten quarters March 13. School spokesman confirmed available for Friday vs UCF. Averaging 17.6 PPG,manual
-Christian Anderson,Texas Tech,HEALTHY,Cleared for NCAA tournament March 15. Slipped on Big 12 glass court but said feels good. Averaging 18.9 PPG 7.6 APG,manual
-Darryn Peterson,Kansas,HEALTHY,Hamstring/cramps earlier in season - missed 11 games but fully healthy since Feb 9. Playing 30 min in last 6 games. Averaging 19.8 PPG,manual
-B.J. Edwards,SMU,HEALTHY,Ankle injury - missed last 5 games since Feb 25 but confirmed available for NCAA tournament. Averaging 12.7 PPG and 4.9 APG,manual
-Darius Acuff Jr.,Arkansas,RETURNING,Left ankle injury Feb 14 vs Auburn - wore walking boot. Sat out games but scored 37 in SEC tourney. Playing through it with managed workload,manual
-Jalen Warley,Gonzaga,RETURNING,Quad contusion since early Feb - missed games but played 39 min across WCC tourney. Says ~90%. Treatment finally working per coach Few,manual
-Karter Knox,Arkansas,RETURNING,Left meniscus surgery mid-Feb - returned to play in SEC tournament scoring 16 pts. Availability for full tournament run unclear,manual
-Corey Washington,SMU,DAY-TO-DAY,Shoulder injury in ACC tournament vs Louisville March 11 - went down late in game. No update on status for First Four vs Miami (OH),manual
-Lamont Butler,Kentucky,RETURNING,Left shoulder injury - missed SEC tournament loss. Cleared for NCAA tournament per coach Pope. Averaging 11.5 PPG 4.3 APG,manual
-Aden Holloway,Alabama,OUT,Arrested March 16 on felony marijuana charges. Coach Oats confirmed team preparing to play without him. Was averaging 16.8 PPG,manual
-Yaxel Lendeborg,Michigan,PROBABLE,Low ankle sprain in Big Ten title game. Expected to play but worth monitoring. Averaging 14.4 PPG 7.0 RPG,manual
-Lassina Traore,Texas,DAY-TO-DAY,Knee injury - has not played since Feb 3. Questionable for First Four vs NC State Tuesday. Averaging 3.4 PPG in limited role,manual
-Taison Chatman,Ohio St.,PROBABLE,Groin injury - missed Big Ten quarterfinals. Coach Diebler expects everyone available for Thursday opener vs TCU,manual
+player,team,status,notes,source,games_missed,fitness
+JT Toppin,Texas Tech,OUT,ACL tear Feb 17 - season ending. Was averaging 21.8 PPG,manual,6,0.0
+Richie Saunders,BYU,OUT,ACL tear Feb 14 - season ending. Was averaging 18.0 PPG,manual,6,0.0
+Dawson Baker,BYU,OUT,ACL tear plus MCL/PCL damage - season ending,manual,6,0.0
+Nate Pickens,BYU,OUT,Knee injury - season ending (preseason),manual,6,0.0
+Caleb Wilson,North Carolina,OUT,Fractured left hand then fractured right thumb - season ending surgery,manual,6,0.0
+James Brown,North Carolina,OUT,Foot surgery Feb 18 - season ending. Reserve center,manual,6,0.0
+L.J. Cason,Michigan,OUT,ACL tear late February - season ending. Was averaging 8.4 PPG,manual,6,0.0
+Carter Welling,Clemson,OUT,ACL tear in ACC tournament - season ending. Was averaging 10.2 PPG,manual,6,0.0
+Matt Hodge,Villanova,OUT,ACL tear - season ending. Freshman averaging 9.2 PPG,manual,6,0.0
+Caleb Foster,Duke,OUT,Fractured foot - surgery. Outside chance of returning for Final Four,manual,4,0.0
+Braden Huff,Gonzaga,OUT,Left knee since Jan 15 - ruled out first weekend. Could return Sweet 16 with rust,manual,2,0.8
+Jayden Quaintance,Kentucky,OUT,Swelling in surgically repaired knee - not returning,manual,6,0.0
+Patrick Ngongba II,Duke,DAY-TO-DAY,Right foot soreness - very unlikely R1 and R2. Earliest return Sweet 16 on minutes limit,manual,2,0.85
+Mikel Brown Jr.,Louisville,OUT,Back injury - ruled out first weekend. Could return if Louisville advances with rust,manual,2,0.8
+Jaylin Stewart,Connecticut,DAY-TO-DAY,Right knee inflammation - Hurley says close for R1. If plays may be limited,manual,1,0.9
+Labaron Philon,Alabama,PROBABLE,Nagging thigh/groin all season - playing through but not 100%,manual,0,0.95
+John Bol,UCF,DAY-TO-DAY,Collapsed clutching chest during Big 12 tourney. No diagnosis. If plays may be limited,manual,1,0.85
+Silas Demary Jr.,Connecticut,PROBABLE,Ankle sprain Big East final - very mild. Expected full go,manual,0,1.0
+Nolan Winter,Wisconsin,RETURNING,Ankle sprain - missed Big Ten tourney. Ready but may have rust,manual,0,0.9
+Donovan Dent,UCLA,HEALTHY,Calf strain but confirmed available,manual,0,1.0
+Tyler Bilodeau,UCLA,HEALTHY,Mild knee strain but confirmed available,manual,0,1.0
+Christian Anderson,Texas Tech,HEALTHY,Cleared for tournament,manual,0,1.0
+Darryn Peterson,Kansas,HEALTHY,Fully healthy since Feb 9,manual,0,1.0
+B.J. Edwards,SMU,HEALTHY,Ankle injury - confirmed available but missed 5 games. May ease back in,manual,0,0.9
+Darius Acuff Jr.,Arkansas,RETURNING,Left ankle - wore boot but scored 37 in SEC tourney. Playing but managing workload,manual,0,0.85
+Jalen Warley,Gonzaga,RETURNING,Quad contusion - played 39 min in WCC tourney. Says ~90%,manual,0,0.9
+Karter Knox,Arkansas,RETURNING,Left meniscus surgery mid-Feb - returned but availability for full run unclear,manual,0,0.8
+Corey Washington,SMU,DAY-TO-DAY,Shoulder injury in ACC tournament. No update on status,manual,1,0.85
+Lamont Butler,Kentucky,RETURNING,Left shoulder - cleared but missed SEC tournament,manual,0,0.9
+Aden Holloway,Alabama,OUT,Arrested March 16. Coach Oats confirmed out,manual,6,0.0
+Yaxel Lendeborg,Michigan,PROBABLE,Low ankle sprain in Big Ten title game. Expected to play but monitoring,manual,0,0.95
+Lassina Traore,Texas,DAY-TO-DAY,Knee injury - has not played since Feb 3. Questionable,manual,1,0.85
+Taison Chatman,Ohio St.,PROBABLE,Groin injury but coach expects everyone available Thursday,manual,0,0.95

@@ -95,13 +95,24 @@ def load_manual_overrides():
 
     overrides = []
     for _, row in df.iterrows():
-        overrides.append({
+        entry = {
             'player': str(row['player']).strip(),
             'team': str(row['team']).strip(),
             'status': str(row['status']).strip().upper(),
             'notes': str(row.get('notes', '')).strip(),
             'source': 'manual'
-        })
+        }
+        if 'games_missed' in row.index:
+            try:
+                entry['games_missed'] = int(row['games_missed'])
+            except (ValueError, TypeError):
+                entry['games_missed'] = 6 if entry['status'] == 'OUT' else 0
+        if 'fitness' in row.index:
+            try:
+                entry['fitness'] = float(row['fitness'])
+            except (ValueError, TypeError):
+                entry['fitness'] = 0.0 if entry['status'] == 'OUT' else 1.0
+        overrides.append(entry)
 
     return overrides
 

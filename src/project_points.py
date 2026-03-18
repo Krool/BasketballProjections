@@ -28,14 +28,8 @@ _SUFFIX_RE = re.compile(r'\s+(jr\.?|sr\.?|ii|iii|iv|v)\s*$', re.IGNORECASE)
 # D-I average defensive efficiency (KenPom centers on ~100)
 D1_AVG_DRTG = 100.0
 
-# Injury multipliers
-INJURY_MULTIPLIERS = {
-    'OUT': 0.0,
-    'DAY-TO-DAY': 0.7,      # Truly uncertain — missed recent games, status unknown
-    'PROBABLE': 0.9,         # Expected to play, minor lingering issue
-    'RETURNING': 0.8,        # Back from injury but may have limited minutes / rust
-    'HEALTHY': 1.0,
-}
+
+
 
 
 def _normalize_name(name):
@@ -50,38 +44,39 @@ def _normalize_name(name):
 
 def _build_injury_lookup(injuries_df):
     """
-    Build an injury lookup dict that can match on both exact and
-    suffix-stripped names. Exact matches take priority.
+    Build injury lookup dicts for status and games_missed.
+    Matches on both exact and suffix-stripped names.
     """
-    exact_lookup = {}   # (player_lower, team_lower) -> status
-    fuzzy_lookup = {}   # (normalized_name, team_lower) -> status
+    exact_lookup = {}   # (player_lower, team_lower) -> (status, games_missed)
+    fuzzy_lookup = {}   # (normalized_name, team_lower) -> (status, games_missed)
 
     for _, row in injuries_df.iterrows():
         player = str(row['player']).strip()
         team = str(row['team']).strip().lower()
         status = str(row['status']).strip().upper()
+        games_missed = int(row['games_missed']) if 'games_missed' in row.index and pd.notna(row.get('games_missed')) else (6 if status == 'OUT' else 0)
 
-        exact_lookup[(player.lower(), team)] = status
-        fuzzy_lookup[(_normalize_name(player), team)] = status
+        fitness = float(row['fitness']) if 'fitness' in row.index and pd.notna(row.get('fitness')) else (0.0 if status == 'OUT' else 1.0)
+
+        exact_lookup[(player.lower(), team)] = (status, games_missed, fitness)
+        fuzzy_lookup[(_normalize_name(player), team)] = (status, games_missed, fitness)
 
     return exact_lookup, fuzzy_lookup
 
 
-def _get_injury_status(player_name, team_name, exact_lookup, fuzzy_lookup):
-    """Look up injury status, trying exact match first, then normalized."""
+def _get_injury_info(player_name, team_name, exact_lookup, fuzzy_lookup):
+    """Look up injury status and games_missed, trying exact match first."""
     team = team_name.lower()
 
-    # Try exact match
-    status = exact_lookup.get((player_name.lower(), team))
-    if status:
-        return status
+    result = exact_lookup.get((player_name.lower(), team))
+    if result:
+        return result
 
-    # Try normalized (suffix-stripped) match
-    status = fuzzy_lookup.get((_normalize_name(player_name), team))
-    if status:
-        return status
+    result = fuzzy_lookup.get((_normalize_name(player_name), team))
+    if result:
+        return result
 
-    return 'HEALTHY'
+    return ('HEALTHY', 0, 1.0)
 
 
 
@@ -134,33 +129,36 @@ def project_player_points(player_stats_df, expected_games, round_context=None,
     if injuries_df is not None and not injuries_df.empty:
         exact_lookup, fuzzy_lookup = _build_injury_lookup(injuries_df)
 
-        def get_injury_multiplier(row):
-            status = _get_injury_status(row['player'], row['team'], exact_lookup, fuzzy_lookup)
-            return INJURY_MULTIPLIERS.get(status, 1.0)
+        def get_injury_info(row):
+            return _get_injury_info(row['player'], row['team'], exact_lookup, fuzzy_lookup)
 
-        df['injury_multiplier'] = df.apply(get_injury_multiplier, axis=1)
-        df['injury_status'] = df.apply(
-            lambda row: _get_injury_status(row['player'], row['team'], exact_lookup, fuzzy_lookup),
-            axis=1
+        df[['injury_status', 'games_missed', 'fitness_mult']] = df.apply(
+            lambda row: pd.Series(get_injury_info(row)), axis=1
         )
     else:
-        df['injury_multiplier'] = 1.0
         df['injury_status'] = 'HEALTHY'
+        df['games_missed'] = 0
+        df['fitness_mult'] = 1.0
 
     # Calculate projected points
     if round_context:
-        # Per-round matchup-adjusted scoring
+        # Per-round matchup-adjusted scoring, skipping missed rounds
         def compute_adjusted(row):
             tc = round_context.get(row['team'])
             if not tc:
-                return row['ppg'] * row['expected_games'] * row['injury_multiplier']
+                return row['ppg'] * max(0, row['expected_games'] - row['games_missed']) * row['fitness_mult']
 
             ppg = row['ppg']
             team_adjt = tc['adj_t']
-            injury_mult = row['injury_multiplier']
+            fitness = row['fitness_mult']
+            skip = int(row['games_missed'])
             total = 0.0
 
-            for rd in tc['rounds']:
+            for i, rd in enumerate(tc['rounds']):
+                # Skip first N rounds the player will miss
+                if i < skip:
+                    continue
+
                 # Pace: tournament game pace = avg of both teams' tempo
                 matchup_pace = (team_adjt + rd['opp_adjt']) / 2
                 pace_factor = matchup_pace / team_adjt
@@ -169,7 +167,7 @@ def project_player_points(player_stats_df, expected_games, round_context=None,
                 defense_factor = rd['opp_drtg'] / D1_AVG_DRTG
 
                 # Expected points this round
-                round_pts = ppg * pace_factor * defense_factor * injury_mult
+                round_pts = ppg * pace_factor * defense_factor * fitness
                 total += rd['p_play'] * round_pts
 
             return round(total, 1)
