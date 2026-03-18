@@ -1307,6 +1307,8 @@ function loadState() {
       draftOrder = state.draftOrder || [];
       draftConfig = state.draftConfig || null;
       teamNames = state.teamNames || {};
+      liveActive = state.liveActive || false;
+      liveConfig = state.liveConfig || { teams: 14, position: 1, rounds: 14 };
     }
   } catch(e) {}
 }
@@ -1318,7 +1320,9 @@ function saveState() {
     favorites: [...favorites],
     draftOrder,
     draftConfig,
-    teamNames
+    teamNames,
+    liveActive,
+    liveConfig
   }));
 }
 
@@ -1582,11 +1586,14 @@ function render() {
 
       // Action buttons: contextual based on draft mode
       let actionHtml = '';
+      const draftOver = (liveActive && isLiveComplete()) || (mockActive && isMockComplete());
       const myMockTurn = mockActive && isMyMockPick();
       const myLiveTurn = liveActive && isLiveMyPick() && !isLiveComplete();
       const liveOtherTurn = liveActive && !isLiveMyPick() && !isLiveComplete();
 
-      if (isMyTeam) {
+      if (draftOver) {
+        actionHtml = isMyTeam ? '<span class="my-team-badge">OURS</span>' : '';
+      } else if (isMyTeam) {
         const canRemove = !mockActive || mockPaused;
         actionHtml = canRemove ? `<button class="we-draft-btn" onclick="toggleMyTeam(${p.rank})" title="Remove from your team"><span class="btn-full">Ours</span><span class="btn-short">Us</span></button>` : `<span class="my-team-badge">OURS</span>`;
       } else if (isDraftedByOthers) {
@@ -1680,6 +1687,8 @@ function undoPick(rank) {
 }
 
 function toggleDraft(rank) {
+  if (liveActive && isLiveComplete()) return; // Draft is over
+  if (mockActive && isMockComplete()) return;
   if (drafted.has(rank)) {
     if (liveActive) return; // No undo during live draft
     drafted.delete(rank);
@@ -1695,6 +1704,8 @@ function toggleDraft(rank) {
 }
 
 function toggleMyTeam(rank) {
+  if (liveActive && isLiveComplete()) return; // Draft is over
+  if (mockActive && isMockComplete()) return;
   if (myTeam.has(rank)) {
     if (liveActive) return; // No undo during live draft
     myTeam.delete(rank);
@@ -1765,6 +1776,9 @@ function init() {
         opt.textContent = r;
         regionSelect.appendChild(opt);
       });
+
+      // Restore live draft banner if draft was in progress
+      if (liveActive) updateLiveBanner();
 
       render();
     })
@@ -2237,6 +2251,7 @@ function startLiveDraft() {
 
 function stopLiveDraft() {
   liveActive = false;
+  saveState();
   updateLiveBanner();
   render();
 }
