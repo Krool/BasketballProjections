@@ -1,5 +1,5 @@
 """
-Main pipeline: March Madness 2026 Player Scoring Projections
+Main pipeline: March Madness Player Scoring Projections
 
 Usage:
     python src/main.py
@@ -8,12 +8,19 @@ Requires data/kenpom_tournament.csv and data/bracket.json to exist.
 Run src/parse_kenpom.py first if kenpom_tournament.csv is missing.
 
 Pipeline steps:
-1. Load KenPom team ratings (AdjO, AdjD)
+1. Load KenPom team ratings (AdjO, AdjD, AdjT)
 2. Load bracket (64 teams, 4 regions)
-3. Simulate bracket analytically to get expected games per team
-4. Load/scrape per-player season stats (PPG) from ESPN
-5. Load injury data (manual overrides + ESPN scrape)
-6. Compute projected points = PPG * expected_games * injury_multiplier
+3. Load/scrape per-player season stats from ESPN (with ESPN IDs)
+4. Load injury data (manual overrides + ESPN scrape)
+5. Adjust KenPom for injuries + simulate bracket (expected games + round context)
+6. Scrape recent form (last 5 game PPG from ESPN game logs)
+7. Project points: per-round PPG × pace × defense × injury, blended with recent form
+
+Outputs:
+- output/projections.csv  (ranked player projections)
+- docs/players.json       (deployed to web draft board)
+
+To reuse next year: see README.md "How to Reuse This for Next Year"
 """
 import os
 import sys

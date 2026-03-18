@@ -1,214 +1,215 @@
 # March Madness 2026 - Fantasy Draft Projections
 
-Fantasy draft board for a 20-team league where each team drafts 14 players (280 total picks). Projects which players will score the most total points across the 2026 NCAA tournament.
+Fantasy draft board for March Madness player pools. Projects which players will score the most total points across the NCAA tournament based on KenPom efficiency ratings, recent form, and injury data.
 
-**Live draft board**: Open `docs/index.html` or deploy to GitHub Pages.
+**Live draft board**: [krool.github.io/BasketballProjections](https://krool.github.io/BasketballProjections/) or open `docs/index.html` locally.
 
-## Projection Methodology
+## How to Reuse This for Next Year
 
-### Core Formula
+### 1. Update KenPom data
+After the bracket is announced (Selection Sunday):
+1. Go to [kenpom.com](https://kenpom.com) and copy the ratings table
+2. Paste into `data/kenpom_raw.txt`
+3. Run `python src/parse_kenpom.py` — generates `kenpom.csv` and `kenpom_tournament.csv`
+4. Verify `kenpom_tournament.csv` has all 68 tournament teams with correct seeds
 
-For each player, we compute expected points **per tournament round**, then sum across all 6 possible rounds:
+### 2. Update the bracket
+Edit `data/bracket.json` with the 64-team bracket. Structure:
+```json
+{
+  "regions": {
+    "East":    { "1": "TeamName", "16": "TeamName", "8": "...", ... },
+    "West":    { ... },
+    "Midwest": { ... },
+    "South":   { ... }
+  },
+  "final_four_matchups": [["East", "West"], ["South", "Midwest"]]
+}
+```
+Team names must match KenPom exactly (e.g., "Iowa St." not "Iowa State").
 
+### 3. Update ESPN team IDs
+In `src/scrape_players_espn.py`, update the `ESPN_TEAM_IDS` dict for any new tournament teams. These are the numeric IDs from ESPN URLs (e.g., `espn.com/mens-college-basketball/team/stats/_/id/150` → Duke = 150).
+
+### 4. Update First Four matchups
+In `src/update_first_four.py`, update the `FIRST_FOUR` list with the new play-in matchups.
+
+In `src/main.py`, update the `FIRST_FOUR_PAIRS` list for undecided matchups (both teams' players appear in projections until the game is played).
+
+### 5. Update injury data
+Edit `data/injury_overrides.csv`:
+```csv
+player,team,status,notes
+Player Name,Team Name,OUT,Description of injury
+```
+Status values: `OUT`, `DAY-TO-DAY`, `PROBABLE`, `RETURNING`, `HEALTHY`
+
+### 6. Clear caches and regenerate
+```bash
+rm -rf data/player_stats/          # ESPN player stat cache
+rm -f data/all_player_stats.csv    # Combined stats
+rm -f data/player_stats/_recent_form.json  # Game log cache
+python src/main.py                 # Full pipeline
+```
+
+### 7. Update insights (optional)
+Edit `docs/insights.json` with scouting notes per player:
+```json
+{
+  "Player Name": "Note about this player for the draft board tooltip"
+}
+```
+
+## Pipeline Steps (src/main.py)
+
+The pipeline runs 7 steps:
+
+1. **Load KenPom data** — Team ratings (AdjO, AdjD, AdjT) from `kenpom_tournament.csv`
+2. **Load bracket** — 64-team bracket from `bracket.json`
+3. **Load/scrape player stats** — Per-player PPG, RPG, APG from ESPN. Cached in `data/player_stats/`. Also captures ESPN player IDs for game log scraping and team logos.
+4. **Load injuries** — Manual overrides from `injury_overrides.csv` + ESPN scrape (unreliable). Manual overrides take precedence.
+5. **Adjust KenPom + simulate bracket** — Reduce AdjO for teams with OUT players, then propagate win probabilities through the bracket tree to compute expected games per team. Also computes per-round opponent context (DRtg, AdjT, margin) for matchup adjustments.
+6. **Scrape recent form** — Game logs from ESPN for players with 12+ PPG. Computes last-5-game average. Cached in `_recent_form.json`.
+7. **Project points** — Combine all data into final projections. Deploy to `docs/players.json`.
+
+## Projection Model
+
+### Formula
 ```
 projected_points = Σ (P(play round r) × adjusted_PPG_r)
+adjusted_PPG = blended_PPG × pace_factor × defense_factor × injury_multiplier
 ```
 
-Where for each round:
-```
-adjusted_PPG = PPG × surge × pace_factor × defense_factor × blowout_factor × injury_mult
-```
+### Factors
 
-### Factor Breakdown
-
-#### 1. Win Probability Model
-Teams' chances of advancing are computed analytically (not Monte Carlo) using KenPom adjusted efficiency ratings:
-
+**Win probability** (expected games):
 ```
-P(A beats B) = 1 / (1 + 10^(-margin / 17))
+P(A beats B) = 1 / (1 + 10^(-margin / 20))
 margin = (AdjO_A - AdjD_A) - (AdjO_B - AdjD_B)
 ```
+Divisor of 20 calibrated for tournament single-elimination variance. Team quality drives results — not seed labels.
 
-The divisor of **17** is calibrated against historical single-elimination upset rates:
-- 1-seeds win R1: ~99% (model: 99.6%)
-- 5v12 upset rate: ~35% (model: ~13-17% depending on matchup)
-- 8v9 matchups: ~50/50 (model: ~60-65% for higher seed)
-- Best team championship odds: ~15-25% (model: ~28% for Duke)
-
-Each team's probability of playing each round is derived by propagating win probabilities through the full bracket tree.
-
-#### 2. Tournament Scoring Surge
-Historical analysis (2015-2025) shows star players score significantly more in March Madness than their regular season average. The top tournament scorer averaged **+36% above regular season PPG** — driven by tighter rotations, higher usage, and elevated intensity.
-
-We apply a conservative, tiered bump (the +36% is survivorship-biased since we only see players whose teams went deep):
-
-| Regular Season PPG | Surge Factor | Rationale |
-|---|---|---|
-| 20+ PPG | 1.08 (+8%) | Stars get more touches, tighter rotation |
-| 15-20 PPG | 1.04 (+4%) | Solid starters see slight usage increase |
-| Under 15 PPG | 1.00 (none) | Role players don't meaningfully surge |
-
-#### 3. Pace Normalization
-A player's PPG was earned at their team's season tempo (AdjT). In any given tournament game, the actual pace is the average of both teams' tempos:
-
+**Recent form blending**:
 ```
-pace_factor = ((team_AdjT + opponent_AdjT) / 2) / team_AdjT
+effective_PPG = 60% × season_PPG + 40% × last_5_games_PPG
 ```
+Captures hot/cold streaks entering the tournament. Only applied to players with 12+ season PPG (where we have game log data). Others use flat season average.
 
-This adjusts for tempo mismatches — e.g., a player on Alabama (73.1 tempo) facing Houston (63.3 tempo) will play at ~68.2 possessions, producing ~93% of their normal scoring rate.
+**Pace normalization** (per round):
+```
+pace_factor = (team_AdjT + opponent_AdjT) / 2 / team_AdjT
+```
+Adjusts for tempo mismatches. Range: ~±6%.
 
-#### 4. Opponent Defense Adjustment
-Per-round scoring is scaled by the weighted-average defensive efficiency of likely opponents vs the D-I average (100.0):
-
+**Opponent defense** (per round):
 ```
 defense_factor = opponent_DRtg / 100.0
 ```
+Scales scoring by opponent quality. Range: ~±11%. Opponents are probability-weighted.
 
-A player facing Siena (DRtg 109) scores ~9% more than average. Against Michigan (DRtg 89), ~11% less. Opponents in later rounds are probability-weighted across all teams that could reach that round.
-
-#### 5. Blowout Minutes Reduction
-In lopsided games, starters sit early. Historical data (e.g., Edey scored 30 in 23 min vs a 16-seed in 2024) shows stars still produce at ~80% even in blowouts:
-
-```
-blowout_factor = max(0.80, 1.0 - (|margin| - 7) * 0.006)
-```
-
-| Expected Margin | Factor | Interpretation |
-|---|---|---|
-| ≤ 7 pts | 1.00 | Competitive game, full minutes |
-| 17 pts | 0.94 | Moderate win, slight rest |
-| 27 pts | 0.88 | Clear blowout, starters sit ~5 min early |
-| 40+ pts | 0.80 | Floor — stars still produce in limited time |
-
-Uses absolute margin — underdogs in blowout losses also see reduced minutes.
-
-#### 6. Injury-Adjusted KenPom (Team Level)
-Teams with OUT players have their KenPom offensive efficiency (AdjO) reduced before bracket simulation:
-
-```
-loss_rate = 0.35 + (0.10 if player_ppg >= 20)
-net_loss = player_ppg × loss_rate
-AdjO_reduction = (net_loss / team_total_ppg) × (team_AdjO - 107)
-```
-
-This reflects that ~65% of a missing player's production is backfilled by teammates at lower efficiency. Stars (20+ PPG) are harder to replace.
-
-#### 7. Injury Multipliers (Player Level)
-
+**Injury multipliers** (player level):
 | Status | Multiplier | Use When |
 |---|---|---|
-| HEALTHY | 1.0 | Default — no injury concerns |
-| PROBABLE | 0.9 | Expected to play, minor lingering issue |
-| RETURNING | 0.8 | Back from injury, may have limited minutes / rust |
-| DAY-TO-DAY | 0.7 | Truly uncertain — missed recent games, status unknown |
-| OUT | 0.0 | Season-ending or ruled out |
+| HEALTHY | 1.0 | Default |
+| PROBABLE | 0.9 | Expected to play, minor issue |
+| RETURNING | 0.8 | Back from injury, may have rust |
+| DAY-TO-DAY | 0.7 | Truly uncertain |
+| OUT | 0.0 | Not playing |
 
-### Historical Calibration
-
-Top tournament scorers 2015-2025 (for context — our projections are expected values, which are lower than actuals because actuals are conditional on the team going deep):
-
-| Year | #1 Scorer | Total Pts | Seed | Tournament PPG |
-|---|---|---|---|---|
-| 2025 | Walter Clayton Jr. | 123 | 1 | 24.6 |
-| 2024 | Zach Edey | 177 | 1 | 29.5 |
-| 2023 | Adama Sanogo | 118 | 4 | 19.7 |
-| 2022 | Caleb Love | 113 | 8 | 18.8 |
-| 2021 | Johnny Juzang | 137 | 11 | 27.4 |
-| 2019 | Carsen Edwards | 139 | 3 | 34.8 |
-
-Average #1 scorer: **124 pts**. Championship teams typically place **3-5 players** in the top 10 scorers.
-
-## Quick Start
-
-```bash
-pip install pandas requests beautifulsoup4
-
-# Run the full pipeline (generates projections + deploys to docs/)
-python src/main.py
+**Injury-adjusted KenPom** (team level):
 ```
-
-## Draft Day Workflow
-
-### Before the draft (after First Four, before Round of 64)
-
-The First Four play-in games (March 17-18) do NOT count for fantasy scoring. By draft time, those games will be done. Update the bracket with results:
-
-```bash
-# Interactive — prompts for each winner
-python src/update_first_four.py
-
-# Or pass results directly
-python src/update_first_four.py --west11 "Texas" --mw16 "Howard" --mw11 "SMU" --south16 "Lehigh"
+loss_rate = 0.35 + (0.10 if player_ppg >= 20)
+AdjO_reduction = (ppg × loss_rate / team_total_ppg) × (AdjO - 107)
 ```
+Only applied for OUT players. Reduces team's offensive efficiency before bracket simulation.
 
-First Four matchups:
-| Slot | Matchup | Winner plays |
-|------|---------|-------------|
-| West 11 | N.C. State vs Texas | BYU (R64) |
-| Midwest 16 | UMBC vs Howard | Michigan (R64) |
-| Midwest 11 | SMU vs Miami (OH) | Tennessee (R64) |
-| South 16 | Lehigh vs Prairie View A&M | Florida (R64) |
+### What we tested and removed
+These factors were implemented, tested against historical data, and removed because they either had no evidence or didn't change draft rankings:
+- **Tournament scoring surge** (+8% for stars) — Only supported by survivorship-biased data. Sensitivity test: changed 0 picks in top 30.
+- **Scoring concentration** (boost go-to scorers) — Historical data showed no effect (high-share players surged 1.18x vs low-share 1.22x).
+- **Blowout minutes reduction** — Historical data showed the opposite: stars score MORE in blowouts (Edey 30pts in R1, Clingan 19 in 20min).
 
-If a new team enters the bracket (e.g. Texas replaces N.C. State):
-1. Add their KenPom ratings to `data/kenpom_tournament.csv`
-2. Delete their cache in `data/player_stats/` if it exists
-3. Re-run `python src/main.py` — it will scrape missing team stats automatically
+## Draft Board Features (docs/index.html)
 
-### Last-minute injury updates
+### Draft Modes
+- **Live Draft** — Real-time draft tracking with turn awareness. Setup: teams, rounds, your position, snake/linear, custom team names. Shows "YOUR PICK!" when it's your turn, hides irrelevant buttons. Blocks picks after completion.
+- **Mock Draft** — Simulates other teams auto-picking best available. Configurable speed and draft type.
+- **Free Draft** — No turn tracking, just mark Us/Them as picks happen.
 
-Edit `data/injury_overrides.csv` and re-run `python src/main.py`.
+### UI Features
+- School logos from ESPN CDN (`a.espncdn.com/i/teamlogos/ncaa/500/{id}.png`)
+- Best Available banner with quick-draft button on your turn
+- Seed range filter (min/max dropdowns, default 1-16)
+- Search by player or team name
+- Favorites system (star players you're targeting)
+- Conflict warnings (bracket conflicts between your players)
+- Sortable columns
+- Mobile responsive (hides columns, compact layout)
 
-Name matching is fuzzy on suffixes (Jr., Sr., II, III) — "Patrick Ngongba II" matches "Patrick Ngongba".
+### Draft Log
+- Shows pick number, round, team name (from setup), school logo
+- Your picks highlighted in purple
+- Snake/linear order calculated from draft config
 
-### During the draft
+### Draft Summary (after completion)
+- Logo cloud: school logos sized by their % of your total projected points
+- Player breakdown grouped by school team
+- League standings: all draft teams ranked by projected points with conflict penalties
 
-Open `docs/index.html` in a browser. Features:
-- Click **Draft** to mark players as taken (persists via localStorage)
-- **Best Available** banner shows the top undrafted player
-- Filter by team, seed, or search by name
-- **Favorites** to star players you're targeting
-- **Draft Log** sidebar tracks pick order
-- **Mock Draft** mode simulates other teams picking
-- **Export** downloads draft results as CSV
-- **Undo** / **Reset** for mistakes
+### Export
+- **Export Draft**: CSV with pick #, round, draft team name, player stats
+- **Export All**: Full player database with drafted/available status
+
+### Persistence
+Everything saves to localStorage: drafted players, your team, favorites, draft order, draft config, team names, live draft state. Survives page refresh.
 
 ## Project Structure
-
 ```
 data/
-  bracket.json             # 64-team bracket (edit after First Four)
-  injury_overrides.csv     # Manual injury statuses (primary injury source)
-  injuries_combined.csv    # Generated: merged ESPN + manual injuries
-  kenpom_raw.txt           # Raw KenPom ratings (paste from kenpom.com)
-  kenpom.csv               # Parsed: all 365 D1 teams
-  kenpom_tournament.csv    # Parsed: 68 tournament teams with seeds
-  all_player_stats.csv     # Combined player stats from ESPN
-  player_stats/            # Per-team JSON cache from ESPN scraping
+  bracket.json              # 64-team bracket
+  injury_overrides.csv      # Manual injury statuses (authoritative source)
+  injuries_combined.csv     # Generated: merged ESPN + manual
+  kenpom_raw.txt            # Raw KenPom paste (not committed)
+  kenpom.csv                # All 365 D1 teams
+  kenpom_tournament.csv     # 68 tournament teams with seeds
+  all_player_stats.csv      # Player stats with ESPN IDs
+  player_stats/             # Per-team JSON cache + _recent_form.json
 
 src/
-  main.py                  # Full pipeline — run this to regenerate everything
-  update_first_four.py     # Update bracket with play-in results
-  parse_kenpom.py          # Parse raw KenPom data into CSVs
-  simulate_bracket.py      # Analytical bracket simulation (expected games)
-  scrape_players_espn.py   # Scrape player per-game stats from ESPN
-  scrape_injuries.py       # Load injuries (manual overrides + ESPN)
-  project_points.py        # Combine data into final projections
+  main.py                   # Pipeline orchestrator (7 steps)
+  parse_kenpom.py           # Raw KenPom → CSV
+  simulate_bracket.py       # Win probability + bracket propagation + round context
+  scrape_players_espn.py    # ESPN scraper (stats + game logs + IDs)
+  scrape_injuries.py        # Injury loader (manual + ESPN)
+  project_points.py         # PPG × expected_games with adjustments
+  update_first_four.py      # Update bracket with play-in results
 
 output/
-  projections.csv          # Final ranked player projections
+  projections.csv           # Final ranked projections
 
 docs/
-  index.html               # Draft board web app
-  players.json             # Deployed projections (auto-updated by main.py)
-  insights.json            # Manual scouting notes per player
+  index.html                # Draft board SPA (~93KB)
+  players.json              # Deployed projections (auto-updated by main.py)
+  insights.json             # Manual scouting notes
+  sw.js                     # Service worker (network-first for data)
+  manifest.json             # PWA manifest
+  icon-192.png, icon-512.png
 ```
 
-## Updating Data
+## Dependencies
+```
+pip install pandas requests beautifulsoup4 PyPDF2
+```
+PyPDF2 is optional (only used for reading competitor ranking PDFs).
 
-**KenPom ratings**: Paste updated table into `data/kenpom_raw.txt`, then run `python src/parse_kenpom.py`.
+## Key Design Decisions
 
-**Bracket changes**: Edit `data/bracket.json`. Team names must match KenPom exactly.
+1. **Expected value over ceiling** — Rankings optimize for the most likely total points, not upside. This is correct for a 14-player roster where the law of large numbers applies.
 
-**Injuries**: Edit `data/injury_overrides.csv`. Re-run `python src/main.py`.
+2. **Team quality over seed labels** — We use actual KenPom ratings, not historical seed-line averages. A strong 4-seed and a weak 4-seed get different expected games.
 
-**Re-scrape all player stats**: Delete `data/player_stats/` and `data/all_player_stats.csv`, then re-run `python src/main.py`.
+3. **Recent form is the only "extra" modifier** — After testing tournament surge, scoring concentration, and blowout reduction against historical data, only recent form (60/40 blend) survived. It's the only modifier that actually changes draft rankings.
+
+4. **Injuries are first-class** — Both team-level (AdjO reduction for OUT players) and player-level (multipliers). Boyd's Bets, our main competitor, doesn't adjust for injuries at all — their top 50 includes 4 OUT players.
+
+5. **Per-round scoring** — Not flat PPG × games. Each round has different opponents with different defensive quality and pace. A player facing Siena in R1 scores differently than facing Michigan in E8.
