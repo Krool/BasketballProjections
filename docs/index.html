@@ -624,8 +624,8 @@
     }
     .layout {
       grid-template-columns: 1fr;
-      height: calc(100vh - 158px);
-      height: calc(100dvh - 158px);
+      height: calc(100vh - 130px);
+      height: calc(100dvh - 130px);
     }
     .col-left, .col-right, .col-center {
       display: none;
@@ -649,8 +649,9 @@
     .controls { gap: 5px; }
     .search-box { width: 140px; }
 
-    /* Hide columns on mobile to prevent horizontal scrolling */
+    /* Hide columns and footer on mobile */
     .col-team, .col-region, .col-seed { display: none; }
+    .site-footer { display: none; }
     .col-fav { padding: 0 2px; }
     .fav-btn { font-size: 16px; padding: 4px 2px; }
 
@@ -2691,7 +2692,7 @@ document.getElementById('analysis-modal').addEventListener('click', function(e) 
   if (e.target === this) this.classList.remove('open');
 });
 </script>
-<footer style="position:fixed;bottom:0;left:0;right:0;padding:6px 0;border-top:1px solid var(--border);text-align:center;background:var(--bg);z-index:50;">
+<footer class="site-footer" style="position:fixed;bottom:0;left:0;right:0;padding:6px 0;border-top:1px solid var(--border);text-align:center;background:var(--bg);z-index:50;">
   <p style="color:var(--text-dim);font-size:13px;margin:0;">Part of <a href="https://krool.github.io/" target="_blank" rel="noopener noreferrer" style="color:#4f8cff;text-decoration:none;display:inline-flex;align-items:center;gap:4px;">Krool World <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></p>
 </footer>
 </body>
