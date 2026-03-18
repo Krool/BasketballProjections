@@ -1,34 +1,34 @@
 player,team,status,notes,source,games_missed,fitness
-JT Toppin,Texas Tech,OUT,ACL tear Feb 17 - season ending. Was averaging 21.8 PPG,manual,6,0.0
-Richie Saunders,BYU,OUT,ACL tear Feb 14 - season ending. Was averaging 18.0 PPG,manual,6,0.0
+JT Toppin,Texas Tech,OUT,ACL tear Feb 17 - season ending,manual,6,0.0
+Richie Saunders,BYU,OUT,ACL tear Feb 14 - season ending,manual,6,0.0
 Dawson Baker,BYU,OUT,ACL tear plus MCL/PCL damage - season ending,manual,6,0.0
 Nate Pickens,BYU,OUT,Knee injury - season ending (preseason),manual,6,0.0
-Caleb Wilson,North Carolina,OUT,Fractured left hand then fractured right thumb - season ending surgery,manual,6,0.0
-James Brown,North Carolina,OUT,Foot surgery Feb 18 - season ending. Reserve center,manual,6,0.0
-L.J. Cason,Michigan,OUT,ACL tear late February - season ending. Was averaging 8.4 PPG,manual,6,0.0
-Carter Welling,Clemson,OUT,ACL tear in ACC tournament - season ending. Was averaging 10.2 PPG,manual,6,0.0
-Matt Hodge,Villanova,OUT,ACL tear - season ending. Freshman averaging 9.2 PPG,manual,6,0.0
-Caleb Foster,Duke,OUT,Fractured foot - surgery. Outside chance of returning for Final Four,manual,4,0.0
-Braden Huff,Gonzaga,OUT,Left knee since Jan 15 - ruled out first weekend. Could return Sweet 16 with rust,manual,2,0.8
-Jayden Quaintance,Kentucky,OUT,Swelling in surgically repaired knee - not returning,manual,6,0.0
-Patrick Ngongba II,Duke,DAY-TO-DAY,Right foot soreness - very unlikely R1 and R2. Earliest return Sweet 16 on minutes limit,manual,2,0.85
-Mikel Brown Jr.,Louisville,OUT,Back injury - ruled out first weekend. Could return if Louisville advances with rust,manual,2,0.8
-Jaylin Stewart,Connecticut,DAY-TO-DAY,Right knee inflammation - Hurley says close for R1. If plays may be limited,manual,1,0.9
-Labaron Philon,Alabama,PROBABLE,Nagging thigh/groin all season - playing through but not 100%,manual,0,0.95
-John Bol,UCF,DAY-TO-DAY,Collapsed clutching chest during Big 12 tourney. No diagnosis. If plays may be limited,manual,1,0.85
-Silas Demary Jr.,Connecticut,PROBABLE,Ankle sprain Big East final - very mild. Expected full go,manual,0,1.0
-Nolan Winter,Wisconsin,RETURNING,Ankle sprain - missed Big Ten tourney. Ready but may have rust,manual,0,0.9
+Caleb Wilson,North Carolina,OUT,Fractured hand + thumb - season ending surgery,manual,6,0.0
+James Brown,North Carolina,OUT,Foot surgery Feb 18 - season ending,manual,6,0.0
+L.J. Cason,Michigan,OUT,ACL tear late Feb - season ending. Redshirting next year,manual,6,0.0
+Carter Welling,Clemson,OUT,Torn ACL in ACC tournament - season ending,manual,6,0.0
+Matt Hodge,Villanova,OUT,ACL tear - season ending,manual,6,0.0
+Jayden Quaintance,Kentucky,OUT,Surgically repaired knee - not returning,manual,6,0.0
+Aden Holloway,Alabama,OUT,Arrested March 16 felony marijuana. Suspended by team. Oats confirmed out,manual,6,0.0
+Caleb Foster,Duke,OUT,Fractured foot - surgery. Outside chance Final Four only,manual,4,0.0
+Braden Huff,Gonzaga,OUT,Dislocated kneecap Jan 15. Jogging and shooting per Few. Sweet 16 return possible but will have major rust,manual,2,0.75
+Patrick Ngongba II,Duke,DAY-TO-DAY,Right foot soreness. Scheyer says very unlikely R1 and R2. Not a fracture. Earliest return Sweet 16 on minutes limit,manual,2,0.85
+Mikel Brown Jr.,Louisville,OUT,Back injury - ruled out first weekend March 18. Could return if Louisville advances but with major rust after missing 10+ games,manual,2,0.75
+Karter Knox,Arkansas,OUT,Left meniscus surgery. Missed 11 of last 12 games including SEC tournament. Did not play SEC semifinal vs Mississippi,manual,6,0.0
+Jaylin Stewart,Connecticut,DAY-TO-DAY,Knee injury - out since Feb 21. Hurley expects him back for tournament but hasnt played in weeks. Will be on minutes limit,manual,0,0.85
+Labaron Philon,Alabama,PROBABLE,Nagging thigh/groin all season but playing through. Leading scorer 21.7 PPG. Not 100% per Oats,manual,0,0.95
+John Bol,UCF,DAY-TO-DAY,Collapsed clutching chest during Big 12 tourney March 12. No official diagnosis. Most concerning unknown injury,manual,1,0.85
+Silas Demary Jr.,Connecticut,PROBABLE,Ankle sprain Big East final - very mild per Hurley. No swelling. Full go,manual,0,1.0
+Nolan Winter,Wisconsin,RETURNING,Ankle sprain - sat out Big Ten tourney. Coach Gard says full go in practice. Expected available,manual,0,0.95
 Donovan Dent,UCLA,HEALTHY,Calf strain but confirmed available,manual,0,1.0
 Tyler Bilodeau,UCLA,HEALTHY,Mild knee strain but confirmed available,manual,0,1.0
-Christian Anderson,Texas Tech,HEALTHY,Cleared for tournament,manual,0,1.0
+Christian Anderson,Texas Tech,HEALTHY,Groin injury in Big 12 tourney but cleared for tournament,manual,0,1.0
 Darryn Peterson,Kansas,HEALTHY,Fully healthy since Feb 9,manual,0,1.0
-B.J. Edwards,SMU,HEALTHY,Ankle injury - confirmed available but missed 5 games. May ease back in,manual,0,0.9
-Darius Acuff Jr.,Arkansas,RETURNING,Left ankle - wore boot but scored 37 in SEC tourney. Playing but managing workload,manual,0,0.85
-Jalen Warley,Gonzaga,RETURNING,Quad contusion - played 39 min in WCC tourney. Says ~90%,manual,0,0.9
-Karter Knox,Arkansas,RETURNING,Left meniscus surgery mid-Feb - returned but availability for full run unclear,manual,0,0.8
-Corey Washington,SMU,DAY-TO-DAY,Shoulder injury in ACC tournament. No update on status,manual,1,0.85
-Lamont Butler,Kentucky,RETURNING,Left shoulder - cleared but missed SEC tournament,manual,0,0.9
-Aden Holloway,Alabama,OUT,Arrested March 16. Coach Oats confirmed out,manual,6,0.0
-Yaxel Lendeborg,Michigan,PROBABLE,Low ankle sprain in Big Ten title game. Expected to play but monitoring,manual,0,0.95
-Lassina Traore,Texas,DAY-TO-DAY,Knee injury - has not played since Feb 3. Questionable,manual,1,0.85
-Taison Chatman,Ohio St.,PROBABLE,Groin injury but coach expects everyone available Thursday,manual,0,0.95
+B.J. Edwards,SMU,HEALTHY,Ankle injury - missed 5 games but confirmed available. May ease back in,manual,0,0.9
+Darius Acuff Jr.,Arkansas,RETURNING,Left ankle - sat out Missouri game to rest. Scored 37 in SEC tourney. AP First Team All-American. Playing but managing,manual,0,0.9
+Jalen Warley,Gonzaga,RETURNING,Quad contusion Feb 4. Missed final 2 regular season games. Returned for WCC tourney (39 min). Says ~90%,manual,0,0.9
+Corey Washington,SMU,DAY-TO-DAY,Shoulder injury in ACC tournament vs Louisville. No status update for First Four,manual,1,0.85
+Lamont Butler,Kentucky,RETURNING,Left shoulder - missed SEC tournament. Cleared for NCAAs per Pope,manual,0,0.9
+Yaxel Lendeborg,Michigan,PROBABLE,Low ankle sprain in Big Ten final vs Purdue. Says false alarm - good to go. No X-rays needed,manual,0,0.95
+Lassina Traore,Texas,DAY-TO-DAY,Knee injury - has not played since Feb 3,manual,1,0.85
+Taison Chatman,Ohio St.,PROBABLE,Groin injury - missed Big Ten QF. Coach Diebler expects everyone available Thursday,manual,0,0.95
