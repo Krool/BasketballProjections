@@ -1306,6 +1306,7 @@ function loadState() {
       favorites = new Set(state.favorites || []);
       draftOrder = state.draftOrder || [];
       draftConfig = state.draftConfig || null;
+      teamNames = state.teamNames || {};
     }
   } catch(e) {}
 }
@@ -1316,7 +1317,8 @@ function saveState() {
     myTeam: [...myTeam],
     favorites: [...favorites],
     draftOrder,
-    draftConfig
+    draftConfig,
+    teamNames
   }));
 }
 
@@ -1830,14 +1832,15 @@ function init() {
   });
 
   document.getElementById('export-btn').addEventListener('click', () => {
-    const lines = ['Pick,Round,Draft Team,Rank,Player,Team,Region,Seed,PPG,Projected Points,Our Team'];
+    const lines = ['Pick,Round,Draft Team #,Draft Team Name,Rank,Player,Team,Region,Seed,PPG,Projected Points,Our Team'];
     draftOrder.forEach((rank, i) => {
       const p = players.find(pl => pl.rank === rank);
       if (!p) return;
       const teamNum = getSnakeTeam(i);
+      const teamName = getTeamName(teamNum);
       const round = Math.floor(i / getDraftLogTeams()) + 1;
       const isOurs = myTeam.has(rank) ? 'Yes' : 'No';
-      lines.push(`${i + 1},${round},${teamNum},${p.rank},${p.player},${p.team},${getTeamRegion(p.team) || ''},${p.seed},${p.ppg},${p.projected_points},${isOurs}`);
+      lines.push(`${i + 1},${round},${teamNum},"${teamName}",${p.rank},"${p.player}",${p.team},${getTeamRegion(p.team) || ''},${p.seed},${p.ppg},${p.projected_points},${isOurs}`);
     });
     const blob = new Blob([lines.join('\n')], { type: 'text/csv' });
     const a = document.createElement('a');
