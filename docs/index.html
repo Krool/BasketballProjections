@@ -986,6 +986,7 @@
         <span class="stat-label" id="generated-ts"></span>
       </div>
       <div class="stat">
+        <button class="btn" id="live-draft-btn" style="color:var(--green);border-color:rgba(52,211,153,0.3);">Live Draft</button>
         <button class="btn" id="mock-btn" style="color:var(--orange);border-color:rgba(251,191,36,0.3);">Mock Draft</button>
       </div>
     </div>
@@ -1119,6 +1120,29 @@
 
 <div class="modal-overlay" id="analysis-modal">
   <div class="analysis-modal" id="analysis-content"></div>
+</div>
+
+<div class="modal-overlay" id="live-draft-modal">
+  <div class="modal">
+    <h2>Live Draft Setup</h2>
+    <label>Number of Teams</label>
+    <input type="number" id="live-teams" value="14" min="2" max="30">
+    <label>Players Per Team</label>
+    <input type="number" id="live-rounds" value="14" min="1" max="30">
+    <label>Your Draft Position</label>
+    <div style="display:flex;gap:8px;align-items:center;">
+      <input type="number" id="live-position" value="1" min="1" max="30" style="flex:1;">
+      <button class="btn-cancel" style="flex:0;padding:8px 12px;font-size:13px;" onclick="document.getElementById('live-position').value=Math.floor(Math.random()*parseInt(document.getElementById('live-teams').value||14))+1">Random</button>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="document.getElementById('live-draft-modal').classList.remove('open')">Cancel</button>
+      <button class="btn-primary" onclick="startLiveDraft()">Start Draft</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="draft-summary-modal">
+  <div class="analysis-modal" id="draft-summary-content"></div>
 </div>
 
 <script>
@@ -1565,16 +1589,25 @@ function render() {
       if (isMyTeam) rowClass = 'my-team';
       else if (isDrafted) rowClass = 'drafted';
 
-      // Action buttons: contextual
+      // Action buttons: contextual based on draft mode
       let actionHtml = '';
       const myMockTurn = mockActive && isMyMockPick();
+      const myLiveTurn = liveActive && isLiveMyPick() && !isLiveComplete();
+      const liveOtherTurn = liveActive && !isLiveMyPick() && !isLiveComplete();
+
       if (isMyTeam) {
         const canRemove = !mockActive || mockPaused;
         actionHtml = canRemove ? `<button class="we-draft-btn" onclick="toggleMyTeam(${p.rank})" title="Remove from your team"><span class="btn-full">Ours</span><span class="btn-short">Us</span></button>` : `<span class="my-team-badge">OURS</span>`;
       } else if (isDraftedByOthers) {
-        actionHtml = mockActive ? '' : `<button class="draft-btn" onclick="toggleDraft(${p.rank})" title="Undo — mark as available again"><span class="btn-full">Undo</span><span class="btn-short">&#8630;</span></button>`;
+        actionHtml = (mockActive || liveActive) ? '' : `<button class="draft-btn" onclick="toggleDraft(${p.rank})" title="Undo — mark as available again"><span class="btn-full">Undo</span><span class="btn-short">&#8630;</span></button>`;
+      } else if (liveActive && !isLiveComplete()) {
+        // Live draft: show only the relevant button based on whose turn it is
+        if (myLiveTurn) {
+          actionHtml = `<button class="we-draft-btn" onclick="toggleMyTeam(${p.rank})" title="Draft this player for your team"><span class="btn-full">Us</span><span class="btn-short">Us</span></button>`;
+        } else {
+          actionHtml = `<button class="draft-btn" onclick="toggleDraft(${p.rank})" title="This team drafted this player"><span class="btn-full">Them</span><span class="btn-short">&#128683;</span></button>`;
+        }
       } else if (mockActive) {
-        // During mock: "Us" only enabled on your turn
         if (myMockTurn) {
           actionHtml = `<button class="we-draft-btn" onclick="toggleMyTeam(${p.rank})" title="Draft this player for your team"><span class="btn-full">Us</span><span class="btn-short">Us</span></button>`;
         } else {
@@ -1656,6 +1689,7 @@ function undoPick(rank) {
 
 function toggleDraft(rank) {
   if (drafted.has(rank)) {
+    if (liveActive) return; // No undo during live draft
     drafted.delete(rank);
     myTeam.delete(rank);
     draftOrder = draftOrder.filter(r => r !== rank);
@@ -1664,11 +1698,13 @@ function toggleDraft(rank) {
     draftOrder.push(rank);
   }
   saveState();
+  if (liveActive) updateLiveBanner();
   render();
 }
 
 function toggleMyTeam(rank) {
   if (myTeam.has(rank)) {
+    if (liveActive) return; // No undo during live draft
     myTeam.delete(rank);
     drafted.delete(rank);
     draftOrder = draftOrder.filter(r => r !== rank);
@@ -1680,6 +1716,7 @@ function toggleMyTeam(rank) {
     }
   }
   saveState();
+  if (liveActive) updateLiveBanner();
   render();
 }
 
@@ -2050,9 +2087,9 @@ function startMockDraft() {
 
   document.getElementById('mock-modal').classList.remove('open');
 
-  hideDrafted = false;
-  document.getElementById('hide-drafted').classList.remove('active');
-  document.getElementById('hide-drafted').textContent = 'Show All';
+  hideDrafted = true;
+  document.getElementById('hide-drafted').classList.add('active');
+  document.getElementById('hide-drafted').textContent = 'Hide Drafted';
 
   render();
   updateMockBanner();
@@ -2112,8 +2149,166 @@ document.getElementById('mock-pause').addEventListener('click', () => {
   if (!mockPaused) scheduleMockNext();
 });
 
-// Stop
+// Stop — handled in live draft section below
+
+// === Live Draft ===
+let liveActive = false;
+let liveConfig = { teams: 14, position: 1, rounds: 14 };
+
+function getLiveTotalPicks() { return liveConfig.teams * liveConfig.rounds; }
+
+function getLiveCurrentTeam() {
+  const { teams } = liveConfig;
+  const round = Math.floor(draftOrder.length / teams);
+  const pos = draftOrder.length % teams;
+  return round % 2 === 0 ? pos + 1 : teams - pos;
+}
+
+function isLiveMyPick() { return getLiveCurrentTeam() === liveConfig.position; }
+function isLiveComplete() { return draftOrder.length >= getLiveTotalPicks(); }
+
+function startLiveDraft() {
+  const teams = parseInt(document.getElementById('live-teams').value) || 14;
+  const rounds = parseInt(document.getElementById('live-rounds').value) || 14;
+  const position = parseInt(document.getElementById('live-position').value) || 1;
+
+  if (position < 1 || position > teams) {
+    alert('Position must be between 1 and ' + teams);
+    return;
+  }
+
+  drafted.clear();
+  myTeam.clear();
+  draftOrder = [];
+  saveState();
+
+  liveConfig = { teams, position, rounds };
+  draftConfig = { teams, position, snake: true, rounds };
+  liveActive = true;
+
+  // Sync draft log dropdowns
+  document.getElementById('draft-log-teams').value = teams;
+  populatePositionDropdown();
+  document.getElementById('draft-log-position').value = position;
+
+  document.getElementById('live-draft-modal').classList.remove('open');
+
+  hideDrafted = true;
+  document.getElementById('hide-drafted').classList.add('active');
+  document.getElementById('hide-drafted').textContent = 'Hide Drafted';
+
+  render();
+  updateLiveBanner();
+}
+
+function stopLiveDraft() {
+  liveActive = false;
+  updateLiveBanner();
+  render();
+}
+
+function updateLiveBanner() {
+  const banner = document.getElementById('mock-banner');
+  if (!liveActive) {
+    banner.classList.remove('active');
+    return;
+  }
+  banner.classList.add('active');
+
+  const round = Math.floor(draftOrder.length / liveConfig.teams) + 1;
+  const pickInRound = (draftOrder.length % liveConfig.teams) + 1;
+
+  document.getElementById('mock-round').textContent = 'Round ' + round;
+  document.getElementById('mock-pick').textContent = 'Pick ' + pickInRound + ' of ' + liveConfig.teams;
+
+  if (isLiveComplete()) {
+    document.getElementById('mock-status').textContent = 'Draft Complete!';
+    document.getElementById('mock-status').className = 'mock-banner-status your-turn';
+    document.getElementById('mock-pause').style.display = 'none';
+    // Show summary after brief delay
+    setTimeout(showDraftSummary, 500);
+  } else if (isLiveMyPick()) {
+    document.getElementById('mock-status').textContent = 'YOUR PICK!';
+    document.getElementById('mock-status').className = 'mock-banner-status your-turn';
+  } else {
+    document.getElementById('mock-status').textContent = 'Team ' + getLiveCurrentTeam() + ' is picking...';
+    document.getElementById('mock-status').className = 'mock-banner-status waiting';
+  }
+
+  document.getElementById('mock-pause').style.display = 'none';
+  document.getElementById('mock-stop').textContent = isLiveComplete() ? 'Summary' : 'Stop';
+}
+
+function showDraftSummary() {
+  const myPlayers = players.filter(p => myTeam.has(p.rank));
+  if (myPlayers.length === 0) return;
+
+  const totalPts = myPlayers.reduce((s, p) => s + p.projected_points, 0);
+
+  // Group by college team
+  const byTeam = {};
+  for (const p of myPlayers) {
+    if (!byTeam[p.team]) byTeam[p.team] = { pts: 0, players: [], espn_id: p.espn_team_id };
+    byTeam[p.team].pts += p.projected_points;
+    byTeam[p.team].players.push(p);
+  }
+
+  // Sort by pts descending
+  const teamList = Object.entries(byTeam).sort((a, b) => b[1].pts - a[1].pts);
+
+  let html = '<h2>Draft Summary</h2>';
+  html += '<div class="analysis-subtitle">Your team: ' + myPlayers.length + ' players, ' + Math.round(totalPts) + ' projected points</div>';
+
+  // Logo cloud — sized by point share
+  html += '<div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:12px;padding:20px 0;">';
+  for (const [team, data] of teamList) {
+    const share = data.pts / totalPts;
+    const minSize = 32;
+    const maxSize = 120;
+    const size = Math.round(minSize + share * (maxSize - minSize) * 4); // scale up
+    const clampedSize = Math.min(maxSize, Math.max(minSize, size));
+    if (data.espn_id) {
+      html += '<div style="text-align:center;" title="' + team + ': ' + Math.round(data.pts) + ' pts (' + Math.round(share * 100) + '%)">';
+      html += '<img src="https://a.espncdn.com/i/teamlogos/ncaa/500/' + data.espn_id + '.png" style="width:' + clampedSize + 'px;height:' + clampedSize + 'px;">';
+      html += '<div style="font-size:10px;color:var(--text-dim);margin-top:2px;">' + Math.round(share * 100) + '%</div>';
+      html += '</div>';
+    }
+  }
+  html += '</div>';
+
+  // Player list by team
+  html += '<div style="margin-top:16px;">';
+  for (const [team, data] of teamList) {
+    const share = data.pts / totalPts;
+    const logo = data.espn_id ? '<img src="https://a.espncdn.com/i/teamlogos/ncaa/500/' + data.espn_id + '.png" style="width:20px;height:20px;vertical-align:middle;margin-right:6px;">' : '';
+    html += '<div style="border:1px solid var(--border);border-radius:6px;padding:10px;margin-bottom:6px;">';
+    html += '<div style="font-weight:700;font-size:13px;">' + logo + team + ' <span style="color:var(--green);margin-left:8px;">' + Math.round(data.pts) + ' pts (' + Math.round(share * 100) + '%)</span></div>';
+    for (const p of data.players.sort((a, b) => b.projected_points - a.projected_points)) {
+      html += '<div style="font-size:12px;color:var(--text-dim);padding:2px 0 2px 26px;">' + p.player + ' — ' + Math.round(p.projected_points) + ' pts</div>';
+    }
+    html += '</div>';
+  }
+  html += '</div>';
+
+  html += '<div class="modal-actions" style="margin-top:16px;"><button class="btn-cancel" onclick="document.getElementById(\'draft-summary-modal\').classList.remove(\'open\')">Close</button></div>';
+
+  document.getElementById('draft-summary-content').innerHTML = html;
+  document.getElementById('draft-summary-modal').classList.add('open');
+}
+
+document.getElementById('live-draft-btn').addEventListener('click', () => {
+  document.getElementById('live-draft-modal').classList.add('open');
+});
+
 document.getElementById('mock-stop').addEventListener('click', () => {
+  if (liveActive && isLiveComplete()) {
+    showDraftSummary();
+    return;
+  }
+  if (liveActive) {
+    stopLiveDraft();
+    return;
+  }
   stopMockDraft();
 });
 
