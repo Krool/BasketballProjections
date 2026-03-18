@@ -1941,7 +1941,7 @@ function updateMockBanner() {
   if (isMockComplete()) {
     roundEl.textContent = 'Draft Complete';
     pickEl.textContent = `${getMockTotalPicks()} picks | ${myTeam.size} on your team`;
-    statusEl.innerHTML = '<a href="#" onclick="showDraftSummary();return false;" style="color:var(--green);text-decoration:underline;font-weight:700;">View Summary</a>';
+    statusEl.innerHTML = '<a href="#" onclick="showDraftSummary();return false;" style="color:var(--green);text-decoration:underline;font-weight:700;">View Summary</a> &middot; <a href="#" onclick="showAnalysis();return false;" style="color:var(--accent);text-decoration:underline;font-weight:700;">View Analysis</a>';
     pauseBtn.style.display = 'none';
     return;
   }
@@ -2192,7 +2192,7 @@ function updateLiveBanner() {
   document.getElementById('mock-pick').textContent = 'Pick ' + pickInRound + ' of ' + liveConfig.teams;
 
   if (isLiveComplete()) {
-    document.getElementById('mock-status').textContent = 'Draft Complete!';
+    document.getElementById('mock-status').innerHTML = 'Draft Complete! <a href="#" onclick="showDraftSummary();return false;" style="color:var(--green);text-decoration:underline;">Summary</a> &middot; <a href="#" onclick="showAnalysis();return false;" style="color:var(--accent);text-decoration:underline;">Analysis</a>';
     document.getElementById('mock-status').className = 'mock-banner-status your-turn';
     document.getElementById('mock-pause').style.display = 'none';
     // Show summary after brief delay
