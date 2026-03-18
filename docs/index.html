@@ -1125,6 +1125,11 @@
       <input type="number" id="live-position" value="1" min="1" max="30" style="flex:1;">
       <button class="btn-cancel" style="flex:0;padding:8px 12px;font-size:13px;" onclick="document.getElementById('live-position').value=Math.floor(Math.random()*parseInt(document.getElementById('live-teams').value||14))+1">Random</button>
     </div>
+    <label>Draft Type</label>
+    <select id="live-type">
+      <option value="snake">Snake Draft</option>
+      <option value="linear">Linear Draft</option>
+    </select>
     <div class="modal-actions">
       <button class="btn-cancel" onclick="document.getElementById('live-draft-modal').classList.remove('open')">Cancel</button>
       <button class="btn-primary" onclick="showTeamNamesModal()">Next</button>
@@ -1427,12 +1432,12 @@ function getDraftLogPosition() {
 }
 
 function getSnakeTeam(pickIndex) {
-  // Snake draft: round 1 goes 1→N, round 2 goes N→1, etc.
   const numTeams = getDraftLogTeams();
   const round = Math.floor(pickIndex / numTeams);
   const posInRound = pickIndex % numTeams;
-  const isEvenRound = round % 2 === 0;
-  return isEvenRound ? posInRound + 1 : numTeams - posInRound;
+  const isSnake = draftConfig ? draftConfig.snake : true;
+  if (isSnake && round % 2 === 1) return numTeams - posInRound;
+  return posInRound + 1;
 }
 
 function isOurPick(pickIndex) {
@@ -2216,10 +2221,11 @@ function confirmLiveDraft() {
 function getLiveTotalPicks() { return liveConfig.teams * liveConfig.rounds; }
 
 function getLiveCurrentTeam() {
-  const { teams } = liveConfig;
+  const { teams, snake } = liveConfig;
   const round = Math.floor(draftOrder.length / teams);
   const pos = draftOrder.length % teams;
-  return round % 2 === 0 ? pos + 1 : teams - pos;
+  if (snake && round % 2 === 1) return teams - pos;
+  return pos + 1;
 }
 
 function isLiveMyPick() { return getLiveCurrentTeam() === liveConfig.position; }
@@ -2240,8 +2246,10 @@ function startLiveDraft() {
   draftOrder = [];
   saveState();
 
-  liveConfig = { teams, position, rounds };
-  draftConfig = { teams, position, snake: true, rounds };
+  const type = document.getElementById('live-type').value;
+  const snake = type === 'snake';
+  liveConfig = { teams, position, rounds, snake };
+  draftConfig = { teams, position, snake, rounds };
   liveActive = true;
 
   document.getElementById('live-draft-modal').classList.remove('open');
