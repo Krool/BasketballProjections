@@ -184,7 +184,13 @@ def main():
                 return row
             output_df_rounded = output_df_rounded.apply(add_recent, axis=1)
 
+        # Convert NaN to None for valid JSON (pandas NaN breaks browser JSON.parse)
+        import math
         records = output_df_rounded.to_dict('records')
+        for rec in records:
+            for k, v in rec.items():
+                if isinstance(v, float) and math.isnan(v):
+                    rec[k] = None
         payload = {
             'generated_at': datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ'),
             'players': records,
