@@ -2260,6 +2260,54 @@ function showDraftSummary() {
   }
   html += '</div>';
 
+  // === Team Score Rankings ===
+  const config = liveActive ? { teams: liveConfig.teams, position: liveConfig.position, snake: true, rounds: liveConfig.rounds }
+                            : draftConfig;
+  if (config && draftOrder.length > 0) {
+    const teamScores = buildAnalysis(config);
+    const ours = teamScores.find(t => t.isOurs);
+
+    html += '<div style="margin-top:24px;padding-top:16px;border-top:2px solid var(--border);">';
+    html += '<h2 style="font-size:16px;margin-bottom:4px;">League Standings</h2>';
+    if (ours) {
+      html += '<div class="analysis-subtitle">Your projected finish: <strong style="color:var(--green);">' + ordinal(ours.finish) + '</strong> of ' + config.teams + ' teams</div>';
+    }
+
+    html += '<div style="margin-top:12px;">';
+    for (const team of teamScores) {
+      const isUs = team.isOurs;
+      const border = isUs ? 'border-color:rgba(167,139,250,0.4);background:rgba(167,139,250,0.05);' : '';
+      const rankColor = team.finish <= 3 ? 'var(--green)' : 'var(--text-dim)';
+
+      html += '<div style="border:1px solid var(--border);border-radius:6px;padding:8px 12px;margin-bottom:4px;display:flex;align-items:center;gap:10px;' + border + '">';
+      html += '<span style="font-size:18px;font-weight:800;color:' + rankColor + ';min-width:28px;">' + team.finish + '</span>';
+      html += '<div style="flex:1;">';
+      html += '<span style="font-weight:700;">' + (isUs ? 'You' : 'Team ' + team.teamNum) + '</span>';
+      if (isUs) html += ' <span style="color:var(--purple);font-size:10px;font-weight:700;">YOUR TEAM</span>';
+
+      // Show top 3 college teams with logos
+      const collegePts = {};
+      const collegeIds = {};
+      for (const p of team.roster) {
+        collegePts[p.collegeteam] = (collegePts[p.collegeteam] || 0) + p.pts;
+        const pl = players.find(x => x.rank === p.rank);
+        if (pl && pl.espn_team_id) collegeIds[p.collegeteam] = pl.espn_team_id;
+      }
+      const topColleges = Object.entries(collegePts).sort((a, b) => b[1] - a[1]).slice(0, 3);
+      html += '<div style="font-size:11px;color:var(--text-dim);margin-top:2px;">';
+      html += topColleges.map(([t, pts]) => {
+        const logo = collegeIds[t] ? '<img src="https://a.espncdn.com/i/teamlogos/ncaa/500/' + collegeIds[t] + '.png" style="width:14px;height:14px;vertical-align:middle;margin-right:2px;">' : '';
+        return logo + t + ' ' + Math.round(pts);
+      }).join(' &middot; ');
+      html += '</div></div>';
+
+      html += '<span style="font-size:16px;font-weight:700;color:var(--green);">' + team.adjPts + '</span>';
+      if (team.penalty > 0) html += '<span style="font-size:10px;color:var(--orange);margin-left:4px;">-' + team.penalty + '</span>';
+      html += '</div>';
+    }
+    html += '</div></div>';
+  }
+
   html += '<div class="modal-actions" style="margin-top:16px;"><button class="btn-cancel" onclick="document.getElementById(\'draft-summary-modal\').classList.remove(\'open\')">Close</button></div>';
 
   document.getElementById('draft-summary-content').innerHTML = html;
