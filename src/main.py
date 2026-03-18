@@ -25,7 +25,7 @@ import pandas as pd
 sys.path.insert(0, os.path.dirname(__file__))
 
 from simulate_bracket import calculate_expected_games, calculate_round_context, adjust_kenpom_for_injuries
-from scrape_players_espn import scrape_all_tournament_teams, scrape_recent_form
+from scrape_players_espn import scrape_all_tournament_teams, scrape_recent_form, ESPN_TEAM_IDS
 from scrape_injuries import get_combined_injuries
 from project_points import project_player_points, save_projections, print_draft_board
 
@@ -184,6 +184,11 @@ def main():
                 return row
             output_df_rounded = output_df_rounded.apply(add_recent, axis=1)
 
+        # Add ESPN team IDs for logo URLs
+        for _, row in output_df_rounded.iterrows():
+            pass  # just need the column
+        output_df_rounded['espn_team_id'] = output_df_rounded['team'].map(ESPN_TEAM_IDS)
+
         # Convert NaN to None for valid JSON (pandas NaN breaks browser JSON.parse)
         import math
         records = output_df_rounded.to_dict('records')
@@ -191,6 +196,8 @@ def main():
             for k, v in rec.items():
                 if isinstance(v, float) and math.isnan(v):
                     rec[k] = None
+                elif isinstance(v, (int, float)) and k == 'espn_team_id':
+                    rec[k] = int(v) if v and not (isinstance(v, float) and math.isnan(v)) else None
         payload = {
             'generated_at': datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ'),
             'players': records,
