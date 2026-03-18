@@ -1073,13 +1073,13 @@
   <div class="modal">
     <h2>Mock Draft Setup</h2>
     <label>Number of Teams</label>
-    <input type="number" id="mock-teams" value="20" min="2" max="30">
+    <input type="number" id="mock-teams" value="14" min="2" max="30">
     <label>Players Per Team</label>
     <input type="number" id="mock-rounds" value="14" min="1" max="30">
     <label>Your Draft Position</label>
     <div style="display:flex;gap:8px;align-items:center;">
       <input type="number" id="mock-position" value="1" min="1" max="30" style="flex:1;">
-      <button class="btn-cancel" style="flex:0;padding:8px 12px;font-size:13px;" onclick="document.getElementById('mock-position').value=Math.floor(Math.random()*parseInt(document.getElementById('mock-teams').value||20))+1">Random</button>
+      <button class="btn-cancel" style="flex:0;padding:8px 12px;font-size:13px;" onclick="document.getElementById('mock-position').value=Math.floor(Math.random()*parseInt(document.getElementById('mock-teams').value||14))+1">Random</button>
     </div>
     <label>Draft Type</label>
     <select id="mock-type">
@@ -1088,10 +1088,10 @@
     </select>
     <label>Pick Speed</label>
     <select id="mock-speed">
-      <option value="10">Instant (0.01s)</option>
+      <option value="10" selected>Instant (0.01s)</option>
       <option value="100">Blitz (0.1s)</option>
       <option value="500">Fast (0.5s)</option>
-      <option value="1000" selected>Normal (1s)</option>
+      <option value="1000">Normal (1s)</option>
       <option value="2000">Slow (2s)</option>
     </select>
     <div class="modal-actions">
@@ -1965,7 +1965,7 @@ function scheduleMockNext() {
 }
 
 function startMockDraft() {
-  const teams = parseInt(document.getElementById('mock-teams').value) || 20;
+  const teams = parseInt(document.getElementById('mock-teams').value) || 14;
   const rounds = parseInt(document.getElementById('mock-rounds').value) || 14;
   const position = parseInt(document.getElementById('mock-position').value) || 1;
   const type = document.getElementById('mock-type').value;

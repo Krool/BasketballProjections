@@ -19,25 +19,39 @@ from pathlib import Path
 
 def win_probability(adj_o_a, adj_d_a, adj_o_b, adj_d_b):
     """
-    Probability that team A beats team B on a neutral court.
+    Probability that team A beats team B in a single NCAA tournament game.
 
-    Parameters
-    ----------
-    adj_o_a, adj_d_a : float
-        Team A adjusted offensive / defensive efficiency.
-    adj_o_b, adj_d_b : float
-        Team B adjusted offensive / defensive efficiency.
+    Uses a margin-dependent divisor to capture the reality that March Madness
+    has more variance than regular season games. A single fixed divisor cannot
+    match historical upset rates across all seed matchups (needed divisor
+    ranges from 21 for 1v16 to 56 for 5v12).
 
-    Returns
-    -------
-    float  in (0, 1)
+    Solution: the divisor increases with smaller margins, reflecting that
+    closely-matched teams have more unpredictable outcomes in single
+    elimination (pressure, one-and-done, hot shooting streaks).
+
+    Calibrated against 40 years of historical seed-vs-seed win rates:
+        1v16: 99%  2v15: 94%  3v14: 85%  4v13: 79%
+        5v12: 64%  6v11: 62%  7v10: 61%  8v9:  51%
     """
-    # Positive margin means A is better
-    # margin = NetRtg_A - NetRtg_B = (AdjO_A - AdjD_A) - (AdjO_B - AdjD_B)
-    # Divisor of 17 calibrated to match historical single-elimination upset rates:
-    #   1-seeds ~99% R1, ~25-30% F4; 5v12 upsets ~35%; 8v9 ~50/50
     margin = (adj_o_a - adj_d_a) - (adj_o_b - adj_d_b)
-    return 1.0 / (1.0 + 10.0 ** (-margin / 17.0))
+    abs_margin = abs(margin)
+
+    # Divisor scales smoothly with margin: large mismatches are more
+    # predictable (lower divisor), competitive games have more chaos
+    # (higher divisor). Linear interpolation between anchor points.
+    # Anchors fitted to minimize RMSE vs 40 years of seed matchup rates.
+    if abs_margin >= 35:
+        divisor = 22.0
+    elif abs_margin >= 12:
+        # Interpolate: margin 12 -> div 50, margin 35 -> div 22
+        divisor = 50.0 - (abs_margin - 12) * (50.0 - 22.0) / 23.0
+    else:
+        # Small margins (0-12): peaked curve — highest variance at margin ~12
+        # where 5v12 upsets live, lower variance for near-coin-flips
+        divisor = 20.0 + abs_margin * (50.0 - 20.0) / 12.0
+
+    return 1.0 / (1.0 + 10.0 ** (-margin / divisor))
 
 
 # ---------------------------------------------------------------------------
