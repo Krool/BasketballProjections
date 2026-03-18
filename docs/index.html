@@ -1941,7 +1941,7 @@ function updateMockBanner() {
   if (isMockComplete()) {
     roundEl.textContent = 'Draft Complete';
     pickEl.textContent = `${getMockTotalPicks()} picks | ${myTeam.size} on your team`;
-    statusEl.innerHTML = '<a href="#" onclick="showAnalysis();return false;" style="color:var(--green);text-decoration:underline;font-weight:700;">View Analysis</a>';
+    statusEl.innerHTML = '<a href="#" onclick="showDraftSummary();return false;" style="color:var(--green);text-decoration:underline;font-weight:700;">View Summary</a>';
     pauseBtn.style.display = 'none';
     return;
   }
@@ -2020,8 +2020,8 @@ function scheduleMockNext() {
   if (!mockActive || mockPaused) return;
   if (isMockComplete()) {
     updateMockBanner();
-    // Auto-show analysis after a short delay so user sees the last pick
-    setTimeout(() => showAnalysis(), 600);
+    // Auto-show summary after a short delay so user sees the last pick
+    setTimeout(() => showDraftSummary(), 600);
     return;
   }
 
