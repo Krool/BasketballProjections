@@ -99,18 +99,43 @@ def main():
         print("ERROR: No player stats available.")
         return
 
-    # Filter to bracket teams only
-    player_stats = player_stats[player_stats['team'].isin(bracket_teams)]
+    # Filter to bracket teams + First Four opponents not yet resolved
+    # Both teams in an undecided First Four matchup need to be draftable
+    FIRST_FOUR_PAIRS = [
+        ('SMU', 'Miami OH'),           # Midwest 11
+        ('Lehigh', 'Prairie View A&M'), # South 16
+    ]
+    first_four_extras = set()
+    for team_a, team_b in FIRST_FOUR_PAIRS:
+        if team_a in bracket_teams and team_b not in bracket_teams:
+            first_four_extras.add(team_b)
+        elif team_b in bracket_teams and team_a not in bracket_teams:
+            first_four_extras.add(team_a)
+    all_eligible = bracket_teams | first_four_extras
+    if first_four_extras:
+        print(f"  Including First Four opponents not yet resolved: {first_four_extras}")
+    player_stats = player_stats[player_stats['team'].isin(all_eligible)]
 
     # Step 4: Load injuries
     print("\n[4/7] Loading injury data...")
-    injuries = get_combined_injuries(tournament_teams=sorted(bracket_teams))
+    injuries = get_combined_injuries(tournament_teams=sorted(all_eligible))
 
     # Step 5: Adjust KenPom for injuries and simulate bracket
     print("\n[5/7] Adjusting KenPom for injured players and simulating bracket...")
     kenpom_adjusted = adjust_kenpom_for_injuries(kenpom_df, injuries, player_stats)
     expected_games = calculate_expected_games(kenpom_adjusted, bracket)
     round_context = calculate_round_context(kenpom_adjusted, bracket)
+
+    # Give First Four opponents the same expected games / context as their bracket counterpart
+    for team_a, team_b in FIRST_FOUR_PAIRS:
+        if team_a in expected_games and team_b not in expected_games:
+            expected_games[team_b] = expected_games[team_a]
+            if team_a in round_context:
+                round_context[team_b] = round_context[team_a]
+        elif team_b in expected_games and team_a not in expected_games:
+            expected_games[team_a] = expected_games[team_b]
+            if team_b in round_context:
+                round_context[team_a] = round_context[team_b]
 
     # Print expected games summary
     eg_df = pd.DataFrame([
