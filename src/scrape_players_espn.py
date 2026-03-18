@@ -195,17 +195,22 @@ def scrape_team_espn(team_name, use_cache=True):
             hdrs = [th.text.strip().upper() for th in thead.find_all(['th', 'td'])]
 
         if hdrs == ['NAME'] or (len(hdrs) == 1 and 'NAME' in hdrs[0].upper()):
-            # Name table
+            # Name table — also capture ESPN player IDs from href links
             names = []
+            espn_ids = []
             for row in rows:
                 link = row.find('a')
                 if link:
                     names.append(link.text.strip())
+                    href = link.get('href', '')
+                    pid = href.split('/id/')[-1].split('/')[0] if '/id/' in href else None
+                    espn_ids.append(pid)
                 else:
                     td = row.find('td')
                     if td:
                         names.append(td.text.strip())
-            name_tables.append(names)
+                    espn_ids.append(None)
+            name_tables.append((names, espn_ids))
         elif 'GP' in hdrs and 'PTS' in hdrs:
             # Stats table with headers - parse by column name
             col_map = {h: i for i, h in enumerate(hdrs)}
@@ -217,7 +222,7 @@ def scrape_team_espn(team_name, use_cache=True):
 
     # Match first name table with first stat table (per-game)
     if name_tables and stat_tables:
-        names = name_tables[0]
+        names, espn_ids = name_tables[0]
         stat_rows, col_map = stat_tables[0]
 
         gp_idx = col_map.get('GP', 0)
@@ -238,7 +243,7 @@ def scrape_team_espn(team_name, use_cache=True):
                 apg = float(cells[ast_idx]) if ast_idx is not None and ast_idx < len(cells) else 0.0
 
                 if gp > 0:
-                    players.append({
+                    player_data = {
                         'player': name,
                         'team': team_name,
                         'games_played': gp,
@@ -246,7 +251,10 @@ def scrape_team_espn(team_name, use_cache=True):
                         'ppg': round(ppg, 1),
                         'rpg': round(rpg, 1),
                         'apg': round(apg, 1),
-                    })
+                    }
+                    if i < len(espn_ids) and espn_ids[i]:
+                        player_data['espn_id'] = espn_ids[i]
+                    players.append(player_data)
             except (ValueError, IndexError):
                 continue
 
@@ -290,6 +298,121 @@ def scrape_all_tournament_teams(tournament_teams, use_cache=True, delay=3.0):
         print(f"\nSaved {len(df)} players to {output_path}")
 
     return df
+
+
+def scrape_player_gamelog(espn_id, player_name=''):
+    """
+    Scrape a player's game log from ESPN to get per-game scoring.
+    Returns list of point totals from most recent games, newest first.
+    """
+    url = f"https://www.espn.com/mens-college-basketball/player/gamelog/_/id/{espn_id}"
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+    }
+
+    try:
+        resp = requests.get(url, headers=headers, timeout=15)
+        if resp.status_code != 200:
+            return []
+        resp.raise_for_status()
+    except requests.RequestException:
+        return []
+
+    soup = BeautifulSoup(resp.text, 'html.parser')
+    tables = soup.find_all('table')
+
+    # ESPN game log has paired tables like team stats:
+    # Table 0: dates/opponents, Table 1: stats
+    # We want PTS column from the stats table
+    game_pts = []
+
+    for table in tables:
+        thead = table.find('thead')
+        tbody = table.find('tbody')
+        if not thead or not tbody:
+            continue
+
+        hdrs = [th.text.strip().upper() for th in thead.find_all(['th', 'td'])]
+        if 'PTS' not in hdrs:
+            continue
+
+        pts_idx = hdrs.index('PTS')
+        rows = tbody.find_all('tr')
+        for row in rows:
+            cells = [td.text.strip() for td in row.find_all('td')]
+            if len(cells) > pts_idx:
+                try:
+                    pts = int(cells[pts_idx])
+                    game_pts.append(pts)
+                except (ValueError, IndexError):
+                    continue
+        if game_pts:
+            break  # only need first stats table (regular season)
+
+    return game_pts
+
+
+def scrape_recent_form(player_stats_df, min_ppg=10.0, last_n=5, delay=2.0):
+    """
+    Scrape recent game logs for top players and compute last-N game PPG.
+
+    Only scrapes players with season PPG >= min_ppg and valid ESPN IDs.
+    Returns dict: {(player, team): recent_ppg}
+    """
+    CACHE_FILE = os.path.join(CACHE_DIR, '_recent_form.json')
+
+    # Check cache
+    if os.path.exists(CACHE_FILE):
+        try:
+            with open(CACHE_FILE, 'r') as f:
+                cached = json.load(f)
+            if cached:
+                print(f"  Loaded {len(cached)} recent form entries from cache")
+                return {tuple(k.split('||')): v for k, v in cached.items()}
+        except (json.JSONDecodeError, IOError):
+            pass
+
+    # Filter to players worth scraping
+    if 'espn_id' not in player_stats_df.columns:
+        print("  No ESPN IDs available — skipping recent form scraping")
+        return {}
+
+    top_players = player_stats_df[
+        (player_stats_df['ppg'] >= min_ppg) &
+        (player_stats_df['espn_id'].notna())
+    ].copy()
+
+    if top_players.empty:
+        return {}
+
+    print(f"  Scraping game logs for {len(top_players)} players (PPG >= {min_ppg})...")
+    recent_form = {}
+
+    for i, (_, row) in enumerate(top_players.iterrows()):
+        player = row['player']
+        team = row['team']
+        espn_id = str(row['espn_id']).split('.')[0]  # remove any decimal
+
+        if i > 0 and i % 10 == 0:
+            print(f"    [{i}/{len(top_players)}] scraped...")
+
+        game_pts = scrape_player_gamelog(espn_id, player)
+        if game_pts:
+            # Last N games (game_pts is newest-first from ESPN)
+            last_games = game_pts[:last_n]
+            recent_ppg = sum(last_games) / len(last_games)
+            recent_form[(player, team)] = round(recent_ppg, 1)
+
+        time.sleep(delay)
+
+    # Cache results
+    os.makedirs(CACHE_DIR, exist_ok=True)
+    cache_data = {f"{k[0]}||{k[1]}": v for k, v in recent_form.items()}
+    with open(CACHE_FILE, 'w') as f:
+        json.dump(cache_data, f, indent=2)
+
+    print(f"  Scraped recent form for {len(recent_form)} players")
+    return recent_form
 
 
 if __name__ == '__main__':

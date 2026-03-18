@@ -28,6 +28,13 @@ _SUFFIX_RE = re.compile(r'\s+(jr\.?|sr\.?|ii|iii|iv|v)\s*$', re.IGNORECASE)
 # D-I average defensive efficiency (KenPom centers on ~100)
 D1_AVG_DRTG = 100.0
 
+# Scoring concentration: players who account for a larger share of their team's
+# scoring see even higher usage in tournament (go-to option gets more touches).
+# Average share is ~13% for tournament teams. Scaling of 0.3 means a player with
+# 25% share gets +3.6% boost, while a 10% share player gets -0.9%.
+CONCENTRATION_AVG_SHARE = 0.13
+CONCENTRATION_SCALING = 0.3
+
 # Tournament scoring surge: stars score more in March due to tighter rotations,
 # higher usage, and elevated intensity. Historical data (2015-2025) shows the
 # #1 tournament scorer averages +36% above regular season PPG, but this is
@@ -125,8 +132,31 @@ def _tournament_surge(ppg):
     return 1.0
 
 
+def _build_concentration_lookup(player_stats_df, min_mpg=10.0):
+    """
+    Compute each player's scoring concentration factor.
+
+    Players who account for a larger share of their team's scoring are the
+    go-to options and see increased usage in tournament settings.
+    """
+    df = player_stats_df[player_stats_df['mpg'] >= min_mpg].copy()
+    team_totals = df.groupby('team')['ppg'].sum()
+    lookup = {}
+    for _, row in df.iterrows():
+        total = team_totals.get(row['team'], 70.0)
+        share = row['ppg'] / total if total > 0 else CONCENTRATION_AVG_SHARE
+        factor = 1.0 + (share - CONCENTRATION_AVG_SHARE) * CONCENTRATION_SCALING
+        lookup[(row['player'], row['team'])] = factor
+    return lookup
+
+
+# Recent form blending: weight recent games vs season average.
+# 60% season + 40% recent captures "hot hand" without overreacting to noise.
+RECENT_FORM_WEIGHT = 0.40
+
+
 def project_player_points(player_stats_df, expected_games, round_context=None,
-                          injuries_df=None, min_mpg=10.0):
+                          injuries_df=None, recent_form=None, min_mpg=10.0):
     """
     Project total tournament points for each player.
 
@@ -138,6 +168,7 @@ def project_player_points(player_stats_df, expected_games, round_context=None,
         expected_games: dict of {team_name: expected_games_float}
         round_context: dict from calculate_round_context() (optional)
         injuries_df: DataFrame with columns [player, team, status] (optional)
+        recent_form: dict of {(player, team): recent_ppg} (optional)
         min_mpg: minimum minutes per game to include player
 
     Returns:
@@ -151,6 +182,18 @@ def project_player_points(player_stats_df, expected_games, round_context=None,
 
     # Drop players whose teams aren't in the bracket
     df = df.dropna(subset=['expected_games'])
+
+    # Blend recent form with season PPG
+    if recent_form:
+        def blend_ppg(row):
+            key = (row['player'], row['team'])
+            if key in recent_form:
+                recent = recent_form[key]
+                season = row['ppg']
+                return round((1 - RECENT_FORM_WEIGHT) * season + RECENT_FORM_WEIGHT * recent, 1)
+            return row['ppg']
+
+        df['ppg'] = df.apply(blend_ppg, axis=1)
 
     # Apply injury adjustments
     if injuries_df is not None and not injuries_df.empty:
@@ -169,6 +212,9 @@ def project_player_points(player_stats_df, expected_games, round_context=None,
         df['injury_multiplier'] = 1.0
         df['injury_status'] = 'HEALTHY'
 
+    # Build concentration lookup
+    conc_lookup = _build_concentration_lookup(player_stats_df, min_mpg)
+
     # Calculate projected points
     if round_context:
         # Per-round matchup-adjusted scoring
@@ -181,6 +227,7 @@ def project_player_points(player_stats_df, expected_games, round_context=None,
             team_adjt = tc['adj_t']
             injury_mult = row['injury_multiplier']
             surge = _tournament_surge(ppg)
+            conc = conc_lookup.get((row['player'], row['team']), 1.0)
             total = 0.0
 
             for rd in tc['rounds']:
@@ -195,7 +242,7 @@ def project_player_points(player_stats_df, expected_games, round_context=None,
                 blowout = _blowout_factor(rd['margin'])
 
                 # Expected points this round
-                round_pts = ppg * surge * pace_factor * defense_factor * blowout * injury_mult
+                round_pts = ppg * surge * conc * pace_factor * defense_factor * blowout * injury_mult
                 total += rd['p_play'] * round_pts
 
             return round(total, 1)

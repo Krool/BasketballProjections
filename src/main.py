@@ -25,7 +25,7 @@ import pandas as pd
 sys.path.insert(0, os.path.dirname(__file__))
 
 from simulate_bracket import calculate_expected_games, calculate_round_context, adjust_kenpom_for_injuries
-from scrape_players_espn import scrape_all_tournament_teams
+from scrape_players_espn import scrape_all_tournament_teams, scrape_recent_form
 from scrape_injuries import get_combined_injuries
 from project_points import project_player_points, save_projections, print_draft_board
 
@@ -48,7 +48,7 @@ def main():
     print("=" * 60)
 
     # Step 1: Load KenPom data
-    print("\n[1/6] Loading KenPom data...")
+    print("\n[1/7] Loading KenPom data...")
     kenpom_path = os.path.join(DATA_DIR, 'kenpom_tournament.csv')
     if not os.path.exists(kenpom_path):
         print("ERROR: kenpom_tournament.csv not found. Run parse_kenpom.py first.")
@@ -59,7 +59,7 @@ def main():
     print(f"  Loaded {len(kenpom_df)} tournament teams from KenPom")
 
     # Step 2: Load bracket
-    print("\n[2/6] Loading bracket...")
+    print("\n[2/7] Loading bracket...")
     bracket_path = os.path.join(DATA_DIR, 'bracket.json')
     if not os.path.exists(bracket_path):
         print("ERROR: bracket.json not found. Please create it first.")
@@ -76,7 +76,7 @@ def main():
     print(f"  Loaded bracket with {len(bracket.get('regions', {}))} regions, {len(bracket_teams)} teams")
 
     # Step 3: Load player stats
-    print("\n[3/6] Loading player stats...")
+    print("\n[3/7] Loading player stats...")
     stats_path = os.path.join(DATA_DIR, 'all_player_stats.csv')
     if os.path.exists(stats_path):
         player_stats = pd.read_csv(stats_path)
@@ -103,11 +103,11 @@ def main():
     player_stats = player_stats[player_stats['team'].isin(bracket_teams)]
 
     # Step 4: Load injuries
-    print("\n[4/6] Loading injury data...")
+    print("\n[4/7] Loading injury data...")
     injuries = get_combined_injuries(tournament_teams=sorted(bracket_teams))
 
     # Step 5: Adjust KenPom for injuries and simulate bracket
-    print("\n[5/6] Adjusting KenPom for injured players and simulating bracket...")
+    print("\n[5/7] Adjusting KenPom for injured players and simulating bracket...")
     kenpom_adjusted = adjust_kenpom_for_injuries(kenpom_df, injuries, player_stats)
     expected_games = calculate_expected_games(kenpom_adjusted, bracket)
     round_context = calculate_round_context(kenpom_adjusted, bracket)
@@ -120,6 +120,30 @@ def main():
     print(f"\n  Top 15 teams by expected games:")
     print(eg_df.head(15).to_string(index=False))
 
+    # Step 6: Scrape recent form (last 5 games) for top players
+    print("\n[6/7] Loading recent form data...")
+    recent_form = scrape_recent_form(player_stats, min_ppg=12.0, last_n=5, delay=2.0)
+    if recent_form:
+        # Show biggest movers
+        movers = []
+        for (player, team), recent_ppg in recent_form.items():
+            match = player_stats[(player_stats['player'] == player) & (player_stats['team'] == team)]
+            if not match.empty:
+                season_ppg = match.iloc[0]['ppg']
+                diff = recent_ppg - season_ppg
+                if abs(diff) >= 2.0:
+                    movers.append((player, team, season_ppg, recent_ppg, diff))
+        if movers:
+            movers.sort(key=lambda x: -x[4])
+            print(f"\n  Biggest recent form changes (last 5 vs season):")
+            for name, team, szn, rec, diff in movers[:10]:
+                print(f"    {name} ({team}): {szn:.1f} -> {rec:.1f} ({diff:+.1f})")
+            if len(movers) > 10:
+                cold = sorted(movers, key=lambda x: x[4])[:5]
+                print(f"  Cooling off:")
+                for name, team, szn, rec, diff in cold:
+                    print(f"    {name} ({team}): {szn:.1f} -> {rec:.1f} ({diff:+.1f})")
+
     # Project points
     print("\n" + "=" * 60)
     print("  GENERATING PROJECTIONS")
@@ -130,6 +154,7 @@ def main():
         expected_games=expected_games,
         round_context=round_context,
         injuries_df=injuries,
+        recent_form=recent_form,
         min_mpg=10.0
     )
 
@@ -143,6 +168,22 @@ def main():
         docs_path = os.path.join(docs_dir, 'players.json')
         output_df_rounded = output_df.copy()
         output_df_rounded['expected_games'] = output_df_rounded['expected_games'].round(2)
+
+        # Add recent form data for frontend tooltips
+        if recent_form:
+            # Get original season PPG (before blending)
+            season_ppg_map = dict(zip(
+                zip(player_stats['player'], player_stats['team']),
+                player_stats['ppg'] if 'ppg' in player_stats.columns else []
+            ))
+            def add_recent(row):
+                key = (row['player'], row['team'])
+                if key in recent_form:
+                    row['recent_ppg'] = recent_form[key]
+                    row['season_ppg'] = season_ppg_map.get(key, row['ppg'])
+                return row
+            output_df_rounded = output_df_rounded.apply(add_recent, axis=1)
+
         records = output_df_rounded.to_dict('records')
         payload = {
             'generated_at': datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ'),
