@@ -35,10 +35,13 @@ D1_AVG_DRTG = 100.0
 def _normalize_name(name):
     """
     Normalize a player name for matching across data sources.
-    Strips suffixes like Jr., Sr., II, III, etc. and lowercases.
+    Strips suffixes like Jr., Sr., II, III, etc., removes apostrophes
+    and special characters, and lowercases.
     """
     name = str(name).strip().lower()
     name = _SUFFIX_RE.sub('', name)
+    # Remove apostrophes and special chars for matching (Dell'Orso -> dellorso)
+    name = name.replace("'", "").replace("'", "").replace("-", "")
     return name.strip()
 
 
