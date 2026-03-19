@@ -109,9 +109,9 @@ def main():
     # Filter to bracket teams + First Four opponents not yet resolved
     # Both teams in an undecided First Four matchup need to be draftable
     FIRST_FOUR_PAIRS = [
-        ('SMU', 'Miami OH'),            # Midwest 11 — tonight
-        ('Lehigh', 'Prairie View A&M'), # South 16 — tonight
-        # Resolved yesterday: Texas beat N.C. State, Howard beat UMBC
+        # All First Four resolved:
+        # Texas beat N.C. State, Howard beat UMBC (March 17)
+        # Miami OH beat SMU, Prairie View A&M beat Lehigh (March 18)
     ]
     first_four_extras = set()
     for team_a, team_b in FIRST_FOUR_PAIRS:
