@@ -1035,18 +1035,25 @@
   .countdown-hero h2 span { color: var(--accent); }
   .countdown-hero .tagline { color: var(--text-dim); font-size: 16px; margin-bottom: 40px; max-width: 500px; }
   .countdown-clock {
-    display: flex; gap: 12px; margin-bottom: 40px; flex-wrap: wrap;
+    display: flex; gap: 12px; margin-bottom: 40px;
     justify-content: center; max-width: 100%;
   }
   .countdown-unit {
     background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
-    padding: 18px 20px; min-width: 70px; flex: 0 1 auto;
+    padding: 18px 20px; min-width: 0; flex: 1 1 0; max-width: 110px;
+    text-align: center;
   }
   .countdown-unit .num { font-size: 36px; font-weight: 700; color: var(--accent); line-height: 1; font-variant-numeric: tabular-nums; }
   .countdown-unit .label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-dim); margin-top: 6px; }
+  @media (max-width: 600px) {
+    .countdown-clock { gap: 6px; padding: 0 8px; }
+    .countdown-unit { padding: 12px 4px; }
+    .countdown-unit .num { font-size: 24px; }
+    .countdown-unit .label { font-size: 8px; letter-spacing: 0.5px; }
+  }
   @media (max-width: 380px) {
-    .countdown-unit { padding: 14px 12px; min-width: 60px; }
-    .countdown-unit .num { font-size: 28px; }
+    .countdown-unit { padding: 10px 2px; }
+    .countdown-unit .num { font-size: 20px; }
   }
   .countdown-cta {
     display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;
@@ -1124,6 +1131,12 @@
   .history-table .num { text-align: right; font-variant-numeric: tabular-nums; }
   .history-table .col-rank { width: 36px; padding-left: 6px; padding-right: 6px; color: var(--text-dim); }
   .history-table .col-narrow { width: 50px; }
+  .history-table td .cell-sub {
+    font-size: 10px; color: var(--text-dim); margin-top: 2px;
+    display: flex; align-items: center; gap: 2px; flex-wrap: wrap;
+  }
+  .history-table td .cell-sub .team-icon { width: 12px; height: 12px; margin-right: 3px; }
+  .history-table tbody td { vertical-align: top; padding-top: 8px; padding-bottom: 8px; }
   .history-table .pos { color: var(--green); }
   .history-table .neg { color: var(--red); }
   .history-table .dim { color: var(--text-dim); }
@@ -3113,9 +3126,7 @@ function renderPicks() {
   let html = '<thead><tr>';
   const cols = [
     ['pick','#','num col-rank'],
-    ['entry','Entry',''],
     ['player','Player',''],
-    ['team','Team',''],
     ['proj_total','Proj','num hide-mobile'],
     ['actual_pts','Actual','num'],
     ['residual','+/-','num']
@@ -3125,9 +3136,8 @@ function renderPicks() {
   rows.forEach(r => {
     const cls = r.alive ? 'alive' : (r.in_tournament_injury ? 'injured' : '');
     html += `<tr class="${cls}"><td class="num dim col-rank">${r.pick}</td>` +
-      `<td>${escapeHtml(r.entry)}</td>` +
-      `<td><strong>${escapeHtml(r.player)}</strong>${injuryTag(r)}</td>` +
-      `<td class="dim">${teamLabel(r.team)}</td>` +
+      `<td><strong>${escapeHtml(r.player)}</strong>${injuryTag(r)}` +
+        `<div class="dim cell-sub">${teamIcon(r.team)}${escapeHtml(r.team)} · ${escapeHtml(r.entry)}</div></td>` +
       `<td class="num dim hide-mobile">${r.proj_total != null ? r.proj_total : ''}</td>` +
       `<td class="num"><strong>${r.actual_pts}</strong></td>` +
       `<td class="num">${fmtSigned(r.residual)}</td></tr>`;
@@ -3148,15 +3158,12 @@ function renderPerformers() {
   const t = document.getElementById('hist-performers-table');
   const rows = archiveData.picks.slice().sort((a,b) => b.actual_pts - a.actual_pts).slice(0,50);
   let html = '<thead><tr><th class="col-rank">#</th><th>Player</th>' +
-    '<th>Team</th><th>Drafted by</th>' +
-    '<th class="num hide-mobile">Pick</th><th class="num">Actual</th>' +
+    '<th class="num">Actual</th>' +
     '<th class="num hide-mobile">Proj</th></tr></thead><tbody>';
   rows.forEach((r,i) => {
     html += `<tr class="${r.in_tournament_injury ? 'injured' : ''}"><td class="dim col-rank">${i+1}</td>` +
-      `<td><strong>${escapeHtml(r.player)}</strong>${injuryTag(r)}</td>` +
-      `<td class="dim">${teamLabel(r.team)}</td>` +
-      `<td>${escapeHtml(r.entry)}</td>` +
-      `<td class="num dim hide-mobile">${r.pick}</td>` +
+      `<td><strong>${escapeHtml(r.player)}</strong>${injuryTag(r)}` +
+        `<div class="dim cell-sub">${teamIcon(r.team)}${escapeHtml(r.team)} · ${escapeHtml(r.entry)} · pick ${r.pick}</div></td>` +
       `<td class="num"><strong>${r.actual_pts}</strong></td>` +
       `<td class="num dim hide-mobile">${r.proj_total != null ? r.proj_total : ''}</td></tr>`;
   });
@@ -3169,18 +3176,21 @@ function renderStealsBusts() {
   const bustsT = document.getElementById('hist-busts-table');
   const mkRow = (r,i) => {
     const pick = (archiveData.picks.find(p => p.player === r.player && p.team === r.team) || {}).pick || '';
-    return `<tr><td class="dim">${i+1}</td>` +
-      `<td><strong>${escapeHtml(r.player)}</strong><div class="dim" style="font-size:11px;">${teamLabel(r.team)} · pick ${pick}</div></td>` +
-      `<td class="num dim">${r.proj_total}</td>` +
+    return `<tr><td class="dim col-rank">${i+1}</td>` +
+      `<td><strong>${escapeHtml(r.player)}</strong>` +
+        `<div class="dim cell-sub">${teamIcon(r.team)}${escapeHtml(r.team)} · pick ${pick}</div></td>` +
+      `<td class="num dim hide-mobile">${r.proj_total}</td>` +
       `<td class="num"><strong>${r.actual_pts}</strong></td>` +
       `<td class="num">${fmtSigned(r.residual)}</td></tr>`;
   };
-  let html = '<thead><tr><th>#</th><th>Player</th><th class="num">Proj</th><th class="num">Act</th><th class="num">+/-</th></tr></thead><tbody>';
+  const sbHead = '<thead><tr><th class="col-rank">#</th><th>Player</th>' +
+    '<th class="num hide-mobile">Proj</th><th class="num">Act</th><th class="num">+/-</th></tr></thead><tbody>';
+  let html = sbHead;
   archiveData.top_steals.slice(0,15).forEach((r,i) => html += mkRow(r,i));
   html += '</tbody>';
   stealsT.innerHTML = html;
 
-  let html2 = '<thead><tr><th>#</th><th>Player</th><th class="num">Proj</th><th class="num">Act</th><th class="num">+/-</th></tr></thead><tbody>';
+  let html2 = sbHead;
   archiveData.top_busts.slice(0,15).forEach((r,i) => html2 += mkRow(r,i));
   html2 += '</tbody>';
   bustsT.innerHTML = html2;
@@ -3288,17 +3298,14 @@ function renderPickValue() {
     const cls = sc > 0 ? 'pos' : 'neg';
     const sign = sc > 0 ? '+' : '';
     return `<tr><td class="num dim col-rank">${p.pick}</td>` +
-      `<td class="num hide-mobile col-narrow">${p.actual_rank}</td>` +
       `<td class="num ${cls}"><strong>${sign}${sc}</strong></td>` +
-      `<td><strong>${escapeHtml(p.player)}</strong></td>` +
-      `<td class="dim hide-mobile">${teamLabel(p.team)}</td>` +
-      `<td class="num">${p.actual_pts}</td>` +
-      `<td class="dim hide-mobile">${escapeHtml(p.entry)}</td></tr>`;
+      `<td><strong>${escapeHtml(p.player)}</strong>` +
+        `<div class="dim cell-sub">${teamIcon(p.team)}${escapeHtml(p.team)} · ${escapeHtml(p.entry)} · rank ${p.actual_rank}</div></td>` +
+      `<td class="num">${p.actual_pts}</td></tr>`;
   }
   const head = '<thead><tr><th class="num col-rank">Pick</th>' +
-    '<th class="num hide-mobile col-narrow">Rank</th><th class="num">±</th>' +
-    '<th>Player</th><th class="hide-mobile">Team</th>' +
-    '<th class="num">Pts</th><th class="hide-mobile">Entry</th></tr></thead>';
+    '<th class="num">±</th><th>Player</th>' +
+    '<th class="num">Pts</th></tr></thead>';
   document.getElementById('hist-risers-table').innerHTML = head + '<tbody>' + risers.map(row).join('') + '</tbody>';
   document.getElementById('hist-fallers-table').innerHTML = head + '<tbody>' + fallers.map(row).join('') + '</tbody>';
 }
