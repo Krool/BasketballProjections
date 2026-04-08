@@ -1,0 +1,132 @@
+[
+  {
+    "player": "Terrence Hill Jr.",
+    "team": "VCU",
+    "games_played": 34,
+    "mpg": 24.3,
+    "ppg": 14.4,
+    "rpg": 2.5,
+    "apg": 2.8,
+    "espn_id": "5060712"
+  },
+  {
+    "player": "Lazar Djokovic",
+    "team": "VCU",
+    "games_played": 33,
+    "mpg": 27.3,
+    "ppg": 13.5,
+    "rpg": 5.4,
+    "apg": 1.0,
+    "espn_id": "5175368"
+  },
+  {
+    "player": "Jadrian Tracey",
+    "team": "VCU",
+    "games_played": 34,
+    "mpg": 22.1,
+    "ppg": 9.9,
+    "rpg": 2.9,
+    "apg": 1.8,
+    "espn_id": "4701030"
+  },
+  {
+    "player": "Nyk Lewis",
+    "team": "VCU",
+    "games_played": 33,
+    "mpg": 24.1,
+    "ppg": 8.7,
+    "rpg": 4.5,
+    "apg": 1.7,
+    "espn_id": "5311890"
+  },
+  {
+    "player": "Brandon Jennings",
+    "team": "VCU",
+    "games_played": 34,
+    "mpg": 24.6,
+    "ppg": 8.7,
+    "rpg": 3.5,
+    "apg": 2.2,
+    "espn_id": "5239713"
+  },
+  {
+    "player": "Michael Belle",
+    "team": "VCU",
+    "games_played": 34,
+    "mpg": 22.3,
+    "ppg": 7.5,
+    "rpg": 5.1,
+    "apg": 1.0,
+    "espn_id": "5174672"
+  },
+  {
+    "player": "Barry Evans",
+    "team": "VCU",
+    "games_played": 34,
+    "mpg": 26.5,
+    "ppg": 7.2,
+    "rpg": 5.0,
+    "apg": 2.1,
+    "espn_id": "5105987"
+  },
+  {
+    "player": "Tyrell Ward",
+    "team": "VCU",
+    "games_played": 29,
+    "mpg": 13.3,
+    "ppg": 5.8,
+    "rpg": 2.1,
+    "apg": 0.5,
+    "espn_id": "4684733"
+  },
+  {
+    "player": "Ahmad Nowell",
+    "team": "VCU",
+    "games_played": 27,
+    "mpg": 10.6,
+    "ppg": 4.7,
+    "rpg": 1.2,
+    "apg": 0.6,
+    "espn_id": "4869778"
+  },
+  {
+    "player": "Jordan Tillery",
+    "team": "VCU",
+    "games_played": 11,
+    "mpg": 7.2,
+    "ppg": 4.5,
+    "rpg": 1.5,
+    "apg": 0.5,
+    "espn_id": "5311892"
+  },
+  {
+    "player": "Keyshawn Mitchell",
+    "team": "VCU",
+    "games_played": 19,
+    "mpg": 11.1,
+    "ppg": 3.4,
+    "rpg": 2.6,
+    "apg": 0.5,
+    "espn_id": "5174851"
+  },
+  {
+    "player": "Jordann Dumont",
+    "team": "VCU",
+    "games_played": 8,
+    "mpg": 2.4,
+    "ppg": 1.0,
+    "rpg": 0.1,
+    "apg": 0.0,
+    "espn_id": "5117584"
+  },
+  {
+    "player": "Christian Fermin",
+    "team": "VCU",
+    "games_played": 4,
+    "mpg": 13.0,
+    "ppg": 0.8,
+    "rpg": 2.5,
+    "apg": 0.8,
+    "espn_id": "5106041"
+  }
+]

@@ -1,0 +1,132 @@
+[
+  {
+    "player": "Robbie Avila",
+    "team": "Saint Louis",
+    "games_played": 33,
+    "mpg": 26.2,
+    "ppg": 12.9,
+    "rpg": 4.5,
+    "apg": 4.1,
+    "espn_id": "4917097"
+  },
+  {
+    "player": "Trey Green",
+    "team": "Saint Louis",
+    "games_played": 32,
+    "mpg": 23.7,
+    "ppg": 11.1,
+    "rpg": 2.8,
+    "apg": 1.7,
+    "espn_id": "4711258"
+  },
+  {
+    "player": "Dion Brown",
+    "team": "Saint Louis",
+    "games_played": 33,
+    "mpg": 23.5,
+    "ppg": 11.1,
+    "rpg": 5.5,
+    "apg": 1.5,
+    "espn_id": "5107242"
+  },
+  {
+    "player": "Amari McCottry",
+    "team": "Saint Louis",
+    "games_played": 32,
+    "mpg": 22.6,
+    "ppg": 10.3,
+    "rpg": 5.2,
+    "apg": 2.8,
+    "espn_id": "5239707"
+  },
+  {
+    "player": "Kellen Thames",
+    "team": "Saint Louis",
+    "games_played": 31,
+    "mpg": 17.3,
+    "ppg": 9.9,
+    "rpg": 4.8,
+    "apg": 1.9,
+    "espn_id": "5105980"
+  },
+  {
+    "player": "Quentin Jones",
+    "team": "Saint Louis",
+    "games_played": 33,
+    "mpg": 26.5,
+    "ppg": 9.2,
+    "rpg": 3.9,
+    "apg": 2.9,
+    "espn_id": "5175171"
+  },
+  {
+    "player": "Ishan Sharma",
+    "team": "Saint Louis",
+    "games_played": 33,
+    "mpg": 22.2,
+    "ppg": 9.1,
+    "rpg": 2.6,
+    "apg": 1.6,
+    "espn_id": "5183809"
+  },
+  {
+    "player": "Brady Dunlap",
+    "team": "Saint Louis",
+    "games_played": 32,
+    "mpg": 16.9,
+    "ppg": 6.8,
+    "rpg": 2.1,
+    "apg": 0.8,
+    "espn_id": "4685659"
+  },
+  {
+    "player": "Paul Otieno",
+    "team": "Saint Louis",
+    "games_played": 33,
+    "mpg": 15.5,
+    "ppg": 5.2,
+    "rpg": 3.9,
+    "apg": 0.9,
+    "espn_id": "5107797"
+  },
+  {
+    "player": "Jax Kerr",
+    "team": "Saint Louis",
+    "games_played": 17,
+    "mpg": 6.6,
+    "ppg": 2.9,
+    "rpg": 1.9,
+    "apg": 0.2,
+    "espn_id": "5236225"
+  },
+  {
+    "player": "Cam Hutson",
+    "team": "Saint Louis",
+    "games_played": 17,
+    "mpg": 5.5,
+    "ppg": 1.9,
+    "rpg": 1.0,
+    "apg": 0.2,
+    "espn_id": "5254323"
+  },
+  {
+    "player": "Isaac Holmes",
+    "team": "Saint Louis",
+    "games_played": 13,
+    "mpg": 2.8,
+    "ppg": 0.8,
+    "rpg": 0.7,
+    "apg": 0.3,
+    "espn_id": "5107907"
+  },
+  {
+    "player": "Jaden Schertz",
+    "team": "Saint Louis",
+    "games_played": 12,
+    "mpg": 3.0,
+    "ppg": 0.7,
+    "rpg": 0.5,
+    "apg": 0.1,
+    "espn_id": "5107905"
+  }
+]

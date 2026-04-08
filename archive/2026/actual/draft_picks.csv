@@ -1,211 +1,211 @@
-round,pick,entry,player,team
-1,1,Lucas,Cameron Boozer,Duke
-1,2,Merbers,Brayden Burries,Arizona
-1,3,Terry,Thomas Haugh,Florida
-1,4,Alana & Gary,Yaxel Lendeborg,Michigan
-1,5,Rich,Isaiah Evans,Duke
-1,6,Griffin,Alex Condon,Florida
-1,7,Matt D.,Koa Peat,Arizona
-1,8,Spike,Graham Ike,Gonzaga
-1,9,Bruce & Ryan,Darius Acuff Jr.,Arkansas
-1,10,Grace & Pat,Keaton Wagler,Illinois
-1,11,Zach,Jaden Bradley,Arizona
-1,12,Elizabeth,Nick Boyd,Wisconsin
-1,13,John & Claire,Milan Momcilovic,Iowa St.
-1,14,Schlossbergs,Morez Johnson Jr.,Michigan
-1,15,Michael D.,Kingston Flemings,Houston
-2,16,Michael D.,Joshua Jefferson,Iowa St.
-2,17,Schlossbergs,Emanuel Sharp,Houston
-2,18,John & Claire,Jeremy Fears Jr.,Michigan St.
-2,19,Elizabeth,Jaxon Kohler,Michigan St.
-2,20,Zach,Aday Mara,Michigan
-2,21,Grace & Pat,Braden Smith,Purdue
-2,22,Bruce & Ryan,AJ Dybantsa,BYU
-2,23,Spike,Boogie Fland,Florida
-2,24,Matt D.,Tamin Lipsey,Iowa St.
-2,25,Griffin,Xaivian Lee,Florida
-2,26,Rich,Trey Kaufman-Renn,Purdue
-2,27,Alana & Gary,David Mirkovic,Illinois
-2,28,Terry,Joseph Tugler,Houston
-2,29,Merbers,Ivan Kharchenkov,Arizona
-2,30,Lucas,Fletcher Loyer,Purdue
-3,31,Lucas,Labaron Philon Jr.,Alabama
-3,32,Merbers,Elliot Cadeau,Michigan
-3,33,Terry,Tarris Reed Jr.,Connecticut
-3,34,Alana & Gary,Andrej Stojakovic,Illinois
-3,35,Rich,Tyler Tanner,Vanderbilt
-3,36,Griffin,Christian Anderson,Texas Tech
-3,37,Matt D.,Darryn Peterson,Kansas
-3,38,Spike,Thijs De Ridder,Virginia
-3,39,Bruce & Ryan,Milos Uzan,Houston
-3,40,Grace & Pat,Kylan Boswell,Illinois
-3,41,Zach,Zuby Ejiofor,St. John's
-3,42,Elizabeth,John Blackwell,Wisconsin
-3,43,John & Claire,Robert Wright III,BYU
-3,44,Schlossbergs,Solo Ball,Connecticut
-3,45,Michael D.,Meleek Thomas,Arkansas
-4,46,Michael D.,Ja'Kobi Gillespie,Tennessee
-4,47,Schlossbergs,Motiejus Krivas,Arizona
-4,48,John & Claire,Duke Miles,Vanderbilt
-4,49,Elizabeth,Cayden Boozer,Duke
-4,50,Zach,Anthony Dell'Orso,Arizona
-4,51,Grace & Pat,Oscar Cluff,Purdue
-4,52,Bruce & Ryan,Pryce Sandfort,Nebraska
-4,53,Spike,Rueben Chinyelu,Florida
-4,54,Matt D.,Trey McKenney,Michigan
-4,55,Griffin,Alex Karaban,Connecticut
-4,56,Rich,Tyler Nickel,Vanderbilt
-4,57,Alana & Gary,Nate Ament,Tennessee
-4,58,Terry,Tobe Awaka,Arizona
-4,59,Merbers,Coen Carr,Michigan St.
-4,60,Lucas,Nimari Burnett,Michigan
-5,61,Lucas,Trevon Brazile,Arkansas
-5,62,Merbers,Urban Klavzar,Florida
-5,63,Terry,Tomislav Ivisic,Illinois
-5,64,Alana & Gary,Patrick Ngongba II,Duke
-5,65,Rich,Ryan Conwell,Louisville
-5,66,Griffin,Braylon Mullins,Connecticut
-5,67,Matt D.,Tyon Grant-Foster,Gonzaga
-5,68,Spike,Bryce Hopkins,St. John's
-5,69,Bruce & Ryan,Silas Demary Jr.,Connecticut
-5,70,Grace & Pat,Malik Thomas,Virginia
-5,71,Zach,Bruce Thornton,Ohio St.
-5,72,Elizabeth,Chris Cenac Jr.,Houston
-5,73,John & Claire,Bennett Stirtz,Iowa
-5,74,Schlossbergs,Carson Cooper,Michigan St.
-5,75,Michael D.,Blake Buchanan,Iowa St.
-6,76,Michael D.,Flory Bidunga,Kansas
-6,77,Schlossbergs,Tre White,Kansas
-6,78,John & Claire,Killyan Toure,Iowa St.
-6,79,Elizabeth,Otega Oweh,Kentucky
-6,80,Zach,Paulius Murauskas,Saint Mary's
-6,81,Grace & Pat,Sam Lewis,Virginia
-6,82,Bruce & Ryan,Malik Reneau,Miami FL
-6,83,Spike,Amari Allen,Alabama
-6,84,Matt D.,Tyler Bilodeau,UCLA
-6,85,Griffin,Rienk Mast,Nebraska
-6,86,Rich,Roddy Gayle Jr.,Michigan
-6,87,Alana & Gary,Donovan Atwell,Texas Tech
-6,88,Terry,Mercy Miller,Houston
-6,89,Merbers,Peter Suder,Miami OH
-6,90,Lucas,Latrell Wrightsell,Alabama
-7,91,Lucas,Dailyn Swain,Texas
-7,92,Merbers,Bryce Harris,Howard
-7,93,Terry,Dame Sarr,Duke
-7,94,Alana & Gary,Henri Veesaar,North Carolina
-7,95,Rich,C.J. Cox,Purdue
-7,96,Griffin,Seth Trimble,North Carolina
-7,97,Matt D.,Mikey Lewis,Saint Mary's
-7,98,Spike,Nolan Winter,Wisconsin
-7,99,Bruce & Ryan,Nikolas Khamenia,Duke
-7,100,Grace & Pat,MJ Collins Jr.,Utah St.
-7,101,Zach,Billy Richmond III,Arkansas
-7,102,Elizabeth,AK Okereke,Vanderbilt
-7,103,John & Claire,Austin Rapp,Wisconsin
-7,104,Schlossbergs,Malique Ewin,Arkansas
-7,105,Michael D.,Melvin Council Jr.,Kansas
-8,106,Michael D.,J.P. Estrella,Tennessee
-8,107,Schlossbergs,Aiden Sherrell,Alabama
-8,108,John & Claire,Mark Mitchell,Missouri
-8,109,Elizabeth,Mason Falslev,Utah St.
-8,110,Zach,Tre Donaldson,Miami FL
-8,111,Grace & Pat,Dominique Daniels Jr.,Cal Baptist
-8,112,Bruce & Ryan,Braden Frager,Nebraska
-8,113,Spike,Oziyah Sellers,St. John's
-8,114,Matt D.,Trent Perry,UCLA
-8,115,Griffin,LeJuan Watts,Texas Tech
-8,116,Rich,Donovan Dent,UCLA
-8,117,Alana & Gary,J'Vonne Hadley,Louisville
-8,118,Terry,David Punch,TCU
-8,119,Merbers,Kur Teng,Michigan St.
-8,120,Lucas,Rashaun Agee,Texas A&M
-9,121,Lucas,Terrence Hill Jr.,VCU
-9,122,Merbers,Jeremiah Wilkinson,Georgia
-9,123,Terry,Jamarion Batemon,Iowa St.
-9,124,Alana & Gary,Mario Saint-Supery,Gonzaga
-9,125,Rich,Chance Mallory,Virginia
-9,126,Griffin,Davis Fogle,Gonzaga
-9,127,Matt D.,Jamarques Lawrence,Nebraska
-9,128,Spike,Jacari White,Virginia
-9,129,Bruce & Ryan,Jaylen Petty,Texas Tech
-9,130,Grace & Pat,Tavari Johnson,Akron
-9,131,Zach,Wes Enis,South Florida
-9,132,Elizabeth,Lazar Djokovic,VCU
-9,133,John & Claire,Jordan Scott,Michigan St.
-9,134,Schlossbergs,Sam Hoiberg,Nebraska
-9,135,Michael D.,Shelton Henderson,Miami FL
-10,136,Michael D.,D.J. Wagner,Arkansas
-10,137,Schlossbergs,Devin McGlockton,Vanderbilt
-10,138,John & Claire,Luka Bogavac,North Carolina
-10,139,Elizabeth,Riley Kugel,UCF
-10,140,Zach,John Mobley Jr.,Ohio St.
-10,141,Grace & Pat,Zvonimir Ivisic,Illinois
-10,142,Bruce & Ryan,Denzel Aberdeen,Kentucky
-10,143,Spike,Cruz Davis,Hofstra
-10,144,Matt D.,Brant Byers,Miami OH
-10,145,Griffin,Ian Jackson,St. John's
-10,146,Rich,Christian Hammond,Santa Clara
-10,147,Alana & Gary,Skyy Clark,UCLA
-10,148,Terry,Robbie Avila,Saint Louis
-10,149,Merbers,Joson Sanon,St. John's
-10,150,Lucas,Matas Vokietaitis,Texas
-11,151,Lucas,Kanon Catchings,Georgia
-11,152,Merbers,Eric Dailey Jr.,UCLA
-11,153,Terry,Izaiyah Nelson,South Florida
-11,154,Alana & Gary,Larry Johnson,McNeese
-11,155,Rich,Jalen Washington,Vanderbilt
-11,156,Griffin,Isaac McKneely,Louisville
-11,157,Matt D.,Tru Washington,Miami FL
-11,158,Spike,Johann Grunloh,Virginia
-11,159,Bruce & Ryan,Elijah Mahi,Santa Clara
-11,160,Grace & Pat,RJ Johnson,Kennesaw St.
-11,161,Zach,Adam Miller,Gonzaga
-11,162,Elizabeth,Xavier Edmonds,TCU
-11,163,John & Claire,Amani Lyles,Akron
-11,164,Schlossbergs,Collin Chandler,Kentucky
-11,165,Michael D.,Tyler Perkins,Villanova
-12,166,Michael D.,Dillon Mitchell,St. John's
-12,167,Schlossbergs,Daniel Jacobsen,Purdue
-12,168,John & Claire,Braeden Carrington,Wisconsin
-12,169,Elizabeth,Joseph Pinion,South Florida
-12,170,Zach,Joshua Dent,Saint Mary's
-12,171,Grace & Pat,Ben Humrichous,Illinois
-12,172,Bruce & Ryan,Isaiah Brown,Florida
-12,173,Spike,Devin Royal,Ohio St.
-12,174,Matt D.,Bryce Lindsay,Villanova
-12,175,Griffin,Eric Reibe,Connecticut
-12,176,Rich,Duke Brennan,Villanova
-12,177,Alana & Gary,Jalen Warley,Gonzaga
-12,178,Terry,Kennard Davis Jr.,BYU
-12,179,Merbers,Amare Bynum,Ohio St.
-12,180,Lucas,Jadrian Tracey,VCU
-13,181,Lucas,Allen Graves,Santa Clara
-13,182,Merbers,Felix Okpara,Tennessee
-13,183,Terry,Maliq Brown,Duke
-13,184,Alana & Gary,Dylan Darling,St. John's
-13,185,Rich,Tavion Banks,Iowa
-13,186,Griffin,Adrian Wooley,Louisville
-13,187,Matt D.,Bryson Tiller,Kansas
-13,188,Spike,Jake Davis,Illinois
-13,189,Bruce & Ryan,Terry Anderson,High Point
-13,190,Grace & Pat,Alex Wilkins,Furman
-13,191,Zach,Rob Martin,High Point
-13,192,Elizabeth,RJ Godfrey,Clemson
-13,193,John & Claire,Kristian Gonzalez,Idaho
-13,194,Schlossbergs,Andrew Rohde,Wisconsin
-13,195,Michael D.,Jayden Pierre,TCU
-14,196,Michael D.,Jayden Stone,Missouri
-14,197,Schlossbergs,Ugonna Onyenso,Virginia
-14,198,John & Claire,Omer Mayer,Purdue
-14,199,Elizabeth,Sananda Fru,Louisville
-14,200,Zach,Preston Edmead,Hofstra
-14,201,Grace & Pat,Eian Elmer,Miami OH
-14,202,Bruce & Ryan,Acaden Lewis,Villanova
-14,203,Spike,Rylan Griffen,Texas A&M
-14,204,Matt D.,Jamichael Stillwell,UCF
-14,205,Griffin,Dontae Horne,Prairie View A&M
-14,206,Rich,Jarin Stevenson,North Carolina
-14,207,Alana & Gary,TJ Power,Penn
-14,208,Terry,Jayden Ross,Connecticut
-14,209,Merbers,Emmanuel Innocenti,Gonzaga
-14,210,Lucas,Tramon Mark,Texas
+round,pick,entry,player,team,espn_id
+1,1,Lucas,Cameron Boozer,Duke,5041935
+1,2,Merbers,Brayden Burries,Arizona,5082206
+1,3,Terry,Thomas Haugh,Florida,5080489
+1,4,Alana & Gary,Yaxel Lendeborg,Michigan,5175737
+1,5,Rich,Isaiah Evans,Duke,5061585
+1,6,Griffin,Alex Condon,Florida,5174657
+1,7,Matt D.,Koa Peat,Arizona,5041953
+1,8,Spike,Graham Ike,Gonzaga,4703396
+1,9,Bruce & Ryan,Darius Acuff Jr.,Arkansas,5142620
+1,10,Grace & Pat,Keaton Wagler,Illinois,5254165
+1,11,Zach,Jaden Bradley,Arizona,4432737
+1,12,Elizabeth,Nick Boyd,Wisconsin,4702654
+1,13,John & Claire,Milan Momcilovic,Iowa St.,4848637
+1,14,Schlossbergs,Morez Johnson Jr.,Michigan,4873153
+1,15,Michael D.,Kingston Flemings,Houston,5149077
+2,16,Michael D.,Joshua Jefferson,Iowa St.,4870564
+2,17,Schlossbergs,Emanuel Sharp,Houston,5106058
+2,18,John & Claire,Jeremy Fears Jr.,Michigan St.,4711255
+2,19,Elizabeth,Jaxon Kohler,Michigan St.,5105815
+2,20,Zach,Aday Mara,Michigan,5174983
+2,21,Grace & Pat,Braden Smith,Purdue,5105854
+2,22,Bruce & Ryan,AJ Dybantsa,BYU,5142718
+2,23,Spike,Boogie Fland,Florida,5238195
+2,24,Matt D.,Tamin Lipsey,Iowa St.,5106254
+2,25,Griffin,Xaivian Lee,Florida,5107169
+2,26,Rich,Trey Kaufman-Renn,Purdue,4897438
+2,27,Alana & Gary,David Mirkovic,Illinois,5311832
+2,28,Terry,Joseph Tugler,Houston,5060700
+2,29,Merbers,Ivan Kharchenkov,Arizona,5311896
+2,30,Lucas,Fletcher Loyer,Purdue,5105853
+3,31,Lucas,Labaron Philon Jr.,Alabama,4873090
+3,32,Merbers,Elliot Cadeau,Michigan,4869764
+3,33,Terry,Tarris Reed Jr.,Connecticut,5105809
+3,34,Alana & Gary,Andrej Stojakovic,Illinois,5175007
+3,35,Rich,Tyler Tanner,Vanderbilt,5187600
+3,36,Griffin,Christian Anderson,Texas Tech,5060701
+3,37,Matt D.,Darryn Peterson,Kansas,5041955
+3,38,Spike,Thijs De Ridder,Virginia,5311846
+3,39,Bruce & Ryan,Milos Uzan,Houston,5106272
+3,40,Grace & Pat,Kylan Boswell,Illinois,4684269
+3,41,Zach,Zuby Ejiofor,St. John's,5106262
+3,42,Elizabeth,John Blackwell,Wisconsin,5103630
+3,43,John & Claire,Robert Wright III,BYU,5060709
+3,44,Schlossbergs,Solo Ball,Connecticut,4895737
+3,45,Michael D.,Meleek Thomas,Arkansas,5041951
+4,46,Michael D.,Ja'Kobi Gillespie,Tennessee,5107968
+4,47,Schlossbergs,Motiejus Krivas,Arizona,5174954
+4,48,John & Claire,Duke Miles,Vanderbilt,4702049
+4,49,Elizabeth,Cayden Boozer,Duke,5041937
+4,50,Zach,Anthony Dell'Orso,Arizona,5108141
+4,51,Grace & Pat,Oscar Cluff,Purdue,5174973
+4,52,Bruce & Ryan,Pryce Sandfort,Nebraska,4858604
+4,53,Spike,Rueben Chinyelu,Florida,5174971
+4,54,Matt D.,Trey McKenney,Michigan,5041954
+4,55,Griffin,Alex Karaban,Connecticut,4917149
+4,56,Rich,Tyler Nickel,Vanderbilt,4838721
+4,57,Alana & Gary,Nate Ament,Tennessee,5164559
+4,58,Terry,Tobe Awaka,Arizona,5105555
+4,59,Merbers,Coen Carr,Michigan St.,4872740
+4,60,Lucas,Nimari Burnett,Michigan,4433138
+5,61,Lucas,Trevon Brazile,Arkansas,4698719
+5,62,Merbers,Urban Klavzar,Florida,5238200
+5,63,Terry,Tomislav Ivisic,Illinois,5214642
+5,64,Alana & Gary,Patrick Ngongba II,Duke,4873209
+5,65,Rich,Ryan Conwell,Louisville,5107157
+5,66,Griffin,Braylon Mullins,Connecticut,5196916
+5,67,Matt D.,Tyon Grant-Foster,Gonzaga,4700527
+5,68,Spike,Bryce Hopkins,St. John's,4565698
+5,69,Bruce & Ryan,Silas Demary Jr.,Connecticut,5054083
+5,70,Grace & Pat,Malik Thomas,Virginia,4683758
+5,71,Zach,Bruce Thornton,Ohio St.,5105837
+5,72,Elizabeth,Chris Cenac Jr.,Houston,5142621
+5,73,John & Claire,Bennett Stirtz,Iowa,5241364
+5,74,Schlossbergs,Carson Cooper,Michigan St.,5105817
+5,75,Michael D.,Blake Buchanan,Iowa St.,5079838
+6,76,Michael D.,Flory Bidunga,Kansas,5044426
+6,77,Schlossbergs,Tre White,Kansas,5105643
+6,78,John & Claire,Killyan Toure,Iowa St.,5248302
+6,79,Elizabeth,Otega Oweh,Kentucky,5106270
+6,80,Zach,Paulius Murauskas,Saint Mary's,5174955
+6,81,Grace & Pat,Sam Lewis,Virginia,5176232
+6,82,Bruce & Ryan,Malik Reneau,Miami FL,5105798
+6,83,Spike,Amari Allen,Alabama,5101833
+6,84,Matt D.,Tyler Bilodeau,UCLA,5105626
+6,85,Griffin,Rienk Mast,Nebraska,4592677
+6,86,Rich,Roddy Gayle Jr.,Michigan,5105836
+6,87,Alana & Gary,Donovan Atwell,Texas Tech,5107355
+6,88,Terry,Mercy Miller,Houston,4873086
+6,89,Merbers,Peter Suder,Miami OH,5106674
+6,90,Lucas,Latrell Wrightsell,Alabama,4702484
+7,91,Lucas,Dailyn Swain,Texas,4848625
+7,92,Merbers,Bryce Harris,Howard,4897768
+7,93,Terry,Dame Sarr,Duke,5287474
+7,94,Alana & Gary,Henri Veesaar,North Carolina,5105571
+7,95,Rich,C.J. Cox,Purdue,5175591
+7,96,Griffin,Seth Trimble,North Carolina,4712836
+7,97,Matt D.,Mikey Lewis,Saint Mary's,5240980
+7,98,Spike,Nolan Winter,Wisconsin,4895783
+7,99,Bruce & Ryan,Nikolas Khamenia,Duke,5144124
+7,100,Grace & Pat,MJ Collins Jr.,Utah St.,5105401
+7,101,Zach,Billy Richmond III,Arkansas,5060732
+7,102,Elizabeth,AK Okereke,Vanderbilt,5114350
+7,103,John & Claire,Austin Rapp,Wisconsin,5240971
+7,104,Schlossbergs,Malique Ewin,Arkansas,5105546
+7,105,Michael D.,Melvin Council Jr.,Kansas,5177301
+8,106,Michael D.,J.P. Estrella,Tennessee,5093142
+8,107,Schlossbergs,Aiden Sherrell,Alabama,4873184
+8,108,John & Claire,Mark Mitchell,Missouri,4433285
+8,109,Elizabeth,Mason Falslev,Utah St.,5107864
+8,110,Zach,Tre Donaldson,Miami FL,4837356
+8,111,Grace & Pat,Dominique Daniels Jr.,Cal Baptist,5178207
+8,112,Bruce & Ryan,Braden Frager,Nebraska,5239571
+8,113,Spike,Oziyah Sellers,St. John's,5105642
+8,114,Matt D.,Trent Perry,UCLA,5060706
+8,115,Griffin,LeJuan Watts,Texas Tech,5107312
+8,116,Rich,Donovan Dent,UCLA,5107782
+8,117,Alana & Gary,J'Vonne Hadley,Louisville,4702784
+8,118,Terry,David Punch,TCU,5164368
+8,119,Merbers,Kur Teng,Michigan St.,4873111
+8,120,Lucas,Rashaun Agee,Texas A&M,4593815
+9,121,Lucas,Terrence Hill Jr.,VCU,5060712
+9,122,Merbers,Jeremiah Wilkinson,Georgia,5165276
+9,123,Terry,Jamarion Batemon,Iowa St.,5217196
+9,124,Alana & Gary,Mario Saint-Supery,Gonzaga,5313012
+9,125,Rich,Chance Mallory,Virginia,5150404
+9,126,Griffin,Davis Fogle,Gonzaga,5196913
+9,127,Matt D.,Jamarques Lawrence,Nebraska,5105825
+9,128,Spike,Jacari White,Virginia,5107274
+9,129,Bruce & Ryan,Jaylen Petty,Texas Tech,5221321
+9,130,Grace & Pat,Tavari Johnson,Akron,5108059
+9,131,Zach,Wes Enis,South Florida,5313560
+9,132,Elizabeth,Lazar Djokovic,VCU,5175368
+9,133,John & Claire,Jordan Scott,Michigan St.,5196931
+9,134,Schlossbergs,Sam Hoiberg,Nebraska,4897432
+9,135,Michael D.,Shelton Henderson,Miami FL,5101809
+10,136,Michael D.,D.J. Wagner,Arkansas,4683777
+10,137,Schlossbergs,Devin McGlockton,Vanderbilt,4791227
+10,138,John & Claire,Luka Bogavac,North Carolina,5312014
+10,139,Elizabeth,Riley Kugel,UCF,5105529
+10,140,Zach,John Mobley Jr.,Ohio St.,5060708
+10,141,Grace & Pat,Zvonimir Ivisic,Illinois,5174665
+10,142,Bruce & Ryan,Denzel Aberdeen,Kentucky,5105527
+10,143,Spike,Cruz Davis,Hofstra,5107198
+10,144,Matt D.,Brant Byers,Miami OH,5243053
+10,145,Griffin,Ian Jackson,St. John's,4869770
+10,146,Rich,Christian Hammond,Santa Clara,5176359
+10,147,Alana & Gary,Skyy Clark,UCLA,5105794
+10,148,Terry,Robbie Avila,Saint Louis,4917097
+10,149,Merbers,Joson Sanon,St. John's,5142625
+10,150,Lucas,Matas Vokietaitis,Texas,5239838
+11,151,Lucas,Kanon Catchings,Georgia,5243212
+11,152,Merbers,Eric Dailey Jr.,UCLA,4610012
+11,153,Terry,Izaiyah Nelson,South Florida,5107251
+11,154,Alana & Gary,Larry Johnson,McNeese,5144375
+11,155,Rich,Jalen Washington,Vanderbilt,4433625
+11,156,Griffin,Isaac McKneely,Louisville,4712845
+11,157,Matt D.,Tru Washington,Miami FL,4845368
+11,158,Spike,Johann Grunloh,Virginia,5311844
+11,159,Bruce & Ryan,Elijah Mahi,Santa Clara,5241069
+11,160,Grace & Pat,RJ Johnson,Kennesaw St.,
+11,161,Zach,Adam Miller,Gonzaga,4432175
+11,162,Elizabeth,Xavier Edmonds,TCU,5311928
+11,163,John & Claire,Amani Lyles,Akron,5108060
+11,164,Schlossbergs,Collin Chandler,Kentucky,5238207
+11,165,Michael D.,Tyler Perkins,Villanova,5182412
+12,166,Michael D.,Dillon Mitchell,St. John's,5106283
+12,167,Schlossbergs,Daniel Jacobsen,Purdue,5144147
+12,168,John & Claire,Braeden Carrington,Wisconsin,5105820
+12,169,Elizabeth,Joseph Pinion,South Florida,4699760
+12,170,Zach,Joshua Dent,Saint Mary's,5183875
+12,171,Grace & Pat,Ben Humrichous,Illinois,5177736
+12,172,Bruce & Ryan,Isaiah Brown,Florida,5144372
+12,173,Spike,Devin Royal,Ohio St.,4895776
+12,174,Matt D.,Bryce Lindsay,Villanova,5174291
+12,175,Griffin,Eric Reibe,Connecticut,5152763
+12,176,Rich,Duke Brennan,Villanova,4870569
+12,177,Alana & Gary,Jalen Warley,Gonzaga,4683147
+12,178,Terry,Kennard Davis Jr.,BYU,4685654
+12,179,Merbers,Amare Bynum,Ohio St.,5196946
+12,180,Lucas,Jadrian Tracey,VCU,4701030
+13,181,Lucas,Allen Graves,Santa Clara,5149115
+13,182,Merbers,Felix Okpara,Tennessee,5105841
+13,183,Terry,Maliq Brown,Duke,5105337
+13,184,Alana & Gary,Dylan Darling,St. John's,5105658
+13,185,Rich,Tavion Banks,Iowa,5241363
+13,186,Griffin,Adrian Wooley,Louisville,5242127
+13,187,Matt D.,Bryson Tiller,Kansas,5041958
+13,188,Spike,Jake Davis,Illinois,5176150
+13,189,Bruce & Ryan,Terry Anderson,High Point,5241590
+13,190,Grace & Pat,Alex Wilkins,Furman,5314511
+13,191,Zach,Rob Martin,High Point,5107904
+13,192,Elizabeth,RJ Godfrey,Clemson,5105449
+13,193,John & Claire,Kristian Gonzalez,Idaho,5176303
+13,194,Schlossbergs,Andrew Rohde,Wisconsin,5109019
+13,195,Michael D.,Jayden Pierre,TCU,5105619
+14,196,Michael D.,Jayden Stone,Missouri,4432196
+14,197,Schlossbergs,Ugonna Onyenso,Virginia,5037878
+14,198,John & Claire,Omer Mayer,Purdue,5312035
+14,199,Elizabeth,Sananda Fru,Louisville,5311967
+14,200,Zach,Preston Edmead,Hofstra,5236222
+14,201,Grace & Pat,Eian Elmer,Miami OH,5093252
+14,202,Bruce & Ryan,Acaden Lewis,Villanova,5144105
+14,203,Spike,Rylan Griffen,Texas A&M,4683682
+14,204,Matt D.,Jamichael Stillwell,UCF,5241667
+14,205,Griffin,Dontae Horne,Prairie View A&M,5176727
+14,206,Rich,Jarin Stevenson,North Carolina,4873181
+14,207,Alana & Gary,TJ Power,Penn,4684843
+14,208,Terry,Jayden Ross,Connecticut,4895753
+14,209,Merbers,Emmanuel Innocenti,Gonzaga,5176787
+14,210,Lucas,Tramon Mark,Texas,4432243

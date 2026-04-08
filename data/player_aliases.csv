@@ -1,0 +1,28 @@
+alias,canonical_player,canonical_team,notes
+Labaron Philon,Labaron Philon Jr.,Alabama,2026 league spreadsheet missing Jr.
+Kennard Davis,Kennard Davis Jr.,BYU,2026 league spreadsheet missing Jr.
+RJ Gobfrey,RJ Godfrey,Clemson,2026 league spreadsheet typo
+Patrick Ngongba,Patrick Ngongba II,Duke,2026 league spreadsheet missing II
+Xavian Lee,Xaivian Lee,Florida,2026 league spreadsheet spelling
+Mario Saint-Supey,Mario Saint-Supery,Gonzaga,2026 league spreadsheet missing y
+Colin Chandler,Collin Chandler,Kentucky,2026 league spreadsheet single l
+Adrian Wolley,Adrian Wooley,Louisville,2026 league spreadsheet typo
+Sheldon Henderson,Shelton Henderson,Miami FL,2026 league spreadsheet wrong first name
+Trey Donaldson,Tre Donaldson,Miami FL,2026 league spreadsheet Trey vs Tre
+Yaxel Lendenborg,Yaxel Lendeborg,Michigan,2026 league spreadsheet extra n
+Dante Horn,Dontae Horne,Prairie View A&M,2026 league spreadsheet phonetic spelling
+Dylan Mitchell,Dillon Mitchell,St. John's,2026 league spreadsheet wrong first name
+Lejuan Watts,LeJuan Watts,Texas Tech,2026 league spreadsheet capitalization
+Bralon Mullins,Braylon Mullins,Connecticut,2026 league spreadsheet missing y
+Solomon Ball,Solo Ball,Connecticut,2026 league spreadsheet full vs nickname
+MJ Collins,MJ Collins Jr.,Utah St.,2026 league spreadsheet missing Jr.
+Johan Grunloh,Johann Grunloh,Virginia,2026 league spreadsheet single n
+Iowa State,,Iowa St.,team name normalization
+Kennesaw State,,Kennesaw St.,team name normalization
+Miami (FL),,Miami FL,team name normalization
+Miami (OH),,Miami OH,team name normalization
+Michigan State,,Michigan St.,team name normalization
+Ohio State,,Ohio St.,team name normalization
+St. Mary's,,Saint Mary's,team name normalization
+UConn,,Connecticut,team name normalization
+Utah State,,Utah St.,team name normalization

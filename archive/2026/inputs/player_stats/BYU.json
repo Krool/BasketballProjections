@@ -1,0 +1,142 @@
+[
+  {
+    "player": "AJ Dybantsa",
+    "team": "BYU",
+    "games_played": 34,
+    "mpg": 34.6,
+    "ppg": 25.3,
+    "rpg": 6.7,
+    "apg": 3.8,
+    "espn_id": "5142718"
+  },
+  {
+    "player": "Robert Wright III",
+    "team": "BYU",
+    "games_played": 34,
+    "mpg": 34.8,
+    "ppg": 18.2,
+    "rpg": 3.5,
+    "apg": 4.7,
+    "espn_id": "5060709"
+  },
+  {
+    "player": "Richie Saunders",
+    "team": "BYU",
+    "games_played": 25,
+    "mpg": 31.4,
+    "ppg": 18.0,
+    "rpg": 5.8,
+    "apg": 2.1,
+    "espn_id": "5105462"
+  },
+  {
+    "player": "Kennard Davis Jr.",
+    "team": "BYU",
+    "games_played": 31,
+    "mpg": 29.3,
+    "ppg": 8.5,
+    "rpg": 2.7,
+    "apg": 1.3,
+    "espn_id": "4685654"
+  },
+  {
+    "player": "Dawson Baker",
+    "team": "BYU",
+    "games_played": 6,
+    "mpg": 19.8,
+    "ppg": 7.5,
+    "rpg": 1.7,
+    "apg": 0.5,
+    "espn_id": "4702626"
+  },
+  {
+    "player": "Keba Keita",
+    "team": "BYU",
+    "games_played": 32,
+    "mpg": 22.6,
+    "ppg": 6.3,
+    "rpg": 7.3,
+    "apg": 0.3,
+    "espn_id": "5105647"
+  },
+  {
+    "player": "Aleksej Kostic",
+    "team": "BYU",
+    "games_played": 26,
+    "mpg": 11.6,
+    "ppg": 4.2,
+    "rpg": 0.9,
+    "apg": 0.4,
+    "espn_id": "5311908"
+  },
+  {
+    "player": "Mihailo Bo\u0161kovic",
+    "team": "BYU",
+    "games_played": 33,
+    "mpg": 12.3,
+    "ppg": 3.1,
+    "rpg": 1.9,
+    "apg": 0.6,
+    "espn_id": "5243211"
+  },
+  {
+    "player": "Khadim Mboup",
+    "team": "BYU",
+    "games_played": 33,
+    "mpg": 15.5,
+    "ppg": 2.3,
+    "rpg": 5.1,
+    "apg": 0.4,
+    "espn_id": "5262601"
+  },
+  {
+    "player": "Tyler Mrus",
+    "team": "BYU",
+    "games_played": 27,
+    "mpg": 9.6,
+    "ppg": 2.0,
+    "rpg": 0.9,
+    "apg": 0.3,
+    "espn_id": "5176299"
+  },
+  {
+    "player": "Dominique Diomande",
+    "team": "BYU",
+    "games_played": 23,
+    "mpg": 7.1,
+    "ppg": 2.0,
+    "rpg": 1.3,
+    "apg": 0.1,
+    "espn_id": "5262996"
+  },
+  {
+    "player": "Abdullah Ahmed",
+    "team": "BYU",
+    "games_played": 19,
+    "mpg": 12.4,
+    "ppg": 1.3,
+    "rpg": 2.8,
+    "apg": 0.4,
+    "espn_id": "5183975"
+  },
+  {
+    "player": "Xavion Staton",
+    "team": "BYU",
+    "games_played": 9,
+    "mpg": 4.9,
+    "ppg": 0.6,
+    "rpg": 0.4,
+    "apg": 0.3,
+    "espn_id": "5143304"
+  },
+  {
+    "player": "Jared McGregor",
+    "team": "BYU",
+    "games_played": 7,
+    "mpg": 1.1,
+    "ppg": 0.0,
+    "rpg": 0.3,
+    "apg": 0.3,
+    "espn_id": "5105466"
+  }
+]

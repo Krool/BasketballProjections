@@ -1,0 +1,122 @@
+[
+  {
+    "player": "Rob Lee Jr.",
+    "team": "Kennesaw St.",
+    "games_played": 31,
+    "mpg": 28.2,
+    "ppg": 16.0,
+    "rpg": 3.2,
+    "apg": 2.0,
+    "espn_id": "5313558"
+  },
+  {
+    "player": "Braden East",
+    "team": "Kennesaw St.",
+    "games_played": 30,
+    "mpg": 24.0,
+    "ppg": 12.8,
+    "rpg": 9.1,
+    "apg": 0.7,
+    "espn_id": "5242573"
+  },
+  {
+    "player": "Andrew Holifield",
+    "team": "Kennesaw St.",
+    "games_played": 31,
+    "mpg": 28.6,
+    "ppg": 11.7,
+    "rpg": 4.6,
+    "apg": 1.5,
+    "espn_id": "5116468"
+  },
+  {
+    "player": "Cody Pennebaker",
+    "team": "Kennesaw St.",
+    "games_played": 31,
+    "mpg": 27.5,
+    "ppg": 7.1,
+    "rpg": 4.3,
+    "apg": 2.5,
+    "espn_id": "5108080"
+  },
+  {
+    "player": "King-Njhsanni Wilhite",
+    "team": "Kennesaw St.",
+    "games_played": 29,
+    "mpg": 21.0,
+    "ppg": 5.8,
+    "rpg": 1.1,
+    "apg": 2.5,
+    "espn_id": "5313554"
+  },
+  {
+    "player": "Errol White",
+    "team": "Kennesaw St.",
+    "games_played": 31,
+    "mpg": 22.3,
+    "ppg": 5.0,
+    "rpg": 4.9,
+    "apg": 1.2,
+    "espn_id": "5176637"
+  },
+  {
+    "player": "Eian Lowe",
+    "team": "Kennesaw St.",
+    "games_played": 30,
+    "mpg": 17.9,
+    "ppg": 4.3,
+    "rpg": 1.5,
+    "apg": 2.5,
+    "espn_id": "5313555"
+  },
+  {
+    "player": "Jayden Gambrell",
+    "team": "Kennesaw St.",
+    "games_played": 30,
+    "mpg": 11.2,
+    "ppg": 4.0,
+    "rpg": 0.8,
+    "apg": 0.4,
+    "espn_id": "5242574"
+  },
+  {
+    "player": "Jayden Barrs",
+    "team": "Kennesaw St.",
+    "games_played": 7,
+    "mpg": 11.7,
+    "ppg": 3.1,
+    "rpg": 1.3,
+    "apg": 1.1,
+    "espn_id": "5176636"
+  },
+  {
+    "player": "B.B. Knight",
+    "team": "Kennesaw St.",
+    "games_played": 20,
+    "mpg": 8.1,
+    "ppg": 2.7,
+    "rpg": 0.6,
+    "apg": 0.4,
+    "espn_id": "5106641"
+  },
+  {
+    "player": "Janko Bulajic",
+    "team": "Kennesaw St.",
+    "games_played": 31,
+    "mpg": 11.7,
+    "ppg": 1.5,
+    "rpg": 3.1,
+    "apg": 0.9,
+    "espn_id": "5123799"
+  },
+  {
+    "player": "Spencer Ezewiro",
+    "team": "Kennesaw St.",
+    "games_played": 20,
+    "mpg": 5.6,
+    "ppg": 0.5,
+    "rpg": 1.7,
+    "apg": 0.3,
+    "espn_id": "5313557"
+  }
+]

@@ -1,0 +1,142 @@
+[
+  {
+    "player": "Brayden Burries",
+    "team": "Arizona",
+    "games_played": 34,
+    "mpg": 29.5,
+    "ppg": 15.9,
+    "rpg": 4.7,
+    "apg": 2.5,
+    "espn_id": "5082206"
+  },
+  {
+    "player": "Koa Peat",
+    "team": "Arizona",
+    "games_played": 31,
+    "mpg": 27.3,
+    "ppg": 13.6,
+    "rpg": 5.3,
+    "apg": 2.7,
+    "espn_id": "5041953"
+  },
+  {
+    "player": "Jaden Bradley",
+    "team": "Arizona",
+    "games_played": 34,
+    "mpg": 30.4,
+    "ppg": 13.3,
+    "rpg": 3.6,
+    "apg": 4.5,
+    "espn_id": "4432737"
+  },
+  {
+    "player": "Motiejus Krivas",
+    "team": "Arizona",
+    "games_played": 34,
+    "mpg": 24.9,
+    "ppg": 10.5,
+    "rpg": 8.1,
+    "apg": 1.0,
+    "espn_id": "5174954"
+  },
+  {
+    "player": "Ivan Kharchenkov",
+    "team": "Arizona",
+    "games_played": 34,
+    "mpg": 27.7,
+    "ppg": 10.1,
+    "rpg": 4.1,
+    "apg": 2.3,
+    "espn_id": "5311896"
+  },
+  {
+    "player": "Tobe Awaka",
+    "team": "Arizona",
+    "games_played": 34,
+    "mpg": 21.4,
+    "ppg": 9.4,
+    "rpg": 9.5,
+    "apg": 0.8,
+    "espn_id": "5105555"
+  },
+  {
+    "player": "Anthony Dell'Orso",
+    "team": "Arizona",
+    "games_played": 34,
+    "mpg": 21.8,
+    "ppg": 9.0,
+    "rpg": 2.1,
+    "apg": 2.0,
+    "espn_id": "5108141"
+  },
+  {
+    "player": "Dwayne Aristode",
+    "team": "Arizona",
+    "games_played": 30,
+    "mpg": 14.3,
+    "ppg": 4.1,
+    "rpg": 1.8,
+    "apg": 0.8,
+    "espn_id": "5186456"
+  },
+  {
+    "player": "Sidi Gueye",
+    "team": "Arizona",
+    "games_played": 24,
+    "mpg": 3.4,
+    "ppg": 1.2,
+    "rpg": 0.7,
+    "apg": 0.2,
+    "espn_id": "5311897"
+  },
+  {
+    "player": "Evan Nelson",
+    "team": "Arizona",
+    "games_played": 22,
+    "mpg": 3.5,
+    "ppg": 0.6,
+    "rpg": 0.5,
+    "apg": 0.3,
+    "espn_id": "4702960"
+  },
+  {
+    "player": "Sven Djopmo",
+    "team": "Arizona",
+    "games_played": 17,
+    "mpg": 1.8,
+    "ppg": 0.6,
+    "rpg": 0.2,
+    "apg": 0.2,
+    "espn_id": "5239487"
+  },
+  {
+    "player": "Jackson Francois",
+    "team": "Arizona",
+    "games_played": 8,
+    "mpg": 1.4,
+    "ppg": 0.5,
+    "rpg": 0.5,
+    "apg": 0.0,
+    "espn_id": "5105542"
+  },
+  {
+    "player": "Addison Arnold",
+    "team": "Arizona",
+    "games_played": 18,
+    "mpg": 2.2,
+    "ppg": 0.3,
+    "rpg": 0.4,
+    "apg": 0.2,
+    "espn_id": "4896359"
+  },
+  {
+    "player": "Jackson Cook",
+    "team": "Arizona",
+    "games_played": 8,
+    "mpg": 1.4,
+    "ppg": 0.0,
+    "rpg": 0.1,
+    "apg": 0.0,
+    "espn_id": "5174956"
+  }
+]

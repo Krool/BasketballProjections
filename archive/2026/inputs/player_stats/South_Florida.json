@@ -1,0 +1,142 @@
+[
+  {
+    "player": "Wes Enis",
+    "team": "South Florida",
+    "games_played": 31,
+    "mpg": 34.1,
+    "ppg": 16.8,
+    "rpg": 3.6,
+    "apg": 2.5,
+    "espn_id": "5313560"
+  },
+  {
+    "player": "Izaiyah Nelson",
+    "team": "South Florida",
+    "games_played": 33,
+    "mpg": 27.1,
+    "ppg": 15.7,
+    "rpg": 9.6,
+    "apg": 1.2,
+    "espn_id": "5107251"
+  },
+  {
+    "player": "Joseph Pinion",
+    "team": "South Florida",
+    "games_played": 33,
+    "mpg": 29.9,
+    "ppg": 14.2,
+    "rpg": 3.8,
+    "apg": 2.3,
+    "espn_id": "4699760"
+  },
+  {
+    "player": "Josh Omojafo",
+    "team": "South Florida",
+    "games_played": 33,
+    "mpg": 27.3,
+    "ppg": 11.5,
+    "rpg": 5.3,
+    "apg": 1.8,
+    "espn_id": "5241690"
+  },
+  {
+    "player": "CJ Brown",
+    "team": "South Florida",
+    "games_played": 33,
+    "mpg": 26.9,
+    "ppg": 11.1,
+    "rpg": 3.9,
+    "apg": 4.8,
+    "espn_id": "5183925"
+  },
+  {
+    "player": "Isaiah Jones",
+    "team": "South Florida",
+    "games_played": 33,
+    "mpg": 15.5,
+    "ppg": 4.5,
+    "rpg": 2.9,
+    "apg": 0.5,
+    "espn_id": "4067423"
+  },
+  {
+    "player": "Daimion Collins",
+    "team": "South Florida",
+    "games_played": 32,
+    "mpg": 14.4,
+    "ppg": 4.2,
+    "rpg": 3.2,
+    "apg": 0.4,
+    "espn_id": "4611412"
+  },
+  {
+    "player": "Gavin Hightower",
+    "team": "South Florida",
+    "games_played": 25,
+    "mpg": 9.6,
+    "ppg": 3.8,
+    "rpg": 1.6,
+    "apg": 1.7,
+    "espn_id": "5101765"
+  },
+  {
+    "player": "Adriel Nyorha",
+    "team": "South Florida",
+    "games_played": 26,
+    "mpg": 10.9,
+    "ppg": 3.7,
+    "rpg": 1.7,
+    "apg": 2.0,
+    "espn_id": "5313563"
+  },
+  {
+    "player": "Devin Haid",
+    "team": "South Florida",
+    "games_played": 23,
+    "mpg": 10.0,
+    "ppg": 3.3,
+    "rpg": 2.0,
+    "apg": 0.8,
+    "espn_id": "5241694"
+  },
+  {
+    "player": "Caleb Sanders",
+    "team": "South Florida",
+    "games_played": 11,
+    "mpg": 7.5,
+    "ppg": 2.8,
+    "rpg": 1.5,
+    "apg": 0.7,
+    "espn_id": "5313561"
+  },
+  {
+    "player": "Xavier Brown",
+    "team": "South Florida",
+    "games_played": 3,
+    "mpg": 12.3,
+    "ppg": 2.7,
+    "rpg": 0.7,
+    "apg": 1.7,
+    "espn_id": "5107222"
+  },
+  {
+    "player": "Tristan Beckford",
+    "team": "South Florida",
+    "games_played": 21,
+    "mpg": 7.2,
+    "ppg": 2.6,
+    "rpg": 1.7,
+    "apg": 0.3,
+    "espn_id": "5313562"
+  },
+  {
+    "player": "Onyx Nnani",
+    "team": "South Florida",
+    "games_played": 1,
+    "mpg": 1.0,
+    "ppg": 0.0,
+    "rpg": 1.0,
+    "apg": 0.0,
+    "espn_id": "5196957"
+  }
+]

@@ -1,0 +1,142 @@
+[
+  {
+    "player": "Nasir Mann",
+    "team": "Queens",
+    "games_played": 34,
+    "mpg": 30.4,
+    "ppg": 13.4,
+    "rpg": 5.8,
+    "apg": 2.7,
+    "espn_id": "5176643"
+  },
+  {
+    "player": "Yoav Berman",
+    "team": "Queens",
+    "games_played": 34,
+    "mpg": 29.3,
+    "ppg": 12.6,
+    "rpg": 3.9,
+    "apg": 3.7,
+    "espn_id": "5240006"
+  },
+  {
+    "player": "Jordan Watford",
+    "team": "Queens",
+    "games_played": 34,
+    "mpg": 20.6,
+    "ppg": 11.9,
+    "rpg": 2.6,
+    "apg": 3.8,
+    "espn_id": "5144110"
+  },
+  {
+    "player": "Chris Ashby",
+    "team": "Queens",
+    "games_played": 34,
+    "mpg": 30.6,
+    "ppg": 11.7,
+    "rpg": 2.0,
+    "apg": 1.5,
+    "espn_id": "5107088"
+  },
+  {
+    "player": "Avantae Parker",
+    "team": "Queens",
+    "games_played": 34,
+    "mpg": 22.1,
+    "ppg": 11.3,
+    "rpg": 5.3,
+    "apg": 1.1,
+    "espn_id": "5176801"
+  },
+  {
+    "player": "Carson Schwieger",
+    "team": "Queens",
+    "games_played": 33,
+    "mpg": 24.5,
+    "ppg": 10.2,
+    "rpg": 3.2,
+    "apg": 0.8,
+    "espn_id": "5177217"
+  },
+  {
+    "player": "Maban Jabriel",
+    "team": "Queens",
+    "games_played": 34,
+    "mpg": 19.8,
+    "ppg": 7.6,
+    "rpg": 3.8,
+    "apg": 1.0,
+    "espn_id": "5240005"
+  },
+  {
+    "player": "Gus Larson",
+    "team": "Queens",
+    "games_played": 34,
+    "mpg": 11.8,
+    "ppg": 3.1,
+    "rpg": 2.1,
+    "apg": 0.6,
+    "espn_id": "4898223"
+  },
+  {
+    "player": "Isaiah Henry",
+    "team": "Queens",
+    "games_played": 25,
+    "mpg": 8.0,
+    "ppg": 2.9,
+    "rpg": 1.7,
+    "apg": 0.4,
+    "espn_id": "5196932"
+  },
+  {
+    "player": "Kam Clark",
+    "team": "Queens",
+    "games_played": 26,
+    "mpg": 7.2,
+    "ppg": 1.7,
+    "rpg": 1.0,
+    "apg": 0.3,
+    "espn_id": "5314491"
+  },
+  {
+    "player": "Reid Celestin",
+    "team": "Queens",
+    "games_played": 16,
+    "mpg": 2.5,
+    "ppg": 0.2,
+    "rpg": 0.6,
+    "apg": 0.2,
+    "espn_id": "5314490"
+  },
+  {
+    "player": "Jacob Brandly",
+    "team": "Queens",
+    "games_played": 1,
+    "mpg": 1.0,
+    "ppg": 0.0,
+    "rpg": 0.0,
+    "apg": 0.0,
+    "espn_id": "5240007"
+  },
+  {
+    "player": "Colby Christiansen",
+    "team": "Queens",
+    "games_played": 1,
+    "mpg": 0.0,
+    "ppg": 0.0,
+    "rpg": 0.0,
+    "apg": 0.0,
+    "espn_id": "5240008"
+  },
+  {
+    "player": "Tyler Crider",
+    "team": "Queens",
+    "games_played": 9,
+    "mpg": 1.0,
+    "ppg": 0.0,
+    "rpg": 0.0,
+    "apg": 0.1,
+    "espn_id": "5314493"
+  }
+]

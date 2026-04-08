@@ -1,0 +1,122 @@
+[
+  {
+    "player": "MJ Collins Jr.",
+    "team": "Utah St.",
+    "games_played": 34,
+    "mpg": 30.4,
+    "ppg": 17.6,
+    "rpg": 2.4,
+    "apg": 1.6,
+    "espn_id": "5105401"
+  },
+  {
+    "player": "Mason Falslev",
+    "team": "Utah St.",
+    "games_played": 34,
+    "mpg": 31.9,
+    "ppg": 16.1,
+    "rpg": 5.8,
+    "apg": 3.1,
+    "espn_id": "5107864"
+  },
+  {
+    "player": "Karson Templin",
+    "team": "Utah St.",
+    "games_played": 34,
+    "mpg": 18.7,
+    "ppg": 9.1,
+    "rpg": 4.2,
+    "apg": 0.8,
+    "espn_id": "5176273"
+  },
+  {
+    "player": "Drake Allen",
+    "team": "Utah St.",
+    "games_played": 33,
+    "mpg": 25.2,
+    "ppg": 7.7,
+    "rpg": 3.0,
+    "apg": 4.7,
+    "espn_id": "5105494"
+  },
+  {
+    "player": "Kolby King",
+    "team": "Utah St.",
+    "games_played": 34,
+    "mpg": 19.7,
+    "ppg": 7.6,
+    "rpg": 3.4,
+    "apg": 1.5,
+    "espn_id": "5105604"
+  },
+  {
+    "player": "Garry Clark",
+    "team": "Utah St.",
+    "games_played": 34,
+    "mpg": 16.5,
+    "ppg": 6.8,
+    "rpg": 4.3,
+    "apg": 0.6,
+    "espn_id": "5108973"
+  },
+  {
+    "player": "Adlan Elamin",
+    "team": "Utah St.",
+    "games_played": 33,
+    "mpg": 19.0,
+    "ppg": 6.5,
+    "rpg": 3.0,
+    "apg": 0.8,
+    "espn_id": "5195079"
+  },
+  {
+    "player": "Elijah Perryman",
+    "team": "Utah St.",
+    "games_played": 34,
+    "mpg": 14.2,
+    "ppg": 4.6,
+    "rpg": 1.6,
+    "apg": 3.1,
+    "espn_id": "5255260"
+  },
+  {
+    "player": "Zach Keller",
+    "team": "Utah St.",
+    "games_played": 33,
+    "mpg": 13.8,
+    "ppg": 3.5,
+    "rpg": 2.1,
+    "apg": 0.5,
+    "espn_id": "4896363"
+  },
+  {
+    "player": "Tucker Anderson",
+    "team": "Utah St.",
+    "games_played": 25,
+    "mpg": 11.6,
+    "ppg": 3.4,
+    "rpg": 1.2,
+    "apg": 0.7,
+    "espn_id": "5175860"
+  },
+  {
+    "player": "Luke Kearney",
+    "team": "Utah St.",
+    "games_played": 12,
+    "mpg": 4.0,
+    "ppg": 1.7,
+    "rpg": 0.4,
+    "apg": 0.3,
+    "espn_id": "5182081"
+  },
+  {
+    "player": "Jordy Barnes",
+    "team": "Utah St.",
+    "games_played": 17,
+    "mpg": 5.5,
+    "ppg": 0.9,
+    "rpg": 0.6,
+    "apg": 0.7,
+    "espn_id": "5241264"
+  }
+]

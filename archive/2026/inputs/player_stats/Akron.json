@@ -1,0 +1,132 @@
+[
+  {
+    "player": "Tavari Johnson",
+    "team": "Akron",
+    "games_played": 34,
+    "mpg": 32.0,
+    "ppg": 20.1,
+    "rpg": 3.0,
+    "apg": 5.0,
+    "espn_id": "5108059"
+  },
+  {
+    "player": "Amani Lyles",
+    "team": "Akron",
+    "games_played": 34,
+    "mpg": 26.2,
+    "ppg": 14.6,
+    "rpg": 8.0,
+    "apg": 2.2,
+    "espn_id": "5108060"
+  },
+  {
+    "player": "Shammah Scott",
+    "team": "Akron",
+    "games_played": 34,
+    "mpg": 26.5,
+    "ppg": 12.7,
+    "rpg": 2.6,
+    "apg": 2.9,
+    "espn_id": "5106652"
+  },
+  {
+    "player": "Evan Mahaffey",
+    "team": "Akron",
+    "games_played": 34,
+    "mpg": 28.4,
+    "ppg": 10.2,
+    "rpg": 5.6,
+    "apg": 3.5,
+    "espn_id": "5105847"
+  },
+  {
+    "player": "Bowen Hardman",
+    "team": "Akron",
+    "games_played": 34,
+    "mpg": 18.3,
+    "ppg": 7.9,
+    "rpg": 1.6,
+    "apg": 0.2,
+    "espn_id": "5105840"
+  },
+  {
+    "player": "Eric Mahaffey",
+    "team": "Akron",
+    "games_played": 33,
+    "mpg": 22.1,
+    "ppg": 7.8,
+    "rpg": 5.7,
+    "apg": 1.6,
+    "espn_id": "5241471"
+  },
+  {
+    "player": "Sharron Young",
+    "team": "Akron",
+    "games_played": 33,
+    "mpg": 19.1,
+    "ppg": 7.3,
+    "rpg": 2.7,
+    "apg": 1.6,
+    "espn_id": "5241470"
+  },
+  {
+    "player": "Chabi Barre",
+    "team": "Akron",
+    "games_played": 17,
+    "mpg": 6.8,
+    "ppg": 3.3,
+    "rpg": 2.1,
+    "apg": 0.1,
+    "espn_id": "5105882"
+  },
+  {
+    "player": "Zach Halligan",
+    "team": "Akron",
+    "games_played": 33,
+    "mpg": 11.7,
+    "ppg": 2.7,
+    "rpg": 2.2,
+    "apg": 0.7,
+    "espn_id": "5176138"
+  },
+  {
+    "player": "Ognjen Stankovic",
+    "team": "Akron",
+    "games_played": 17,
+    "mpg": 6.9,
+    "ppg": 2.4,
+    "rpg": 1.8,
+    "apg": 0.5,
+    "espn_id": "5314282"
+  },
+  {
+    "player": "Marvin Musiime-Kamali",
+    "team": "Akron",
+    "games_played": 34,
+    "mpg": 8.9,
+    "ppg": 2.1,
+    "rpg": 2.0,
+    "apg": 0.5,
+    "espn_id": "5176139"
+  },
+  {
+    "player": "Rich Brisco",
+    "team": "Akron",
+    "games_played": 9,
+    "mpg": 2.7,
+    "ppg": 1.1,
+    "rpg": 0.8,
+    "apg": 0.0,
+    "espn_id": "5241469"
+  },
+  {
+    "player": "Conner Groce",
+    "team": "Akron",
+    "games_played": 12,
+    "mpg": 2.2,
+    "ppg": 0.9,
+    "rpg": 0.1,
+    "apg": 0.1,
+    "espn_id": "5241472"
+  }
+]

@@ -1,0 +1,142 @@
+[
+  {
+    "player": "Thijs De Ridder",
+    "team": "Virginia",
+    "games_played": 34,
+    "mpg": 27.6,
+    "ppg": 15.5,
+    "rpg": 6.2,
+    "apg": 1.6,
+    "espn_id": "5311846"
+  },
+  {
+    "player": "Malik Thomas",
+    "team": "Virginia",
+    "games_played": 34,
+    "mpg": 22.9,
+    "ppg": 12.4,
+    "rpg": 3.9,
+    "apg": 1.6,
+    "espn_id": "4683758"
+  },
+  {
+    "player": "Sam Lewis",
+    "team": "Virginia",
+    "games_played": 34,
+    "mpg": 25.4,
+    "ppg": 10.8,
+    "rpg": 3.6,
+    "apg": 1.4,
+    "espn_id": "5176232"
+  },
+  {
+    "player": "Chance Mallory",
+    "team": "Virginia",
+    "games_played": 34,
+    "mpg": 24.1,
+    "ppg": 9.5,
+    "rpg": 3.7,
+    "apg": 3.6,
+    "espn_id": "5150404"
+  },
+  {
+    "player": "Jacari White",
+    "team": "Virginia",
+    "games_played": 29,
+    "mpg": 17.3,
+    "ppg": 8.8,
+    "rpg": 2.3,
+    "apg": 1.2,
+    "espn_id": "5107274"
+  },
+  {
+    "player": "Johann Grunloh",
+    "team": "Virginia",
+    "games_played": 34,
+    "mpg": 21.1,
+    "ppg": 7.2,
+    "rpg": 5.2,
+    "apg": 0.7,
+    "espn_id": "5311844"
+  },
+  {
+    "player": "Ugonna Onyenso",
+    "team": "Virginia",
+    "games_played": 34,
+    "mpg": 18.6,
+    "ppg": 6.7,
+    "rpg": 5.0,
+    "apg": 0.6,
+    "espn_id": "5037878"
+  },
+  {
+    "player": "Dallin Hall",
+    "team": "Virginia",
+    "games_played": 34,
+    "mpg": 28.4,
+    "ppg": 5.9,
+    "rpg": 3.6,
+    "apg": 4.3,
+    "espn_id": "5105464"
+  },
+  {
+    "player": "Devin Tillis",
+    "team": "Virginia",
+    "games_played": 29,
+    "mpg": 16.3,
+    "ppg": 4.3,
+    "rpg": 2.8,
+    "apg": 1.4,
+    "espn_id": "4703393"
+  },
+  {
+    "player": "Elijah Gertrude",
+    "team": "Virginia",
+    "games_played": 17,
+    "mpg": 6.2,
+    "ppg": 1.7,
+    "rpg": 0.8,
+    "apg": 0.6,
+    "espn_id": "5080790"
+  },
+  {
+    "player": "Martin Carrere",
+    "team": "Virginia",
+    "games_played": 16,
+    "mpg": 3.9,
+    "ppg": 0.8,
+    "rpg": 0.5,
+    "apg": 0.3,
+    "espn_id": "5239714"
+  },
+  {
+    "player": "Carter Lang",
+    "team": "Virginia",
+    "games_played": 12,
+    "mpg": 2.2,
+    "ppg": 0.4,
+    "rpg": 0.5,
+    "apg": 0.3,
+    "espn_id": "4894460"
+  },
+  {
+    "player": "Owen Odom",
+    "team": "Virginia",
+    "games_played": 11,
+    "mpg": 1.0,
+    "ppg": 0.4,
+    "rpg": 0.2,
+    "apg": 0.0,
+    "espn_id": "5311845"
+  },
+  {
+    "player": "Desmond Roberts",
+    "team": "Virginia",
+    "games_played": 13,
+    "mpg": 1.2,
+    "ppg": 0.0,
+    "rpg": 0.4,
+    "apg": 0.0,
+    "espn_id": "5174572"
+  }
+]

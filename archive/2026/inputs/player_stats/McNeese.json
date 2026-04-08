@@ -1,0 +1,112 @@
+[
+  {
+    "player": "Larry Johnson",
+    "team": "McNeese",
+    "games_played": 33,
+    "mpg": 25.2,
+    "ppg": 17.5,
+    "rpg": 5.5,
+    "apg": 1.4,
+    "espn_id": "5144375"
+  },
+  {
+    "player": "Tyshawn Archie",
+    "team": "McNeese",
+    "games_played": 33,
+    "mpg": 25.5,
+    "ppg": 14.3,
+    "rpg": 1.9,
+    "apg": 2.9,
+    "espn_id": "5175726"
+  },
+  {
+    "player": "Javohn Garcia",
+    "team": "McNeese",
+    "games_played": 29,
+    "mpg": 29.4,
+    "ppg": 12.0,
+    "rpg": 3.1,
+    "apg": 1.6,
+    "espn_id": "4701125"
+  },
+  {
+    "player": "DJ Richards Jr.",
+    "team": "McNeese",
+    "games_played": 33,
+    "mpg": 22.1,
+    "ppg": 8.3,
+    "rpg": 2.0,
+    "apg": 0.7,
+    "espn_id": "5106843"
+  },
+  {
+    "player": "Garwey Dual",
+    "team": "McNeese",
+    "games_played": 33,
+    "mpg": 26.3,
+    "ppg": 8.2,
+    "rpg": 2.8,
+    "apg": 4.3,
+    "espn_id": "5077373"
+  },
+  {
+    "player": "Jerrell Colbert",
+    "team": "McNeese",
+    "games_played": 33,
+    "mpg": 19.4,
+    "ppg": 5.8,
+    "rpg": 4.0,
+    "apg": 0.5,
+    "espn_id": "4433273"
+  },
+  {
+    "player": "Jacolb Fredson-Cole",
+    "team": "McNeese",
+    "games_played": 33,
+    "mpg": 18.9,
+    "ppg": 5.5,
+    "rpg": 4.1,
+    "apg": 1.5,
+    "espn_id": "5238222"
+  },
+  {
+    "player": "Carl Cherenfant",
+    "team": "McNeese",
+    "games_played": 32,
+    "mpg": 16.8,
+    "ppg": 4.3,
+    "rpg": 3.1,
+    "apg": 0.9,
+    "espn_id": "4711271"
+  },
+  {
+    "player": "Peitok Machar",
+    "team": "McNeese",
+    "games_played": 33,
+    "mpg": 12.7,
+    "ppg": 3.6,
+    "rpg": 3.2,
+    "apg": 0.1,
+    "espn_id": "5313569"
+  },
+  {
+    "player": "Yanis Ndjonga",
+    "team": "McNeese",
+    "games_played": 27,
+    "mpg": 10.7,
+    "ppg": 2.5,
+    "rpg": 3.5,
+    "apg": 0.1,
+    "espn_id": "5175027"
+  },
+  {
+    "player": "JJ Rembert",
+    "team": "McNeese",
+    "games_played": 8,
+    "mpg": 4.6,
+    "ppg": 0.5,
+    "rpg": 0.0,
+    "apg": 1.5,
+    "espn_id": "5186554"
+  }
+]

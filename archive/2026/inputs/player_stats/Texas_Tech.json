@@ -1,0 +1,132 @@
+[
+  {
+    "player": "JT Toppin",
+    "team": "Texas Tech",
+    "games_played": 25,
+    "mpg": 34.8,
+    "ppg": 21.8,
+    "rpg": 10.8,
+    "apg": 2.1,
+    "espn_id": "5143604"
+  },
+  {
+    "player": "Christian Anderson",
+    "team": "Texas Tech",
+    "games_played": 31,
+    "mpg": 38.4,
+    "ppg": 18.9,
+    "rpg": 3.6,
+    "apg": 7.6,
+    "espn_id": "5060701"
+  },
+  {
+    "player": "Donovan Atwell",
+    "team": "Texas Tech",
+    "games_played": 32,
+    "mpg": 34.7,
+    "ppg": 13.5,
+    "rpg": 3.3,
+    "apg": 0.8,
+    "espn_id": "5107355"
+  },
+  {
+    "player": "LeJuan Watts",
+    "team": "Texas Tech",
+    "games_played": 31,
+    "mpg": 27.5,
+    "ppg": 11.5,
+    "rpg": 6.0,
+    "apg": 2.5,
+    "espn_id": "5107312"
+  },
+  {
+    "player": "Jaylen Petty",
+    "team": "Texas Tech",
+    "games_played": 31,
+    "mpg": 30.0,
+    "ppg": 9.5,
+    "rpg": 3.9,
+    "apg": 2.2,
+    "espn_id": "5221321"
+  },
+  {
+    "player": "Luke Bamgboye",
+    "team": "Texas Tech",
+    "games_played": 19,
+    "mpg": 16.5,
+    "ppg": 4.7,
+    "rpg": 3.3,
+    "apg": 0.5,
+    "espn_id": "5061581"
+  },
+  {
+    "player": "Josiah Moseley",
+    "team": "Texas Tech",
+    "games_played": 12,
+    "mpg": 12.8,
+    "ppg": 4.6,
+    "rpg": 3.7,
+    "apg": 0.5,
+    "espn_id": "5152656"
+  },
+  {
+    "player": "Tyeree Bryan",
+    "team": "Texas Tech",
+    "games_played": 31,
+    "mpg": 17.5,
+    "ppg": 3.7,
+    "rpg": 2.6,
+    "apg": 0.6,
+    "espn_id": "5108120"
+  },
+  {
+    "player": "Leon Horner",
+    "team": "Texas Tech",
+    "games_played": 22,
+    "mpg": 8.3,
+    "ppg": 2.4,
+    "rpg": 1.9,
+    "apg": 0.2,
+    "espn_id": "5240271"
+  },
+  {
+    "player": "Marial Akuentok",
+    "team": "Texas Tech",
+    "games_played": 13,
+    "mpg": 6.6,
+    "ppg": 1.3,
+    "rpg": 1.8,
+    "apg": 0.2,
+    "espn_id": "5311930"
+  },
+  {
+    "player": "Nolan Groves",
+    "team": "Texas Tech",
+    "games_played": 21,
+    "mpg": 6.1,
+    "ppg": 1.0,
+    "rpg": 1.2,
+    "apg": 0.2,
+    "espn_id": "5311929"
+  },
+  {
+    "player": "Jazz Henderson",
+    "team": "Texas Tech",
+    "games_played": 11,
+    "mpg": 3.9,
+    "ppg": 0.8,
+    "rpg": 0.5,
+    "apg": 0.4,
+    "espn_id": "5240270"
+  },
+  {
+    "player": "Jack Francis",
+    "team": "Texas Tech",
+    "games_played": 13,
+    "mpg": 1.2,
+    "ppg": 0.0,
+    "rpg": 0.3,
+    "apg": 0.0,
+    "espn_id": "5175077"
+  }
+]

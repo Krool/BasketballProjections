@@ -130,5 +130,449 @@
     "Virginia",
     "Wisconsin"
   ],
-  "note": "Sets derived from non-empty round columns in player_results.csv. R32 had all 32 teams represented by at least one drafted player."
+  "note": "games[] derived from bracket structure + advancement; scores not stored",
+  "games": [
+    {
+      "round": "r64",
+      "region": "East",
+      "winner": "Duke",
+      "loser": "Siena",
+      "winner_seed": 1,
+      "loser_seed": 16
+    },
+    {
+      "round": "r64",
+      "region": "East",
+      "winner": "TCU",
+      "loser": "Ohio St.",
+      "winner_seed": 9,
+      "loser_seed": 8
+    },
+    {
+      "round": "r64",
+      "region": "East",
+      "winner": "St. John's",
+      "loser": "Northern Iowa",
+      "winner_seed": 5,
+      "loser_seed": 12
+    },
+    {
+      "round": "r64",
+      "region": "East",
+      "winner": "Kansas",
+      "loser": "Cal Baptist",
+      "winner_seed": 4,
+      "loser_seed": 13
+    },
+    {
+      "round": "r64",
+      "region": "East",
+      "winner": "Louisville",
+      "loser": "South Florida",
+      "winner_seed": 6,
+      "loser_seed": 11
+    },
+    {
+      "round": "r64",
+      "region": "East",
+      "winner": "Michigan St.",
+      "loser": "North Dakota St.",
+      "winner_seed": 3,
+      "loser_seed": 14
+    },
+    {
+      "round": "r64",
+      "region": "East",
+      "winner": "UCLA",
+      "loser": "UCF",
+      "winner_seed": 7,
+      "loser_seed": 10
+    },
+    {
+      "round": "r64",
+      "region": "East",
+      "winner": "Connecticut",
+      "loser": "Furman",
+      "winner_seed": 2,
+      "loser_seed": 15
+    },
+    {
+      "round": "r64",
+      "region": "West",
+      "winner": "Arizona",
+      "loser": "LIU",
+      "winner_seed": 1,
+      "loser_seed": 16
+    },
+    {
+      "round": "r64",
+      "region": "West",
+      "winner": "Utah St.",
+      "loser": "Villanova",
+      "winner_seed": 9,
+      "loser_seed": 8
+    },
+    {
+      "round": "r64",
+      "region": "West",
+      "winner": "High Point",
+      "loser": "Wisconsin",
+      "winner_seed": 12,
+      "loser_seed": 5
+    },
+    {
+      "round": "r64",
+      "region": "West",
+      "winner": "Arkansas",
+      "loser": "Hawaii",
+      "winner_seed": 4,
+      "loser_seed": 13
+    },
+    {
+      "round": "r64",
+      "region": "West",
+      "winner": "Texas",
+      "loser": "BYU",
+      "winner_seed": 11,
+      "loser_seed": 6
+    },
+    {
+      "round": "r64",
+      "region": "West",
+      "winner": "Gonzaga",
+      "loser": "Kennesaw St.",
+      "winner_seed": 3,
+      "loser_seed": 14
+    },
+    {
+      "round": "r64",
+      "region": "West",
+      "winner": "Miami FL",
+      "loser": "Missouri",
+      "winner_seed": 7,
+      "loser_seed": 10
+    },
+    {
+      "round": "r64",
+      "region": "West",
+      "winner": "Purdue",
+      "loser": "Queens",
+      "winner_seed": 2,
+      "loser_seed": 15
+    },
+    {
+      "round": "r64",
+      "region": "Midwest",
+      "winner": "Michigan",
+      "loser": "Howard",
+      "winner_seed": 1,
+      "loser_seed": 16
+    },
+    {
+      "round": "r64",
+      "region": "Midwest",
+      "winner": "Saint Louis",
+      "loser": "Georgia",
+      "winner_seed": 9,
+      "loser_seed": 8
+    },
+    {
+      "round": "r64",
+      "region": "Midwest",
+      "winner": "Texas Tech",
+      "loser": "Akron",
+      "winner_seed": 5,
+      "loser_seed": 12
+    },
+    {
+      "round": "r64",
+      "region": "Midwest",
+      "winner": "Alabama",
+      "loser": "Hofstra",
+      "winner_seed": 4,
+      "loser_seed": 13
+    },
+    {
+      "round": "r64",
+      "region": "Midwest",
+      "winner": "Tennessee",
+      "loser": "Miami OH",
+      "winner_seed": 6,
+      "loser_seed": 11
+    },
+    {
+      "round": "r64",
+      "region": "Midwest",
+      "winner": "Virginia",
+      "loser": "Wright St.",
+      "winner_seed": 3,
+      "loser_seed": 14
+    },
+    {
+      "round": "r64",
+      "region": "Midwest",
+      "winner": "Kentucky",
+      "loser": "Santa Clara",
+      "winner_seed": 7,
+      "loser_seed": 10
+    },
+    {
+      "round": "r64",
+      "region": "Midwest",
+      "winner": "Iowa St.",
+      "loser": "Tennessee St.",
+      "winner_seed": 2,
+      "loser_seed": 15
+    },
+    {
+      "round": "r64",
+      "region": "South",
+      "winner": "Florida",
+      "loser": "Prairie View A&M",
+      "winner_seed": 1,
+      "loser_seed": 16
+    },
+    {
+      "round": "r64",
+      "region": "South",
+      "winner": "Iowa",
+      "loser": "Clemson",
+      "winner_seed": 9,
+      "loser_seed": 8
+    },
+    {
+      "round": "r64",
+      "region": "South",
+      "winner": "Vanderbilt",
+      "loser": "McNeese",
+      "winner_seed": 5,
+      "loser_seed": 12
+    },
+    {
+      "round": "r64",
+      "region": "South",
+      "winner": "Nebraska",
+      "loser": "Troy",
+      "winner_seed": 4,
+      "loser_seed": 13
+    },
+    {
+      "round": "r64",
+      "region": "South",
+      "winner": "VCU",
+      "loser": "North Carolina",
+      "winner_seed": 11,
+      "loser_seed": 6
+    },
+    {
+      "round": "r64",
+      "region": "South",
+      "winner": "Illinois",
+      "loser": "Penn",
+      "winner_seed": 3,
+      "loser_seed": 14
+    },
+    {
+      "round": "r64",
+      "region": "South",
+      "winner": "Texas A&M",
+      "loser": "Saint Mary's",
+      "winner_seed": 10,
+      "loser_seed": 7
+    },
+    {
+      "round": "r64",
+      "region": "South",
+      "winner": "Houston",
+      "loser": "Idaho",
+      "winner_seed": 2,
+      "loser_seed": 15
+    },
+    {
+      "round": "r32",
+      "region": "East",
+      "winner": "Duke",
+      "loser": "TCU"
+    },
+    {
+      "round": "r32",
+      "region": "East",
+      "winner": "St. John's",
+      "loser": "Kansas"
+    },
+    {
+      "round": "r32",
+      "region": "East",
+      "winner": "Michigan St.",
+      "loser": "Louisville"
+    },
+    {
+      "round": "r32",
+      "region": "East",
+      "winner": "Connecticut",
+      "loser": "UCLA"
+    },
+    {
+      "round": "r32",
+      "region": "West",
+      "winner": "Arizona",
+      "loser": "Utah St."
+    },
+    {
+      "round": "r32",
+      "region": "West",
+      "winner": "Arkansas",
+      "loser": "High Point"
+    },
+    {
+      "round": "r32",
+      "region": "West",
+      "winner": "Texas",
+      "loser": "Gonzaga"
+    },
+    {
+      "round": "r32",
+      "region": "West",
+      "winner": "Purdue",
+      "loser": "Miami FL"
+    },
+    {
+      "round": "r32",
+      "region": "Midwest",
+      "winner": "Michigan",
+      "loser": "Saint Louis"
+    },
+    {
+      "round": "r32",
+      "region": "Midwest",
+      "winner": "Alabama",
+      "loser": "Texas Tech"
+    },
+    {
+      "round": "r32",
+      "region": "Midwest",
+      "winner": "Tennessee",
+      "loser": "Virginia"
+    },
+    {
+      "round": "r32",
+      "region": "Midwest",
+      "winner": "Iowa St.",
+      "loser": "Kentucky"
+    },
+    {
+      "round": "r32",
+      "region": "South",
+      "winner": "Iowa",
+      "loser": "Florida"
+    },
+    {
+      "round": "r32",
+      "region": "South",
+      "winner": "Nebraska",
+      "loser": "Vanderbilt"
+    },
+    {
+      "round": "r32",
+      "region": "South",
+      "winner": "Illinois",
+      "loser": "VCU"
+    },
+    {
+      "round": "r32",
+      "region": "South",
+      "winner": "Houston",
+      "loser": "Texas A&M"
+    },
+    {
+      "round": "s16",
+      "region": "East",
+      "winner": "Duke",
+      "loser": "St. John's"
+    },
+    {
+      "round": "s16",
+      "region": "East",
+      "winner": "Connecticut",
+      "loser": "Michigan St."
+    },
+    {
+      "round": "s16",
+      "region": "West",
+      "winner": "Arizona",
+      "loser": "Arkansas"
+    },
+    {
+      "round": "s16",
+      "region": "West",
+      "winner": "Purdue",
+      "loser": "Texas"
+    },
+    {
+      "round": "s16",
+      "region": "Midwest",
+      "winner": "Michigan",
+      "loser": "Alabama"
+    },
+    {
+      "round": "s16",
+      "region": "Midwest",
+      "winner": "Tennessee",
+      "loser": "Iowa St."
+    },
+    {
+      "round": "s16",
+      "region": "South",
+      "winner": "Iowa",
+      "loser": "Nebraska"
+    },
+    {
+      "round": "s16",
+      "region": "South",
+      "winner": "Illinois",
+      "loser": "Houston"
+    },
+    {
+      "round": "e8",
+      "region": "East",
+      "winner": "Connecticut",
+      "loser": "Duke"
+    },
+    {
+      "round": "e8",
+      "region": "West",
+      "winner": "Arizona",
+      "loser": "Purdue"
+    },
+    {
+      "round": "e8",
+      "region": "Midwest",
+      "winner": "Michigan",
+      "loser": "Tennessee"
+    },
+    {
+      "round": "e8",
+      "region": "South",
+      "winner": "Illinois",
+      "loser": "Iowa"
+    },
+    {
+      "round": "f4",
+      "region": "East/West",
+      "winner": "Connecticut",
+      "loser": "Arizona"
+    },
+    {
+      "round": "f4",
+      "region": "South/Midwest",
+      "winner": "Michigan",
+      "loser": "Illinois"
+    },
+    {
+      "round": "championship",
+      "region": "Final",
+      "winner": "Connecticut",
+      "loser": "Michigan"
+    }
+  ]
 }

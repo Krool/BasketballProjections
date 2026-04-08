@@ -1,0 +1,122 @@
+[
+  {
+    "player": "RJ Godfrey",
+    "team": "Clemson",
+    "games_played": 34,
+    "mpg": 25.1,
+    "ppg": 11.9,
+    "rpg": 5.3,
+    "apg": 1.6,
+    "espn_id": "5105449"
+  },
+  {
+    "player": "Carter Welling",
+    "team": "Clemson",
+    "games_played": 32,
+    "mpg": 20.8,
+    "ppg": 10.2,
+    "rpg": 5.4,
+    "apg": 1.1,
+    "espn_id": "5176397"
+  },
+  {
+    "player": "Jestin Porter",
+    "team": "Clemson",
+    "games_played": 34,
+    "mpg": 27.1,
+    "ppg": 9.6,
+    "rpg": 1.8,
+    "apg": 1.3,
+    "espn_id": "5106880"
+  },
+  {
+    "player": "Nick Davidson",
+    "team": "Clemson",
+    "games_played": 34,
+    "mpg": 21.7,
+    "ppg": 9.1,
+    "rpg": 4.1,
+    "apg": 1.1,
+    "espn_id": "4699440"
+  },
+  {
+    "player": "Ace Buckner",
+    "team": "Clemson",
+    "games_played": 34,
+    "mpg": 19.5,
+    "ppg": 8.4,
+    "rpg": 2.8,
+    "apg": 1.8,
+    "espn_id": "5179085"
+  },
+  {
+    "player": "Dillon Hunter",
+    "team": "Clemson",
+    "games_played": 34,
+    "mpg": 28.5,
+    "ppg": 7.5,
+    "rpg": 3.8,
+    "apg": 3.0,
+    "espn_id": "5105445"
+  },
+  {
+    "player": "Zac Foster",
+    "team": "Clemson",
+    "games_played": 12,
+    "mpg": 18.6,
+    "ppg": 6.9,
+    "rpg": 2.8,
+    "apg": 2.5,
+    "espn_id": "5237299"
+  },
+  {
+    "player": "Butta Johnson",
+    "team": "Clemson",
+    "games_played": 34,
+    "mpg": 20.7,
+    "ppg": 6.2,
+    "rpg": 2.1,
+    "apg": 1.0,
+    "espn_id": "5107144"
+  },
+  {
+    "player": "Jake Wahlin",
+    "team": "Clemson",
+    "games_played": 34,
+    "mpg": 20.6,
+    "ppg": 5.4,
+    "rpg": 3.9,
+    "apg": 0.7,
+    "espn_id": "5174977"
+  },
+  {
+    "player": "Chase Thompson",
+    "team": "Clemson",
+    "games_played": 34,
+    "mpg": 8.8,
+    "ppg": 2.3,
+    "rpg": 1.1,
+    "apg": 0.3,
+    "espn_id": "5196962"
+  },
+  {
+    "player": "Dallas Thomas",
+    "team": "Clemson",
+    "games_played": 21,
+    "mpg": 4.4,
+    "ppg": 2.2,
+    "rpg": 0.4,
+    "apg": 0.1,
+    "espn_id": "4869781"
+  },
+  {
+    "player": "Trent Steinour",
+    "team": "Clemson",
+    "games_played": 6,
+    "mpg": 2.5,
+    "ppg": 1.0,
+    "rpg": 1.2,
+    "apg": 0.0,
+    "espn_id": "5196959"
+  }
+]

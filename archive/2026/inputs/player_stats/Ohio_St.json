@@ -1,0 +1,132 @@
+[
+  {
+    "player": "Bruce Thornton",
+    "team": "Ohio St.",
+    "games_played": 33,
+    "mpg": 36.5,
+    "ppg": 20.2,
+    "rpg": 5.1,
+    "apg": 3.9,
+    "espn_id": "5105837"
+  },
+  {
+    "player": "John Mobley Jr.",
+    "team": "Ohio St.",
+    "games_played": 30,
+    "mpg": 31.4,
+    "ppg": 15.7,
+    "rpg": 2.4,
+    "apg": 2.7,
+    "espn_id": "5060708"
+  },
+  {
+    "player": "Devin Royal",
+    "team": "Ohio St.",
+    "games_played": 31,
+    "mpg": 32.3,
+    "ppg": 13.7,
+    "rpg": 5.7,
+    "apg": 1.7,
+    "espn_id": "4895776"
+  },
+  {
+    "player": "Christoph Tilly",
+    "team": "Ohio St.",
+    "games_played": 31,
+    "mpg": 25.9,
+    "ppg": 11.0,
+    "rpg": 4.7,
+    "apg": 2.2,
+    "espn_id": "5109790"
+  },
+  {
+    "player": "Amare Bynum",
+    "team": "Ohio St.",
+    "games_played": 33,
+    "mpg": 28.3,
+    "ppg": 9.7,
+    "rpg": 4.8,
+    "apg": 1.1,
+    "espn_id": "5196946"
+  },
+  {
+    "player": "Brandon Noel",
+    "team": "Ohio St.",
+    "games_played": 15,
+    "mpg": 20.0,
+    "ppg": 7.1,
+    "rpg": 3.9,
+    "apg": 0.9,
+    "espn_id": "4702994"
+  },
+  {
+    "player": "Taison Chatman",
+    "team": "Ohio St.",
+    "games_played": 27,
+    "mpg": 13.2,
+    "ppg": 4.5,
+    "rpg": 1.2,
+    "apg": 0.9,
+    "espn_id": "4685646"
+  },
+  {
+    "player": "Ivan Njegovan",
+    "team": "Ohio St.",
+    "games_played": 29,
+    "mpg": 11.8,
+    "ppg": 2.7,
+    "rpg": 3.1,
+    "apg": 0.7,
+    "espn_id": "5239599"
+  },
+  {
+    "player": "Puff Johnson",
+    "team": "Ohio St.",
+    "games_played": 9,
+    "mpg": 11.4,
+    "ppg": 2.3,
+    "rpg": 1.1,
+    "apg": 0.1,
+    "espn_id": "4701846"
+  },
+  {
+    "player": "Gabe Cupps",
+    "team": "Ohio St.",
+    "games_played": 32,
+    "mpg": 12.5,
+    "ppg": 1.6,
+    "rpg": 1.2,
+    "apg": 1.1,
+    "espn_id": "4845387"
+  },
+  {
+    "player": "Mathieu Grujicic",
+    "team": "Ohio St.",
+    "games_played": 6,
+    "mpg": 5.3,
+    "ppg": 1.0,
+    "rpg": 0.8,
+    "apg": 0.3,
+    "espn_id": "5290629"
+  },
+  {
+    "player": "Colin White",
+    "team": "Ohio St.",
+    "games_played": 29,
+    "mpg": 8.7,
+    "ppg": 0.9,
+    "rpg": 1.0,
+    "apg": 0.4,
+    "espn_id": "5101675"
+  },
+  {
+    "player": "Braylen Nash",
+    "team": "Ohio St.",
+    "games_played": 6,
+    "mpg": 1.2,
+    "ppg": 0.0,
+    "rpg": 0.0,
+    "apg": 0.2,
+    "espn_id": "5239598"
+  }
+]

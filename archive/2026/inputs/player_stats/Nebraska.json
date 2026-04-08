@@ -1,0 +1,132 @@
+[
+  {
+    "player": "Pryce Sandfort",
+    "team": "Nebraska",
+    "games_played": 32,
+    "mpg": 33.3,
+    "ppg": 17.8,
+    "rpg": 4.8,
+    "apg": 2.0,
+    "espn_id": "4858604"
+  },
+  {
+    "player": "Rienk Mast",
+    "team": "Nebraska",
+    "games_played": 31,
+    "mpg": 28.9,
+    "ppg": 13.5,
+    "rpg": 5.8,
+    "apg": 2.9,
+    "espn_id": "4592677"
+  },
+  {
+    "player": "Braden Frager",
+    "team": "Nebraska",
+    "games_played": 30,
+    "mpg": 23.3,
+    "ppg": 11.6,
+    "rpg": 3.8,
+    "apg": 0.9,
+    "espn_id": "5239571"
+  },
+  {
+    "player": "Jamarques Lawrence",
+    "team": "Nebraska",
+    "games_played": 32,
+    "mpg": 28.2,
+    "ppg": 9.7,
+    "rpg": 2.5,
+    "apg": 4.0,
+    "espn_id": "5105825"
+  },
+  {
+    "player": "Sam Hoiberg",
+    "team": "Nebraska",
+    "games_played": 32,
+    "mpg": 32.1,
+    "ppg": 9.6,
+    "rpg": 5.3,
+    "apg": 4.3,
+    "espn_id": "4897432"
+  },
+  {
+    "player": "Ugnius Jarusevicius",
+    "team": "Nebraska",
+    "games_played": 1,
+    "mpg": 11.0,
+    "ppg": 7.0,
+    "rpg": 2.0,
+    "apg": 0.0,
+    "espn_id": "5108721"
+  },
+  {
+    "player": "Berke Buyuktuncel",
+    "team": "Nebraska",
+    "games_played": 30,
+    "mpg": 24.0,
+    "ppg": 6.4,
+    "rpg": 5.4,
+    "apg": 1.9,
+    "espn_id": "5174982"
+  },
+  {
+    "player": "Connor Essegian",
+    "team": "Nebraska",
+    "games_played": 7,
+    "mpg": 14.0,
+    "ppg": 5.4,
+    "rpg": 1.3,
+    "apg": 0.9,
+    "espn_id": "5105861"
+  },
+  {
+    "player": "Cale Jacobsen",
+    "team": "Nebraska",
+    "games_played": 32,
+    "mpg": 20.3,
+    "ppg": 4.8,
+    "rpg": 2.9,
+    "apg": 1.4,
+    "espn_id": "5105827"
+  },
+  {
+    "player": "Jared Garcia",
+    "team": "Nebraska",
+    "games_played": 27,
+    "mpg": 8.5,
+    "ppg": 3.1,
+    "rpg": 2.2,
+    "apg": 0.3,
+    "espn_id": "4702740"
+  },
+  {
+    "player": "Leo Curtis",
+    "team": "Nebraska",
+    "games_played": 15,
+    "mpg": 3.9,
+    "ppg": 1.7,
+    "rpg": 0.6,
+    "apg": 0.3,
+    "espn_id": "5263670"
+  },
+  {
+    "player": "Kendall Blue",
+    "team": "Nebraska",
+    "games_played": 18,
+    "mpg": 3.6,
+    "ppg": 0.7,
+    "rpg": 0.3,
+    "apg": 0.2,
+    "espn_id": "5109018"
+  },
+  {
+    "player": "Justin Bolis",
+    "team": "Nebraska",
+    "games_played": 16,
+    "mpg": 1.4,
+    "ppg": 0.2,
+    "rpg": 0.3,
+    "apg": 0.1,
+    "espn_id": "5239573"
+  }
+]

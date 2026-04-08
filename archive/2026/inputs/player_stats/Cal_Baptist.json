@@ -1,0 +1,132 @@
+[
+  {
+    "player": "Dominique Daniels Jr.",
+    "team": "Cal Baptist",
+    "games_played": 32,
+    "mpg": 36.2,
+    "ppg": 23.2,
+    "rpg": 3.7,
+    "apg": 3.2,
+    "espn_id": "5178207"
+  },
+  {
+    "player": "Martel Williams",
+    "team": "Cal Baptist",
+    "games_played": 32,
+    "mpg": 33.0,
+    "ppg": 12.7,
+    "rpg": 4.8,
+    "apg": 1.6,
+    "espn_id": "4702158"
+  },
+  {
+    "player": "Jayden Jackson",
+    "team": "Cal Baptist",
+    "games_played": 27,
+    "mpg": 29.4,
+    "ppg": 9.3,
+    "rpg": 3.1,
+    "apg": 1.8,
+    "espn_id": "4897936"
+  },
+  {
+    "player": "Jonathan Griman",
+    "team": "Cal Baptist",
+    "games_played": 30,
+    "mpg": 22.8,
+    "ppg": 6.1,
+    "rpg": 5.9,
+    "apg": 0.4,
+    "espn_id": "5178211"
+  },
+  {
+    "player": "Devon Malcolm",
+    "team": "Cal Baptist",
+    "games_played": 32,
+    "mpg": 13.8,
+    "ppg": 5.9,
+    "rpg": 3.3,
+    "apg": 0.6,
+    "espn_id": "5241323"
+  },
+  {
+    "player": "Thomas Ndong",
+    "team": "Cal Baptist",
+    "games_played": 31,
+    "mpg": 17.6,
+    "ppg": 5.0,
+    "rpg": 6.6,
+    "apg": 0.4,
+    "espn_id": "5175014"
+  },
+  {
+    "player": "Bradey Henige",
+    "team": "Cal Baptist",
+    "games_played": 32,
+    "mpg": 20.0,
+    "ppg": 4.9,
+    "rpg": 5.5,
+    "apg": 0.5,
+    "espn_id": "5241326"
+  },
+  {
+    "player": "Jordan Muller",
+    "team": "Cal Baptist",
+    "games_played": 33,
+    "mpg": 21.1,
+    "ppg": 4.5,
+    "rpg": 1.0,
+    "apg": 1.9,
+    "espn_id": "5314832"
+  },
+  {
+    "player": "Rene D'Amelio",
+    "team": "Cal Baptist",
+    "games_played": 18,
+    "mpg": 10.6,
+    "ppg": 2.6,
+    "rpg": 3.0,
+    "apg": 0.2,
+    "espn_id": "5314831"
+  },
+  {
+    "player": "Nate Garcia",
+    "team": "Cal Baptist",
+    "games_played": 16,
+    "mpg": 6.1,
+    "ppg": 2.4,
+    "rpg": 1.1,
+    "apg": 0.1,
+    "espn_id": "5314834"
+  },
+  {
+    "player": "Miles Daniels",
+    "team": "Cal Baptist",
+    "games_played": 21,
+    "mpg": 10.4,
+    "ppg": 2.4,
+    "rpg": 1.5,
+    "apg": 0.5,
+    "espn_id": "5314830"
+  },
+  {
+    "player": "Monty Bowser",
+    "team": "Cal Baptist",
+    "games_played": 13,
+    "mpg": 8.4,
+    "ppg": 2.1,
+    "rpg": 1.4,
+    "apg": 0.2,
+    "espn_id": "4591258"
+  },
+  {
+    "player": "Jalen Dollar",
+    "team": "Cal Baptist",
+    "games_played": 10,
+    "mpg": 3.6,
+    "ppg": 1.5,
+    "rpg": 0.2,
+    "apg": 0.1,
+    "espn_id": "5241322"
+  }
+]

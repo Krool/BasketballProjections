@@ -25,16 +25,33 @@ def snapshot(year: int, notes: str = ""):
     shutil.copy(root / "output" / "projections.csv",
                 yroot / "projections_final.csv")
 
-    # Copy inputs
+    # Copy inputs (everything the projection pipeline reads)
     inputs = {
         "kenpom.csv": "kenpom.csv",
+        "kenpom_tournament.csv": "kenpom_tournament.csv",
+        "kenpom_raw.txt": "kenpom_raw.txt",
         "injuries_combined.csv": "injuries.csv",
+        "injury_overrides.csv": "injury_overrides.csv",
         "bracket.json": "bracket.json",
+        "all_player_stats.csv": "all_player_stats.csv",
     }
     for src, dst in inputs.items():
         s = root / "data" / src
         if s.exists():
             shutil.copy(s, yroot / "inputs" / dst)
+
+    # Snapshot the per-team player_stats cache (per-team JSON + recent_form)
+    cache_src = root / "data" / "player_stats"
+    if cache_src.exists():
+        cache_dst = yroot / "inputs" / "player_stats"
+        if cache_dst.exists():
+            shutil.rmtree(cache_dst)
+        shutil.copytree(cache_src, cache_dst)
+
+    # Snapshot manual scouting notes used during draft
+    insights_src = root / "docs" / "insights.json"
+    if insights_src.exists():
+        shutil.copy(insights_src, yroot / "inputs" / "insights.json")
 
     # Capture git SHA + commit message
     sha = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=root).decode().strip()

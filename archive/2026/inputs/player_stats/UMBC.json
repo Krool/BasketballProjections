@@ -1,0 +1,142 @@
+[
+  {
+    "player": "Jah'Likai King",
+    "team": "UMBC",
+    "games_played": 31,
+    "mpg": 32.1,
+    "ppg": 13.9,
+    "rpg": 3.4,
+    "apg": 1.5,
+    "espn_id": "5313186"
+  },
+  {
+    "player": "DJ Armstrong Jr.",
+    "team": "UMBC",
+    "games_played": 32,
+    "mpg": 32.3,
+    "ppg": 13.2,
+    "rpg": 2.8,
+    "apg": 2.1,
+    "espn_id": "5252505"
+  },
+  {
+    "player": "Ace Valentine",
+    "team": "UMBC",
+    "games_played": 31,
+    "mpg": 32.5,
+    "ppg": 12.0,
+    "rpg": 4.1,
+    "apg": 4.0,
+    "espn_id": "5174860"
+  },
+  {
+    "player": "Caden Diggs",
+    "team": "UMBC",
+    "games_played": 31,
+    "mpg": 22.5,
+    "ppg": 9.8,
+    "rpg": 3.6,
+    "apg": 0.9,
+    "espn_id": "5196866"
+  },
+  {
+    "player": "Josh Odunowo",
+    "team": "UMBC",
+    "games_played": 29,
+    "mpg": 23.1,
+    "ppg": 8.6,
+    "rpg": 5.2,
+    "apg": 0.9,
+    "espn_id": "4702976"
+  },
+  {
+    "player": "Jose Roberto Tanchyn",
+    "team": "UMBC",
+    "games_played": 31,
+    "mpg": 19.1,
+    "ppg": 6.5,
+    "rpg": 5.7,
+    "apg": 0.7,
+    "espn_id": "5182581"
+  },
+  {
+    "player": "Daylon Dickerson",
+    "team": "UMBC",
+    "games_played": 21,
+    "mpg": 13.9,
+    "ppg": 5.6,
+    "rpg": 3.3,
+    "apg": 1.3,
+    "espn_id": "5239816"
+  },
+  {
+    "player": "Devin Ceaser",
+    "team": "UMBC",
+    "games_played": 3,
+    "mpg": 7.7,
+    "ppg": 4.3,
+    "rpg": 1.0,
+    "apg": 0.3,
+    "espn_id": "4888718"
+  },
+  {
+    "player": "Riley Jacobs",
+    "team": "UMBC",
+    "games_played": 31,
+    "mpg": 15.6,
+    "ppg": 4.3,
+    "rpg": 3.8,
+    "apg": 0.6,
+    "espn_id": "5313189"
+  },
+  {
+    "player": "Cougar Downing",
+    "team": "UMBC",
+    "games_played": 30,
+    "mpg": 12.4,
+    "ppg": 3.7,
+    "rpg": 0.9,
+    "apg": 0.6,
+    "espn_id": "5177355"
+  },
+  {
+    "player": "Paul Greene",
+    "team": "UMBC",
+    "games_played": 19,
+    "mpg": 7.8,
+    "ppg": 2.1,
+    "rpg": 2.3,
+    "apg": 0.2,
+    "espn_id": "5313187"
+  },
+  {
+    "player": "Tim Eze",
+    "team": "UMBC",
+    "games_played": 15,
+    "mpg": 5.7,
+    "ppg": 1.8,
+    "rpg": 1.1,
+    "apg": 0.1,
+    "espn_id": "5239817"
+  },
+  {
+    "player": "Jake Stout",
+    "team": "UMBC",
+    "games_played": 10,
+    "mpg": 3.4,
+    "ppg": 1.3,
+    "rpg": 0.3,
+    "apg": 0.2,
+    "espn_id": "5239818"
+  },
+  {
+    "player": "Saahil Thakkar",
+    "team": "UMBC",
+    "games_played": 6,
+    "mpg": 1.7,
+    "ppg": 0.5,
+    "rpg": 0.2,
+    "apg": 0.0,
+    "espn_id": "5313190"
+  }
+]

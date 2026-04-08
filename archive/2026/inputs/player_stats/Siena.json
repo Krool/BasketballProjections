@@ -1,0 +1,162 @@
+[
+  {
+    "player": "Gavin Doty",
+    "team": "Siena",
+    "games_played": 34,
+    "mpg": 36.7,
+    "ppg": 17.9,
+    "rpg": 7.0,
+    "apg": 2.2,
+    "espn_id": "5242926"
+  },
+  {
+    "player": "Justice Shoats",
+    "team": "Siena",
+    "games_played": 34,
+    "mpg": 35.4,
+    "ppg": 13.2,
+    "rpg": 2.5,
+    "apg": 4.4,
+    "espn_id": "5242922"
+  },
+  {
+    "player": "Francis Folefac",
+    "team": "Siena",
+    "games_played": 34,
+    "mpg": 27.7,
+    "ppg": 11.1,
+    "rpg": 5.2,
+    "apg": 2.2,
+    "espn_id": "5314195"
+  },
+  {
+    "player": "Tasman Goodrick",
+    "team": "Siena",
+    "games_played": 9,
+    "mpg": 23.3,
+    "ppg": 9.7,
+    "rpg": 7.3,
+    "apg": 1.3,
+    "espn_id": "5178209"
+  },
+  {
+    "player": "Brendan Coyle",
+    "team": "Siena",
+    "games_played": 34,
+    "mpg": 30.3,
+    "ppg": 8.6,
+    "rpg": 4.6,
+    "apg": 1.0,
+    "espn_id": "5107811"
+  },
+  {
+    "player": "Antonio Chandler",
+    "team": "Siena",
+    "games_played": 29,
+    "mpg": 22.1,
+    "ppg": 7.3,
+    "rpg": 5.6,
+    "apg": 0.4,
+    "espn_id": "5314192"
+  },
+  {
+    "player": "Christian Jones",
+    "team": "Siena",
+    "games_played": 34,
+    "mpg": 17.5,
+    "ppg": 4.3,
+    "rpg": 0.8,
+    "apg": 1.2,
+    "espn_id": "5314193"
+  },
+  {
+    "player": "Riley Mulvey",
+    "team": "Siena",
+    "games_played": 25,
+    "mpg": 17.2,
+    "ppg": 3.8,
+    "rpg": 3.9,
+    "apg": 1.5,
+    "espn_id": "4685004"
+  },
+  {
+    "player": "Isaiah Henderson",
+    "team": "Siena",
+    "games_played": 28,
+    "mpg": 13.7,
+    "ppg": 3.8,
+    "rpg": 0.8,
+    "apg": 0.5,
+    "espn_id": "5314191"
+  },
+  {
+    "player": "Owen Schlager",
+    "team": "Siena",
+    "games_played": 5,
+    "mpg": 10.0,
+    "ppg": 2.8,
+    "rpg": 1.2,
+    "apg": 0.6,
+    "espn_id": "5314194"
+  },
+  {
+    "player": "Tajae Jones",
+    "team": "Siena",
+    "games_played": 3,
+    "mpg": 5.0,
+    "ppg": 1.3,
+    "rpg": 0.7,
+    "apg": 0.0,
+    "espn_id": "5242925"
+  },
+  {
+    "player": "Marcus Jackson",
+    "team": "Siena",
+    "games_played": 6,
+    "mpg": 7.5,
+    "ppg": 0.5,
+    "rpg": 2.0,
+    "apg": 0.7,
+    "espn_id": "5106044"
+  },
+  {
+    "player": "Chris Torres",
+    "team": "Siena",
+    "games_played": 6,
+    "mpg": 1.7,
+    "ppg": 0.3,
+    "rpg": 0.0,
+    "apg": 0.2,
+    "espn_id": "5242923"
+  },
+  {
+    "player": "Mosi Clayton",
+    "team": "Siena",
+    "games_played": 3,
+    "mpg": 2.3,
+    "ppg": 0.0,
+    "rpg": 0.0,
+    "apg": 0.0,
+    "espn_id": "5177164"
+  },
+  {
+    "player": "Cooper Nadler",
+    "team": "Siena",
+    "games_played": 2,
+    "mpg": 3.5,
+    "ppg": 0.0,
+    "rpg": 1.0,
+    "apg": 0.0,
+    "espn_id": "5242929"
+  },
+  {
+    "player": "Danny Murray",
+    "team": "Siena",
+    "games_played": 4,
+    "mpg": 1.5,
+    "ppg": 0.0,
+    "rpg": 0.0,
+    "apg": 0.0,
+    "espn_id": "5314196"
+  }
+]

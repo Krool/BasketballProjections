@@ -1,0 +1,142 @@
+[
+  {
+    "player": "Tarris Reed Jr.",
+    "team": "Connecticut",
+    "games_played": 29,
+    "mpg": 26.2,
+    "ppg": 13.7,
+    "rpg": 8.1,
+    "apg": 2.3,
+    "espn_id": "5105809"
+  },
+  {
+    "player": "Solo Ball",
+    "team": "Connecticut",
+    "games_played": 33,
+    "mpg": 29.1,
+    "ppg": 13.5,
+    "rpg": 3.3,
+    "apg": 1.6,
+    "espn_id": "4895737"
+  },
+  {
+    "player": "Alex Karaban",
+    "team": "Connecticut",
+    "games_played": 34,
+    "mpg": 33.8,
+    "ppg": 12.6,
+    "rpg": 5.2,
+    "apg": 2.3,
+    "espn_id": "4917149"
+  },
+  {
+    "player": "Braylon Mullins",
+    "team": "Connecticut",
+    "games_played": 27,
+    "mpg": 27.5,
+    "ppg": 12.0,
+    "rpg": 3.5,
+    "apg": 1.4,
+    "espn_id": "5196916"
+  },
+  {
+    "player": "Silas Demary Jr.",
+    "team": "Connecticut",
+    "games_played": 34,
+    "mpg": 29.1,
+    "ppg": 10.9,
+    "rpg": 4.5,
+    "apg": 6.2,
+    "espn_id": "5054083"
+  },
+  {
+    "player": "Eric Reibe",
+    "team": "Connecticut",
+    "games_played": 34,
+    "mpg": 15.0,
+    "ppg": 6.8,
+    "rpg": 3.8,
+    "apg": 0.5,
+    "espn_id": "5152763"
+  },
+  {
+    "player": "Jayden Ross",
+    "team": "Connecticut",
+    "games_played": 32,
+    "mpg": 16.9,
+    "ppg": 4.7,
+    "rpg": 2.4,
+    "apg": 0.8,
+    "espn_id": "4895753"
+  },
+  {
+    "player": "Jaylin Stewart",
+    "team": "Connecticut",
+    "games_played": 28,
+    "mpg": 17.7,
+    "ppg": 4.5,
+    "rpg": 2.8,
+    "apg": 1.2,
+    "espn_id": "4685647"
+  },
+  {
+    "player": "Malachi Smith",
+    "team": "Connecticut",
+    "games_played": 34,
+    "mpg": 15.0,
+    "ppg": 3.5,
+    "rpg": 1.5,
+    "apg": 2.7,
+    "espn_id": "4683861"
+  },
+  {
+    "player": "Dwayne Koroma",
+    "team": "Connecticut",
+    "games_played": 16,
+    "mpg": 5.6,
+    "ppg": 1.5,
+    "rpg": 0.9,
+    "apg": 0.2,
+    "espn_id": "4703011"
+  },
+  {
+    "player": "Alec Millender",
+    "team": "Connecticut",
+    "games_played": 16,
+    "mpg": 3.1,
+    "ppg": 0.6,
+    "rpg": 0.3,
+    "apg": 0.4,
+    "espn_id": "5241657"
+  },
+  {
+    "player": "Jacob Furphy",
+    "team": "Connecticut",
+    "games_played": 13,
+    "mpg": 2.5,
+    "ppg": 0.5,
+    "rpg": 0.1,
+    "apg": 0.0,
+    "espn_id": "5248294"
+  },
+  {
+    "player": "Uro\u0161 Paunovic",
+    "team": "Connecticut",
+    "games_played": 13,
+    "mpg": 1.0,
+    "ppg": 0.2,
+    "rpg": 0.1,
+    "apg": 0.1,
+    "espn_id": "5307570"
+  },
+  {
+    "player": "Rrezon Elezaj",
+    "team": "Connecticut",
+    "games_played": 4,
+    "mpg": 1.0,
+    "ppg": 0.0,
+    "rpg": 0.8,
+    "apg": 0.0,
+    "espn_id": "5312036"
+  }
+]

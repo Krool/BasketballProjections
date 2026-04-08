@@ -1,0 +1,152 @@
+[
+  {
+    "player": "Peter Suder",
+    "team": "Miami OH",
+    "games_played": 31,
+    "mpg": 30.9,
+    "ppg": 14.6,
+    "rpg": 4.6,
+    "apg": 4.0,
+    "espn_id": "5106674"
+  },
+  {
+    "player": "Brant Byers",
+    "team": "Miami OH",
+    "games_played": 32,
+    "mpg": 30.4,
+    "ppg": 14.2,
+    "rpg": 4.1,
+    "apg": 0.6,
+    "espn_id": "5243053"
+  },
+  {
+    "player": "Evan Ipsaro",
+    "team": "Miami OH",
+    "games_played": 12,
+    "mpg": 27.9,
+    "ppg": 13.9,
+    "rpg": 2.4,
+    "apg": 3.3,
+    "espn_id": "5176212"
+  },
+  {
+    "player": "Eian Elmer",
+    "team": "Miami OH",
+    "games_played": 32,
+    "mpg": 30.5,
+    "ppg": 12.6,
+    "rpg": 6.0,
+    "apg": 1.2,
+    "espn_id": "5093252"
+  },
+  {
+    "player": "Luke Skaljac",
+    "team": "Miami OH",
+    "games_played": 30,
+    "mpg": 28.0,
+    "ppg": 10.3,
+    "rpg": 3.0,
+    "apg": 4.7,
+    "espn_id": "5101653"
+  },
+  {
+    "player": "Antwone Woolfolk",
+    "team": "Miami OH",
+    "games_played": 31,
+    "mpg": 23.4,
+    "ppg": 10.3,
+    "rpg": 5.5,
+    "apg": 1.5,
+    "espn_id": "5105859"
+  },
+  {
+    "player": "Almar Atlason",
+    "team": "Miami OH",
+    "games_played": 32,
+    "mpg": 18.8,
+    "ppg": 10.1,
+    "rpg": 2.4,
+    "apg": 1.0,
+    "espn_id": "5176313"
+  },
+  {
+    "player": "Justin Kirby",
+    "team": "Miami OH",
+    "games_played": 19,
+    "mpg": 16.8,
+    "ppg": 6.4,
+    "rpg": 3.3,
+    "apg": 0.6,
+    "espn_id": "5313370"
+  },
+  {
+    "player": "Trey Perry",
+    "team": "Miami OH",
+    "games_played": 30,
+    "mpg": 13.1,
+    "ppg": 6.0,
+    "rpg": 1.5,
+    "apg": 1.3,
+    "espn_id": "5313368"
+  },
+  {
+    "player": "Tyler Robbins",
+    "team": "Miami OH",
+    "games_played": 27,
+    "mpg": 5.8,
+    "ppg": 3.1,
+    "rpg": 1.9,
+    "apg": 0.3,
+    "espn_id": "5313371"
+  },
+  {
+    "player": "Kyle Waltz",
+    "team": "Miami OH",
+    "games_played": 21,
+    "mpg": 7.4,
+    "ppg": 3.0,
+    "rpg": 1.3,
+    "apg": 0.6,
+    "espn_id": "5313373"
+  },
+  {
+    "player": "Brady Ganley",
+    "team": "Miami OH",
+    "games_played": 6,
+    "mpg": 2.5,
+    "ppg": 1.8,
+    "rpg": 0.5,
+    "apg": 0.3,
+    "espn_id": "5313369"
+  },
+  {
+    "player": "Eli Yofan",
+    "team": "Miami OH",
+    "games_played": 2,
+    "mpg": 7.0,
+    "ppg": 1.5,
+    "rpg": 0.0,
+    "apg": 0.5,
+    "espn_id": "5108031"
+  },
+  {
+    "player": "Ethan Wright",
+    "team": "Miami OH",
+    "games_played": 5,
+    "mpg": 2.0,
+    "ppg": 1.4,
+    "rpg": 0.8,
+    "apg": 0.0,
+    "espn_id": "5243054"
+  },
+  {
+    "player": "Jackson Kotecki",
+    "team": "Miami OH",
+    "games_played": 5,
+    "mpg": 5.8,
+    "ppg": 1.2,
+    "rpg": 1.6,
+    "apg": 0.4,
+    "espn_id": "5176215"
+  }
+]

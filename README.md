@@ -219,8 +219,9 @@ src/
   update_first_four.py      # Update bracket with play-in results
   snapshot_year.py          # Freeze data/ + output/ into archive/<year>/ before draft day
   detect_injuries.py        # Heuristic scanner for in-tournament injury candidates
-  analyze_year.py           # Post-mortem: residuals, calibration, bias, draft value
+  analyze_year.py           # Post-mortem: residuals, calibration, bias, draft value, draft efficiency
   compare_years.py          # Cross-year algorithm performance trends
+  build_archive_json.py     # Convert archive/<year>/ → docs/archive/<year>.json for the SPA
 
 archive/
   <year>/
@@ -234,13 +235,26 @@ output/
   projections.csv           # Final ranked projections
 
 docs/
-  index.html                # Draft board SPA (~93KB)
-  players.json              # Deployed projections (auto-updated by main.py)
+  index.html                # SPA — Draft Mode + History Mode + countdown landing
+  players.json              # Live projections (auto-updated by main.py)
   insights.json             # Manual scouting notes
+  archive/
+    index.json              # List of archived years
+    <year>.json             # Bundled post-mortem data for History Mode
+    <year>_players.json     # players.json-shaped file for "Re-Draft year X" feature
   sw.js                     # Service worker (network-first for data)
   manifest.json             # PWA manifest
   icon-192.png, icon-512.png
 ```
+
+## Website modes
+
+The SPA at `docs/index.html` has two modes, switchable from the header:
+
+- **📋 Draft Mode** — the live draft board (loads `players.json`). Off-season (before Selection Sunday) it shows a countdown clock instead, with buttons to view the 2026 recap or load 2026 projections into the board for a replay draft.
+- **📊 History Mode** — archive viewer for past seasons. Year selector + tabs for standings, draft replay, top performers, steals & busts, bracket, and algorithm post-mortem.
+
+The "↻ 2026" button (live draft controls) and "Re-Draft 2026" CTA (countdown view) both call `loadArchiveDraft(2026)` which swaps the players array with the archived projections so the existing draft UI works against historical data.
 
 ## Dependencies
 ```

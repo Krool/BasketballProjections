@@ -1,0 +1,142 @@
+[
+  {
+    "player": "Zuby Ejiofor",
+    "team": "St. John's",
+    "games_played": 34,
+    "mpg": 29.7,
+    "ppg": 16.3,
+    "rpg": 7.1,
+    "apg": 3.5,
+    "espn_id": "5106262"
+  },
+  {
+    "player": "Bryce Hopkins",
+    "team": "St. John's",
+    "games_played": 34,
+    "mpg": 28.5,
+    "ppg": 13.5,
+    "rpg": 6.2,
+    "apg": 2.0,
+    "espn_id": "4565698"
+  },
+  {
+    "player": "Oziyah Sellers",
+    "team": "St. John's",
+    "games_played": 34,
+    "mpg": 28.9,
+    "ppg": 10.7,
+    "rpg": 2.9,
+    "apg": 1.7,
+    "espn_id": "5105642"
+  },
+  {
+    "player": "Ian Jackson",
+    "team": "St. John's",
+    "games_played": 33,
+    "mpg": 18.5,
+    "ppg": 9.6,
+    "rpg": 2.3,
+    "apg": 1.2,
+    "espn_id": "4869770"
+  },
+  {
+    "player": "Joson Sanon",
+    "team": "St. John's",
+    "games_played": 34,
+    "mpg": 21.3,
+    "ppg": 8.3,
+    "rpg": 2.6,
+    "apg": 0.6,
+    "espn_id": "5142625"
+  },
+  {
+    "player": "Dillon Mitchell",
+    "team": "St. John's",
+    "games_played": 34,
+    "mpg": 27.7,
+    "ppg": 8.2,
+    "rpg": 7.0,
+    "apg": 3.1,
+    "espn_id": "5106283"
+  },
+  {
+    "player": "Dylan Darling",
+    "team": "St. John's",
+    "games_played": 32,
+    "mpg": 21.0,
+    "ppg": 7.0,
+    "rpg": 2.5,
+    "apg": 2.5,
+    "espn_id": "5105658"
+  },
+  {
+    "player": "Ruben Prey",
+    "team": "St. John's",
+    "games_played": 34,
+    "mpg": 10.5,
+    "ppg": 3.9,
+    "rpg": 1.9,
+    "apg": 0.9,
+    "espn_id": "5240539"
+  },
+  {
+    "player": "Lefteris Liotopoulos",
+    "team": "St. John's",
+    "games_played": 27,
+    "mpg": 8.0,
+    "ppg": 3.1,
+    "rpg": 1.0,
+    "apg": 0.4,
+    "espn_id": "5145712"
+  },
+  {
+    "player": "Sadiku Ibine Ayo",
+    "team": "St. John's",
+    "games_played": 28,
+    "mpg": 8.2,
+    "ppg": 1.9,
+    "rpg": 1.1,
+    "apg": 0.5,
+    "espn_id": "5107197"
+  },
+  {
+    "player": "Kelvin Odih",
+    "team": "St. John's",
+    "games_played": 10,
+    "mpg": 5.3,
+    "ppg": 1.5,
+    "rpg": 1.9,
+    "apg": 0.2,
+    "espn_id": "5226072"
+  },
+  {
+    "player": "Handje Tamba",
+    "team": "St. John's",
+    "games_played": 7,
+    "mpg": 2.4,
+    "ppg": 0.7,
+    "rpg": 0.3,
+    "apg": 0.3,
+    "espn_id": "4896480"
+  },
+  {
+    "player": "Fotis Konstantinidis",
+    "team": "St. John's",
+    "games_played": 7,
+    "mpg": 1.1,
+    "ppg": 0.4,
+    "rpg": 0.1,
+    "apg": 0.1,
+    "espn_id": "5312302"
+  },
+  {
+    "player": "Casper Pohto",
+    "team": "St. John's",
+    "games_played": 6,
+    "mpg": 4.5,
+    "ppg": 0.3,
+    "rpg": 0.7,
+    "apg": 0.2,
+    "espn_id": "5312301"
+  }
+]

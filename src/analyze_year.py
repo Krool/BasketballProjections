@@ -220,6 +220,93 @@ def analyze(year: int):
         w.writeheader()
         w.writerows(value_rows)
 
+    # --- Draft efficiency: did entries that followed projections do better? ---
+    # For each entry, compare actual score against two benchmarks:
+    #   (a) algo_score: simulate the draft where each entry takes the highest
+    #       *projected* player still available at their pick. This is "what
+    #       would have happened if everyone followed the algorithm."
+    #   (b) actual_rank_score: simulate where players are taken in *actual*
+    #       point order (best actual scorer at pick 1, etc.). NOT a true
+    #       ceiling — just a benchmark showing what each pick slot would
+    #       have yielded under perfect retrospective ordering. An entry CAN
+    #       beat this if their actual picks outperformed the top-N-by-pick
+    #       baseline (Lucas did this in 2026).
+    # actual - algo_score = how much they deviated from the algo and won/lost
+    actual_pts_idx = {(a["player"], a["team"]): to_int(a["total_points"])
+                      for a in actual}
+    proj_total_idx = {(p["player"], p["team"]):
+                      to_float(p.get("ppg")) * to_float(p.get("expected_games"))
+                      for p in proj}
+
+    # Sort all picks by global pick order
+    picks_ordered = sorted(picks, key=lambda p: int(p["pick"]))
+
+    # Simulate algo-following draft: at each pick, the entry on the clock takes
+    # the highest projected player still available
+    pool_proj = sorted(proj, key=lambda p: -proj_total_idx.get((p["player"], p["team"]), 0))
+    pool_actual = sorted(proj, key=lambda p: -actual_pts_idx.get((p["player"], p["team"]), 0))
+    available_proj = [(p["player"], p["team"]) for p in pool_proj]
+    available_actual = [(p["player"], p["team"]) for p in pool_actual]
+
+    algo_picks_per_entry = defaultdict(list)
+    actual_rank_picks_per_entry = defaultdict(list)
+    for pk in picks_ordered:
+        entry = pk["entry"]
+        if available_proj:
+            choice = available_proj.pop(0)
+            algo_picks_per_entry[entry].append(choice)
+        if available_actual:
+            choice2 = available_actual.pop(0)
+            actual_rank_picks_per_entry[entry].append(choice2)
+
+    # Score each simulated draft using actual points
+    eff_rows = []
+    actual_by_entry = defaultdict(int)
+    for a in actual:
+        actual_by_entry[a["entry"]] += to_int(a["total_points"])
+    for entry in sorted(actual_by_entry):
+        algo_score = sum(actual_pts_idx.get(k, 0) for k in algo_picks_per_entry[entry])
+        actual_rank_score = sum(actual_pts_idx.get(k, 0) for k in actual_rank_picks_per_entry[entry])
+        actual_score = actual_by_entry[entry]
+        eff_rows.append({
+            "entry": entry,
+            "actual_score": actual_score,
+            "algo_score": algo_score,
+            "actual_rank_score": actual_rank_score,
+            "deviation_from_algo": actual_score - algo_score,
+            "vs_actual_rank": actual_score - actual_rank_score,
+        })
+    eff_rows.sort(key=lambda r: -r["actual_score"])
+    with open(out / "draft_efficiency.csv", "w", newline="", encoding="utf-8") as f:
+        w = csv.DictWriter(f, fieldnames=["entry", "actual_score", "algo_score", "actual_rank_score",
+                                          "deviation_from_algo", "vs_actual_rank"])
+        w.writeheader()
+        w.writerows(eff_rows)
+
+    # --- Per-entry post-mortem (skill vs variance) ---
+    entry_resids = defaultdict(list)
+    for r in matched:
+        entry_resids[r["entry"]].append(r["residual"])
+    entry_pm_rows = []
+    for entry, resids in entry_resids.items():
+        n = len(resids)
+        mae = sum(abs(r) for r in resids) / n if n else 0
+        mean_r = sum(resids) / n if n else 0
+        # Hit rate: how many picks beat expectation
+        hits = sum(1 for r in resids if r > 0)
+        entry_pm_rows.append({
+            "entry": entry,
+            "n_picks": n,
+            "mae": round(mae, 1),
+            "mean_residual": round(mean_r, 1),
+            "hit_rate": round(hits / n * 100, 1) if n else 0,
+        })
+    entry_pm_rows.sort(key=lambda r: -r["mean_residual"])
+    with open(out / "entry_post_mortem.csv", "w", newline="", encoding="utf-8") as f:
+        w = csv.DictWriter(f, fieldnames=["entry", "n_picks", "mae", "mean_residual", "hit_rate"])
+        w.writeheader()
+        w.writerows(entry_pm_rows)
+
     # --- Print summary ---
     print(f"=== {year} POST-MORTEM ===")
     print(f"Champion: {bracket['champion']}")
@@ -262,6 +349,22 @@ def analyze(year: int):
     print("TOP 10 DRAFT BUSTS:")
     for r in busts[:10]:
         print(f"  pick {r['pick']:>3}: {r['player']:<25} {r['team']:<15} actual={r['actual_pts']:>4} (drafted by {r['entry']})")
+    print()
+    print()
+    print("DRAFT EFFICIENCY:")
+    print("  actual = real score; algo = simulated score if entry took top-projected at each pick;")
+    print("  rank_base = simulated score if top-actual went in pick order (a benchmark, NOT a ceiling)")
+    print(f"  {'entry':<15} {'actual':>7} {'algo':>7} {'rank_base':>10} {'vs_algo':>8} {'vs_rank':>8}")
+    for r in eff_rows:
+        print(f"  {r['entry']:<15} {r['actual_score']:>7} {r['algo_score']:>7} "
+              f"{r['actual_rank_score']:>10} {r['deviation_from_algo']:>+8} "
+              f"{r['vs_actual_rank']:>+8}")
+    print()
+    print("ENTRY POST-MORTEM (per-pick MAE, hit rate vs projection):")
+    print(f"  {'entry':<15} {'n':>3} {'MAE':>6} {'mean_resid':>11} {'hit%':>6}")
+    for r in entry_pm_rows:
+        print(f"  {r['entry']:<15} {r['n_picks']:>3} {r['mae']:>6} "
+              f"{r['mean_residual']:>+11} {r['hit_rate']:>5}%")
     print()
     print(f"Wrote analysis files to {out}")
 

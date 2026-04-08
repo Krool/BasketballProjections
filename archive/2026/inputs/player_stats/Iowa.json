@@ -1,0 +1,122 @@
+[
+  {
+    "player": "Bennett Stirtz",
+    "team": "Iowa",
+    "games_played": 33,
+    "mpg": 37.5,
+    "ppg": 20.0,
+    "rpg": 2.5,
+    "apg": 4.5,
+    "espn_id": "5241364"
+  },
+  {
+    "player": "Tavion Banks",
+    "team": "Iowa",
+    "games_played": 33,
+    "mpg": 23.3,
+    "ppg": 10.5,
+    "rpg": 4.7,
+    "apg": 1.2,
+    "espn_id": "5241363"
+  },
+  {
+    "player": "Alvaro Folgueiras",
+    "team": "Iowa",
+    "games_played": 33,
+    "mpg": 21.0,
+    "ppg": 8.1,
+    "rpg": 3.8,
+    "apg": 2.3,
+    "espn_id": "5177211"
+  },
+  {
+    "player": "Cooper Koch",
+    "team": "Iowa",
+    "games_played": 33,
+    "mpg": 27.6,
+    "ppg": 7.7,
+    "rpg": 3.0,
+    "apg": 1.1,
+    "espn_id": "4873203"
+  },
+  {
+    "player": "Cam Manyawu",
+    "team": "Iowa",
+    "games_played": 33,
+    "mpg": 18.9,
+    "ppg": 7.1,
+    "rpg": 4.5,
+    "apg": 1.0,
+    "espn_id": "5176283"
+  },
+  {
+    "player": "Kael Combs",
+    "team": "Iowa",
+    "games_played": 33,
+    "mpg": 25.8,
+    "ppg": 5.9,
+    "rpg": 2.5,
+    "apg": 2.3,
+    "espn_id": "5176280"
+  },
+  {
+    "player": "Tate Sage",
+    "team": "Iowa",
+    "games_played": 33,
+    "mpg": 15.9,
+    "ppg": 5.7,
+    "rpg": 1.9,
+    "apg": 0.7,
+    "espn_id": "5311842"
+  },
+  {
+    "player": "Isaia Howard",
+    "team": "Iowa",
+    "games_played": 33,
+    "mpg": 18.8,
+    "ppg": 5.4,
+    "rpg": 2.8,
+    "apg": 1.2,
+    "espn_id": "5241366"
+  },
+  {
+    "player": "Brendan Hausen",
+    "team": "Iowa",
+    "games_played": 21,
+    "mpg": 10.3,
+    "ppg": 4.0,
+    "rpg": 0.7,
+    "apg": 0.5,
+    "espn_id": "5105589"
+  },
+  {
+    "player": "Trevin Jirak",
+    "team": "Iowa",
+    "games_played": 16,
+    "mpg": 8.3,
+    "ppg": 3.6,
+    "rpg": 1.0,
+    "apg": 1.2,
+    "espn_id": "5311843"
+  },
+  {
+    "player": "Joey Matteoni",
+    "team": "Iowa",
+    "games_played": 11,
+    "mpg": 3.7,
+    "ppg": 1.5,
+    "rpg": 0.6,
+    "apg": 0.3,
+    "espn_id": "5241367"
+  },
+  {
+    "player": "Jacob Koch",
+    "team": "Iowa",
+    "games_played": 5,
+    "mpg": 2.2,
+    "ppg": 0.4,
+    "rpg": 0.0,
+    "apg": 0.2,
+    "espn_id": "5239551"
+  }
+]

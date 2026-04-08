@@ -965,14 +965,161 @@
     color: var(--text);
     font-size: 14px;
   }
+
+  /* ============================================================
+     Mode switching: Draft vs History vs Countdown
+     ============================================================ */
+  body.mode-history .draft-only,
+  body.mode-countdown .draft-only { display: none !important; }
+  body.mode-draft .history-only,
+  body.mode-countdown .history-only { display: none !important; }
+  body.mode-draft .countdown-only,
+  body.mode-history .countdown-only { display: none !important; }
+
+  .mode-toggle { display: flex; gap: 4px; background: var(--surface2); border-radius: 6px; padding: 3px; }
+  .mode-toggle button {
+    background: transparent; color: var(--text-dim); border: none;
+    padding: 6px 14px; font-size: 12px; font-weight: 600; border-radius: 4px;
+    cursor: pointer; transition: all 0.15s;
+  }
+  .mode-toggle button.active { background: var(--accent); color: white; }
+  .mode-toggle button:hover:not(.active) { color: var(--text); }
+
+  /* ----- Countdown landing ----- */
+  .countdown-hero {
+    min-height: calc(100vh - 100px);
+    min-height: calc(100dvh - 100px);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 40px 20px; text-align: center;
+  }
+  .countdown-hero h2 {
+    font-size: 32px; font-weight: 700; margin-bottom: 12px; letter-spacing: -1px;
+  }
+  .countdown-hero h2 span { color: var(--accent); }
+  .countdown-hero .tagline { color: var(--text-dim); font-size: 16px; margin-bottom: 40px; max-width: 500px; }
+  .countdown-clock {
+    display: flex; gap: 16px; margin-bottom: 40px; flex-wrap: wrap; justify-content: center;
+  }
+  .countdown-unit {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+    padding: 20px 24px; min-width: 90px;
+  }
+  .countdown-unit .num { font-size: 40px; font-weight: 700; color: var(--accent); line-height: 1; }
+  .countdown-unit .label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-dim); margin-top: 6px; }
+  .countdown-cta {
+    display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;
+  }
+  .countdown-cta button {
+    background: var(--surface); border: 1px solid var(--border); color: var(--text);
+    padding: 12px 24px; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer;
+    transition: all 0.15s;
+  }
+  .countdown-cta button:hover { background: var(--surface2); border-color: var(--accent); }
+  .countdown-cta button.primary { background: var(--accent); border-color: var(--accent); color: white; }
+  .countdown-cta button.primary:hover { background: #3a6fd1; }
+
+  /* ----- History view ----- */
+  .history-container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+  .history-header {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+    padding: 20px 24px; margin-bottom: 20px;
+  }
+  .history-header-top { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 12px; }
+  .history-header h2 { font-size: 22px; font-weight: 700; }
+  .history-header h2 span { color: var(--accent); }
+  .history-header .year-select {
+    background: var(--surface2); color: var(--text); border: 1px solid var(--border);
+    padding: 8px 12px; border-radius: 6px; font-size: 14px; font-weight: 600; cursor: pointer;
+  }
+  .history-headline {
+    display: flex; gap: 24px; flex-wrap: wrap; font-size: 14px; color: var(--text-dim);
+  }
+  .history-headline strong { color: var(--text); font-weight: 700; }
+  .history-headline .pill {
+    background: var(--surface2); padding: 4px 10px; border-radius: 4px;
+    color: var(--text); font-weight: 600;
+  }
+  .history-headline .pill.gold { background: rgba(251,191,36,0.15); color: var(--orange); }
+  .history-headline .pill.green { background: rgba(52,211,153,0.15); color: var(--green); }
+
+  .history-tabs {
+    display: flex; gap: 4px; background: var(--surface); border: 1px solid var(--border);
+    border-radius: 8px; padding: 4px; margin-bottom: 20px; overflow-x: auto;
+  }
+  .history-tabs button {
+    background: transparent; color: var(--text-dim); border: none; padding: 10px 16px;
+    font-size: 13px; font-weight: 600; border-radius: 6px; cursor: pointer; white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .history-tabs button.active { background: var(--accent); color: white; }
+  .history-tabs button:hover:not(.active) { color: var(--text); background: var(--surface2); }
+
+  .history-section { display: none; }
+  .history-section.active { display: block; }
+
+  .history-card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+    padding: 20px; margin-bottom: 20px;
+  }
+  .history-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 14px; color: var(--text); }
+  .history-card h3 .sub { color: var(--text-dim); font-size: 12px; font-weight: 400; margin-left: 8px; }
+
+  .history-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .history-table th {
+    text-align: left; color: var(--text-dim); font-weight: 600; font-size: 11px;
+    text-transform: uppercase; letter-spacing: 0.5px; padding: 8px 10px;
+    border-bottom: 1px solid var(--border); position: sticky; top: 0; background: var(--surface);
+    cursor: pointer; user-select: none;
+  }
+  .history-table th:hover { color: var(--text); }
+  .history-table td { padding: 8px 10px; border-bottom: 1px solid var(--border); }
+  .history-table tbody tr:hover { background: var(--surface2); }
+  .history-table .num { text-align: right; font-variant-numeric: tabular-nums; }
+  .history-table .pos { color: var(--green); }
+  .history-table .neg { color: var(--red); }
+  .history-table .dim { color: var(--text-dim); }
+  .history-table tr.alive td:first-child::before { content: '🏆 '; }
+  .history-table tr.injured { opacity: 0.6; }
+  .history-table tr.injured td:first-child::after { content: ' 🤕'; font-size: 11px; }
+
+  .history-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media (max-width: 800px) {
+    .history-grid-2 { grid-template-columns: 1fr; }
+    .history-container { padding: 12px; }
+    .history-header { padding: 16px; }
+    .history-card { padding: 14px; }
+    .history-tabs { font-size: 12px; }
+    .history-table { font-size: 12px; }
+    .history-table th, .history-table td { padding: 6px 6px; }
+  }
+
+  .standings-rank { display: inline-block; width: 24px; text-align: right; color: var(--text-dim); margin-right: 8px; font-weight: 700; }
+  .standings-rank.gold { color: var(--orange); }
+  .standings-bar {
+    height: 4px; background: var(--surface2); border-radius: 2px; margin-top: 4px; overflow: hidden;
+  }
+  .standings-bar-fill { height: 100%; background: var(--accent); }
+
+  .calibration-table tr.dead-on { background: rgba(52,211,153,0.05); }
+  .bracket-tree { font-size: 12px; line-height: 1.6; }
+  .bracket-tree .winner { color: var(--green); font-weight: 600; }
+  .bracket-tree .loser { color: var(--text-dim); text-decoration: line-through; }
+  .bracket-round { margin-bottom: 16px; }
+  .bracket-round h4 { font-size: 13px; color: var(--accent); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .bracket-game { padding: 4px 0; }
+
 </style>
 </head>
 <body>
 
 <div class="header">
   <div class="header-top">
-    <h1>March Madness <span>2026</span> Draft Board</h1>
-    <div class="stats-bar">
+    <h1>March Madness <span id="hdr-year">2026</span> <span id="hdr-mode-label">Draft Board</span></h1>
+    <div class="mode-toggle" role="tablist" aria-label="View mode">
+      <button id="mode-btn-draft" class="active" onclick="setMode('draft')">📋 Draft</button>
+      <button id="mode-btn-history" onclick="setMode('history')">📊 History</button>
+    </div>
+    <div class="stats-bar draft-only">
       <div class="stat">
         <span class="stat-value green" id="available-count">0</span>
         <span class="stat-label">Available</span>
@@ -997,7 +1144,7 @@
       </div>
     </div>
   </div>
-  <div class="controls">
+  <div class="controls draft-only">
     <input type="text" class="search-box" id="search" placeholder="Search player or team..." aria-label="Search players or teams">
     <select id="team-filter"><option value="">All Teams</option></select>
     <select id="seed-min"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option></select>
@@ -1009,17 +1156,18 @@
     <span style="flex:1"></span>
     <button class="btn" id="export-btn">Export Draft</button>
     <button class="btn" id="export-all-btn">Export All</button>
+    <button class="btn" id="load-2026-btn" title="Load 2026 archived projections to re-draft against last year's values" onclick="loadArchiveDraft(2026)">↻ 2026</button>
     <button class="btn danger" id="reset-btn">Reset Draft</button>
   </div>
 </div>
 
-<div class="mobile-tabs" id="mobile-tabs">
+<div class="mobile-tabs draft-only" id="mobile-tabs">
   <button data-tab="my-team">My Team</button>
   <button data-tab="board" class="active">Draft Board</button>
   <button data-tab="log">Draft Log</button>
 </div>
 
-<div class="layout">
+<div class="layout draft-only">
   <!-- Left column: My Team -->
   <div class="col-left">
     <div class="col-title">My Team</div>
@@ -1152,6 +1300,119 @@
 
 <div class="modal-overlay" id="draft-summary-modal">
   <div class="analysis-modal" id="draft-summary-content"></div>
+</div>
+
+<!-- ============================================================
+     COUNTDOWN VIEW (off-season landing inside Draft Mode)
+     ============================================================ -->
+<div class="countdown-only countdown-hero" id="countdown-view">
+  <h2>March Madness <span id="countdown-year">2027</span></h2>
+  <div class="tagline">Selection Sunday is the start of everything. Until then, the draft board is on ice.</div>
+  <div class="countdown-clock" id="countdown-clock">
+    <div class="countdown-unit"><div class="num" id="cd-days">--</div><div class="label">Days</div></div>
+    <div class="countdown-unit"><div class="num" id="cd-hours">--</div><div class="label">Hours</div></div>
+    <div class="countdown-unit"><div class="num" id="cd-mins">--</div><div class="label">Minutes</div></div>
+    <div class="countdown-unit"><div class="num" id="cd-secs">--</div><div class="label">Seconds</div></div>
+  </div>
+  <div class="countdown-cta">
+    <button class="primary" onclick="setMode('history')">📊 View 2026 Recap</button>
+    <button onclick="loadArchiveDraft(2026)">🔄 Re-Draft 2026</button>
+  </div>
+  <p style="color:var(--text-dim);font-size:12px;margin-top:24px;max-width:480px;">
+    Re-Draft loads the 2026 projections into the draft board so you can run a mock or live draft against last year's player values.
+  </p>
+</div>
+
+<!-- ============================================================
+     HISTORY VIEW
+     ============================================================ -->
+<div class="history-only history-container" id="history-view">
+  <div class="history-header">
+    <div class="history-header-top">
+      <h2>📊 League History — <span id="hist-year-display">2026</span></h2>
+      <select class="year-select" id="hist-year-select"></select>
+    </div>
+    <div class="history-headline" id="hist-headline">Loading...</div>
+  </div>
+
+  <div class="history-tabs">
+    <button class="active" data-section="standings">Standings</button>
+    <button data-section="picks">Draft Replay</button>
+    <button data-section="performers">Top Performers</button>
+    <button data-section="steals">Steals & Busts</button>
+    <button data-section="bracket">Bracket</button>
+    <button data-section="algo">Algorithm</button>
+  </div>
+
+  <div class="history-section active" id="hist-sec-standings">
+    <div class="history-card">
+      <h3>Final Standings</h3>
+      <table class="history-table" id="hist-standings-table"></table>
+    </div>
+  </div>
+
+  <div class="history-section" id="hist-sec-picks">
+    <div class="history-card">
+      <h3>Draft Replay <span class="sub">all picks in order, color-coded vs projection</span></h3>
+      <div style="margin-bottom:12px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+        <select id="hist-picks-entry" style="background:var(--surface2);color:var(--text);border:1px solid var(--border);padding:6px 10px;border-radius:6px;font-size:13px;">
+          <option value="">All entries</option>
+        </select>
+        <span style="color:var(--text-dim);font-size:12px;">filter by entry</span>
+      </div>
+      <table class="history-table" id="hist-picks-table"></table>
+    </div>
+  </div>
+
+  <div class="history-section" id="hist-sec-performers">
+    <div class="history-card">
+      <h3>Top Actual Scorers</h3>
+      <table class="history-table" id="hist-performers-table"></table>
+    </div>
+  </div>
+
+  <div class="history-section" id="hist-sec-steals">
+    <div class="history-grid-2">
+      <div class="history-card">
+        <h3>💎 Top Steals <span class="sub">actual >> projection</span></h3>
+        <table class="history-table" id="hist-steals-table"></table>
+      </div>
+      <div class="history-card">
+        <h3>🪦 Top Busts <span class="sub">actual << projection</span></h3>
+        <table class="history-table" id="hist-busts-table"></table>
+      </div>
+    </div>
+  </div>
+
+  <div class="history-section" id="hist-sec-bracket">
+    <div class="history-card">
+      <h3>Bracket — Actual Results</h3>
+      <div class="bracket-tree" id="hist-bracket"></div>
+    </div>
+  </div>
+
+  <div class="history-section" id="hist-sec-algo">
+    <div class="history-card">
+      <h3>Calibration <span class="sub">top-N projected vs actual (closer to 0% = better)</span></h3>
+      <table class="history-table calibration-table" id="hist-calibration-table"></table>
+    </div>
+    <div class="history-card">
+      <h3>Bias by Seed <span class="sub">avg residual per seed line (n=4 each — small sample)</span></h3>
+      <table class="history-table" id="hist-bias-seed-table"></table>
+    </div>
+    <div class="history-card">
+      <h3>Draft Efficiency <span class="sub">did entries that followed the algorithm do better?</span></h3>
+      <p style="font-size:12px;color:var(--text-dim);margin-bottom:10px;">
+        <strong>algo</strong> = simulated score if entry took top-projected at each pick.
+        <strong>vs algo</strong> &gt; 0 means the entry beat the algorithm.
+      </p>
+      <table class="history-table" id="hist-efficiency-table"></table>
+    </div>
+    <div class="history-card">
+      <h3>Entry Post-Mortem <span class="sub">per-pick MAE and hit rate vs projection</span></h3>
+      <table class="history-table" id="hist-entry-pm-table"></table>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -2146,6 +2407,415 @@ toggleDraft = function(rank) {
 };
 
 init();
+
+// ============================================================
+// MODE SWITCHING (Draft / History / Countdown)
+// ============================================================
+const SELECTION_SUNDAY = new Date('2027-03-14T00:00:00');
+let currentMode = 'draft';
+let archiveData = null;          // currently-loaded year bundle
+let archiveIndex = null;         // index of available years
+let histPicksSort = { col: 'pick', asc: true };
+let histPerformersSort = { col: 'actual_pts', asc: false };
+
+// If true, draft mode shows the live board even if before Selection Sunday
+// (used when the user explicitly loaded an archived year to re-draft)
+let forceLiveBoard = false;
+
+function setMode(mode) {
+  currentMode = mode;
+  document.body.classList.remove('mode-draft','mode-history','mode-countdown');
+  // Draft mode shows either the live board or the countdown depending on date
+  if (mode === 'draft') {
+    if (!forceLiveBoard && Date.now() < SELECTION_SUNDAY.getTime()) {
+      document.body.classList.add('mode-countdown');
+    } else {
+      document.body.classList.add('mode-draft');
+    }
+  } else if (mode === 'history') {
+    document.body.classList.add('mode-history');
+    if (!archiveData) loadArchive();
+  }
+  document.getElementById('mode-btn-draft').classList.toggle('active', mode === 'draft');
+  document.getElementById('mode-btn-history').classList.toggle('active', mode === 'history');
+  // Update header label
+  const lbl = document.getElementById('hdr-mode-label');
+  if (lbl) lbl.textContent = mode === 'history' ? 'History' : 'Draft Board';
+  try { localStorage.setItem('mode', mode); } catch(e){}
+}
+
+// ============================================================
+// LOAD ARCHIVED YEAR INTO LIVE DRAFT BOARD
+// Replaces the players[] array with an archived year's projections
+// so the user can re-draft against historical values.
+// ============================================================
+function loadArchiveDraft(year) {
+  if (!confirm('Load ' + year + ' projections into the draft board? This will reset any current draft state.')) return;
+  fetch('archive/' + year + '_players.json')
+    .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+    .then(data => {
+      // Replace players array used by the existing draft board
+      players = data.players || [];
+      // Clear draft state since the player set has changed
+      drafted.clear();
+      myTeam.clear();
+      favorites.clear();
+      draftOrder = [];
+      if (typeof saveState === 'function') saveState();
+
+      // Rebuild REGIONS index
+      REGIONS = {};
+      for (const p of players) {
+        if (p.region) {
+          if (!REGIONS[p.region]) REGIONS[p.region] = [];
+          if (!REGIONS[p.region].includes(p.team)) REGIONS[p.region].push(p.team);
+        }
+      }
+
+      // Refresh filter dropdowns
+      const teamSelect = document.getElementById('team-filter');
+      teamSelect.innerHTML = '<option value="">All Teams</option>';
+      [...new Set(players.map(p => p.team))].sort().forEach(t => {
+        const opt = document.createElement('option');
+        opt.value = t; opt.textContent = t;
+        teamSelect.appendChild(opt);
+      });
+      const regionSelect = document.getElementById('region-filter');
+      regionSelect.innerHTML = '<option value="">All Regions</option>';
+      Object.keys(REGIONS).sort().forEach(r => {
+        const opt = document.createElement('option');
+        opt.value = r; opt.textContent = r;
+        regionSelect.appendChild(opt);
+      });
+
+      // Update header to indicate replay mode
+      document.getElementById('hdr-year').textContent = year + ' (Replay)';
+      const ts = document.getElementById('generated-ts');
+      if (ts) ts.textContent = 'Loaded ' + year + ' archive';
+
+      // Force draft mode regardless of date
+      forceLiveBoard = true;
+      setMode('draft');
+      if (typeof render === 'function') render();
+    })
+    .catch(err => {
+      alert('Failed to load ' + year + ' archive: ' + err.message);
+      console.error(err);
+    });
+}
+
+// ============================================================
+// COUNTDOWN CLOCK
+// ============================================================
+function tickCountdown() {
+  const ms = SELECTION_SUNDAY.getTime() - Date.now();
+  if (ms <= 0) {
+    document.getElementById('cd-days').textContent = '0';
+    document.getElementById('cd-hours').textContent = '0';
+    document.getElementById('cd-mins').textContent = '0';
+    document.getElementById('cd-secs').textContent = '0';
+    return;
+  }
+  const d = Math.floor(ms / 86400000);
+  const h = Math.floor((ms % 86400000) / 3600000);
+  const m = Math.floor((ms % 3600000) / 60000);
+  const s = Math.floor((ms % 60000) / 1000);
+  const els = ['cd-days','cd-hours','cd-mins','cd-secs'];
+  const vals = [d,h,m,s];
+  els.forEach((id,i) => { const el = document.getElementById(id); if (el) el.textContent = vals[i]; });
+}
+setInterval(tickCountdown, 1000);
+tickCountdown();
+
+// ============================================================
+// HISTORY MODE — Archive loader & renderers
+// ============================================================
+function loadArchive() {
+  fetch('archive/index.json')
+    .then(r => r.json())
+    .then(idx => {
+      archiveIndex = idx;
+      const sel = document.getElementById('hist-year-select');
+      sel.innerHTML = '';
+      idx.years.forEach(y => {
+        const opt = document.createElement('option');
+        opt.value = y.year;
+        opt.textContent = y.year;
+        sel.appendChild(opt);
+      });
+      sel.onchange = () => loadArchiveYear(parseInt(sel.value));
+      if (idx.years.length) loadArchiveYear(idx.years[0].year);
+    })
+    .catch(err => {
+      document.getElementById('hist-headline').textContent = 'No archive data available.';
+      console.error('Failed to load archive index:', err);
+    });
+}
+
+function loadArchiveYear(year) {
+  document.getElementById('hist-year-display').textContent = year;
+  document.getElementById('hist-headline').textContent = 'Loading...';
+  fetch('archive/' + year + '.json')
+    .then(r => r.json())
+    .then(data => {
+      archiveData = data;
+      renderArchive();
+    })
+    .catch(err => {
+      document.getElementById('hist-headline').textContent = 'Failed to load ' + year + '.';
+      console.error(err);
+    });
+}
+
+function renderArchive() {
+  if (!archiveData) return;
+  const d = archiveData;
+  // Headline
+  const winner = d.winning_entry || '?';
+  const winScore = d.winning_score || 0;
+  const champ = d.champion || '?';
+  const finalist = (d.finalists || []).find(t => t !== champ) || '?';
+  document.getElementById('hist-headline').innerHTML =
+    `<span class="pill gold">🏆 ${escapeHtml(champ)}</span> beat <strong>${escapeHtml(finalist)}</strong> in the championship` +
+    ` &nbsp;·&nbsp; <span class="pill green">${escapeHtml(winner)}</span> won the league with <strong>${winScore}</strong> pts` +
+    ` &nbsp;·&nbsp; ${d.n_drafted} players drafted` +
+    (d.n_in_tournament_injuries ? ` &nbsp;·&nbsp; ${d.n_in_tournament_injuries} in-tournament injury` : '');
+
+  renderStandings();
+  renderPicks();
+  renderPerformers();
+  renderStealsBusts();
+  renderBracket();
+  renderAlgo();
+
+  // Populate entry filter
+  const entrySel = document.getElementById('hist-picks-entry');
+  if (entrySel.options.length <= 1) {
+    const entries = [...new Set(d.picks.map(p => p.entry))].sort();
+    entries.forEach(e => {
+      const opt = document.createElement('option'); opt.value = e; opt.textContent = e;
+      entrySel.appendChild(opt);
+    });
+    entrySel.onchange = renderPicks;
+  }
+}
+
+function escapeHtml(s) {
+  if (s == null) return '';
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
+}
+
+function fmtSigned(n) {
+  if (n == null || n === '') return '';
+  const v = Number(n);
+  if (v > 0) return '<span class="pos">+' + v + '</span>';
+  if (v < 0) return '<span class="neg">' + v + '</span>';
+  return '<span class="dim">0</span>';
+}
+
+function renderStandings() {
+  const t = document.getElementById('hist-standings-table');
+  const rows = archiveData.standings;
+  const max = Math.max(...rows.map(r => r.total));
+  let html = '<thead><tr><th>Rank</th><th>Entry</th><th class="num">Total</th><th class="num">R64</th><th class="num">R32</th><th class="num">S16</th><th class="num">E8</th><th class="num">F4</th><th class="num">Final</th><th class="num">Left</th></tr></thead><tbody>';
+  rows.forEach(r => {
+    const goldClass = r.rank === 1 ? 'gold' : '';
+    html += `<tr><td><span class="standings-rank ${goldClass}">${r.rank}</span></td>` +
+      `<td><strong>${escapeHtml(r.entry)}</strong>` +
+      `<div class="standings-bar"><div class="standings-bar-fill" style="width:${(r.total/max*100).toFixed(0)}%"></div></div></td>` +
+      `<td class="num"><strong>${r.total}</strong></td>` +
+      `<td class="num dim">${r.r64}</td><td class="num dim">${r.r32}</td>` +
+      `<td class="num dim">${r.s16}</td><td class="num dim">${r.e8}</td>` +
+      `<td class="num dim">${r.f4}</td><td class="num dim">${r.championship}</td>` +
+      `<td class="num">${r.players_left || ''}</td></tr>`;
+  });
+  html += '</tbody>';
+  t.innerHTML = html;
+}
+
+function renderPicks() {
+  const t = document.getElementById('hist-picks-table');
+  const filterEntry = document.getElementById('hist-picks-entry').value;
+  let rows = archiveData.picks.slice();
+  if (filterEntry) rows = rows.filter(r => r.entry === filterEntry);
+  const sc = histPicksSort.col;
+  rows.sort((a,b) => {
+    let av = a[sc], bv = b[sc];
+    if (typeof av === 'string') { av = av.toLowerCase(); bv = (bv||'').toLowerCase(); }
+    if (av < bv) return histPicksSort.asc ? -1 : 1;
+    if (av > bv) return histPicksSort.asc ? 1 : -1;
+    return 0;
+  });
+  let html = '<thead><tr>';
+  const cols = [['pick','#'],['entry','Entry'],['player','Player'],['team','Team'],['proj_total','Proj','num'],['actual_pts','Actual','num'],['residual','+/-','num']];
+  cols.forEach(c => html += `<th data-sort="${c[0]}" class="${c[2]||''}">${c[1]}</th>`);
+  html += '</tr></thead><tbody>';
+  rows.forEach(r => {
+    const cls = r.alive ? 'alive' : (r.in_tournament_injury ? 'injured' : '');
+    html += `<tr class="${cls}"><td class="num dim">${r.pick}</td>` +
+      `<td>${escapeHtml(r.entry)}</td>` +
+      `<td><strong>${escapeHtml(r.player)}</strong></td>` +
+      `<td class="dim">${escapeHtml(r.team)}</td>` +
+      `<td class="num dim">${r.proj_total != null ? r.proj_total : ''}</td>` +
+      `<td class="num"><strong>${r.actual_pts}</strong></td>` +
+      `<td class="num">${fmtSigned(r.residual)}</td></tr>`;
+  });
+  html += '</tbody>';
+  t.innerHTML = html;
+  t.querySelectorAll('th[data-sort]').forEach(th => {
+    th.onclick = () => {
+      const c = th.dataset.sort;
+      if (histPicksSort.col === c) histPicksSort.asc = !histPicksSort.asc;
+      else { histPicksSort.col = c; histPicksSort.asc = true; }
+      renderPicks();
+    };
+  });
+}
+
+function renderPerformers() {
+  const t = document.getElementById('hist-performers-table');
+  const rows = archiveData.picks.slice().sort((a,b) => b.actual_pts - a.actual_pts).slice(0,50);
+  let html = '<thead><tr><th>#</th><th>Player</th><th>Team</th><th>Drafted by</th><th class="num">Pick</th><th class="num">Actual</th><th class="num">Proj</th></tr></thead><tbody>';
+  rows.forEach((r,i) => {
+    html += `<tr><td class="dim">${i+1}</td>` +
+      `<td><strong>${escapeHtml(r.player)}</strong></td>` +
+      `<td class="dim">${escapeHtml(r.team)}</td>` +
+      `<td>${escapeHtml(r.entry)}</td>` +
+      `<td class="num dim">${r.pick}</td>` +
+      `<td class="num"><strong>${r.actual_pts}</strong></td>` +
+      `<td class="num dim">${r.proj_total != null ? r.proj_total : ''}</td></tr>`;
+  });
+  html += '</tbody>';
+  t.innerHTML = html;
+}
+
+function renderStealsBusts() {
+  const stealsT = document.getElementById('hist-steals-table');
+  const bustsT = document.getElementById('hist-busts-table');
+  const mkRow = (r,i) => {
+    const pick = (archiveData.picks.find(p => p.player === r.player && p.team === r.team) || {}).pick || '';
+    return `<tr><td class="dim">${i+1}</td>` +
+      `<td><strong>${escapeHtml(r.player)}</strong><div class="dim" style="font-size:11px;">${escapeHtml(r.team)} · pick ${pick}</div></td>` +
+      `<td class="num dim">${r.proj_total}</td>` +
+      `<td class="num"><strong>${r.actual_pts}</strong></td>` +
+      `<td class="num">${fmtSigned(r.residual)}</td></tr>`;
+  };
+  let html = '<thead><tr><th>#</th><th>Player</th><th class="num">Proj</th><th class="num">Act</th><th class="num">+/-</th></tr></thead><tbody>';
+  archiveData.top_steals.slice(0,15).forEach((r,i) => html += mkRow(r,i));
+  html += '</tbody>';
+  stealsT.innerHTML = html;
+
+  let html2 = '<thead><tr><th>#</th><th>Player</th><th class="num">Proj</th><th class="num">Act</th><th class="num">+/-</th></tr></thead><tbody>';
+  archiveData.top_busts.slice(0,15).forEach((r,i) => html2 += mkRow(r,i));
+  html2 += '</tbody>';
+  bustsT.innerHTML = html2;
+}
+
+function renderBracket() {
+  const el = document.getElementById('hist-bracket');
+  if (!archiveData.games || !archiveData.games.length) {
+    el.innerHTML = '<p class="dim">No matchup data available.</p>';
+    return;
+  }
+  const ROUND_LABELS = {
+    r64: 'Round of 64', r32: 'Round of 32', s16: 'Sweet 16',
+    e8: 'Elite 8', f4: 'Final Four', championship: 'Championship'
+  };
+  const byRound = {};
+  archiveData.games.forEach(g => { (byRound[g.round] = byRound[g.round] || []).push(g); });
+  let html = '';
+  ['r64','r32','s16','e8','f4','championship'].forEach(rk => {
+    if (!byRound[rk]) return;
+    html += `<div class="bracket-round"><h4>${ROUND_LABELS[rk]}</h4>`;
+    byRound[rk].forEach(g => {
+      html += `<div class="bracket-game"><span class="winner">${escapeHtml(g.winner)}</span> <span class="dim">def.</span> <span class="loser">${escapeHtml(g.loser)}</span>` +
+        (g.region && rk !== 'championship' ? ` <span class="dim" style="font-size:10px;">(${escapeHtml(g.region)})</span>` : '') +
+        `</div>`;
+    });
+    html += '</div>';
+  });
+  el.innerHTML = html;
+}
+
+function renderAlgo() {
+  // Calibration
+  const calT = document.getElementById('hist-calibration-table');
+  let html = '<thead><tr><th>Top N Projected</th><th class="num">Avg Projected</th><th class="num">Avg Actual</th><th class="num">Delta</th><th class="num">Error %</th></tr></thead><tbody>';
+  archiveData.calibration.forEach(c => {
+    const pe = parseFloat(c.pct_error);
+    const cls = Math.abs(pe) < 2 ? 'dead-on' : '';
+    html += `<tr class="${cls}"><td>Top ${c.top_n}</td>` +
+      `<td class="num dim">${c.avg_projected}</td>` +
+      `<td class="num">${c.avg_actual}</td>` +
+      `<td class="num">${fmtSigned(c.delta)}</td>` +
+      `<td class="num">${fmtSigned(c.pct_error)}%</td></tr>`;
+  });
+  html += '</tbody>';
+  calT.innerHTML = html;
+
+  // Bias by seed
+  const bsT = document.getElementById('hist-bias-seed-table');
+  let html2 = '<thead><tr><th>Seed</th><th class="num">N</th><th class="num">Avg Proj</th><th class="num">Avg Actual</th><th class="num">Avg Residual</th></tr></thead><tbody>';
+  archiveData.bias_by_seed.forEach(s => {
+    html2 += `<tr><td><strong>${s.seed}</strong></td>` +
+      `<td class="num dim">${s.n_players}</td>` +
+      `<td class="num dim">${s.avg_projected}</td>` +
+      `<td class="num">${s.avg_actual}</td>` +
+      `<td class="num">${fmtSigned(s.avg_residual)}</td></tr>`;
+  });
+  html2 += '</tbody>';
+  bsT.innerHTML = html2;
+
+  // Draft efficiency
+  const effT = document.getElementById('hist-efficiency-table');
+  let html3 = '<thead><tr><th>Entry</th><th class="num">Actual</th><th class="num">Algo</th><th class="num">vs Algo</th><th class="num">Rank Base</th></tr></thead><tbody>';
+  archiveData.draft_efficiency.forEach(r => {
+    html3 += `<tr><td><strong>${escapeHtml(r.entry)}</strong></td>` +
+      `<td class="num"><strong>${r.actual_score}</strong></td>` +
+      `<td class="num dim">${r.algo_score}</td>` +
+      `<td class="num">${fmtSigned(r.deviation_from_algo)}</td>` +
+      `<td class="num dim">${r.actual_rank_score}</td></tr>`;
+  });
+  html3 += '</tbody>';
+  effT.innerHTML = html3;
+
+  // Entry post-mortem
+  const pmT = document.getElementById('hist-entry-pm-table');
+  let html4 = '<thead><tr><th>Entry</th><th class="num">N</th><th class="num">MAE</th><th class="num">Mean Resid</th><th class="num">Hit %</th></tr></thead><tbody>';
+  archiveData.entry_post_mortem.forEach(r => {
+    html4 += `<tr><td><strong>${escapeHtml(r.entry)}</strong></td>` +
+      `<td class="num dim">${r.n_picks}</td>` +
+      `<td class="num">${r.mae}</td>` +
+      `<td class="num">${fmtSigned(r.mean_residual)}</td>` +
+      `<td class="num">${r.hit_rate}%</td></tr>`;
+  });
+  html4 += '</tbody>';
+  pmT.innerHTML = html4;
+}
+
+// History sub-tab switching
+document.querySelectorAll('.history-tabs button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.history-tabs button').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.history-section').forEach(s => s.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('hist-sec-' + btn.dataset.section).classList.add('active');
+  });
+});
+
+// Decide initial mode: respect saved preference, else default by date
+(function chooseInitialMode() {
+  let saved = null;
+  try { saved = localStorage.getItem('mode'); } catch(e){}
+  if (saved === 'history' || saved === 'draft') {
+    setMode(saved);
+  } else if (Date.now() < SELECTION_SUNDAY.getTime()) {
+    // Off-season: default to History since there's something to look at
+    setMode('history');
+  } else {
+    setMode('draft');
+  }
+})();
 
 // Mock draft button
 document.getElementById('mock-btn').addEventListener('click', () => {

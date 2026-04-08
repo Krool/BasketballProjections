@@ -1,0 +1,132 @@
+[
+  {
+    "player": "Kingston Flemings",
+    "team": "Houston",
+    "games_played": 34,
+    "mpg": 31.7,
+    "ppg": 16.4,
+    "rpg": 3.9,
+    "apg": 5.3,
+    "espn_id": "5149077"
+  },
+  {
+    "player": "Emanuel Sharp",
+    "team": "Houston",
+    "games_played": 34,
+    "mpg": 29.5,
+    "ppg": 15.3,
+    "rpg": 2.9,
+    "apg": 1.8,
+    "espn_id": "5106058"
+  },
+  {
+    "player": "Milos Uzan",
+    "team": "Houston",
+    "games_played": 34,
+    "mpg": 32.9,
+    "ppg": 11.1,
+    "rpg": 2.6,
+    "apg": 4.0,
+    "espn_id": "5106272"
+  },
+  {
+    "player": "Chris Cenac Jr.",
+    "team": "Houston",
+    "games_played": 34,
+    "mpg": 24.7,
+    "ppg": 9.5,
+    "rpg": 7.5,
+    "apg": 0.8,
+    "espn_id": "5142621"
+  },
+  {
+    "player": "Joseph Tugler",
+    "team": "Houston",
+    "games_played": 34,
+    "mpg": 23.4,
+    "ppg": 8.4,
+    "rpg": 5.4,
+    "apg": 1.2,
+    "espn_id": "5060700"
+  },
+  {
+    "player": "Mercy Miller",
+    "team": "Houston",
+    "games_played": 33,
+    "mpg": 11.3,
+    "ppg": 4.8,
+    "rpg": 1.8,
+    "apg": 0.4,
+    "espn_id": "4873086"
+  },
+  {
+    "player": "Chase McCarty",
+    "team": "Houston",
+    "games_played": 32,
+    "mpg": 11.9,
+    "ppg": 4.0,
+    "rpg": 2.4,
+    "apg": 0.2,
+    "espn_id": "5101660"
+  },
+  {
+    "player": "Isiah Harwell",
+    "team": "Houston",
+    "games_played": 30,
+    "mpg": 14.5,
+    "ppg": 3.8,
+    "rpg": 2.1,
+    "apg": 0.6,
+    "espn_id": "5041942"
+  },
+  {
+    "player": "Kalifa Sakho",
+    "team": "Houston",
+    "games_played": 31,
+    "mpg": 13.0,
+    "ppg": 2.5,
+    "rpg": 2.6,
+    "apg": 0.1,
+    "espn_id": "5176274"
+  },
+  {
+    "player": "Ramon Walker Jr.",
+    "team": "Houston",
+    "games_played": 27,
+    "mpg": 11.0,
+    "ppg": 2.5,
+    "rpg": 2.0,
+    "apg": 0.5,
+    "espn_id": "4708176"
+  },
+  {
+    "player": "Kordel Jefferson",
+    "team": "Houston",
+    "games_played": 3,
+    "mpg": 3.7,
+    "ppg": 1.3,
+    "rpg": 0.7,
+    "apg": 0.3,
+    "espn_id": "5070506"
+  },
+  {
+    "player": "Cedric Lath",
+    "team": "Houston",
+    "games_played": 19,
+    "mpg": 4.2,
+    "ppg": 0.5,
+    "rpg": 0.7,
+    "apg": 0.1,
+    "espn_id": "5117524"
+  },
+  {
+    "player": "Jacob McFarland",
+    "team": "Houston",
+    "games_played": 3,
+    "mpg": 3.3,
+    "ppg": 0.0,
+    "rpg": 1.0,
+    "apg": 0.0,
+    "espn_id": "5095062"
+  }
+]

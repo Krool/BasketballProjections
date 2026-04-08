@@ -1,0 +1,182 @@
+[
+  {
+    "player": "Labaron Philon Jr.",
+    "team": "Alabama",
+    "games_played": 30,
+    "mpg": 30.3,
+    "ppg": 21.7,
+    "rpg": 3.2,
+    "apg": 4.7,
+    "espn_id": "4873090"
+  },
+  {
+    "player": "Aden Holloway",
+    "team": "Alabama",
+    "games_played": 28,
+    "mpg": 28.4,
+    "ppg": 16.8,
+    "rpg": 2.8,
+    "apg": 3.8,
+    "espn_id": "4684276"
+  },
+  {
+    "player": "Latrell Wrightsell",
+    "team": "Alabama",
+    "games_played": 24,
+    "mpg": 26.9,
+    "ppg": 12.8,
+    "rpg": 3.1,
+    "apg": 2.0,
+    "espn_id": "4702484"
+  },
+  {
+    "player": "Amari Allen",
+    "team": "Alabama",
+    "games_played": 29,
+    "mpg": 28.4,
+    "ppg": 11.7,
+    "rpg": 7.1,
+    "apg": 3.1,
+    "espn_id": "5101833"
+  },
+  {
+    "player": "Aiden Sherrell",
+    "team": "Alabama",
+    "games_played": 31,
+    "mpg": 23.6,
+    "ppg": 11.1,
+    "rpg": 6.1,
+    "apg": 1.1,
+    "espn_id": "4873184"
+  },
+  {
+    "player": "Charles Bediako",
+    "team": "Alabama",
+    "games_played": 5,
+    "mpg": 21.6,
+    "ppg": 10.0,
+    "rpg": 4.6,
+    "apg": 0.2,
+    "espn_id": "4565203"
+  },
+  {
+    "player": "Houston Mallette",
+    "team": "Alabama",
+    "games_played": 32,
+    "mpg": 23.3,
+    "ppg": 6.6,
+    "rpg": 4.5,
+    "apg": 1.1,
+    "espn_id": "4709141"
+  },
+  {
+    "player": "Taylor Bol Bowen",
+    "team": "Alabama",
+    "games_played": 27,
+    "mpg": 18.7,
+    "ppg": 6.2,
+    "rpg": 4.3,
+    "apg": 0.4,
+    "espn_id": "4685658"
+  },
+  {
+    "player": "London Jemison",
+    "team": "Alabama",
+    "games_played": 30,
+    "mpg": 14.9,
+    "ppg": 6.2,
+    "rpg": 3.4,
+    "apg": 0.4,
+    "espn_id": "5144139"
+  },
+  {
+    "player": "Jalil Bethea",
+    "team": "Alabama",
+    "games_played": 23,
+    "mpg": 8.3,
+    "ppg": 4.4,
+    "rpg": 1.7,
+    "apg": 0.6,
+    "espn_id": "5101656"
+  },
+  {
+    "player": "Keitenn Bristow",
+    "team": "Alabama",
+    "games_played": 10,
+    "mpg": 12.5,
+    "ppg": 3.6,
+    "rpg": 4.0,
+    "apg": 0.5,
+    "espn_id": "5241440"
+  },
+  {
+    "player": "Davion Hannah",
+    "team": "Alabama",
+    "games_played": 10,
+    "mpg": 12.7,
+    "ppg": 3.3,
+    "rpg": 1.9,
+    "apg": 0.8,
+    "espn_id": "5101805"
+  },
+  {
+    "player": "Noah Williamson",
+    "team": "Alabama",
+    "games_played": 30,
+    "mpg": 8.3,
+    "ppg": 1.1,
+    "rpg": 1.5,
+    "apg": 0.3,
+    "espn_id": "5105668"
+  },
+  {
+    "player": "Collins Onyejiaka",
+    "team": "Alabama",
+    "games_played": 2,
+    "mpg": 5.5,
+    "ppg": 1.0,
+    "rpg": 3.0,
+    "apg": 0.0,
+    "espn_id": "5311499"
+  },
+  {
+    "player": "Jacob Martin",
+    "team": "Alabama",
+    "games_played": 8,
+    "mpg": 1.4,
+    "ppg": 0.4,
+    "rpg": 0.1,
+    "apg": 0.1,
+    "espn_id": "5325011"
+  },
+  {
+    "player": "Preston Murphy Jr.",
+    "team": "Alabama",
+    "games_played": 6,
+    "mpg": 1.7,
+    "ppg": 0.3,
+    "rpg": 0.3,
+    "apg": 0.3,
+    "espn_id": "4433289"
+  },
+  {
+    "player": "Klark James",
+    "team": "Alabama",
+    "games_played": 1,
+    "mpg": 1.0,
+    "ppg": 0.0,
+    "rpg": 0.0,
+    "apg": 0.0,
+    "espn_id": "5325013"
+  },
+  {
+    "player": "Jack Fagan",
+    "team": "Alabama",
+    "games_played": 1,
+    "mpg": 1.0,
+    "ppg": 0.0,
+    "rpg": 0.0,
+    "apg": 0.0,
+    "espn_id": "5325014"
+  }
+]

@@ -1,0 +1,132 @@
+[
+  {
+    "player": "Elijah Tucker",
+    "team": "LIU",
+    "games_played": 32,
+    "mpg": 26.3,
+    "ppg": 12.5,
+    "rpg": 6.8,
+    "apg": 1.1,
+    "espn_id": "4684309"
+  },
+  {
+    "player": "Jacoi Hutchinson",
+    "team": "LIU",
+    "games_played": 31,
+    "mpg": 28.4,
+    "ppg": 12.3,
+    "rpg": 3.3,
+    "apg": 3.2,
+    "espn_id": "4845378"
+  },
+  {
+    "player": "Johan Nziemi",
+    "team": "LIU",
+    "games_played": 29,
+    "mpg": 26.0,
+    "ppg": 10.6,
+    "rpg": 6.0,
+    "apg": 1.8,
+    "espn_id": "5175666"
+  },
+  {
+    "player": "Redd Thompson Jr.",
+    "team": "LIU",
+    "games_played": 32,
+    "mpg": 22.1,
+    "ppg": 10.3,
+    "rpg": 1.6,
+    "apg": 2.0,
+    "espn_id": "5101649"
+  },
+  {
+    "player": "Emanuel Richards",
+    "team": "LIU",
+    "games_played": 32,
+    "mpg": 25.9,
+    "ppg": 9.7,
+    "rpg": 3.4,
+    "apg": 1.1,
+    "espn_id": "5175665"
+  },
+  {
+    "player": "Alphonzo Billups III",
+    "team": "LIU",
+    "games_played": 32,
+    "mpg": 23.1,
+    "ppg": 8.1,
+    "rpg": 2.8,
+    "apg": 1.3,
+    "espn_id": "5106039"
+  },
+  {
+    "player": "Jaylen Benard",
+    "team": "LIU",
+    "games_played": 32,
+    "mpg": 19.9,
+    "ppg": 7.3,
+    "rpg": 3.7,
+    "apg": 0.9,
+    "espn_id": "5175669"
+  },
+  {
+    "player": "Elijah Jones",
+    "team": "LIU",
+    "games_played": 27,
+    "mpg": 17.3,
+    "ppg": 3.9,
+    "rpg": 3.6,
+    "apg": 0.7,
+    "espn_id": "5176811"
+  },
+  {
+    "player": "Elijah Kelly",
+    "team": "LIU",
+    "games_played": 31,
+    "mpg": 10.9,
+    "ppg": 2.3,
+    "rpg": 1.7,
+    "apg": 0.4,
+    "espn_id": "5313508"
+  },
+  {
+    "player": "KJ McClurg",
+    "team": "LIU",
+    "games_played": 4,
+    "mpg": 14.0,
+    "ppg": 2.0,
+    "rpg": 2.3,
+    "apg": 0.5,
+    "espn_id": "4701156"
+  },
+  {
+    "player": "Jaylin Payne",
+    "team": "LIU",
+    "games_played": 29,
+    "mpg": 7.9,
+    "ppg": 1.8,
+    "rpg": 1.7,
+    "apg": 0.2,
+    "espn_id": "5313511"
+  },
+  {
+    "player": "Jerome Williams",
+    "team": "LIU",
+    "games_played": 10,
+    "mpg": 4.5,
+    "ppg": 1.2,
+    "rpg": 0.2,
+    "apg": 0.5,
+    "espn_id": "5313512"
+  },
+  {
+    "player": "Isaiah Kalala",
+    "team": "LIU",
+    "games_played": 15,
+    "mpg": 3.3,
+    "ppg": 0.9,
+    "rpg": 0.8,
+    "apg": 0.1,
+    "espn_id": "5313509"
+  }
+]

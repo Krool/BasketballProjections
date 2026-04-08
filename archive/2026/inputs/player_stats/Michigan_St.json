@@ -1,0 +1,142 @@
+[
+  {
+    "player": "Jeremy Fears Jr.",
+    "team": "Michigan St.",
+    "games_played": 32,
+    "mpg": 32.2,
+    "ppg": 15.7,
+    "rpg": 2.4,
+    "apg": 9.2,
+    "espn_id": "4711255"
+  },
+  {
+    "player": "Jaxon Kohler",
+    "team": "Michigan St.",
+    "games_played": 32,
+    "mpg": 27.8,
+    "ppg": 12.7,
+    "rpg": 9.0,
+    "apg": 1.3,
+    "espn_id": "5105815"
+  },
+  {
+    "player": "Coen Carr",
+    "team": "Michigan St.",
+    "games_played": 32,
+    "mpg": 29.0,
+    "ppg": 11.6,
+    "rpg": 5.4,
+    "apg": 1.3,
+    "espn_id": "4872740"
+  },
+  {
+    "player": "Carson Cooper",
+    "team": "Michigan St.",
+    "games_played": 32,
+    "mpg": 26.4,
+    "ppg": 10.8,
+    "rpg": 7.1,
+    "apg": 1.4,
+    "espn_id": "5105817"
+  },
+  {
+    "player": "Kur Teng",
+    "team": "Michigan St.",
+    "games_played": 32,
+    "mpg": 17.5,
+    "ppg": 7.7,
+    "rpg": 2.1,
+    "apg": 1.0,
+    "espn_id": "4873111"
+  },
+  {
+    "player": "Jordan Scott",
+    "team": "Michigan St.",
+    "games_played": 32,
+    "mpg": 20.7,
+    "ppg": 5.9,
+    "rpg": 3.1,
+    "apg": 1.2,
+    "espn_id": "5196931"
+  },
+  {
+    "player": "Divine Ugochukwu",
+    "team": "Michigan St.",
+    "games_played": 22,
+    "mpg": 16.1,
+    "ppg": 5.1,
+    "rpg": 1.5,
+    "apg": 1.5,
+    "espn_id": "5060733"
+  },
+  {
+    "player": "Cam Ward",
+    "team": "Michigan St.",
+    "games_played": 31,
+    "mpg": 15.2,
+    "ppg": 5.0,
+    "rpg": 4.3,
+    "apg": 0.3,
+    "espn_id": "5101798"
+  },
+  {
+    "player": "Trey Fort",
+    "team": "Michigan St.",
+    "games_played": 30,
+    "mpg": 10.0,
+    "ppg": 3.8,
+    "rpg": 1.2,
+    "apg": 0.6,
+    "espn_id": "4703411"
+  },
+  {
+    "player": "Jesse McCulloch",
+    "team": "Michigan St.",
+    "games_played": 27,
+    "mpg": 7.5,
+    "ppg": 2.4,
+    "rpg": 1.3,
+    "apg": 0.2,
+    "espn_id": "5239562"
+  },
+  {
+    "player": "Nick Sanders",
+    "team": "Michigan St.",
+    "games_played": 13,
+    "mpg": 1.6,
+    "ppg": 0.5,
+    "rpg": 0.1,
+    "apg": 0.1,
+    "espn_id": "5105818"
+  },
+  {
+    "player": "Brennan Walton",
+    "team": "Michigan St.",
+    "games_played": 11,
+    "mpg": 1.5,
+    "ppg": 0.5,
+    "rpg": 0.4,
+    "apg": 0.0,
+    "espn_id": "5239563"
+  },
+  {
+    "player": "Denham Wojcik",
+    "team": "Michigan St.",
+    "games_played": 28,
+    "mpg": 5.5,
+    "ppg": 0.4,
+    "rpg": 0.3,
+    "apg": 1.2,
+    "espn_id": "4610138"
+  },
+  {
+    "player": "Colin Walton",
+    "team": "Michigan St.",
+    "games_played": 11,
+    "mpg": 1.4,
+    "ppg": 0.3,
+    "rpg": 0.3,
+    "apg": 0.0,
+    "espn_id": "5239564"
+  }
+]

@@ -1,0 +1,132 @@
+[
+  {
+    "player": "Paul McNeil Jr.",
+    "team": "N.C. State",
+    "games_played": 33,
+    "mpg": 28.5,
+    "ppg": 13.9,
+    "rpg": 3.6,
+    "apg": 0.8,
+    "espn_id": "4873151"
+  },
+  {
+    "player": "Quadir Copeland",
+    "team": "N.C. State",
+    "games_played": 33,
+    "mpg": 28.6,
+    "ppg": 13.9,
+    "rpg": 3.5,
+    "apg": 6.6,
+    "espn_id": "4683860"
+  },
+  {
+    "player": "Ven-Allen Lubin",
+    "team": "N.C. State",
+    "games_played": 33,
+    "mpg": 28.3,
+    "ppg": 13.9,
+    "rpg": 7.2,
+    "apg": 0.8,
+    "espn_id": "4684799"
+  },
+  {
+    "player": "Darrion Williams",
+    "team": "N.C. State",
+    "games_played": 32,
+    "mpg": 29.8,
+    "ppg": 13.8,
+    "rpg": 4.6,
+    "apg": 2.8,
+    "espn_id": "4937074"
+  },
+  {
+    "player": "Tre Holloman",
+    "team": "N.C. State",
+    "games_played": 31,
+    "mpg": 25.6,
+    "ppg": 9.3,
+    "rpg": 1.8,
+    "apg": 2.0,
+    "espn_id": "5105816"
+  },
+  {
+    "player": "Matt Able",
+    "team": "N.C. State",
+    "games_played": 33,
+    "mpg": 21.6,
+    "ppg": 9.0,
+    "rpg": 3.5,
+    "apg": 1.0,
+    "espn_id": "5196877"
+  },
+  {
+    "player": "Jerry Deng",
+    "team": "N.C. State",
+    "games_played": 8,
+    "mpg": 12.6,
+    "ppg": 6.1,
+    "rpg": 2.1,
+    "apg": 0.4,
+    "espn_id": "5174958"
+  },
+  {
+    "player": "Alyn Breed",
+    "team": "N.C. State",
+    "games_played": 21,
+    "mpg": 14.8,
+    "ppg": 4.5,
+    "rpg": 1.9,
+    "apg": 1.3,
+    "espn_id": "4585590"
+  },
+  {
+    "player": "Terrance Arceneaux",
+    "team": "N.C. State",
+    "games_played": 29,
+    "mpg": 16.1,
+    "ppg": 3.9,
+    "rpg": 2.7,
+    "apg": 0.5,
+    "espn_id": "5106059"
+  },
+  {
+    "player": "Musa Sagnia",
+    "team": "N.C. State",
+    "games_played": 33,
+    "mpg": 12.5,
+    "ppg": 2.4,
+    "rpg": 2.8,
+    "apg": 0.2,
+    "espn_id": "5311995"
+  },
+  {
+    "player": "Scottie Ebube",
+    "team": "N.C. State",
+    "games_played": 16,
+    "mpg": 4.2,
+    "ppg": 1.2,
+    "rpg": 1.0,
+    "apg": 0.0,
+    "espn_id": "4897482"
+  },
+  {
+    "player": "Jordan Snell",
+    "team": "N.C. State",
+    "games_played": 8,
+    "mpg": 2.3,
+    "ppg": 0.8,
+    "rpg": 0.3,
+    "apg": 0.3,
+    "espn_id": "5105430"
+  },
+  {
+    "player": "Colt Langdon",
+    "team": "N.C. State",
+    "games_played": 6,
+    "mpg": 2.8,
+    "ppg": 0.3,
+    "rpg": 0.2,
+    "apg": 0.0,
+    "espn_id": "5142707"
+  }
+]

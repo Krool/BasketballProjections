@@ -1,0 +1,122 @@
+[
+  {
+    "player": "Cameron Boozer",
+    "team": "Duke",
+    "games_played": 34,
+    "mpg": 33.0,
+    "ppg": 22.5,
+    "rpg": 10.2,
+    "apg": 4.2,
+    "espn_id": "5041935"
+  },
+  {
+    "player": "Isaiah Evans",
+    "team": "Duke",
+    "games_played": 34,
+    "mpg": 27.9,
+    "ppg": 14.9,
+    "rpg": 3.1,
+    "apg": 1.4,
+    "espn_id": "5061585"
+  },
+  {
+    "player": "Patrick Ngongba II",
+    "team": "Duke",
+    "games_played": 29,
+    "mpg": 22.4,
+    "ppg": 10.7,
+    "rpg": 6.0,
+    "apg": 1.9,
+    "espn_id": "4873209"
+  },
+  {
+    "player": "Caleb Foster",
+    "team": "Duke",
+    "games_played": 31,
+    "mpg": 25.4,
+    "ppg": 8.5,
+    "rpg": 3.6,
+    "apg": 2.8,
+    "espn_id": "4711256"
+  },
+  {
+    "player": "Cayden Boozer",
+    "team": "Duke",
+    "games_played": 34,
+    "mpg": 21.8,
+    "ppg": 7.1,
+    "rpg": 2.1,
+    "apg": 2.8,
+    "espn_id": "5041937"
+  },
+  {
+    "player": "Dame Sarr",
+    "team": "Duke",
+    "games_played": 34,
+    "mpg": 22.9,
+    "ppg": 6.3,
+    "rpg": 3.7,
+    "apg": 1.0,
+    "espn_id": "5287474"
+  },
+  {
+    "player": "Nikolas Khamenia",
+    "team": "Duke",
+    "games_played": 34,
+    "mpg": 19.5,
+    "ppg": 5.8,
+    "rpg": 3.4,
+    "apg": 1.1,
+    "espn_id": "5144124"
+  },
+  {
+    "player": "Maliq Brown",
+    "team": "Duke",
+    "games_played": 34,
+    "mpg": 19.9,
+    "ppg": 4.8,
+    "rpg": 4.9,
+    "apg": 1.8,
+    "espn_id": "5105337"
+  },
+  {
+    "player": "Darren Harris",
+    "team": "Duke",
+    "games_played": 32,
+    "mpg": 10.3,
+    "ppg": 3.7,
+    "rpg": 0.9,
+    "apg": 0.4,
+    "espn_id": "4873107"
+  },
+  {
+    "player": "Ifeanyi Ufochukwu",
+    "team": "Duke",
+    "games_played": 5,
+    "mpg": 4.4,
+    "ppg": 0.8,
+    "rpg": 0.6,
+    "apg": 0.0,
+    "espn_id": "5107141"
+  },
+  {
+    "player": "Cameron Sheffield",
+    "team": "Duke",
+    "games_played": 14,
+    "mpg": 3.0,
+    "ppg": 0.6,
+    "rpg": 0.5,
+    "apg": 0.1,
+    "espn_id": "4432321"
+  },
+  {
+    "player": "Jack Scott",
+    "team": "Duke",
+    "games_played": 14,
+    "mpg": 2.7,
+    "ppg": 0.6,
+    "rpg": 0.9,
+    "apg": 0.1,
+    "espn_id": "4888720"
+  }
+]

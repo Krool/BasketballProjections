@@ -1,0 +1,132 @@
+[
+  {
+    "player": "Dailyn Swain",
+    "team": "Texas",
+    "games_played": 32,
+    "mpg": 32.2,
+    "ppg": 17.8,
+    "rpg": 7.6,
+    "apg": 3.4,
+    "espn_id": "4848625"
+  },
+  {
+    "player": "Matas Vokietaitis",
+    "team": "Texas",
+    "games_played": 32,
+    "mpg": 25.8,
+    "ppg": 15.5,
+    "rpg": 6.8,
+    "apg": 0.6,
+    "espn_id": "5239838"
+  },
+  {
+    "player": "Tramon Mark",
+    "team": "Texas",
+    "games_played": 32,
+    "mpg": 27.7,
+    "ppg": 13.5,
+    "rpg": 3.4,
+    "apg": 1.9,
+    "espn_id": "4432243"
+  },
+  {
+    "player": "Jordan Pope",
+    "team": "Texas",
+    "games_played": 32,
+    "mpg": 28.5,
+    "ppg": 13.3,
+    "rpg": 2.2,
+    "apg": 1.9,
+    "espn_id": "5105624"
+  },
+  {
+    "player": "Camden Heide",
+    "team": "Texas",
+    "games_played": 31,
+    "mpg": 23.1,
+    "ppg": 6.2,
+    "rpg": 2.7,
+    "apg": 0.6,
+    "espn_id": "5105855"
+  },
+  {
+    "player": "Simeon Wilcher",
+    "team": "Texas",
+    "games_played": 32,
+    "mpg": 19.7,
+    "ppg": 6.2,
+    "rpg": 1.8,
+    "apg": 1.8,
+    "espn_id": "4683785"
+  },
+  {
+    "player": "Chendall Weaver",
+    "team": "Texas",
+    "games_played": 32,
+    "mpg": 21.1,
+    "ppg": 5.7,
+    "rpg": 4.1,
+    "apg": 1.2,
+    "espn_id": "5105486"
+  },
+  {
+    "player": "Nic Codie",
+    "team": "Texas",
+    "games_played": 20,
+    "mpg": 15.0,
+    "ppg": 4.0,
+    "rpg": 3.2,
+    "apg": 0.7,
+    "espn_id": "5149083"
+  },
+  {
+    "player": "Lassina Traore",
+    "team": "Texas",
+    "games_played": 23,
+    "mpg": 15.6,
+    "ppg": 3.4,
+    "rpg": 5.1,
+    "apg": 0.6,
+    "espn_id": "4897052"
+  },
+  {
+    "player": "Declan Duru Jr.",
+    "team": "Texas",
+    "games_played": 12,
+    "mpg": 6.9,
+    "ppg": 1.3,
+    "rpg": 1.2,
+    "apg": 0.0,
+    "espn_id": "5311528"
+  },
+  {
+    "player": "Anthon McDermott",
+    "team": "Texas",
+    "games_played": 7,
+    "mpg": 2.9,
+    "ppg": 0.9,
+    "rpg": 0.6,
+    "apg": 0.3,
+    "espn_id": "5191718"
+  },
+  {
+    "player": "Brandon Taylor",
+    "team": "Texas",
+    "games_played": 4,
+    "mpg": 1.0,
+    "ppg": 0.8,
+    "rpg": 0.5,
+    "apg": 0.0,
+    "espn_id": "5176687"
+  },
+  {
+    "player": "Cole Bott",
+    "team": "Texas",
+    "games_played": 6,
+    "mpg": 1.3,
+    "ppg": 0.5,
+    "rpg": 0.2,
+    "apg": 0.2,
+    "espn_id": "4897760"
+  }
+]

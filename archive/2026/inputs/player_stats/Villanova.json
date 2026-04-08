@@ -1,0 +1,132 @@
+[
+  {
+    "player": "Tyler Perkins",
+    "team": "Villanova",
+    "games_played": 32,
+    "mpg": 29.6,
+    "ppg": 13.7,
+    "rpg": 5.4,
+    "apg": 1.6,
+    "espn_id": "5182412"
+  },
+  {
+    "player": "Duke Brennan",
+    "team": "Villanova",
+    "games_played": 31,
+    "mpg": 30.9,
+    "ppg": 12.4,
+    "rpg": 10.3,
+    "apg": 2.0,
+    "espn_id": "4870569"
+  },
+  {
+    "player": "Acaden Lewis",
+    "team": "Villanova",
+    "games_played": 32,
+    "mpg": 30.3,
+    "ppg": 12.3,
+    "rpg": 3.1,
+    "apg": 5.3,
+    "espn_id": "5144105"
+  },
+  {
+    "player": "Bryce Lindsay",
+    "team": "Villanova",
+    "games_played": 32,
+    "mpg": 28.3,
+    "ppg": 11.9,
+    "rpg": 2.1,
+    "apg": 2.0,
+    "espn_id": "5174291"
+  },
+  {
+    "player": "Devin Askew",
+    "team": "Villanova",
+    "games_played": 32,
+    "mpg": 23.1,
+    "ppg": 10.0,
+    "rpg": 2.6,
+    "apg": 2.1,
+    "espn_id": "4702467"
+  },
+  {
+    "player": "Matt Hodge",
+    "team": "Villanova",
+    "games_played": 29,
+    "mpg": 27.6,
+    "ppg": 9.2,
+    "rpg": 3.6,
+    "apg": 0.7,
+    "espn_id": "5175588"
+  },
+  {
+    "player": "Malachi Palmer",
+    "team": "Villanova",
+    "games_played": 32,
+    "mpg": 18.2,
+    "ppg": 4.4,
+    "rpg": 1.7,
+    "apg": 0.6,
+    "espn_id": "5239554"
+  },
+  {
+    "player": "Chris Jeffrey",
+    "team": "Villanova",
+    "games_played": 21,
+    "mpg": 8.5,
+    "ppg": 3.2,
+    "rpg": 1.1,
+    "apg": 1.0,
+    "espn_id": "5221332"
+  },
+  {
+    "player": "Tafara Gapare",
+    "team": "Villanova",
+    "games_played": 9,
+    "mpg": 16.3,
+    "ppg": 2.9,
+    "rpg": 2.9,
+    "apg": 0.4,
+    "espn_id": "5106034"
+  },
+  {
+    "player": "Wade Chiddick",
+    "team": "Villanova",
+    "games_played": 2,
+    "mpg": 1.5,
+    "ppg": 1.5,
+    "rpg": 0.0,
+    "apg": 0.0,
+    "espn_id": "5240540"
+  },
+  {
+    "player": "Zion Stanford",
+    "team": "Villanova",
+    "games_played": 10,
+    "mpg": 5.1,
+    "ppg": 1.3,
+    "rpg": 0.5,
+    "apg": 0.4,
+    "espn_id": "5175067"
+  },
+  {
+    "player": "Braden Pierce",
+    "team": "Villanova",
+    "games_played": 29,
+    "mpg": 6.5,
+    "ppg": 1.2,
+    "rpg": 0.9,
+    "apg": 0.5,
+    "espn_id": "5142360"
+  },
+  {
+    "player": "Malcolm Flaggs",
+    "team": "Villanova",
+    "games_played": 1,
+    "mpg": 2.0,
+    "ppg": 0.0,
+    "rpg": 1.0,
+    "apg": 0.0,
+    "espn_id": "5105576"
+  }
+]

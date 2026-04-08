@@ -1,0 +1,152 @@
+[
+  {
+    "player": "Tyler Tanner",
+    "team": "Vanderbilt",
+    "games_played": 34,
+    "mpg": 33.3,
+    "ppg": 19.1,
+    "rpg": 3.6,
+    "apg": 5.1,
+    "espn_id": "5187600"
+  },
+  {
+    "player": "Duke Miles",
+    "team": "Vanderbilt",
+    "games_played": 26,
+    "mpg": 29.5,
+    "ppg": 16.5,
+    "rpg": 3.2,
+    "apg": 4.5,
+    "espn_id": "4702049"
+  },
+  {
+    "player": "Tyler Nickel",
+    "team": "Vanderbilt",
+    "games_played": 34,
+    "mpg": 30.4,
+    "ppg": 13.5,
+    "rpg": 3.2,
+    "apg": 1.2,
+    "espn_id": "4838721"
+  },
+  {
+    "player": "AK Okereke",
+    "team": "Vanderbilt",
+    "games_played": 34,
+    "mpg": 25.8,
+    "ppg": 9.7,
+    "rpg": 3.4,
+    "apg": 2.0,
+    "espn_id": "5114350"
+  },
+  {
+    "player": "Devin McGlockton",
+    "team": "Vanderbilt",
+    "games_played": 34,
+    "mpg": 25.0,
+    "ppg": 9.6,
+    "rpg": 6.7,
+    "apg": 1.3,
+    "espn_id": "4791227"
+  },
+  {
+    "player": "Jalen Washington",
+    "team": "Vanderbilt",
+    "games_played": 34,
+    "mpg": 20.9,
+    "ppg": 9.1,
+    "rpg": 5.7,
+    "apg": 0.9,
+    "espn_id": "4433625"
+  },
+  {
+    "player": "Frankie Collins",
+    "team": "Vanderbilt",
+    "games_played": 9,
+    "mpg": 20.9,
+    "ppg": 7.8,
+    "rpg": 4.2,
+    "apg": 4.7,
+    "espn_id": "4433616"
+  },
+  {
+    "player": "Tyler Harris",
+    "team": "Vanderbilt",
+    "games_played": 30,
+    "mpg": 12.7,
+    "ppg": 5.5,
+    "rpg": 2.3,
+    "apg": 0.3,
+    "espn_id": "5176497"
+  },
+  {
+    "player": "Chandler Bing",
+    "team": "Vanderbilt",
+    "games_played": 34,
+    "mpg": 14.4,
+    "ppg": 3.6,
+    "rpg": 1.5,
+    "apg": 0.4,
+    "espn_id": "5311759"
+  },
+  {
+    "player": "Mike James",
+    "team": "Vanderbilt",
+    "games_played": 22,
+    "mpg": 10.6,
+    "ppg": 1.5,
+    "rpg": 2.0,
+    "apg": 0.7,
+    "espn_id": "4684164"
+  },
+  {
+    "player": "Jayden Leverett",
+    "team": "Vanderbilt",
+    "games_played": 26,
+    "mpg": 4.0,
+    "ppg": 1.0,
+    "rpg": 1.2,
+    "apg": 0.0,
+    "espn_id": "5254169"
+  },
+  {
+    "player": "Jaylon Dean-Vines",
+    "team": "Vanderbilt",
+    "games_played": 10,
+    "mpg": 2.4,
+    "ppg": 0.9,
+    "rpg": 0.4,
+    "apg": 0.2,
+    "espn_id": "5221327"
+  },
+  {
+    "player": "Miles Keeffe",
+    "team": "Vanderbilt",
+    "games_played": 12,
+    "mpg": 1.7,
+    "ppg": 0.4,
+    "rpg": 0.3,
+    "apg": 0.1,
+    "espn_id": "5105281"
+  },
+  {
+    "player": "Mason Nicholson",
+    "team": "Vanderbilt",
+    "games_played": 5,
+    "mpg": 4.0,
+    "ppg": 0.4,
+    "rpg": 1.0,
+    "apg": 0.0,
+    "espn_id": "5106670"
+  },
+  {
+    "player": "Coleson Messer",
+    "team": "Vanderbilt",
+    "games_played": 7,
+    "mpg": 1.1,
+    "ppg": 0.0,
+    "rpg": 0.0,
+    "apg": 0.0,
+    "espn_id": "5174287"
+  }
+]

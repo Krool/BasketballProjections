@@ -1,0 +1,122 @@
+[
+  {
+    "player": "Malik Reneau",
+    "team": "Miami FL",
+    "games_played": 33,
+    "mpg": 28.5,
+    "ppg": 18.8,
+    "rpg": 6.6,
+    "apg": 2.0,
+    "espn_id": "5105798"
+  },
+  {
+    "player": "Tre Donaldson",
+    "team": "Miami FL",
+    "games_played": 33,
+    "mpg": 33.9,
+    "ppg": 16.5,
+    "rpg": 3.5,
+    "apg": 5.8,
+    "espn_id": "4837356"
+  },
+  {
+    "player": "Shelton Henderson",
+    "team": "Miami FL",
+    "games_played": 33,
+    "mpg": 30.8,
+    "ppg": 13.7,
+    "rpg": 4.8,
+    "apg": 2.0,
+    "espn_id": "5101809"
+  },
+  {
+    "player": "Tru Washington",
+    "team": "Miami FL",
+    "games_played": 29,
+    "mpg": 27.6,
+    "ppg": 12.1,
+    "rpg": 3.9,
+    "apg": 1.7,
+    "espn_id": "4845368"
+  },
+  {
+    "player": "Ernest Udeh Jr.",
+    "team": "Miami FL",
+    "games_played": 31,
+    "mpg": 27.8,
+    "ppg": 6.9,
+    "rpg": 9.3,
+    "apg": 0.5,
+    "espn_id": "5106261"
+  },
+  {
+    "player": "Dante Allen",
+    "team": "Miami FL",
+    "games_played": 28,
+    "mpg": 23.8,
+    "ppg": 6.4,
+    "rpg": 2.8,
+    "apg": 2.2,
+    "espn_id": "5142709"
+  },
+  {
+    "player": "Marcus Allen",
+    "team": "Miami FL",
+    "games_played": 8,
+    "mpg": 19.0,
+    "ppg": 5.3,
+    "rpg": 3.1,
+    "apg": 1.6,
+    "espn_id": "4869762"
+  },
+  {
+    "player": "Timotej Malovec",
+    "team": "Miami FL",
+    "games_played": 31,
+    "mpg": 15.7,
+    "ppg": 4.5,
+    "rpg": 1.4,
+    "apg": 0.9,
+    "espn_id": "5281366"
+  },
+  {
+    "player": "Noam Dovrat",
+    "team": "Miami FL",
+    "games_played": 26,
+    "mpg": 9.7,
+    "ppg": 3.8,
+    "rpg": 0.5,
+    "apg": 1.1,
+    "espn_id": "5311986"
+  },
+  {
+    "player": "Salih Altuntas",
+    "team": "Miami FL",
+    "games_played": 32,
+    "mpg": 7.8,
+    "ppg": 1.6,
+    "rpg": 1.9,
+    "apg": 0.1,
+    "espn_id": "5311984"
+  },
+  {
+    "player": "John Laboy II",
+    "team": "Miami FL",
+    "games_played": 6,
+    "mpg": 4.2,
+    "ppg": 1.2,
+    "rpg": 0.2,
+    "apg": 0.5,
+    "espn_id": "5311985"
+  },
+  {
+    "player": "Jordyn Kee",
+    "team": "Miami FL",
+    "games_played": 8,
+    "mpg": 3.0,
+    "ppg": 0.4,
+    "rpg": 0.4,
+    "apg": 0.4,
+    "espn_id": "5214525"
+  }
+]
