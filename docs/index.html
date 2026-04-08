@@ -1223,13 +1223,16 @@
   @media (max-width: 800px) {
     .history-grid-2 { grid-template-columns: 1fr; }
     .history-container { padding: 8px; max-width: 100%; }
-    .history-header { padding: 12px; }
-    .history-header h2 { font-size: 16px; }
-    .history-headline { font-size: 11px; gap: 8px; }
-    .history-card { padding: 10px; }
-    .history-card h3 { font-size: 13px; }
-    .history-card h3 .sub { display: block; margin-left: 0; margin-top: 2px; font-size: 10px; }
-    .history-tabs { padding: 3px; gap: 3px; flex-wrap: wrap; }
+    .history-header { padding: 10px 12px; margin-bottom: 12px; }
+    .history-header-top { margin-bottom: 6px; gap: 8px; }
+    .history-header h2 { font-size: 14px; }
+    .history-headline { font-size: 11px; gap: 6px; line-height: 1.4; }
+    .history-headline .pill { padding: 2px 6px; font-size: 11px; }
+    .history-card { padding: 10px; margin-bottom: 12px; }
+    .history-card h3 { font-size: 12px; margin-bottom: 8px; }
+    /* Hide sub-text on mobile entirely — section name is enough */
+    .history-card h3 .sub { display: none; }
+    .history-tabs { padding: 3px; gap: 3px; flex-wrap: wrap; margin-bottom: 12px; }
     .history-tabs button { padding: 6px 9px; font-size: 10px; flex: 1 1 auto; min-width: 0; }
     .history-table { font-size: 10px; width: 100%; table-layout: fixed; }
     .history-table th, .history-table td {
@@ -1244,6 +1247,11 @@
     .history-table .col-narrow { width: 36px; }
     .injury-tag { font-size: 8px; padding: 1px 3px; }
     .standings-rank { width: 18px; margin-right: 4px; }
+    .standings-bar { height: 3px; margin-top: 2px; }
+    /* Compact injury banner on mobile */
+    .injury-banner { padding: 8px 10px; margin-bottom: 10px; font-size: 11px; }
+    .injury-banner ul { margin: 4px 0 0 14px; }
+    .injury-banner li { line-height: 1.4; margin: 1px 0; }
   }
 
   .standings-rank { display: inline-block; width: 24px; text-align: right; color: var(--text-dim); margin-right: 8px; font-weight: 700; }
@@ -1591,11 +1599,10 @@
     <div class="history-card">
       <h3>Draft Replay <span class="sub">all picks in order, color-coded vs projection</span></h3>
       <div id="hist-injury-banner"></div>
-      <div style="margin-bottom:12px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
-        <select id="hist-picks-entry" style="background:var(--surface2);color:var(--text);border:1px solid var(--border);padding:6px 10px;border-radius:6px;font-size:13px;">
+      <div style="margin-bottom:10px;">
+        <select id="hist-picks-entry" style="background:var(--surface2);color:var(--text);border:1px solid var(--border);padding:6px 10px;border-radius:6px;font-size:12px;width:100%;max-width:240px;">
           <option value="">All entries</option>
         </select>
-        <span style="color:var(--text-dim);font-size:12px;">filter by entry</span>
       </div>
       <table class="history-table" id="hist-picks-table"></table>
     </div>
@@ -2987,10 +2994,8 @@ function renderArchive() {
   const champ = d.champion || '?';
   const finalist = (d.finalists || []).find(t => t !== champ) || '?';
   document.getElementById('hist-headline').innerHTML =
-    `<span class="pill gold">🏆 ${teamLabel(champ)}</span> beat <strong>${teamLabel(finalist)}</strong> in the championship` +
-    ` &nbsp;·&nbsp; <span class="pill green">${escapeHtml(winner)}</span> won the league with <strong>${winScore.toLocaleString()}</strong> pts` +
-    ` &nbsp;·&nbsp; ${d.n_drafted} players drafted` +
-    (d.n_in_tournament_injuries ? ` &nbsp;·&nbsp; ${d.n_in_tournament_injuries} in-tournament injury` : '');
+    `<span class="pill gold">🏆 ${teamLabel(champ)}</span> beat <strong>${teamLabel(finalist)}</strong>` +
+    ` &nbsp;·&nbsp; <span class="pill green">${escapeHtml(winner)}</span> won with <strong>${winScore.toLocaleString()}</strong> pts`;
   // Footer year
   const footerYear = document.getElementById('hist-footer-year');
   if (footerYear) footerYear.textContent = d.year || '';
@@ -3105,7 +3110,7 @@ function renderPicks() {
   if (banner) {
     if (injured.length) {
       banner.innerHTML = `<div class="injury-banner"><strong>🤕 In-tournament injuries (${injured.length})</strong><ul>` +
-        injured.map(p => `<li><strong>${escapeHtml(p.player)}</strong> (${teamLabel(p.team)}, drafted by ${escapeHtml(p.entry)}, pick ${p.pick}) — ${escapeHtml(p.in_tournament_injury)}</li>`).join('') +
+        injured.map(p => `<li><strong>${escapeHtml(p.player)}</strong> ${teamIcon(p.team)}<span class="dim"> · ${escapeHtml(p.entry)} · pick ${p.pick} · ${escapeHtml(p.in_tournament_injury)}</span></li>`).join('') +
         `</ul></div>`;
     } else {
       banner.innerHTML = '';
