@@ -106,13 +106,15 @@ def main():
         print("ERROR: No player stats available.")
         return
 
-    # Filter to bracket teams + First Four opponents not yet resolved
-    # Both teams in an undecided First Four matchup need to be draftable
-    FIRST_FOUR_PAIRS = [
-        # All First Four resolved:
-        # Texas beat N.C. State, Howard beat UMBC (March 17)
-        # Miami OH beat SMU, Prairie View A&M beat Lehigh (March 18)
-    ]
+    # Filter to bracket teams + First Four opponents not yet resolved.
+    # Both teams in an undecided First Four matchup need to be draftable.
+    # Matchups are configured in data/first_four.json — update before draft day.
+    first_four_path = os.path.join(DATA_DIR, 'first_four.json')
+    if os.path.exists(first_four_path):
+        with open(first_four_path) as f:
+            FIRST_FOUR_PAIRS = [tuple(p) for p in json.load(f).get('matchups', [])]
+    else:
+        FIRST_FOUR_PAIRS = []
     first_four_extras = set()
     for team_a, team_b in FIRST_FOUR_PAIRS:
         if team_a in bracket_teams and team_b not in bracket_teams:

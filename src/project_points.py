@@ -178,7 +178,11 @@ def project_player_points(player_stats_df, expected_games, round_context=None,
         df['projected_points'] = df.apply(compute_adjusted, axis=1)
     else:
         # Fallback: flat PPG * expected_games
-        df['projected_points'] = (df['ppg'] * df['expected_games'] * df['injury_multiplier']).round(1)
+        df['projected_points'] = (
+            df['ppg']
+            * (df['expected_games'] - df['games_missed']).clip(lower=0)
+            * df['fitness_mult']
+        ).round(1)
 
     # Sort by projected points
     df = df.sort_values('projected_points', ascending=False).reset_index(drop=True)

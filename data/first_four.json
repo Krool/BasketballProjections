@@ -1,0 +1,10 @@
+{
+  "_comment": "First Four play-in matchups. Once both teams in a pair are decided and the winner is in bracket.json, you can leave the pair here — main.py only acts on pairs where one team is in the bracket and the other is not. Update this each year before draft day.",
+  "year": 2026,
+  "matchups": [
+    ["Texas", "N.C. State"],
+    ["Howard", "UMBC"],
+    ["Miami OH", "SMU"],
+    ["Prairie View A&M", "Lehigh"]
+  ]
+}

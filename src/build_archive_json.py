@@ -38,10 +38,39 @@ def build_year(year: int, root: Path):
         print(f"  no archive for {year}")
         return None
 
+    # Schema validation: catch missing CSV columns early instead of producing
+    # silently-broken analysis. Imports here so the script can be run from any cwd.
+    from archive_schema import (
+        FIELDS_PLAYER_RESULTS, FIELDS_DRAFT_PICKS, FIELDS_ENTRY_TOTALS,
+        validate_csv_headers, validate_bracket_games,
+    )
+    schema_errors = []
+    for fname, expected in [
+        ("player_results.csv", FIELDS_PLAYER_RESULTS),
+        ("draft_picks.csv", FIELDS_DRAFT_PICKS),
+        ("entry_totals.csv", FIELDS_ENTRY_TOTALS),
+    ]:
+        path = yroot / "actual" / fname
+        if path.exists():
+            missing = validate_csv_headers(path, expected)
+            if missing:
+                schema_errors.append(f"  {fname}: missing columns {missing}")
+    if schema_errors:
+        print(f"SCHEMA WARNINGS for {year}:")
+        for e in schema_errors:
+            print(e)
+
     players = load_csv(yroot / "actual" / "player_results.csv")
     picks = load_csv(yroot / "actual" / "draft_picks.csv")
     totals = load_csv(yroot / "actual" / "entry_totals.csv")
     bracket = json.load(open(yroot / "actual" / "bracket_outcome.json"))
+
+    # Validate bracket games[] structure: should be 63 games with consistent advancement
+    bracket_problems = validate_bracket_games(bracket.get("games", []))
+    if bracket_problems:
+        print(f"BRACKET WARNINGS for {year}:")
+        for p in bracket_problems:
+            print(f"  {p}")
     proj = load_csv(yroot / "projections_final.csv")
     residuals = load_csv(yroot / "analysis" / "player_residuals.csv")
     calibration = load_csv(yroot / "analysis" / "calibration.csv")
@@ -160,6 +189,16 @@ def write_year(year: int, bundle: dict, root: Path):
     # an archived year's projections directly via the existing UI.
     yroot = root / "archive" / str(year)
     proj = load_csv(yroot / "projections_final.csv")
+    # Pull ESPN team IDs from the scraper module so the draft board can show team logos
+    import sys
+    sys.path.insert(0, str(root / "src"))
+    try:
+        from scrape_players_espn import ESPN_TEAM_IDS
+    except Exception as e:
+        print(f"  WARNING: Could not import ESPN_TEAM_IDS ({e}); team logos disabled")
+        ESPN_TEAM_IDS = {}
+    if not ESPN_TEAM_IDS:
+        print("  WARNING: ESPN_TEAM_IDS is empty; team logos will not appear")
     players_payload = []
     for p in proj:
         ppg = to_float(p.get("ppg"))
@@ -175,6 +214,7 @@ def write_year(year: int, bundle: dict, root: Path):
             "injury_status": p.get("injury_status") or "HEALTHY",
             "projected_points": round(ppg * eg, 1),
             "espn_id": p.get("espn_id", ""),
+            "espn_team_id": ESPN_TEAM_IDS.get(p.get("team"), ""),
         })
     players_out = {
         "generated_at": f"{year}-archive",

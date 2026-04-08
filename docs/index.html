@@ -1364,7 +1364,6 @@
     <span style="flex:1"></span>
     <button class="btn" id="export-btn">Export Draft</button>
     <button class="btn" id="export-all-btn">Export All</button>
-    <button class="btn" id="load-2026-btn" title="Load 2026 archived projections to re-draft against last year's values" onclick="loadArchiveDraft(2026)">↻ 2026</button>
     <button class="btn danger" id="reset-btn">Reset Draft</button>
   </div>
 </div>
@@ -1522,12 +1521,6 @@
     <div class="countdown-unit"><div class="num" id="cd-mins">--</div><div class="label">Minutes</div></div>
     <div class="countdown-unit"><div class="num" id="cd-secs">--</div><div class="label">Seconds</div></div>
   </div>
-  <div class="countdown-cta">
-    <button class="primary" onclick="loadArchiveDraft(2026)">Re-Draft 2026</button>
-  </div>
-  <p style="color:var(--text-dim);font-size:12px;margin-top:24px;max-width:480px;">
-    Re-Draft loads the 2026 projections into the draft board so you can run a mock or live draft against last year's player values.
-  </p>
 </div>
 
 <!-- ============================================================
@@ -2745,7 +2738,7 @@ function buildYearTabs(archivedYears) {
   const past = archivedYears.filter(y => y !== UPCOMING_YEAR).sort((a,b)=>b-a);
   past.forEach(y => {
     tabConfigs.push({ year: y, kind: 'summary', label: y + ' Summary' });
-    tabConfigs.push({ year: y, kind: 'redraft', label: y + ' Redraft' });
+    tabConfigs.push({ year: y, kind: 'redraft', label: y + ' Draft' });
   });
   tabs.innerHTML = '';
   tabConfigs.forEach(cfg => {
@@ -2994,8 +2987,11 @@ function escapeHtml(s) {
   return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
 }
 
-// ESPN team logo IDs — kept in sync with src/scrape_players_espn.py
-const TEAM_LOGO_IDS = {
+// ESPN team logo IDs — single-sourced from src/scrape_players_espn.py
+// via docs/team_logos.json (regenerated with `python src/build_team_logos.py`).
+// The inline fallback below covers the case where team_logos.json fails to load
+// (e.g., on first visit before the service worker has cached it).
+let TEAM_LOGO_IDS = {
   "Duke":150,"Arizona":12,"Michigan":130,"Florida":57,
   "Houston":248,"Iowa St.":66,"Purdue":2509,"Connecticut":41,
   "Illinois":356,"Michigan St.":127,"Gonzaga":2250,"Virginia":258,
@@ -3014,6 +3010,11 @@ const TEAM_LOGO_IDS = {
   "Siena":2561,"LIU":2344,
   "Howard":47,"Prairie View A&M":2504,"Texas":251,"Miami OH":193
 };
+// Fetch the canonical map and replace the inline fallback
+fetch('team_logos.json')
+  .then(r => r.ok ? r.json() : null)
+  .then(data => { if (data && typeof data === 'object') TEAM_LOGO_IDS = data; })
+  .catch(() => { /* keep inline fallback */ });
 
 function teamIcon(team, size) {
   const id = TEAM_LOGO_IDS[team];
