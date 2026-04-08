@@ -137,5 +137,14 @@ def detect(year: int):
 
 
 if __name__ == "__main__":
-    year = int(sys.argv[1]) if len(sys.argv) > 1 else 2026
-    detect(year)
+    import argparse
+    ap = argparse.ArgumentParser(
+        description="Heuristic scanner for in-tournament injury candidates. "
+                    "Reads archive/<year>/actual/player_results.csv and flags players "
+                    "by DNP, sustained-zero cliff, or massive underperformance signals. "
+                    "Writes injury_candidates.csv for manual review."
+    )
+    ap.add_argument("year", type=int, nargs="?", default=2026,
+                    help="Draft year to scan (default: 2026)")
+    args = ap.parse_args()
+    detect(args.year)

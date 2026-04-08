@@ -124,4 +124,11 @@ def compare():
 
 
 if __name__ == "__main__":
+    import argparse
+    ap = argparse.ArgumentParser(
+        description="Cross-year algorithm performance comparison. "
+                    "Scans archive/<year>/ directories and compares calibration, MAE, "
+                    "and persistent team bias across seasons. Useful from year 2+."
+    )
+    ap.parse_args()  # purely for --help; no other args
     compare()

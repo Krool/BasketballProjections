@@ -231,8 +231,10 @@ def save_projections(df, kenpom_df=None, bracket=None):
 
 def print_draft_board(df, top_n=50):
     """Print a formatted draft board."""
+    from datetime import datetime
+    season_year = datetime.now().year
     print(f"\n{'='*80}")
-    print(f"  MARCH MADNESS 2026 - PROJECTED SCORING LEADERS")
+    print(f"  MARCH MADNESS {season_year} - PROJECTED SCORING LEADERS")
     print(f"  Fantasy Draft Board (20 teams x 14 players = 280 picks)")
     print(f"{'='*80}\n")
 

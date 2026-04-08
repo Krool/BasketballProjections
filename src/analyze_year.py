@@ -380,5 +380,14 @@ def analyze(year: int):
 
 
 if __name__ == "__main__":
-    year = int(sys.argv[1]) if len(sys.argv) > 1 else 2026
-    analyze(year)
+    import argparse
+    ap = argparse.ArgumentParser(
+        description="Post-mortem analysis of a draft year. "
+                    "Joins archived projections against actual tournament outcomes "
+                    "and writes residuals, calibration, bias, and draft efficiency CSVs "
+                    "to archive/<year>/analysis/."
+    )
+    ap.add_argument("year", type=int, nargs="?", default=2026,
+                    help="Draft year to analyze (default: 2026)")
+    args = ap.parse_args()
+    analyze(args.year)

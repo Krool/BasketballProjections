@@ -51,7 +51,8 @@ def get_bracket_teams(bracket):
 
 def main():
     print("=" * 60)
-    print("  MARCH MADNESS 2026 SCORING PROJECTIONS PIPELINE")
+    season_year = datetime.now().year
+    print(f"  MARCH MADNESS {season_year} SCORING PROJECTIONS PIPELINE")
     print("=" * 60)
 
     # Step 1: Load KenPom data
@@ -220,8 +221,6 @@ def main():
             output_df_rounded = output_df_rounded.apply(add_recent, axis=1)
 
         # Add ESPN team IDs for logo URLs
-        for _, row in output_df_rounded.iterrows():
-            pass  # just need the column
         output_df_rounded['espn_team_id'] = output_df_rounded['team'].map(ESPN_TEAM_IDS)
 
         # Convert NaN to None for valid JSON (pandas NaN breaks browser JSON.parse)
