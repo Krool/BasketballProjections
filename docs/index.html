@@ -1122,6 +1122,8 @@
   .history-table td { padding: 8px 10px; border-bottom: 1px solid var(--border); }
   .history-table tbody tr:hover { background: var(--surface2); }
   .history-table .num { text-align: right; font-variant-numeric: tabular-nums; }
+  .history-table .col-rank { width: 36px; padding-left: 6px; padding-right: 6px; color: var(--text-dim); }
+  .history-table .col-narrow { width: 50px; }
   .history-table .pos { color: var(--green); }
   .history-table .neg { color: var(--red); }
   .history-table .dim { color: var(--text-dim); }
@@ -1224,6 +1226,9 @@
     .history-table th { font-size: 9px; letter-spacing: 0.2px; }
     /* Hide low-priority columns on mobile */
     .history-table .hide-mobile { display: none; }
+    /* Narrow rank/pick/# columns */
+    .history-table .col-rank { width: 28px; padding-left: 4px; padding-right: 4px; }
+    .history-table .col-narrow { width: 36px; }
     .injury-tag { font-size: 8px; padding: 1px 3px; }
     .standings-rank { width: 18px; margin-right: 4px; }
   }
@@ -3060,14 +3065,14 @@ function renderStandings() {
   const t = document.getElementById('hist-standings-table');
   const rows = archiveData.standings;
   const max = Math.max(...rows.map(r => r.total));
-  let html = '<thead><tr><th>#</th><th>Entry</th><th class="num">Total</th>' +
+  let html = '<thead><tr><th class="col-rank">#</th><th>Entry</th><th class="num">Total</th>' +
     '<th class="num hide-mobile">R64</th><th class="num hide-mobile">R32</th>' +
     '<th class="num hide-mobile">S16</th><th class="num hide-mobile">E8</th>' +
     '<th class="num hide-mobile">F4</th><th class="num hide-mobile">Final</th>' +
     '<th class="num hide-mobile">Left</th></tr></thead><tbody>';
   rows.forEach(r => {
     const goldClass = r.rank === 1 ? 'gold' : '';
-    html += `<tr><td><span class="standings-rank ${goldClass}">${r.rank}</span></td>` +
+    html += `<tr><td class="col-rank"><span class="standings-rank ${goldClass}">${r.rank}</span></td>` +
       `<td><strong>${escapeHtml(r.entry)}</strong>` +
       `<div class="standings-bar"><div class="standings-bar-fill" style="width:${(r.total/max*100).toFixed(0)}%"></div></div></td>` +
       `<td class="num"><strong>${r.total}</strong></td>` +
@@ -3107,10 +3112,10 @@ function renderPicks() {
   });
   let html = '<thead><tr>';
   const cols = [
-    ['pick','#','num'],
-    ['entry','Entry','hide-mobile'],
+    ['pick','#','num col-rank'],
+    ['entry','Entry',''],
     ['player','Player',''],
-    ['team','Team','hide-mobile'],
+    ['team','Team',''],
     ['proj_total','Proj','num hide-mobile'],
     ['actual_pts','Actual','num'],
     ['residual','+/-','num']
@@ -3119,10 +3124,10 @@ function renderPicks() {
   html += '</tr></thead><tbody>';
   rows.forEach(r => {
     const cls = r.alive ? 'alive' : (r.in_tournament_injury ? 'injured' : '');
-    html += `<tr class="${cls}"><td class="num dim">${r.pick}</td>` +
-      `<td class="hide-mobile">${escapeHtml(r.entry)}</td>` +
+    html += `<tr class="${cls}"><td class="num dim col-rank">${r.pick}</td>` +
+      `<td>${escapeHtml(r.entry)}</td>` +
       `<td><strong>${escapeHtml(r.player)}</strong>${injuryTag(r)}</td>` +
-      `<td class="dim hide-mobile">${teamLabel(r.team)}</td>` +
+      `<td class="dim">${teamLabel(r.team)}</td>` +
       `<td class="num dim hide-mobile">${r.proj_total != null ? r.proj_total : ''}</td>` +
       `<td class="num"><strong>${r.actual_pts}</strong></td>` +
       `<td class="num">${fmtSigned(r.residual)}</td></tr>`;
@@ -3142,14 +3147,14 @@ function renderPicks() {
 function renderPerformers() {
   const t = document.getElementById('hist-performers-table');
   const rows = archiveData.picks.slice().sort((a,b) => b.actual_pts - a.actual_pts).slice(0,50);
-  let html = '<thead><tr><th>#</th><th>Player</th>' +
-    '<th class="hide-mobile">Team</th><th>Drafted by</th>' +
+  let html = '<thead><tr><th class="col-rank">#</th><th>Player</th>' +
+    '<th>Team</th><th>Drafted by</th>' +
     '<th class="num hide-mobile">Pick</th><th class="num">Actual</th>' +
     '<th class="num hide-mobile">Proj</th></tr></thead><tbody>';
   rows.forEach((r,i) => {
-    html += `<tr class="${r.in_tournament_injury ? 'injured' : ''}"><td class="dim">${i+1}</td>` +
+    html += `<tr class="${r.in_tournament_injury ? 'injured' : ''}"><td class="dim col-rank">${i+1}</td>` +
       `<td><strong>${escapeHtml(r.player)}</strong>${injuryTag(r)}</td>` +
-      `<td class="dim hide-mobile">${teamLabel(r.team)}</td>` +
+      `<td class="dim">${teamLabel(r.team)}</td>` +
       `<td>${escapeHtml(r.entry)}</td>` +
       `<td class="num dim hide-mobile">${r.pick}</td>` +
       `<td class="num"><strong>${r.actual_pts}</strong></td>` +
@@ -3282,16 +3287,16 @@ function renderPickValue() {
     const sc = p.slots_change;
     const cls = sc > 0 ? 'pos' : 'neg';
     const sign = sc > 0 ? '+' : '';
-    return `<tr><td class="num dim">${p.pick}</td>` +
-      `<td class="num hide-mobile">${p.actual_rank}</td>` +
+    return `<tr><td class="num dim col-rank">${p.pick}</td>` +
+      `<td class="num hide-mobile col-narrow">${p.actual_rank}</td>` +
       `<td class="num ${cls}"><strong>${sign}${sc}</strong></td>` +
       `<td><strong>${escapeHtml(p.player)}</strong></td>` +
       `<td class="dim hide-mobile">${teamLabel(p.team)}</td>` +
       `<td class="num">${p.actual_pts}</td>` +
       `<td class="dim hide-mobile">${escapeHtml(p.entry)}</td></tr>`;
   }
-  const head = '<thead><tr><th class="num">Pick</th>' +
-    '<th class="num hide-mobile">Rank</th><th class="num">±</th>' +
+  const head = '<thead><tr><th class="num col-rank">Pick</th>' +
+    '<th class="num hide-mobile col-narrow">Rank</th><th class="num">±</th>' +
     '<th>Player</th><th class="hide-mobile">Team</th>' +
     '<th class="num">Pts</th><th class="hide-mobile">Entry</th></tr></thead>';
   document.getElementById('hist-risers-table').innerHTML = head + '<tbody>' + risers.map(row).join('') + '</tbody>';
