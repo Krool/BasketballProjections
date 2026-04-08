@@ -1035,14 +1035,19 @@
   .countdown-hero h2 span { color: var(--accent); }
   .countdown-hero .tagline { color: var(--text-dim); font-size: 16px; margin-bottom: 40px; max-width: 500px; }
   .countdown-clock {
-    display: flex; gap: 16px; margin-bottom: 40px; flex-wrap: wrap; justify-content: center;
+    display: flex; gap: 12px; margin-bottom: 40px; flex-wrap: wrap;
+    justify-content: center; max-width: 100%;
   }
   .countdown-unit {
     background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
-    padding: 20px 24px; min-width: 90px;
+    padding: 18px 20px; min-width: 70px; flex: 0 1 auto;
   }
-  .countdown-unit .num { font-size: 40px; font-weight: 700; color: var(--accent); line-height: 1; }
-  .countdown-unit .label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-dim); margin-top: 6px; }
+  .countdown-unit .num { font-size: 36px; font-weight: 700; color: var(--accent); line-height: 1; font-variant-numeric: tabular-nums; }
+  .countdown-unit .label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-dim); margin-top: 6px; }
+  @media (max-width: 380px) {
+    .countdown-unit { padding: 14px 12px; min-width: 60px; }
+    .countdown-unit .num { font-size: 28px; }
+  }
   .countdown-cta {
     display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;
   }
@@ -1081,10 +1086,8 @@
 
   .history-tabs {
     display: flex; gap: 4px; background: var(--surface); border: 1px solid var(--border);
-    border-radius: 8px; padding: 4px; margin-bottom: 20px; overflow-x: auto;
-    position: -webkit-sticky; position: sticky;
-    top: 0; z-index: 50;
-    backdrop-filter: blur(8px);
+    border-radius: 8px; padding: 4px; margin-bottom: 20px;
+    flex-wrap: wrap;
   }
   .history-tabs button {
     background: transparent; color: var(--text-dim); border: none; padding: 10px 16px;
@@ -1204,12 +1207,25 @@
   .history-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
   @media (max-width: 800px) {
     .history-grid-2 { grid-template-columns: 1fr; }
-    .history-container { padding: 12px; }
-    .history-header { padding: 16px; }
-    .history-card { padding: 14px; }
-    .history-tabs { font-size: 12px; }
-    .history-table { font-size: 12px; }
-    .history-table th, .history-table td { padding: 6px 6px; }
+    .history-container { padding: 8px; max-width: 100%; }
+    .history-header { padding: 12px; }
+    .history-header h2 { font-size: 16px; }
+    .history-headline { font-size: 11px; gap: 8px; }
+    .history-card { padding: 10px; }
+    .history-card h3 { font-size: 13px; }
+    .history-card h3 .sub { display: block; margin-left: 0; margin-top: 2px; font-size: 10px; }
+    .history-tabs { padding: 3px; gap: 3px; flex-wrap: wrap; }
+    .history-tabs button { padding: 6px 9px; font-size: 10px; flex: 1 1 auto; min-width: 0; }
+    .history-table { font-size: 10px; width: 100%; table-layout: fixed; }
+    .history-table th, .history-table td {
+      padding: 5px 4px;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .history-table th { font-size: 9px; letter-spacing: 0.2px; }
+    /* Hide low-priority columns on mobile */
+    .history-table .hide-mobile { display: none; }
+    .injury-tag { font-size: 8px; padding: 1px 3px; }
+    .standings-rank { width: 18px; margin-right: 4px; }
   }
 
   .standings-rank { display: inline-block; width: 24px; text-align: right; color: var(--text-dim); margin-right: 8px; font-weight: 700; }
@@ -3044,17 +3060,21 @@ function renderStandings() {
   const t = document.getElementById('hist-standings-table');
   const rows = archiveData.standings;
   const max = Math.max(...rows.map(r => r.total));
-  let html = '<thead><tr><th>Rank</th><th>Entry</th><th class="num">Total</th><th class="num">R64</th><th class="num">R32</th><th class="num">S16</th><th class="num">E8</th><th class="num">F4</th><th class="num">Final</th><th class="num">Left</th></tr></thead><tbody>';
+  let html = '<thead><tr><th>#</th><th>Entry</th><th class="num">Total</th>' +
+    '<th class="num hide-mobile">R64</th><th class="num hide-mobile">R32</th>' +
+    '<th class="num hide-mobile">S16</th><th class="num hide-mobile">E8</th>' +
+    '<th class="num hide-mobile">F4</th><th class="num hide-mobile">Final</th>' +
+    '<th class="num hide-mobile">Left</th></tr></thead><tbody>';
   rows.forEach(r => {
     const goldClass = r.rank === 1 ? 'gold' : '';
     html += `<tr><td><span class="standings-rank ${goldClass}">${r.rank}</span></td>` +
       `<td><strong>${escapeHtml(r.entry)}</strong>` +
       `<div class="standings-bar"><div class="standings-bar-fill" style="width:${(r.total/max*100).toFixed(0)}%"></div></div></td>` +
       `<td class="num"><strong>${r.total}</strong></td>` +
-      `<td class="num dim">${r.r64}</td><td class="num dim">${r.r32}</td>` +
-      `<td class="num dim">${r.s16}</td><td class="num dim">${r.e8}</td>` +
-      `<td class="num dim">${r.f4}</td><td class="num dim">${r.championship}</td>` +
-      `<td class="num">${r.players_left || ''}</td></tr>`;
+      `<td class="num dim hide-mobile">${r.r64}</td><td class="num dim hide-mobile">${r.r32}</td>` +
+      `<td class="num dim hide-mobile">${r.s16}</td><td class="num dim hide-mobile">${r.e8}</td>` +
+      `<td class="num dim hide-mobile">${r.f4}</td><td class="num dim hide-mobile">${r.championship}</td>` +
+      `<td class="num hide-mobile">${r.players_left || ''}</td></tr>`;
   });
   html += '</tbody>';
   t.innerHTML = html;
@@ -3086,16 +3106,24 @@ function renderPicks() {
     return 0;
   });
   let html = '<thead><tr>';
-  const cols = [['pick','#'],['entry','Entry'],['player','Player'],['team','Team'],['proj_total','Proj','num'],['actual_pts','Actual','num'],['residual','+/-','num']];
+  const cols = [
+    ['pick','#','num'],
+    ['entry','Entry','hide-mobile'],
+    ['player','Player',''],
+    ['team','Team','hide-mobile'],
+    ['proj_total','Proj','num hide-mobile'],
+    ['actual_pts','Actual','num'],
+    ['residual','+/-','num']
+  ];
   cols.forEach(c => html += `<th data-sort="${c[0]}" class="${c[2]||''}">${c[1]}</th>`);
   html += '</tr></thead><tbody>';
   rows.forEach(r => {
     const cls = r.alive ? 'alive' : (r.in_tournament_injury ? 'injured' : '');
     html += `<tr class="${cls}"><td class="num dim">${r.pick}</td>` +
-      `<td>${escapeHtml(r.entry)}</td>` +
+      `<td class="hide-mobile">${escapeHtml(r.entry)}</td>` +
       `<td><strong>${escapeHtml(r.player)}</strong>${injuryTag(r)}</td>` +
-      `<td class="dim">${teamLabel(r.team)}</td>` +
-      `<td class="num dim">${r.proj_total != null ? r.proj_total : ''}</td>` +
+      `<td class="dim hide-mobile">${teamLabel(r.team)}</td>` +
+      `<td class="num dim hide-mobile">${r.proj_total != null ? r.proj_total : ''}</td>` +
       `<td class="num"><strong>${r.actual_pts}</strong></td>` +
       `<td class="num">${fmtSigned(r.residual)}</td></tr>`;
   });
@@ -3114,15 +3142,18 @@ function renderPicks() {
 function renderPerformers() {
   const t = document.getElementById('hist-performers-table');
   const rows = archiveData.picks.slice().sort((a,b) => b.actual_pts - a.actual_pts).slice(0,50);
-  let html = '<thead><tr><th>#</th><th>Player</th><th>Team</th><th>Drafted by</th><th class="num">Pick</th><th class="num">Actual</th><th class="num">Proj</th></tr></thead><tbody>';
+  let html = '<thead><tr><th>#</th><th>Player</th>' +
+    '<th class="hide-mobile">Team</th><th>Drafted by</th>' +
+    '<th class="num hide-mobile">Pick</th><th class="num">Actual</th>' +
+    '<th class="num hide-mobile">Proj</th></tr></thead><tbody>';
   rows.forEach((r,i) => {
     html += `<tr class="${r.in_tournament_injury ? 'injured' : ''}"><td class="dim">${i+1}</td>` +
       `<td><strong>${escapeHtml(r.player)}</strong>${injuryTag(r)}</td>` +
-      `<td class="dim">${teamLabel(r.team)}</td>` +
+      `<td class="dim hide-mobile">${teamLabel(r.team)}</td>` +
       `<td>${escapeHtml(r.entry)}</td>` +
-      `<td class="num dim">${r.pick}</td>` +
+      `<td class="num dim hide-mobile">${r.pick}</td>` +
       `<td class="num"><strong>${r.actual_pts}</strong></td>` +
-      `<td class="num dim">${r.proj_total != null ? r.proj_total : ''}</td></tr>`;
+      `<td class="num dim hide-mobile">${r.proj_total != null ? r.proj_total : ''}</td></tr>`;
   });
   html += '</tbody>';
   t.innerHTML = html;
@@ -3252,14 +3283,17 @@ function renderPickValue() {
     const cls = sc > 0 ? 'pos' : 'neg';
     const sign = sc > 0 ? '+' : '';
     return `<tr><td class="num dim">${p.pick}</td>` +
-      `<td class="num">${p.actual_rank}</td>` +
+      `<td class="num hide-mobile">${p.actual_rank}</td>` +
       `<td class="num ${cls}"><strong>${sign}${sc}</strong></td>` +
       `<td><strong>${escapeHtml(p.player)}</strong></td>` +
-      `<td class="dim">${teamLabel(p.team)}</td>` +
+      `<td class="dim hide-mobile">${teamLabel(p.team)}</td>` +
       `<td class="num">${p.actual_pts}</td>` +
-      `<td class="dim">${escapeHtml(p.entry)}</td></tr>`;
+      `<td class="dim hide-mobile">${escapeHtml(p.entry)}</td></tr>`;
   }
-  const head = '<thead><tr><th class="num">Pick</th><th class="num">Rank</th><th class="num">±</th><th>Player</th><th>Team</th><th class="num">Pts</th><th>Entry</th></tr></thead>';
+  const head = '<thead><tr><th class="num">Pick</th>' +
+    '<th class="num hide-mobile">Rank</th><th class="num">±</th>' +
+    '<th>Player</th><th class="hide-mobile">Team</th>' +
+    '<th class="num">Pts</th><th class="hide-mobile">Entry</th></tr></thead>';
   document.getElementById('hist-risers-table').innerHTML = head + '<tbody>' + risers.map(row).join('') + '</tbody>';
   document.getElementById('hist-fallers-table').innerHTML = head + '<tbody>' + fallers.map(row).join('') + '</tbody>';
 }
@@ -3483,14 +3517,18 @@ function renderAwards() {
 function renderAlgo() {
   // Calibration
   const calT = document.getElementById('hist-calibration-table');
-  let html = '<thead><tr><th>Top N Projected</th><th class="num">Avg Projected</th><th class="num">Avg Actual</th><th class="num">Delta</th><th class="num">Error %</th></tr></thead><tbody>';
+  let html = '<thead><tr><th>Top N</th>' +
+    '<th class="num hide-mobile">Avg Proj</th>' +
+    '<th class="num">Avg Actual</th>' +
+    '<th class="num hide-mobile">Delta</th>' +
+    '<th class="num">Error %</th></tr></thead><tbody>';
   archiveData.calibration.forEach(c => {
     const pe = parseFloat(c.pct_error);
     const cls = Math.abs(pe) < 2 ? 'dead-on' : '';
-    html += `<tr class="${cls}"><td>Top ${c.top_n}</td>` +
-      `<td class="num dim">${c.avg_projected}</td>` +
+    html += `<tr class="${cls}"><td>${c.top_n}</td>` +
+      `<td class="num dim hide-mobile">${c.avg_projected}</td>` +
       `<td class="num">${c.avg_actual}</td>` +
-      `<td class="num">${fmtSigned(c.delta)}</td>` +
+      `<td class="num hide-mobile">${fmtSigned(c.delta)}</td>` +
       `<td class="num">${fmtSigned(c.pct_error)}%</td></tr>`;
   });
   html += '</tbody>';
@@ -3498,12 +3536,15 @@ function renderAlgo() {
 
   // Bias by seed
   const bsT = document.getElementById('hist-bias-seed-table');
-  let html2 = '<thead><tr><th>Seed</th><th class="num">N</th><th class="num">Avg Proj</th><th class="num">Avg Actual</th><th class="num">Avg Residual</th></tr></thead><tbody>';
+  let html2 = '<thead><tr><th>Seed</th><th class="num">N</th>' +
+    '<th class="num hide-mobile">Avg Proj</th>' +
+    '<th class="num hide-mobile">Avg Actual</th>' +
+    '<th class="num">Residual</th></tr></thead><tbody>';
   archiveData.bias_by_seed.forEach(s => {
     html2 += `<tr><td><strong>${s.seed}</strong></td>` +
       `<td class="num dim">${s.n_players}</td>` +
-      `<td class="num dim">${s.avg_projected}</td>` +
-      `<td class="num">${s.avg_actual}</td>` +
+      `<td class="num dim hide-mobile">${s.avg_projected}</td>` +
+      `<td class="num hide-mobile">${s.avg_actual}</td>` +
       `<td class="num">${fmtSigned(s.avg_residual)}</td></tr>`;
   });
   html2 += '</tbody>';
@@ -3511,25 +3552,32 @@ function renderAlgo() {
 
   // Draft efficiency
   const effT = document.getElementById('hist-efficiency-table');
-  let html3 = '<thead><tr><th>Entry</th><th class="num">Actual</th><th class="num">Algo</th><th class="num">vs Algo</th><th class="num">Rank Base</th></tr></thead><tbody>';
+  let html3 = '<thead><tr><th>Entry</th><th class="num">Actual</th>' +
+    '<th class="num hide-mobile">Algo</th>' +
+    '<th class="num">vs Algo</th>' +
+    '<th class="num hide-mobile">Rank Base</th></tr></thead><tbody>';
   archiveData.draft_efficiency.forEach(r => {
     html3 += `<tr><td><strong>${escapeHtml(r.entry)}</strong></td>` +
       `<td class="num"><strong>${r.actual_score}</strong></td>` +
-      `<td class="num dim">${r.algo_score}</td>` +
+      `<td class="num dim hide-mobile">${r.algo_score}</td>` +
       `<td class="num">${fmtSigned(r.deviation_from_algo)}</td>` +
-      `<td class="num dim">${r.actual_rank_score}</td></tr>`;
+      `<td class="num dim hide-mobile">${r.actual_rank_score}</td></tr>`;
   });
   html3 += '</tbody>';
   effT.innerHTML = html3;
 
   // Entry post-mortem
   const pmT = document.getElementById('hist-entry-pm-table');
-  let html4 = '<thead><tr><th>Entry</th><th class="num">N</th><th class="num">MAE</th><th class="num">Mean Resid</th><th class="num">Hit %</th></tr></thead><tbody>';
+  let html4 = '<thead><tr><th>Entry</th>' +
+    '<th class="num hide-mobile">N</th>' +
+    '<th class="num">MAE</th>' +
+    '<th class="num hide-mobile">Mean Resid</th>' +
+    '<th class="num">Hit %</th></tr></thead><tbody>';
   archiveData.entry_post_mortem.forEach(r => {
     html4 += `<tr><td><strong>${escapeHtml(r.entry)}</strong></td>` +
-      `<td class="num dim">${r.n_picks}</td>` +
+      `<td class="num dim hide-mobile">${r.n_picks}</td>` +
       `<td class="num">${r.mae}</td>` +
-      `<td class="num">${fmtSigned(r.mean_residual)}</td>` +
+      `<td class="num hide-mobile">${fmtSigned(r.mean_residual)}</td>` +
       `<td class="num">${r.hit_rate}%</td></tr>`;
   });
   html4 += '</tbody>';
