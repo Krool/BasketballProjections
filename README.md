@@ -163,6 +163,40 @@ These factors were implemented, tested against historical data, and removed beca
 ### Persistence
 Everything saves to localStorage: drafted players, your team, favorites, draft order, draft config, team names, live draft state. Survives page refresh.
 
+## Yearly Archive & Post-Mortem
+
+Each draft year is frozen under `archive/<year>/` so the algorithm can be improved across seasons without losing prior context. When the model changes, archived projections stay untouched — so you can always re-measure how an old version performed.
+
+### Workflow
+
+**Before draft day** (snapshot the inputs you're about to draft on):
+```bash
+python src/snapshot_year.py 2027 --notes "tweaked surge factor"
+```
+Copies `data/kenpom.csv`, `data/injuries_combined.csv`, `data/bracket.json`, and `output/projections.csv` into `archive/2027/`. Records the git SHA so you know which algorithm version produced the projections.
+
+**After the tournament** (ingest results and analyze):
+1. Paste actual results into the conversation; Claude writes them to `archive/2027/actual/player_results.csv`, `draft_picks.csv`, `entry_totals.csv`, `bracket_outcome.json`.
+2. `python src/detect_injuries.py 2027` — flags ~2-5 players whose data smells like an in-tournament injury. Glance at the list, confirm real ones.
+3. Manually populate the `in_tournament_injury` column for confirmed cases (so they're excluded from algorithm calibration).
+4. `python src/analyze_year.py 2027` — produces residuals, calibration, bias-by-seed, draft value, and biggest misses, all written to `archive/2027/analysis/`.
+5. `python src/compare_years.py` — once 2+ years exist, tracks calibration trends across seasons.
+
+### Archive layout
+```
+archive/<year>/
+  algorithm_version.txt   # git SHA + methodology notes for the algo that produced these projections
+  projections_final.csv   # frozen pre-draft projection (do not modify)
+  inputs/                 # frozen kenpom, injuries, bracket
+  actual/                 # post-tournament: player_results, draft_picks, entry_totals, bracket_outcome, injury_candidates
+  analysis/               # generated post-mortem CSVs
+```
+
+### Why this matters
+Without archives, every algorithm change is unfalsifiable. With them you can answer: "Did my new injury model actually reduce error, or did I just tune to noise?" One year is a sample size of 1 — meaningful pattern recognition needs at least 3 years of frozen data to compare against.
+
+See `docs/post_tournament_workflow.md` for the full step-by-step.
+
 ## Project Structure
 ```
 data/
@@ -183,6 +217,18 @@ src/
   scrape_injuries.py        # Injury loader (manual + ESPN)
   project_points.py         # PPG × expected_games with adjustments
   update_first_four.py      # Update bracket with play-in results
+  snapshot_year.py          # Freeze data/ + output/ into archive/<year>/ before draft day
+  detect_injuries.py        # Heuristic scanner for in-tournament injury candidates
+  analyze_year.py           # Post-mortem: residuals, calibration, bias, draft value
+  compare_years.py          # Cross-year algorithm performance trends
+
+archive/
+  <year>/
+    algorithm_version.txt   # git SHA + methodology notes
+    projections_final.csv   # frozen pre-draft projections
+    inputs/                 # frozen kenpom, injuries, bracket
+    actual/                 # post-tournament results + injury flags
+    analysis/               # post-mortem CSVs
 
 output/
   projections.csv           # Final ranked projections
