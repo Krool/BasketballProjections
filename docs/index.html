@@ -1287,6 +1287,7 @@
   }
   .bracket-rounds {
     display: flex; gap: 0; align-items: stretch; min-height: 320px;
+    padding-top: 8px;
   }
   .bracket-round-col {
     display: flex; flex-direction: column; justify-content: space-around;
@@ -1296,9 +1297,11 @@
     overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0;
   }
   .bracket-round-col .round-label {
-    position: absolute; top: -22px; left: 8px; font-size: 9px;
+    position: absolute; top: -16px; left: 8px; font-size: 9px;
     color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px;
+    white-space: nowrap;
   }
+  .bracket-region h4 { margin-bottom: 24px; }
   .bkt-game {
     background: var(--surface2); border-radius: 5px; padding: 6px 8px;
     border-left: 3px solid var(--border); position: relative;
