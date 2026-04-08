@@ -15,6 +15,31 @@ import json
 import sys
 from pathlib import Path
 
+# Field name constants — single source of truth lives in archive_schema.
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from archive_schema import (
+    COL_PLAYER, COL_TEAM, COL_ENTRY,
+    COL_GAMES_PLAYED, COL_TOTAL_POINTS, COL_IN_TOURNAMENT_INJURY,
+    ROUND_COLS,
+    BO_ROUND_OF_32, BO_SWEET_SIXTEEN, BO_ELITE_EIGHT,
+    BO_FINAL_FOUR, BO_FINALISTS,
+)
+
+# ===== Heuristic thresholds for injury detection =====
+# These are calibrated against 2026 data (Joshua Jefferson + Tyler Bilodeau
+# both surface, all 1-and-done false positives are filtered). Tune cautiously
+# — false positives create review fatigue, false negatives let injuries
+# pollute calibration aggregates.
+DNP_CONFIDENCE = 50               # weight for "missed N rounds entirely"
+CLIFF_CONFIDENCE = 50             # weight for "produced then went cold"
+CLIFF_MIN_PRODUCTION_PTS = 5      # how many points counts as "produced"
+CLIFF_MIN_ZEROS = 2               # require 2+ zeros after producing
+CLIFF_MIN_PLAYED_ROUNDS = 3       # need 3+ rounds of data to spot a cliff
+UNDERPERF_CONFIDENCE = 40         # weight for "actual << projection"
+UNDERPERF_MIN_PROJ = 30           # only flag if proj was meaningful (≥30 pts)
+UNDERPERF_RATIO = 0.25            # actual ≤ 25% of projection
+UNDERPERF_MIN_TEAM_GAMES = 2      # exclude 1-and-done teams (too noisy)
+
 
 def to_int(v, d=0):
     try: return int(v) if v not in ("", None) else d
@@ -29,26 +54,25 @@ def detect(year: int):
     root = Path(__file__).resolve().parents[1]
     yroot = root / "archive" / str(year)
     players = list(csv.DictReader(open(yroot / "actual" / "player_results.csv")))
-    proj = {(p["player"], p["team"]): p
+    proj = {(p[COL_PLAYER], p[COL_TEAM]): p
             for p in csv.DictReader(open(yroot / "projections_final.csv"))}
     bracket = json.load(open(yroot / "actual" / "bracket_outcome.json"))
 
     def team_rounds(team):
         g = 1
-        for k in ["round_of_32", "sweet_sixteen", "elite_eight",
-                  "final_four", "finalists"]:
+        for k in [BO_ROUND_OF_32, BO_SWEET_SIXTEEN, BO_ELITE_EIGHT,
+                  BO_FINAL_FOUR, BO_FINALISTS]:
             if team in bracket.get(k, []):
                 g += 1
         return g
 
-    rounds = ["r64", "r32", "s16", "e8", "f4", "championship"]
     candidates = []
 
     for p in players:
-        team_g = team_rounds(p["team"])
-        played_g = to_int(p["games_played"])
-        actual = to_int(p["total_points"])
-        scores = [p[r] for r in rounds[:team_g]]  # only rounds team played
+        team_g = team_rounds(p[COL_TEAM])
+        played_g = to_int(p[COL_GAMES_PLAYED])
+        actual = to_int(p[COL_TOTAL_POINTS])
+        scores = [p[r] for r in ROUND_COLS[:team_g]]  # only rounds team played
 
         signals = []
         confidence = 0
@@ -57,44 +81,40 @@ def detect(year: int):
         missed = team_g - played_g
         if missed > 0:
             signals.append(f"DNP {missed} round(s)")
-            confidence += 50
+            confidence += DNP_CONFIDENCE
 
         # Signal 2: Sudden cliff — sustained zeros after producing.
-        # Require 2+ zero rounds (a single zero in the team's final round is
-        # often just a blowout/upset loss, not an injury).
         nums = [to_int(s) for s in scores if s != ""]
-        if len(nums) >= 3:
+        if len(nums) >= CLIFF_MIN_PLAYED_ROUNDS:
             had_production = False
             cliff_zeros = 0
             for v in nums:
-                if v >= 5: had_production = True
+                if v >= CLIFF_MIN_PRODUCTION_PTS: had_production = True
                 elif had_production and v == 0: cliff_zeros += 1
-            if had_production and cliff_zeros >= 2:
+            if had_production and cliff_zeros >= CLIFF_MIN_ZEROS:
                 signals.append(f"cliff: {cliff_zeros} zero round(s) after producing")
-                confidence += 50
+                confidence += CLIFF_CONFIDENCE
 
         # Signal 3: Massive underperformance vs projection.
-        # Require team to have played 2+ rounds — single-game samples are too
-        # noisy (a 7-seed losing in R64 isn't evidence of injury).
-        pr = proj.get((p["player"], p["team"]))
-        if pr and team_g >= 2:
+        pr = proj.get((p[COL_PLAYER], p[COL_TEAM]))
+        if pr and team_g >= UNDERPERF_MIN_TEAM_GAMES:
             proj_total = to_float(pr.get("ppg")) * to_float(pr.get("expected_games"))
-            if proj_total >= 30 and actual <= proj_total * 0.25:
+            if proj_total >= UNDERPERF_MIN_PROJ and actual <= proj_total * UNDERPERF_RATIO:
                 signals.append(f"actual {actual} vs proj {proj_total:.0f} ({actual/proj_total*100:.0f}%)")
-                confidence += 40
+                confidence += UNDERPERF_CONFIDENCE
 
         if signals:
             candidates.append({
-                "player": p["player"],
-                "team": p["team"],
-                "entry": p["entry"],
+                "player": p[COL_PLAYER],
+                "team": p[COL_TEAM],
+                "entry": p[COL_ENTRY],
                 "team_games": team_g,
                 "player_games": played_g,
                 "actual_pts": actual,
                 "round_scores": ",".join(scores),
                 "signals": "; ".join(signals),
                 "confidence": confidence,
-                "current_flag": p.get("in_tournament_injury", ""),
+                "current_flag": p.get(COL_IN_TOURNAMENT_INJURY, ""),
             })
 
     candidates.sort(key=lambda c: -c["confidence"])

@@ -18,6 +18,16 @@ from collections import defaultdict
 from pathlib import Path
 from statistics import mean
 
+# Import canonical field names so a column rename in the archive CSV
+# breaks at import time instead of producing silently-wrong analysis.
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from archive_schema import (
+    COL_PLAYER, COL_TEAM, COL_ENTRY, COL_PICK, COL_ESPN_ID,
+    COL_GAMES_PLAYED, COL_TOTAL_POINTS, COL_ALIVE, COL_IN_TOURNAMENT_INJURY,
+    BO_CHAMPION, BO_FINALISTS, BO_FINAL_FOUR, BO_ELITE_EIGHT,
+    BO_SWEET_SIXTEEN, BO_ROUND_OF_32,
+)
+
 
 def load(path):
     with open(path, newline="", encoding="utf-8") as f:
@@ -56,11 +66,11 @@ def analyze(year: int):
     for a in actual:
         key = (a["player"], a["team"])
         p = proj_idx.get(key)
-        actual_pts = to_int(a["total_points"])
-        actual_games = to_int(a["games_played"])
+        actual_pts = to_int(a[COL_TOTAL_POINTS])
+        actual_games = to_int(a[COL_GAMES_PLAYED])
         if p is None:
             rows.append({
-                "player": a["player"], "team": a["team"], "entry": a["entry"],
+                "player": a["player"], "team": a["team"], "entry": a[COL_ENTRY],
                 "proj_rank": "", "proj_ppg": "", "proj_games": "", "proj_total": "",
                 "actual_pts": actual_pts, "actual_games": actual_games,
                 "residual": "", "pct_error": "", "matched": 0,
@@ -72,7 +82,7 @@ def analyze(year: int):
         residual = actual_pts - proj_total
         pct_err = (residual / proj_total * 100) if proj_total else ""
         rows.append({
-            "player": a["player"], "team": a["team"], "entry": a["entry"],
+            "player": a["player"], "team": a["team"], "entry": a[COL_ENTRY],
             "proj_rank": p.get("rank", ""),
             "proj_ppg": round(proj_ppg, 2),
             "proj_games": round(proj_games, 2),
@@ -85,7 +95,7 @@ def analyze(year: int):
             "seed": p.get("seed", ""),
             "region": p.get("region", ""),
             "injury_status": p.get("injury_status", ""),
-            "in_tournament_injury": a.get("in_tournament_injury", ""),
+            "in_tournament_injury": a.get(COL_IN_TOURNAMENT_INJURY, ""),
         })
 
     # Write per-player residuals
@@ -101,8 +111,8 @@ def analyze(year: int):
 
     # --- In-tournament injuries: separated up front so all aggregates exclude them ---
     matched_all = [r for r in rows if r["matched"] == 1]
-    in_tourney_injured = [r for r in matched_all if r.get("in_tournament_injury")]
-    matched = [r for r in matched_all if not r.get("in_tournament_injury")]
+    in_tourney_injured = [r for r in matched_all if r.get(COL_IN_TOURNAMENT_INJURY)]
+    matched = [r for r in matched_all if not r.get(COL_IN_TOURNAMENT_INJURY)]
     matched_sorted = sorted(matched, key=lambda r: -r["proj_total"])
     calibration = []
     for n in (10, 25, 50, 100, 150, 210):
@@ -162,8 +172,8 @@ def analyze(year: int):
     # Map team -> rounds won (count of rounds where team appears in bracket_outcome)
     team_rounds = defaultdict(int)
     round_keys = [
-        ("round_of_32", 1), ("sweet_sixteen", 2), ("elite_eight", 3),
-        ("final_four", 4), ("finalists", 5), ("champion", 6),
+        (BO_ROUND_OF_32, 1), (BO_SWEET_SIXTEEN, 2), (BO_ELITE_EIGHT, 3),
+        (BO_FINAL_FOUR, 4), (BO_FINALISTS, 5), (BO_CHAMPION, 6),
     ]
     for key, _ in round_keys:
         teams = bracket.get(key, [])
@@ -195,18 +205,18 @@ def analyze(year: int):
     biggest_over = sorted(matched, key=lambda r: -r["residual"])[:15]
 
     # --- Draft value (actual pts vs pick number) ---
-    pick_idx = {(p["player"], p["entry"]): int(p["pick"]) for p in picks}
+    pick_idx = {(p["player"], p["entry"]): int(p[COL_PICK]) for p in picks}
     value_rows = []
     for a in actual:
-        pick = pick_idx.get((a["player"], a["entry"]))
+        pick = pick_idx.get((a["player"], a[COL_ENTRY]))
         if pick is None:
             continue
         value_rows.append({
             "pick": pick,
             "player": a["player"],
             "team": a["team"],
-            "entry": a["entry"],
-            "actual_pts": to_int(a["total_points"]),
+            "entry": a[COL_ENTRY],
+            "actual_pts": to_int(a[COL_TOTAL_POINTS]),
         })
     value_rows.sort(key=lambda r: r["pick"])
     # Steals: high actual relative to pick number (low pick = early)
@@ -232,14 +242,14 @@ def analyze(year: int):
     #       beat this if their actual picks outperformed the top-N-by-pick
     #       baseline (Lucas did this in 2026).
     # actual - algo_score = how much they deviated from the algo and won/lost
-    actual_pts_idx = {(a["player"], a["team"]): to_int(a["total_points"])
+    actual_pts_idx = {(a["player"], a["team"]): to_int(a[COL_TOTAL_POINTS])
                       for a in actual}
     proj_total_idx = {(p["player"], p["team"]):
                       to_float(p.get("ppg")) * to_float(p.get("expected_games"))
                       for p in proj}
 
     # Sort all picks by global pick order
-    picks_ordered = sorted(picks, key=lambda p: int(p["pick"]))
+    picks_ordered = sorted(picks, key=lambda p: int(p[COL_PICK]))
 
     # Simulate algo-following draft: at each pick, the entry on the clock takes
     # the highest projected player still available
@@ -251,7 +261,7 @@ def analyze(year: int):
     algo_picks_per_entry = defaultdict(list)
     actual_rank_picks_per_entry = defaultdict(list)
     for pk in picks_ordered:
-        entry = pk["entry"]
+        entry = pk[COL_ENTRY]
         if available_proj:
             choice = available_proj.pop(0)
             algo_picks_per_entry[entry].append(choice)
@@ -263,7 +273,7 @@ def analyze(year: int):
     eff_rows = []
     actual_by_entry = defaultdict(int)
     for a in actual:
-        actual_by_entry[a["entry"]] += to_int(a["total_points"])
+        actual_by_entry[a[COL_ENTRY]] += to_int(a[COL_TOTAL_POINTS])
     for entry in sorted(actual_by_entry):
         algo_score = sum(actual_pts_idx.get(k, 0) for k in algo_picks_per_entry[entry])
         actual_rank_score = sum(actual_pts_idx.get(k, 0) for k in actual_rank_picks_per_entry[entry])
