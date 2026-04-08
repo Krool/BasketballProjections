@@ -3097,7 +3097,7 @@ function renderStandings() {
     '<th class="num hide-mobile">R64</th><th class="num hide-mobile">R32</th>' +
     '<th class="num hide-mobile">S16</th><th class="num hide-mobile">E8</th>' +
     '<th class="num hide-mobile">F4</th><th class="num hide-mobile">Final</th>' +
-    '<th class="num hide-mobile">Left</th></tr></thead><tbody>';
+    '</tr></thead><tbody>';
   rows.forEach(r => {
     const goldClass = r.rank === 1 ? 'gold' : '';
     html += `<tr><td class="col-rank"><span class="standings-rank ${goldClass}">${r.rank}</span></td>` +
@@ -3107,7 +3107,7 @@ function renderStandings() {
       `<td class="num dim hide-mobile">${r.r64}</td><td class="num dim hide-mobile">${r.r32}</td>` +
       `<td class="num dim hide-mobile">${r.s16}</td><td class="num dim hide-mobile">${r.e8}</td>` +
       `<td class="num dim hide-mobile">${r.f4}</td><td class="num dim hide-mobile">${r.championship}</td>` +
-      `<td class="num hide-mobile">${r.players_left || ''}</td></tr>`;
+      `</tr>`;
   });
   html += '</tbody>';
   t.innerHTML = html;
