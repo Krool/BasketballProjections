@@ -17,34 +17,62 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏀</text></svg>">
 <link rel="apple-touch-icon" href="icon-192.png">
 <link rel="manifest" href="manifest.json">
+<!-- Broadcast graphics typography -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Archivo+Narrow:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0f1117;
-    --surface: #1a1d27;
-    --surface2: #242836;
-    --border: #2e3345;
-    --text: #e4e6ed;
-    --text-dim: #8b8fa3;
-    --accent: #4f8cff;
-    --accent-dim: #2a4a8a;
-    --green: #34d399;
-    --red: #f87171;
-    --orange: #fbbf24;
-    --purple: #a78bfa;
-    --drafted-bg: #1a1d27;
-    --drafted-text: #4a4e5e;
+    /* Broadcast Graphics palette — warm parchment + deep navy + NCAA orange */
+    --paper:        #F4EEDF;
+    --paper-deep:   #EAE2CC;
+    --ink:          #0A1E3F;
+    --ink-soft:     #1F3050;
+    --ink-dim:      #4A5568;
+    --ink-faint:    #8A8676;
+    --rule:         #C8BFA8;
+    --orange:       #FF6B1A;     /* primary accent — winners, headlines */
+    --red:          #C8102E;     /* negatives, busts, court line */
+    --gold:         #C9A227;     /* trophy / champion */
+    --navy:         #0A1E3F;
+    --cream-hi:     #FBF6E8;
+
+    /* Region brand colors (used as wash backgrounds on bracket sub-trees) */
+    --region-east:    #1B3A6F;
+    --region-west:    #C8102E;
+    --region-midwest: #FF6B1A;
+    --region-south:   #2D7D2C;
+
+    /* Legacy mappings — keep the old variable names alive so live draft
+       board CSS that references them gets the new theme automatically */
+    --bg: var(--paper);
+    --surface: var(--cream-hi);
+    --surface2: var(--paper-deep);
+    --border: var(--rule);
+    --text: var(--ink);
+    --text-dim: var(--ink-dim);
+    --accent: var(--orange);
+    --accent-dim: #C84F00;
+    --green: #2D7D2C;
+    --purple: #5D3FD3;
+    --drafted-bg: var(--paper-deep);
+    --drafted-text: var(--ink-faint);
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background: var(--bg);
-    color: var(--text);
+    font-family: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--paper);
+    color: var(--ink);
     min-height: 100vh;
     min-height: 100dvh;
     -webkit-text-size-adjust: 100%;
-    font-feature-settings: "tnum" 1, "lnum" 1;
+    font-feature-settings: "tnum" 1, "lnum" 1, "ss01" 1;
+    background-image:
+      radial-gradient(ellipse at top left, rgba(255,107,26,0.04) 0%, transparent 50%),
+      radial-gradient(ellipse at bottom right, rgba(10,30,63,0.04) 0%, transparent 50%);
+    background-attachment: fixed;
   }
   .num, td.num, th.num { font-variant-numeric: tabular-nums; }
 
@@ -1367,6 +1395,553 @@
     .bkt-game .team .score { min-width: 18px; font-size: 9px; }
     .team-icon { width: 14px; height: 14px; }
     .bracket-finals-grid { grid-template-columns: 1fr; gap: 10px; }
+  }
+
+  /* ============================================================
+     BROADCAST GRAPHICS THEME OVERRIDES
+     Cream paper background, deep navy ink, NCAA orange accent.
+     Display fonts: Bebas Neue (huge), Archivo Narrow (medium).
+     ============================================================ */
+
+  /* ----- Site header ----- */
+  .header {
+    background: var(--cream-hi);
+    background-image: linear-gradient(180deg, var(--cream-hi) 0%, var(--paper) 100%);
+    border-bottom: 3px double var(--ink);
+    box-shadow: 0 2px 0 var(--rule);
+  }
+  .header h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    color: var(--ink);
+    text-transform: uppercase;
+  }
+  .header h1 span { color: var(--orange); }
+
+  /* Year tabs as broadcast lower-third style */
+  .mode-toggle {
+    background: var(--ink);
+    border-radius: 0;
+    padding: 0;
+    gap: 0;
+    border: 2px solid var(--ink);
+  }
+  .mode-toggle button {
+    font-family: 'Archivo Narrow', sans-serif;
+    background: transparent;
+    color: var(--cream-hi);
+    border-radius: 0;
+    padding: 8px 16px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-right: 1px solid rgba(255,255,255,0.15);
+    box-shadow: none;
+  }
+  .mode-toggle button:last-child { border-right: none; }
+  .mode-toggle button.active {
+    background: var(--orange);
+    color: var(--ink);
+    box-shadow: none;
+  }
+  .mode-toggle button:hover:not(.active) {
+    background: rgba(255,107,26,0.15);
+    color: var(--cream-hi);
+  }
+
+  /* ----- Countdown landing — magazine cover ----- */
+  .countdown-hero h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(56px, 12vw, 144px);
+    font-weight: 400;
+    line-height: 0.85;
+    letter-spacing: 0.01em;
+    color: var(--ink);
+    text-transform: uppercase;
+    margin-bottom: 0;
+    text-align: center;
+  }
+  .countdown-hero h2 span {
+    display: block;
+    color: var(--orange);
+    font-size: 0.65em;
+    margin-top: 8px;
+  }
+  .countdown-hero .tagline {
+    font-family: 'Archivo Narrow', sans-serif;
+    color: var(--ink);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin: 28px 0;
+    border-top: 1px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+    padding: 10px 24px;
+    max-width: 540px;
+  }
+  .countdown-clock {
+    border: 2px solid var(--ink);
+    background: var(--cream-hi);
+    padding: 18px 12px;
+    margin-bottom: 32px;
+    box-shadow: 6px 6px 0 var(--ink);
+    flex-wrap: nowrap;
+  }
+  .countdown-unit {
+    background: transparent;
+    border: none;
+    border-right: 1px solid var(--rule);
+    border-radius: 0;
+    padding: 8px 16px;
+    box-shadow: none;
+  }
+  .countdown-unit:last-child { border-right: none; }
+  .countdown-unit .num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 56px;
+    color: var(--ink);
+    font-weight: 400;
+    letter-spacing: 0.02em;
+  }
+  .countdown-unit .label {
+    font-family: 'Archivo Narrow', sans-serif;
+    color: var(--ink-dim);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    font-weight: 600;
+  }
+  .countdown-cta button {
+    font-family: 'Archivo Narrow', sans-serif;
+    background: var(--ink);
+    border: 2px solid var(--ink);
+    color: var(--cream-hi);
+    padding: 14px 32px;
+    border-radius: 0;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    box-shadow: 4px 4px 0 var(--orange);
+    transition: transform 0.1s, box-shadow 0.1s;
+  }
+  .countdown-cta button:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0 var(--orange);
+    background: var(--ink);
+  }
+  .countdown-cta button.primary {
+    background: var(--orange);
+    border-color: var(--orange);
+    color: var(--ink);
+    box-shadow: 4px 4px 0 var(--ink);
+  }
+  .countdown-cta button.primary:hover {
+    box-shadow: 6px 6px 0 var(--ink);
+    background: var(--orange);
+  }
+  @media (max-width: 600px) {
+    .countdown-unit .num { font-size: 36px; }
+    .countdown-clock { padding: 14px 6px; }
+  }
+
+  /* ----- History view — magazine spread ----- */
+  .history-container { padding: 32px 24px; }
+
+  .history-header {
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    border-top: 6px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+    padding: 16px 0 24px 0;
+    margin-bottom: 24px;
+    position: relative;
+  }
+  .history-header::before {
+    content: 'TOURNAMENT RECAP';
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    color: var(--orange);
+    font-weight: 700;
+    margin-bottom: 6px;
+    padding-top: 8px;
+  }
+  .history-header h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(36px, 7vw, 72px);
+    font-weight: 400;
+    line-height: 0.9;
+    letter-spacing: 0.01em;
+    color: var(--ink);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .history-header h2 span { color: var(--orange); }
+  .history-headline {
+    font-family: 'Manrope', sans-serif;
+    font-size: 16px;
+    color: var(--ink);
+    gap: 14px;
+    align-items: baseline;
+    line-height: 1.5;
+  }
+  .history-headline strong { color: var(--ink); }
+  .history-headline .pill {
+    background: transparent;
+    color: var(--ink);
+    padding: 0;
+    border-radius: 0;
+    font-weight: 800;
+    font-size: 17px;
+  }
+  .history-headline .pill.gold {
+    background: transparent;
+    color: var(--orange);
+  }
+  .history-headline .pill.green {
+    background: transparent;
+    color: var(--ink);
+    border-bottom: 2px solid var(--orange);
+    padding-bottom: 1px;
+  }
+
+  /* ----- History sub-tabs — newspaper index ----- */
+  .history-tabs {
+    background: transparent;
+    border: none;
+    border-top: 1px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+    border-radius: 0;
+    padding: 6px 0;
+    margin-bottom: 24px;
+    gap: 0;
+  }
+  .history-tabs button {
+    font-family: 'Archivo Narrow', sans-serif;
+    background: transparent;
+    color: var(--ink);
+    padding: 8px 14px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border-radius: 0;
+    border-right: 1px solid var(--rule);
+  }
+  .history-tabs button:last-child { border-right: none; }
+  .history-tabs button.active {
+    background: var(--ink);
+    color: var(--cream-hi);
+  }
+  .history-tabs button:hover:not(.active) {
+    background: rgba(10,30,63,0.06);
+    color: var(--ink);
+  }
+
+  /* ----- History cards — rule-separated sections ----- */
+  .history-card {
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    padding: 0 0 28px 0;
+    margin-bottom: 32px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .history-card:last-child { border-bottom: none; }
+  .history-card h3 {
+    font-family: 'Archivo Narrow', sans-serif;
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--ink);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--ink);
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .history-card h3 .sub {
+    font-family: 'Manrope', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--ink-dim);
+    letter-spacing: 0.02em;
+    text-transform: none;
+    margin-left: 0;
+  }
+
+  /* ----- Tables — newspaper data style ----- */
+  .history-table { font-size: 13px; }
+  .history-table th {
+    font-family: 'Archivo Narrow', sans-serif;
+    background: transparent;
+    color: var(--ink);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 10px 10px;
+    border-bottom: 2px solid var(--ink);
+    border-top: 1px solid var(--ink);
+  }
+  .history-table td {
+    font-family: 'Manrope', sans-serif;
+    color: var(--ink);
+    padding: 10px 10px;
+    border-bottom: 1px dotted var(--rule);
+  }
+  .history-table .num {
+    font-family: 'JetBrains Mono', monospace;
+    font-feature-settings: "tnum" 1;
+    font-weight: 600;
+  }
+  .history-table tbody tr:hover { background: rgba(255,107,26,0.06); }
+  .history-table .pos { color: #2D7D2C; }
+  .history-table .neg { color: var(--red); }
+  .history-table .dim { color: var(--ink-dim); }
+  .history-table td .cell-sub {
+    font-family: 'Manrope', sans-serif;
+    color: var(--ink-faint);
+    font-size: 11px;
+  }
+  .history-table .col-rank { color: var(--ink-faint); }
+
+  /* Standings ranks */
+  .standings-rank {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    color: var(--ink);
+    font-weight: 400;
+    width: 32px;
+  }
+  .standings-rank.gold { color: var(--orange); }
+  .standings-bar { background: var(--rule); height: 3px; }
+  .standings-bar-fill { background: var(--orange); }
+
+  /* ----- Bracket — broadcast tournament graphic ----- */
+  .bracket-region {
+    background: var(--cream-hi);
+    border: 1px solid var(--ink);
+    border-left: 6px solid var(--ink);
+    border-radius: 0;
+    padding: 18px;
+    margin-bottom: 24px;
+  }
+  .bracket-region:nth-of-type(1) { border-left-color: var(--region-east); }
+  .bracket-region:nth-of-type(2) { border-left-color: var(--region-midwest); }
+  .bracket-region:nth-of-type(3) { border-left-color: var(--region-south); }
+  .bracket-region:nth-of-type(4) { border-left-color: var(--region-west); }
+  .bracket-region h4 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px;
+    color: var(--ink);
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--ink);
+  }
+  .bracket-region h4 .champ {
+    font-family: 'Archivo Narrow', sans-serif;
+    font-size: 12px;
+    color: var(--orange);
+    letter-spacing: 0.1em;
+    font-weight: 700;
+  }
+  .bracket-round-col .round-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: var(--ink-faint);
+    letter-spacing: 0.12em;
+    font-weight: 700;
+  }
+  .bkt-game {
+    background: var(--paper);
+    border-left: 3px solid var(--rule);
+    border-radius: 0;
+  }
+  .bkt-game.winner-top { border-left-color: var(--orange); }
+  .bkt-game .team .name {
+    font-family: 'Manrope', sans-serif;
+    font-size: 11px;
+    color: var(--ink);
+  }
+  .bkt-game .team .seed {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--ink-faint);
+    font-weight: 700;
+    font-size: 9px;
+  }
+  .bkt-game .team .score {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--ink-dim);
+    font-weight: 700;
+  }
+  .bkt-game .team.winner .name { color: var(--ink); font-weight: 800; }
+  .bkt-game .team.winner .score { color: var(--orange); }
+  .bkt-game .team.loser .name,
+  .bkt-game .team.loser .score { color: var(--ink-faint); }
+  .bracket-round-col[data-round="r64"] .bkt-game::after,
+  .bracket-round-col[data-round="r32"] .bkt-game::after,
+  .bracket-round-col[data-round="s16"] .bkt-game::after {
+    background: var(--ink);
+    height: 2px;
+  }
+  .bracket-round-col[data-round="r64"] .bkt-game:nth-child(odd)::before,
+  .bracket-round-col[data-round="r32"] .bkt-game:nth-child(odd)::before,
+  .bracket-round-col[data-round="s16"] .bkt-game:nth-child(odd)::before {
+    background: var(--ink);
+    width: 2px;
+  }
+
+  /* Final Four / Championship card — the trophy moment */
+  .bracket-finals {
+    background: var(--cream-hi);
+    border: 3px double var(--ink);
+    border-radius: 0;
+    padding: 28px;
+    margin-bottom: 32px;
+    background-image: none;
+  }
+  .bracket-finals h4 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 38px;
+    color: var(--ink);
+    font-weight: 400;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 14px;
+  }
+  .bracket-finals .bracket-champ-game {
+    border: 3px solid var(--orange);
+    background: var(--paper);
+    box-shadow: 6px 6px 0 var(--ink);
+  }
+  .bracket-finals .bracket-champ-game .winner .name {
+    color: var(--orange);
+    font-weight: 800;
+  }
+  .bracket-trophy { font-size: 48px; margin: 12px 0 4px; }
+
+  /* ----- Awards — certificate cards ----- */
+  .league-awards-card {
+    background: var(--cream-hi);
+    border: 3px double var(--ink);
+    border-radius: 0;
+    padding: 24px;
+    margin-bottom: 32px;
+    box-shadow: 6px 6px 0 var(--orange);
+    background-image: none;
+  }
+  .league-awards-card h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    color: var(--ink);
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 12px;
+    margin-bottom: 18px;
+    text-align: left;
+  }
+  .award-entry-card {
+    background: var(--cream-hi);
+    border: 1px solid var(--ink);
+    border-radius: 0;
+    padding: 16px;
+  }
+  .award-entry-card h4 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    color: var(--ink);
+    font-weight: 400;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    border-bottom: 2px solid var(--ink);
+  }
+  .award-entry-card h4 .actual-total {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--orange);
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .award-row .award-label {
+    font-family: 'Archivo Narrow', sans-serif;
+    color: var(--ink-dim);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+  }
+  .award-row .award-resid {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 800;
+  }
+  .award-row .award-resid.pos { color: #2D7D2C; }
+  .award-row .award-resid.neg { color: var(--red); }
+
+  /* ----- Injury elements ----- */
+  .injury-banner {
+    background: rgba(200,16,46,0.06);
+    border-left: 4px solid var(--red);
+    border-radius: 0;
+    font-family: 'Manrope', sans-serif;
+  }
+  .injury-banner strong { color: var(--red); }
+  .injury-tag {
+    background: var(--red);
+    color: var(--cream-hi);
+    border-radius: 0;
+    font-family: 'Archivo Narrow', sans-serif;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+  }
+
+  /* ----- Footer ----- */
+  .history-footer {
+    border-top: 3px double var(--ink);
+    color: var(--ink-dim);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .history-footer a { color: var(--orange); font-weight: 700; }
+  .history-footer kbd {
+    background: var(--ink);
+    color: var(--cream-hi);
+    border: none;
+    border-radius: 0;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* ----- Mobile broadcast tweaks ----- */
+  @media (max-width: 800px) {
+    .history-container { padding: 16px 12px; }
+    .history-header h2 { font-size: 32px; }
+    .history-card h3 { font-size: 11px; }
+    .bracket-region h4 { font-size: 20px; }
+    .bracket-finals h4 { font-size: 24px; }
+    .bracket-finals { padding: 16px; }
+    .league-awards-card { padding: 14px; }
+    .league-awards-card h3 { font-size: 22px; }
+    .award-entry-card h4 { font-size: 18px; }
+    .header h1 { font-size: 18px; }
+    .mode-toggle button { padding: 7px 11px; font-size: 10px; }
+    .history-tabs button { padding: 7px 9px; font-size: 10px; letter-spacing: 0.06em; }
   }
 
 </style>
