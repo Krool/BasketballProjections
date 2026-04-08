@@ -75,6 +75,24 @@ def build_year(year: int, root: Path):
             "in_tournament_injury": (a or {}).get("in_tournament_injury", ""),
         })
 
+    # Compute actual_rank within the drafted pool: rank by actual points desc.
+    # slots_change = draft_pick - actual_rank.
+    #   positive = drafted lower than they finished (riser / steal)
+    #   negative = drafted higher than they finished (faller / bust)
+    # In-tournament injuries are excluded from ranking (assigned actual_rank=null)
+    # so they don't pollute the riser/faller lists.
+    rankable = [r for r in pick_rows if not r["in_tournament_injury"]]
+    rankable.sort(key=lambda r: (-r["actual_pts"], r["pick"]))  # tiebreak: earlier pick wins
+    rank_map = {(r["player"], r["team"]): i + 1 for i, r in enumerate(rankable)}
+    for r in pick_rows:
+        if r["in_tournament_injury"]:
+            r["actual_rank"] = None
+            r["slots_change"] = None
+        else:
+            ar = rank_map.get((r["player"], r["team"]))
+            r["actual_rank"] = ar
+            r["slots_change"] = (r["pick"] - ar) if ar is not None else None
+
     # Standings
     standings = []
     for t in totals:

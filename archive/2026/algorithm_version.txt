@@ -22,8 +22,20 @@ ACTUAL OUTCOMES (in actual/):
 - entry_totals.csv    — per-entry round totals and final standings
 - bracket_outcome.json — teams advancing each round; champion = Connecticut
 
-CHAMPION: Connecticut
+CHAMPION: Michigan (beat Connecticut 69-63 in the championship)
 WINNING ENTRY: Lucas (606 pts)
+
+DATA CORRECTION (2026-04-08):
+The original ingested data had `alive=1` flags on UConn players and
+players_left counts in entry_totals matching UConn ownership — both
+suggested UConn won. The actual NCAA tournament was won by Michigan.
+Fixed via scripts/fix_2026_bracket.py:
+  - Champion flipped to Michigan
+  - bracket_outcome.json games[] rebuilt from official scores (63 games)
+  - alive flags flipped (Michigan players → 1, UConn → 0)
+  - players_left recomputed (1 each for Alana&Gary, Lucas, Matt D.,
+    Merbers, Rich, Schlossbergs, Zach)
+Entry point totals are unchanged (point sums don't depend on who won).
 
 KNOWN DATA GAPS:
 - RJ Johnson (Kennesaw St.) appears in actual draft but not in projections.csv
@@ -31,9 +43,8 @@ KNOWN DATA GAPS:
 
 IN-TOURNAMENT INJURIES (excluded from algorithm calibration):
 - Joshua Jefferson (Iowa St.): injured during R64; missed remainder. Confirmed.
-- Tyler Bilodeau (UCLA): scored 0 in 2 games on 35-pt projection. Flagged by
-  detect_injuries.py but not yet confirmed by user — leave unflagged pending
-  verification.
+- Tyler Bilodeau (UCLA): injured during tournament, played 0 minutes. Confirmed
+  by user 2026-04-08.
 
 POST-MORTEM (clean sample, n=208):
 - MAE: 12.8 pts/player

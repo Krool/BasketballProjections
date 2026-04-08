@@ -3,15 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>March Madness 2026 Draft Board</title>
-<meta name="description" content="Live fantasy draft board for the 2026 NCAA Tournament. Player projections powered by KenPom efficiency ratings, recent form analysis, and injury tracking.">
-<meta property="og:title" content="March Madness 2026 Draft Board">
-<meta property="og:description" content="Live fantasy draft board with projected scoring for 600+ NCAA tournament players. KenPom-powered analytics, injury tracking, and live draft mode.">
+<title>March Madness Player Tourney</title>
+<meta name="description" content="Fantasy draft board and historical recap for the March Madness Player Tournament. KenPom-powered projections, injury tracking, post-mortem analysis.">
+<meta property="og:title" content="March Madness Player Tourney">
+<meta property="og:description" content="Fantasy draft board and historical recap. KenPom-powered projections, injury tracking, post-mortem analysis.">
 <meta property="og:image" content="icon-512.png">
 <meta property="og:type" content="website">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="MM Draft">
+<meta name="apple-mobile-web-app-title" content="MM Player Tourney">
 <meta name="theme-color" content="#0f1117">
 <meta name="mobile-web-app-capable" content="yes">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏀</text></svg>">
@@ -976,14 +976,18 @@
   body.mode-draft .countdown-only,
   body.mode-history .countdown-only { display: none !important; }
 
-  .mode-toggle { display: flex; gap: 4px; background: var(--surface2); border-radius: 6px; padding: 3px; }
+  .mode-toggle { display: flex; gap: 6px; background: var(--surface2); border-radius: 8px; padding: 4px; }
   .mode-toggle button {
     background: transparent; color: var(--text-dim); border: none;
-    padding: 6px 14px; font-size: 12px; font-weight: 600; border-radius: 4px;
-    cursor: pointer; transition: all 0.15s;
+    padding: 10px 22px; font-size: 14px; font-weight: 700; border-radius: 6px;
+    cursor: pointer; transition: all 0.15s; letter-spacing: 0.3px;
+    text-transform: uppercase;
   }
-  .mode-toggle button.active { background: var(--accent); color: white; }
-  .mode-toggle button:hover:not(.active) { color: var(--text); }
+  .mode-toggle button.active {
+    background: var(--accent); color: white;
+    box-shadow: 0 2px 8px rgba(79,140,255,0.3);
+  }
+  .mode-toggle button:hover:not(.active) { color: var(--text); background: rgba(255,255,255,0.05); }
 
   /* ----- Countdown landing ----- */
   .countdown-hero {
@@ -1079,8 +1083,66 @@
   .history-table .neg { color: var(--red); }
   .history-table .dim { color: var(--text-dim); }
   .history-table tr.alive td:first-child::before { content: '🏆 '; }
-  .history-table tr.injured { opacity: 0.6; }
-  .history-table tr.injured td:first-child::after { content: ' 🤕'; font-size: 11px; }
+  .history-table tr.injured { background: rgba(248,113,113,0.04); }
+  .injury-tag {
+    display: inline-block; background: rgba(248,113,113,0.15); color: var(--red);
+    font-size: 9px; font-weight: 700; padding: 2px 5px; border-radius: 3px;
+    margin-left: 6px; vertical-align: middle; cursor: help; letter-spacing: 0.3px;
+    text-transform: uppercase;
+  }
+  .injury-banner {
+    background: rgba(248,113,113,0.08); border-left: 3px solid var(--red);
+    padding: 10px 14px; border-radius: 4px; margin-bottom: 14px; font-size: 12px;
+  }
+  .injury-banner strong { color: var(--red); }
+  .injury-banner ul { margin: 6px 0 0 18px; color: var(--text-dim); }
+  .injury-banner li { margin: 2px 0; }
+  .injury-banner li strong { color: var(--text); font-weight: 600; }
+
+  .team-icon {
+    display: inline-block; width: 18px; height: 18px;
+    vertical-align: middle; margin-right: 5px;
+    object-fit: contain;
+  }
+  .team-icon-lg { width: 28px; height: 28px; margin-right: 8px; }
+  .team-with-icon { display: inline-flex; align-items: center; gap: 5px; }
+
+  /* ===== Awards ===== */
+  .awards-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 16px;
+  }
+  .award-entry-card {
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px;
+  }
+  .award-entry-card h4 {
+    font-size: 14px; font-weight: 700; color: var(--text);
+    margin-bottom: 12px; padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .award-entry-card h4 .actual-total {
+    font-size: 12px; color: var(--accent); font-weight: 600;
+  }
+  .award-row {
+    display: grid; grid-template-columns: 110px 1fr auto; gap: 8px;
+    padding: 6px 0; font-size: 12px; align-items: center;
+  }
+  .award-row + .award-row { border-top: 1px solid rgba(255,255,255,0.04); }
+  .award-row .award-label {
+    color: var(--text-dim); font-size: 10px; text-transform: uppercase;
+    letter-spacing: 0.5px; font-weight: 600;
+  }
+  .award-row .award-value { color: var(--text); }
+  .award-row .award-value strong { color: var(--text); }
+  .award-row .award-resid {
+    font-variant-numeric: tabular-nums; font-weight: 700;
+    text-align: right; min-width: 50px;
+  }
+  .award-row .award-resid.pos { color: var(--green); }
+  .award-row .award-resid.neg { color: var(--red); }
+  .award-icon { font-size: 14px; margin-right: 4px; }
 
   .history-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
   @media (max-width: 800px) {
@@ -1101,12 +1163,97 @@
   .standings-bar-fill { height: 100%; background: var(--accent); }
 
   .calibration-table tr.dead-on { background: rgba(52,211,153,0.05); }
-  .bracket-tree { font-size: 12px; line-height: 1.6; }
-  .bracket-tree .winner { color: var(--green); font-weight: 600; }
-  .bracket-tree .loser { color: var(--text-dim); text-decoration: line-through; }
-  .bracket-round { margin-bottom: 16px; }
-  .bracket-round h4 { font-size: 13px; color: var(--accent); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
-  .bracket-game { padding: 4px 0; }
+  /* ===== Visual bracket ===== */
+  .bracket-viz { font-size: 11px; }
+  .bracket-region {
+    margin-bottom: 28px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px;
+    background: rgba(255,255,255,0.01);
+  }
+  .bracket-region h4 {
+    font-size: 13px; color: var(--accent); margin-bottom: 12px;
+    text-transform: uppercase; letter-spacing: 1px;
+  }
+  .bracket-region h4 .champ {
+    color: var(--orange); font-size: 11px; margin-left: 8px; font-weight: 600;
+  }
+  .bracket-rounds {
+    display: flex; gap: 0; align-items: stretch; min-height: 320px;
+    overflow-x: auto;
+  }
+  .bracket-round-col {
+    display: flex; flex-direction: column; justify-content: space-around;
+    flex: 1; min-width: 140px; padding: 0 8px; position: relative;
+  }
+  .bracket-round-col .round-label {
+    position: absolute; top: -22px; left: 8px; font-size: 9px;
+    color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px;
+  }
+  .bkt-game {
+    background: var(--surface2); border-radius: 5px; padding: 6px 8px;
+    border-left: 3px solid var(--border); position: relative;
+    font-variant-numeric: tabular-nums;
+  }
+  .bkt-game.winner-top { border-left-color: var(--green); }
+  .bkt-game .team {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 3px 0; gap: 6px;
+  }
+  .bkt-game .team .name { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .bkt-game .team .seed { color: var(--text-dim); font-size: 10px; min-width: 16px; }
+  .bkt-game .team .score { color: var(--text-dim); font-size: 11px; min-width: 24px; text-align: right; }
+  .bkt-game .team.winner .name { color: var(--green); font-weight: 700; }
+  .bkt-game .team.winner .score { color: var(--green); font-weight: 700; }
+  .bkt-game .team.loser .name { color: var(--text-dim); }
+  .bkt-game .team.loser .score { color: var(--text-dim); }
+  /* Connector lines between rounds (right border + half-height stems) */
+  .bracket-round-col[data-round="r64"] .bkt-game,
+  .bracket-round-col[data-round="r32"] .bkt-game,
+  .bracket-round-col[data-round="s16"] .bkt-game {
+    margin-right: 8px;
+  }
+  .bracket-round-col[data-round="r64"] .bkt-game::after,
+  .bracket-round-col[data-round="r32"] .bkt-game::after,
+  .bracket-round-col[data-round="s16"] .bkt-game::after {
+    content: ''; position: absolute; right: -8px; top: 50%;
+    width: 8px; height: 1px; background: var(--border);
+  }
+  .bracket-round-col[data-round="r64"] .bkt-game:nth-child(odd)::before,
+  .bracket-round-col[data-round="r32"] .bkt-game:nth-child(odd)::before,
+  .bracket-round-col[data-round="s16"] .bkt-game:nth-child(odd)::before {
+    content: ''; position: absolute; right: -8px; top: 50%;
+    width: 1px; bottom: -50%; background: var(--border);
+  }
+
+  .bracket-finals {
+    margin-top: 20px;
+    border: 1px solid var(--border);
+    border-radius: 8px; padding: 16px;
+    background: linear-gradient(180deg, rgba(251,191,36,0.03) 0%, rgba(255,255,255,0.01) 100%);
+  }
+  .bracket-finals h4 {
+    font-size: 13px; color: var(--orange); margin-bottom: 14px;
+    text-transform: uppercase; letter-spacing: 1px; text-align: center;
+  }
+  .bracket-finals-grid {
+    display: grid; grid-template-columns: 1fr 1.2fr 1fr; gap: 14px; align-items: center;
+  }
+  .bracket-finals .bkt-game { font-size: 12px; padding: 10px 12px; }
+  .bracket-finals .bracket-champ-game {
+    border: 2px solid var(--orange); background: rgba(251,191,36,0.05);
+  }
+  .bracket-finals .bracket-champ-game .winner .name { color: var(--orange); }
+  .bracket-trophy { text-align: center; font-size: 32px; margin: 8px 0; }
+
+  @media (max-width: 800px) {
+    .bracket-viz { font-size: 10px; }
+    .bracket-rounds { min-height: 280px; }
+    .bracket-round-col { min-width: 120px; padding: 0 6px; }
+    .bkt-game { padding: 4px 6px; }
+    .bracket-finals-grid { grid-template-columns: 1fr; gap: 10px; }
+  }
 
 </style>
 </head>
@@ -1114,11 +1261,8 @@
 
 <div class="header">
   <div class="header-top">
-    <h1>March Madness <span id="hdr-year">2026</span> <span id="hdr-mode-label">Draft Board</span></h1>
-    <div class="mode-toggle" role="tablist" aria-label="View mode">
-      <button id="mode-btn-draft" class="active" onclick="setMode('draft')">📋 Draft</button>
-      <button id="mode-btn-history" onclick="setMode('history')">📊 History</button>
-    </div>
+    <h1>March Madness <span>Player Tourney</span></h1>
+    <div class="mode-toggle" id="year-tabs" role="tablist" aria-label="Draft year"></div>
     <div class="stats-bar draft-only">
       <div class="stat">
         <span class="stat-value green" id="available-count">0</span>
@@ -1307,7 +1451,7 @@
      ============================================================ -->
 <div class="countdown-only countdown-hero" id="countdown-view">
   <h2>March Madness <span id="countdown-year">2027</span></h2>
-  <div class="tagline">Selection Sunday is the start of everything. Until then, the draft board is on ice.</div>
+  <div class="tagline">Brackets revealed Sunday before games start.</div>
   <div class="countdown-clock" id="countdown-clock">
     <div class="countdown-unit"><div class="num" id="cd-days">--</div><div class="label">Days</div></div>
     <div class="countdown-unit"><div class="num" id="cd-hours">--</div><div class="label">Hours</div></div>
@@ -1315,8 +1459,7 @@
     <div class="countdown-unit"><div class="num" id="cd-secs">--</div><div class="label">Seconds</div></div>
   </div>
   <div class="countdown-cta">
-    <button class="primary" onclick="setMode('history')">📊 View 2026 Recap</button>
-    <button onclick="loadArchiveDraft(2026)">🔄 Re-Draft 2026</button>
+    <button class="primary" onclick="loadArchiveDraft(2026)">Re-Draft 2026</button>
   </div>
   <p style="color:var(--text-dim);font-size:12px;margin-top:24px;max-width:480px;">
     Re-Draft loads the 2026 projections into the draft board so you can run a mock or live draft against last year's player values.
@@ -1329,8 +1472,8 @@
 <div class="history-only history-container" id="history-view">
   <div class="history-header">
     <div class="history-header-top">
-      <h2>📊 League History — <span id="hist-year-display">2026</span></h2>
-      <select class="year-select" id="hist-year-select"></select>
+      <h2><span id="hist-year-display">2026</span> Draft Recap</h2>
+      <select class="year-select" id="hist-year-select" style="display:none;"></select>
     </div>
     <div class="history-headline" id="hist-headline">Loading...</div>
   </div>
@@ -1340,7 +1483,9 @@
     <button data-section="picks">Draft Replay</button>
     <button data-section="performers">Top Performers</button>
     <button data-section="steals">Steals & Busts</button>
+    <button data-section="pickvalue">Pick Value</button>
     <button data-section="bracket">Bracket</button>
+    <button data-section="awards">Awards</button>
     <button data-section="algo">Algorithm</button>
   </div>
 
@@ -1354,6 +1499,7 @@
   <div class="history-section" id="hist-sec-picks">
     <div class="history-card">
       <h3>Draft Replay <span class="sub">all picks in order, color-coded vs projection</span></h3>
+      <div id="hist-injury-banner"></div>
       <div style="margin-bottom:12px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
         <select id="hist-picks-entry" style="background:var(--surface2);color:var(--text);border:1px solid var(--border);padding:6px 10px;border-radius:6px;font-size:13px;">
           <option value="">All entries</option>
@@ -1374,12 +1520,31 @@
   <div class="history-section" id="hist-sec-steals">
     <div class="history-grid-2">
       <div class="history-card">
-        <h3>💎 Top Steals <span class="sub">actual >> projection</span></h3>
+        <h3>💎 Top Steals <span class="sub">actual >> projection (excludes injuries)</span></h3>
         <table class="history-table" id="hist-steals-table"></table>
       </div>
       <div class="history-card">
-        <h3>🪦 Top Busts <span class="sub">actual << projection</span></h3>
+        <h3>🪦 Top Busts <span class="sub">actual << projection (excludes injuries)</span></h3>
         <table class="history-table" id="hist-busts-table"></table>
+      </div>
+    </div>
+  </div>
+
+  <div class="history-section" id="hist-sec-pickvalue">
+    <div class="history-card">
+      <h3>📊 Draft vs Reality <span class="sub">how many slots a pick rose or fell from its draft position to its actual finish rank — model-independent</span></h3>
+      <p style="font-size:12px;color:var(--text-dim);margin-bottom:14px;">
+        <strong>+ slots</strong> = drafted later than they finished (a steal). <strong>− slots</strong> = drafted earlier than they finished (a bust). In-tournament injuries are excluded from the ranking entirely so they don't pollute the lists.
+      </p>
+      <div class="history-grid-2">
+        <div>
+          <h3 style="margin-bottom:10px;">📈 Best Value</h3>
+          <table class="history-table" id="hist-risers-table"></table>
+        </div>
+        <div>
+          <h3 style="margin-bottom:10px;">📉 Worst Value</h3>
+          <table class="history-table" id="hist-fallers-table"></table>
+        </div>
       </div>
     </div>
   </div>
@@ -1388,6 +1553,13 @@
     <div class="history-card">
       <h3>Bracket — Actual Results</h3>
       <div class="bracket-tree" id="hist-bracket"></div>
+    </div>
+  </div>
+
+  <div class="history-section" id="hist-sec-awards">
+    <div class="history-card">
+      <h3>🏅 Per-Entry Awards <span class="sub">based on draft residuals (actual − projected). In-tournament injuries excluded.</span></h3>
+      <div id="hist-awards-grid"></div>
     </div>
   </div>
 
@@ -2409,39 +2581,99 @@ toggleDraft = function(rank) {
 init();
 
 // ============================================================
-// MODE SWITCHING (Draft / History / Countdown)
+// YEAR TAB SWITCHING
+// Each tab is a year. The "upcoming" year (= year of next Selection
+// Sunday) is the live draft board (or countdown). Past years are
+// historical archives.
 // ============================================================
 const SELECTION_SUNDAY = new Date('2027-03-14T00:00:00');
+const UPCOMING_YEAR = SELECTION_SUNDAY.getFullYear();
+
 let currentMode = 'draft';
-let archiveData = null;          // currently-loaded year bundle
+let currentYear = UPCOMING_YEAR;
+let archiveData = null;          // currently-loaded archive year bundle
 let archiveIndex = null;         // index of available years
 let histPicksSort = { col: 'pick', asc: true };
 let histPerformersSort = { col: 'actual_pts', asc: false };
 
-// If true, draft mode shows the live board even if before Selection Sunday
-// (used when the user explicitly loaded an archived year to re-draft)
+// If true, the upcoming-year tab shows the live board even before
+// Selection Sunday (used when explicitly re-drafting a past year)
 let forceLiveBoard = false;
 
-function setMode(mode) {
-  currentMode = mode;
+// Tab kinds: 'draft' (upcoming, countdown or live), 'summary' (past year history),
+// 'redraft' (past year projections loaded into the live board).
+// Each past year produces 2 tabs (summary + redraft); the upcoming year is 1 tab.
+function buildYearTabs(archivedYears) {
+  const tabs = document.getElementById('year-tabs');
+  if (!tabs) return;
+  const tabConfigs = [];
+  // Upcoming year first
+  tabConfigs.push({ year: UPCOMING_YEAR, kind: 'draft', label: UPCOMING_YEAR + ' Draft' });
+  // Past years (descending) — each gets a Summary then a Redraft tab
+  const past = archivedYears.filter(y => y !== UPCOMING_YEAR).sort((a,b)=>b-a);
+  past.forEach(y => {
+    tabConfigs.push({ year: y, kind: 'summary', label: y + ' Summary' });
+    tabConfigs.push({ year: y, kind: 'redraft', label: y + ' Redraft' });
+  });
+  tabs.innerHTML = '';
+  tabConfigs.forEach(cfg => {
+    const btn = document.createElement('button');
+    btn.id = 'year-tab-' + cfg.year + '-' + cfg.kind;
+    btn.textContent = cfg.label;
+    btn.dataset.year = cfg.year;
+    btn.dataset.kind = cfg.kind;
+    btn.onclick = () => selectTab(cfg.year, cfg.kind);
+    tabs.appendChild(btn);
+  });
+}
+
+function selectTab(year, kind) {
+  currentYear = year;
+  currentMode = (kind === 'summary') ? 'history' : 'draft';
   document.body.classList.remove('mode-draft','mode-history','mode-countdown');
-  // Draft mode shows either the live board or the countdown depending on date
-  if (mode === 'draft') {
-    if (!forceLiveBoard && Date.now() < SELECTION_SUNDAY.getTime()) {
+
+  if (kind === 'draft') {
+    // Upcoming year: live board if past Selection Sunday or forced, else countdown
+    forceLiveBoard = false;
+    if (Date.now() < SELECTION_SUNDAY.getTime()) {
       document.body.classList.add('mode-countdown');
     } else {
       document.body.classList.add('mode-draft');
     }
-  } else if (mode === 'history') {
+  } else if (kind === 'summary') {
     document.body.classList.add('mode-history');
-    if (!archiveData) loadArchive();
+    loadArchiveYear(year);
+  } else if (kind === 'redraft') {
+    // Load that year's projections into the live board and force-show it.
+    // loadArchiveDraft handles confirm + state reset + render.
+    loadArchiveDraft(year, true);
   }
-  document.getElementById('mode-btn-draft').classList.toggle('active', mode === 'draft');
-  document.getElementById('mode-btn-history').classList.toggle('active', mode === 'history');
-  // Update header label
+
+  // Update tab active state
+  document.querySelectorAll('#year-tabs button').forEach(b => {
+    b.classList.toggle('active',
+      parseInt(b.dataset.year) === year && b.dataset.kind === kind);
+  });
+  // Update header
+  const yr = document.getElementById('hdr-year');
+  if (yr) yr.textContent = year;
   const lbl = document.getElementById('hdr-mode-label');
-  if (lbl) lbl.textContent = mode === 'history' ? 'History' : 'Draft Board';
-  try { localStorage.setItem('mode', mode); } catch(e){}
+  if (lbl) lbl.textContent = kind === 'summary' ? 'Summary' : (kind === 'redraft' ? 'Redraft' : 'Draft Board');
+  try { localStorage.setItem('selected-tab', year + ':' + kind); } catch(e){}
+}
+
+// Backwards-compat shim for any legacy callsites
+function selectYear(year) {
+  if (year === UPCOMING_YEAR) selectTab(year, 'draft');
+  else selectTab(year, 'summary');
+}
+function setMode(mode) {
+  if (mode === 'history') {
+    const past = (archiveIndex && archiveIndex.years || []).map(y => y.year).filter(y => y !== UPCOMING_YEAR);
+    if (past.length) selectTab(Math.max(...past), 'summary');
+  } else {
+    selectTab(UPCOMING_YEAR, 'draft');
+  }
 }
 
 // ============================================================
@@ -2449,8 +2681,8 @@ function setMode(mode) {
 // Replaces the players[] array with an archived year's projections
 // so the user can re-draft against historical values.
 // ============================================================
-function loadArchiveDraft(year) {
-  if (!confirm('Load ' + year + ' projections into the draft board? This will reset any current draft state.')) return;
+function loadArchiveDraft(year, silent) {
+  if (!silent && !confirm('Load ' + year + ' projections into the draft board? This will reset any current draft state.')) return;
   fetch('archive/' + year + '_players.json')
     .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
     .then(data => {
@@ -2488,8 +2720,9 @@ function loadArchiveDraft(year) {
         regionSelect.appendChild(opt);
       });
 
-      // Update header to indicate replay mode
-      document.getElementById('hdr-year').textContent = year + ' (Replay)';
+      // Update header to indicate replay mode (legacy elements; null-safe)
+      const yrEl = document.getElementById('hdr-year');
+      if (yrEl) yrEl.textContent = year + ' (Replay)';
       const ts = document.getElementById('generated-ts');
       if (ts) ts.textContent = 'Loaded ' + year + ' archive';
 
@@ -2531,20 +2764,17 @@ tickCountdown();
 // HISTORY MODE — Archive loader & renderers
 // ============================================================
 function loadArchive() {
-  fetch('archive/index.json')
+  return fetch('archive/index.json')
     .then(r => r.json())
     .then(idx => {
       archiveIndex = idx;
-      const sel = document.getElementById('hist-year-select');
-      sel.innerHTML = '';
-      idx.years.forEach(y => {
-        const opt = document.createElement('option');
-        opt.value = y.year;
-        opt.textContent = y.year;
-        sel.appendChild(opt);
+      // Rebuild tabs now that we know which past years exist
+      const archivedYears = idx.years.map(y => y.year);
+      buildYearTabs(archivedYears);
+      // Re-mark the active tab in case selectYear was called before tabs existed
+      document.querySelectorAll('#year-tabs button').forEach(b => {
+        b.classList.toggle('active', parseInt(b.dataset.year) === currentYear);
       });
-      sel.onchange = () => loadArchiveYear(parseInt(sel.value));
-      if (idx.years.length) loadArchiveYear(idx.years[0].year);
     })
     .catch(err => {
       document.getElementById('hist-headline').textContent = 'No archive data available.';
@@ -2576,7 +2806,7 @@ function renderArchive() {
   const champ = d.champion || '?';
   const finalist = (d.finalists || []).find(t => t !== champ) || '?';
   document.getElementById('hist-headline').innerHTML =
-    `<span class="pill gold">🏆 ${escapeHtml(champ)}</span> beat <strong>${escapeHtml(finalist)}</strong> in the championship` +
+    `<span class="pill gold">🏆 ${teamLabel(champ)}</span> beat <strong>${teamLabel(finalist)}</strong> in the championship` +
     ` &nbsp;·&nbsp; <span class="pill green">${escapeHtml(winner)}</span> won the league with <strong>${winScore}</strong> pts` +
     ` &nbsp;·&nbsp; ${d.n_drafted} players drafted` +
     (d.n_in_tournament_injuries ? ` &nbsp;·&nbsp; ${d.n_in_tournament_injuries} in-tournament injury` : '');
@@ -2585,7 +2815,9 @@ function renderArchive() {
   renderPicks();
   renderPerformers();
   renderStealsBusts();
+  renderPickValue();
   renderBracket();
+  renderAwards();
   renderAlgo();
 
   // Populate entry filter
@@ -2603,6 +2835,43 @@ function renderArchive() {
 function escapeHtml(s) {
   if (s == null) return '';
   return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
+}
+
+// ESPN team logo IDs — kept in sync with src/scrape_players_espn.py
+const TEAM_LOGO_IDS = {
+  "Duke":150,"Arizona":12,"Michigan":130,"Florida":57,
+  "Houston":248,"Iowa St.":66,"Purdue":2509,"Connecticut":41,
+  "Illinois":356,"Michigan St.":127,"Gonzaga":2250,"Virginia":258,
+  "Nebraska":158,"Arkansas":8,"Alabama":333,"Kansas":2305,
+  "Vanderbilt":238,"St. John's":2599,"Texas Tech":2641,"Wisconsin":275,
+  "Tennessee":2633,"Louisville":97,"BYU":252,"North Carolina":153,
+  "Saint Mary's":2608,"UCLA":26,"Kentucky":96,"Miami FL":2390,
+  "Ohio St.":194,"Georgia":61,"Villanova":222,"Clemson":228,
+  "Iowa":2294,"Utah St.":328,"Saint Louis":139,"TCU":2628,
+  "Santa Clara":2541,"Texas A&M":245,"Missouri":142,"UCF":2116,
+  "VCU":2670,"South Florida":58,
+  "Akron":2006,"McNeese":2377,"Northern Iowa":2460,"High Point":2272,
+  "Hofstra":2275,"Cal Baptist":2856,"Hawaii":62,"Troy":2653,
+  "North Dakota St.":2449,"Wright St.":2750,"Penn":219,"Kennesaw St.":2320,
+  "Idaho":70,"Queens":2511,"Tennessee St.":2634,"Furman":231,
+  "Siena":2561,"LIU":2344,
+  "Howard":47,"Prairie View A&M":2504,"Texas":251,"Miami OH":193
+};
+
+function teamIcon(team, size) {
+  const id = TEAM_LOGO_IDS[team];
+  if (!id) return '';
+  const cls = size === 'lg' ? 'team-icon team-icon-lg' : 'team-icon';
+  return `<img class="${cls}" src="https://a.espncdn.com/i/teamlogos/ncaa/500/${id}.png" alt="" loading="lazy" onerror="this.style.display='none'">`;
+}
+
+function teamLabel(team, size) {
+  return teamIcon(team, size) + escapeHtml(team || '');
+}
+
+function injuryTag(p) {
+  if (!p || !p.in_tournament_injury) return '';
+  return ` <span class="injury-tag" title="${escapeHtml(p.in_tournament_injury)}">🤕 INJ</span>`;
 }
 
 function fmtSigned(n) {
@@ -2634,6 +2903,18 @@ function renderStandings() {
 }
 
 function renderPicks() {
+  // Injury banner with full list of in-tournament injuries
+  const banner = document.getElementById('hist-injury-banner');
+  const injured = archiveData.picks.filter(p => p.in_tournament_injury);
+  if (banner) {
+    if (injured.length) {
+      banner.innerHTML = `<div class="injury-banner"><strong>🤕 In-tournament injuries (${injured.length})</strong><ul>` +
+        injured.map(p => `<li><strong>${escapeHtml(p.player)}</strong> (${teamLabel(p.team)}, drafted by ${escapeHtml(p.entry)}, pick ${p.pick}) — ${escapeHtml(p.in_tournament_injury)}</li>`).join('') +
+        `</ul></div>`;
+    } else {
+      banner.innerHTML = '';
+    }
+  }
   const t = document.getElementById('hist-picks-table');
   const filterEntry = document.getElementById('hist-picks-entry').value;
   let rows = archiveData.picks.slice();
@@ -2654,8 +2935,8 @@ function renderPicks() {
     const cls = r.alive ? 'alive' : (r.in_tournament_injury ? 'injured' : '');
     html += `<tr class="${cls}"><td class="num dim">${r.pick}</td>` +
       `<td>${escapeHtml(r.entry)}</td>` +
-      `<td><strong>${escapeHtml(r.player)}</strong></td>` +
-      `<td class="dim">${escapeHtml(r.team)}</td>` +
+      `<td><strong>${escapeHtml(r.player)}</strong>${injuryTag(r)}</td>` +
+      `<td class="dim">${teamLabel(r.team)}</td>` +
       `<td class="num dim">${r.proj_total != null ? r.proj_total : ''}</td>` +
       `<td class="num"><strong>${r.actual_pts}</strong></td>` +
       `<td class="num">${fmtSigned(r.residual)}</td></tr>`;
@@ -2677,9 +2958,9 @@ function renderPerformers() {
   const rows = archiveData.picks.slice().sort((a,b) => b.actual_pts - a.actual_pts).slice(0,50);
   let html = '<thead><tr><th>#</th><th>Player</th><th>Team</th><th>Drafted by</th><th class="num">Pick</th><th class="num">Actual</th><th class="num">Proj</th></tr></thead><tbody>';
   rows.forEach((r,i) => {
-    html += `<tr><td class="dim">${i+1}</td>` +
-      `<td><strong>${escapeHtml(r.player)}</strong></td>` +
-      `<td class="dim">${escapeHtml(r.team)}</td>` +
+    html += `<tr class="${r.in_tournament_injury ? 'injured' : ''}"><td class="dim">${i+1}</td>` +
+      `<td><strong>${escapeHtml(r.player)}</strong>${injuryTag(r)}</td>` +
+      `<td class="dim">${teamLabel(r.team)}</td>` +
       `<td>${escapeHtml(r.entry)}</td>` +
       `<td class="num dim">${r.pick}</td>` +
       `<td class="num"><strong>${r.actual_pts}</strong></td>` +
@@ -2695,7 +2976,7 @@ function renderStealsBusts() {
   const mkRow = (r,i) => {
     const pick = (archiveData.picks.find(p => p.player === r.player && p.team === r.team) || {}).pick || '';
     return `<tr><td class="dim">${i+1}</td>` +
-      `<td><strong>${escapeHtml(r.player)}</strong><div class="dim" style="font-size:11px;">${escapeHtml(r.team)} · pick ${pick}</div></td>` +
+      `<td><strong>${escapeHtml(r.player)}</strong><div class="dim" style="font-size:11px;">${teamLabel(r.team)} · pick ${pick}</div></td>` +
       `<td class="num dim">${r.proj_total}</td>` +
       `<td class="num"><strong>${r.actual_pts}</strong></td>` +
       `<td class="num">${fmtSigned(r.residual)}</td></tr>`;
@@ -2717,23 +2998,248 @@ function renderBracket() {
     el.innerHTML = '<p class="dim">No matchup data available.</p>';
     return;
   }
-  const ROUND_LABELS = {
-    r64: 'Round of 64', r32: 'Round of 32', s16: 'Sweet 16',
-    e8: 'Elite 8', f4: 'Final Four', championship: 'Championship'
-  };
-  const byRound = {};
-  archiveData.games.forEach(g => { (byRound[g.round] = byRound[g.round] || []).push(g); });
-  let html = '';
-  ['r64','r32','s16','e8','f4','championship'].forEach(rk => {
-    if (!byRound[rk]) return;
-    html += `<div class="bracket-round"><h4>${ROUND_LABELS[rk]}</h4>`;
-    byRound[rk].forEach(g => {
-      html += `<div class="bracket-game"><span class="winner">${escapeHtml(g.winner)}</span> <span class="dim">def.</span> <span class="loser">${escapeHtml(g.loser)}</span>` +
-        (g.region && rk !== 'championship' ? ` <span class="dim" style="font-size:10px;">(${escapeHtml(g.region)})</span>` : '') +
-        `</div>`;
-    });
-    html += '</div>';
+  const games = archiveData.games;
+  const ROUND_LABELS = { r64:'1st Round', r32:'2nd Round', s16:'Sweet 16', e8:'Elite 8' };
+
+  // Group games by region (excluding F4/championship which are interregional)
+  const regions = {};
+  games.forEach(g => {
+    if (g.round === 'f4' || g.round === 'championship') return;
+    if (!regions[g.region]) regions[g.region] = { r64:[], r32:[], s16:[], e8:[] };
+    regions[g.region][g.round].push(g);
   });
+
+  // Order R64 games within a region by the canonical seed pairings so the
+  // bracket flow looks right. Standard NCAA top-to-bottom order:
+  const R64_ORDER = [[1,16],[8,9],[5,12],[4,13],[6,11],[3,14],[7,10],[2,15]];
+  function orderR64(arr) {
+    const byPair = {};
+    arr.forEach(g => {
+      const seeds = [g.winner_seed, g.loser_seed].sort((a,b)=>a-b).join('-');
+      byPair[seeds] = g;
+    });
+    return R64_ORDER.map(([a,b]) => byPair[`${a}-${b}`]).filter(Boolean);
+  }
+  // R32 / S16 / E8 ordering: keep in the order they appear (already structurally
+  // sound since all games in a round happen in the same region).
+  function orderRound(arr) { return arr; }
+
+  function gameHTML(g) {
+    if (!g) return '<div class="bkt-game" style="opacity:0.3;">—</div>';
+    const wScore = g.winner_score != null ? g.winner_score : '';
+    const lScore = g.loser_score != null ? g.loser_score : '';
+    return `<div class="bkt-game winner-top">` +
+      `<div class="team winner"><span class="seed">${g.winner_seed||''}</span><span class="name">${teamLabel(g.winner)}</span><span class="score">${wScore}</span></div>` +
+      `<div class="team loser"><span class="seed">${g.loser_seed||''}</span><span class="name">${teamLabel(g.loser)}</span><span class="score">${lScore}</span></div>` +
+      `</div>`;
+  }
+
+  // Render each region as 4 columns: R64, R32, S16, E8
+  let html = '<div class="bracket-viz">';
+
+  // Sort regions by name for consistent display
+  const regionOrder = Object.keys(regions).sort();
+  regionOrder.forEach(rname => {
+    const r = regions[rname];
+    const r64 = orderR64(r.r64);
+    const r32 = orderRound(r.r32);
+    const s16 = orderRound(r.s16);
+    const e8 = orderRound(r.e8);
+    const champ = e8.length ? e8[0].winner : '?';
+    html += `<div class="bracket-region">`;
+    html += `<h4>${escapeHtml(rname)} Region <span class="champ">→ ${teamLabel(champ)}</span></h4>`;
+    html += `<div class="bracket-rounds">`;
+    html += `<div class="bracket-round-col" data-round="r64"><div class="round-label">${ROUND_LABELS.r64}</div>` + r64.map(gameHTML).join('') + `</div>`;
+    html += `<div class="bracket-round-col" data-round="r32"><div class="round-label">${ROUND_LABELS.r32}</div>` + r32.map(gameHTML).join('') + `</div>`;
+    html += `<div class="bracket-round-col" data-round="s16"><div class="round-label">${ROUND_LABELS.s16}</div>` + s16.map(gameHTML).join('') + `</div>`;
+    html += `<div class="bracket-round-col" data-round="e8"><div class="round-label">${ROUND_LABELS.e8}</div>` + e8.map(gameHTML).join('') + `</div>`;
+    html += `</div></div>`;
+  });
+
+  // Final Four + Championship
+  const f4Games = games.filter(g => g.round === 'f4');
+  const champGame = games.find(g => g.round === 'championship');
+  if (f4Games.length) {
+    html += `<div class="bracket-finals"><h4>Final Four & Championship</h4>`;
+    html += `<div class="bracket-finals-grid">`;
+    // Left semifinal
+    html += `<div>${gameHTML(f4Games[0])}<div style="text-align:center;color:var(--text-dim);font-size:10px;margin-top:4px;">${escapeHtml(f4Games[0].region||'')}</div></div>`;
+    // Championship in middle
+    html += `<div>`;
+    if (champGame) {
+      html += `<div class="bkt-game bracket-champ-game winner-top">` +
+        `<div class="team winner"><span class="seed">${champGame.winner_seed||''}</span><span class="name">${teamLabel(champGame.winner)}</span><span class="score">${champGame.winner_score||''}</span></div>` +
+        `<div class="team loser"><span class="seed">${champGame.loser_seed||''}</span><span class="name">${teamLabel(champGame.loser)}</span><span class="score">${champGame.loser_score||''}</span></div>` +
+        `</div>`;
+      html += `<div class="bracket-trophy">🏆</div>`;
+      html += `<div style="text-align:center;color:var(--orange);font-weight:700;font-size:13px;">${teamLabel(champGame.winner,'lg')}</div>`;
+      html += `<div style="text-align:center;color:var(--text-dim);font-size:11px;">National Champion</div>`;
+    }
+    html += `</div>`;
+    // Right semifinal
+    if (f4Games[1]) {
+      html += `<div>${gameHTML(f4Games[1])}<div style="text-align:center;color:var(--text-dim);font-size:10px;margin-top:4px;">${escapeHtml(f4Games[1].region||'')}</div></div>`;
+    }
+    html += `</div></div>`;
+  }
+  html += '</div>';
+  el.innerHTML = html;
+}
+
+function renderPickValue() {
+  const eligible = archiveData.picks.filter(p => p.slots_change != null);
+  const risers = eligible.slice().sort((a,b) => b.slots_change - a.slots_change).slice(0, 20);
+  const fallers = eligible.slice().sort((a,b) => a.slots_change - b.slots_change).slice(0, 20);
+
+  function row(p) {
+    const sc = p.slots_change;
+    const cls = sc > 0 ? 'pos' : 'neg';
+    const sign = sc > 0 ? '+' : '';
+    return `<tr><td class="num dim">${p.pick}</td>` +
+      `<td class="num">${p.actual_rank}</td>` +
+      `<td class="num ${cls}"><strong>${sign}${sc}</strong></td>` +
+      `<td><strong>${escapeHtml(p.player)}</strong></td>` +
+      `<td class="dim">${teamLabel(p.team)}</td>` +
+      `<td class="num">${p.actual_pts}</td>` +
+      `<td class="dim">${escapeHtml(p.entry)}</td></tr>`;
+  }
+  const head = '<thead><tr><th class="num">Pick</th><th class="num">Rank</th><th class="num">±</th><th>Player</th><th>Team</th><th class="num">Pts</th><th>Entry</th></tr></thead>';
+  document.getElementById('hist-risers-table').innerHTML = head + '<tbody>' + risers.map(row).join('') + '</tbody>';
+  document.getElementById('hist-fallers-table').innerHTML = head + '<tbody>' + fallers.map(row).join('') + '</tbody>';
+}
+
+function renderAwards() {
+  const el = document.getElementById('hist-awards-grid');
+  // Build a residuals map keyed by (player, team) for fast lookup, including seed
+  const residIdx = {};
+  archiveData.residuals.forEach(r => {
+    residIdx[r.player + '||' + r.team] = r;
+  });
+
+  // Group picks by entry, joining residual data; exclude in-tournament injuries
+  const byEntry = {};
+  archiveData.picks.forEach(p => {
+    if (p.in_tournament_injury) return;
+    const r = residIdx[p.player + '||' + p.team];
+    if (!r) return;  // unmatched (no projection); skip
+    const resid = parseFloat(r.residual);
+    if (isNaN(resid)) return;
+    const seed = parseInt(r.seed) || null;
+    if (!byEntry[p.entry]) byEntry[p.entry] = [];
+    byEntry[p.entry].push({
+      player: p.player, team: p.team, seed,
+      proj: parseFloat(r.proj_total), actual: p.actual_pts, residual: resid,
+      pick: p.pick, slots_change: p.slots_change,
+    });
+  });
+
+  // Compute total per entry for sorting
+  const entryTotals = {};
+  archiveData.standings.forEach(s => { entryTotals[s.entry] = s.total; });
+
+  // Compute awards per entry
+  const cards = Object.entries(byEntry).map(([entry, picks]) => {
+    // 1. Best/worst value player = highest/lowest residual (vs projection)
+    const sorted = picks.slice().sort((a,b) => b.residual - a.residual);
+    const bestPlayer = sorted[0];
+    const worstPlayer = sorted[sorted.length - 1];
+
+    // 1b. Biggest riser/faller by draft slot (model-independent)
+    const slotted = picks.filter(p => p.slots_change != null)
+      .slice().sort((a,b) => b.slots_change - a.slots_change);
+    const biggestRiser = slotted[0];
+    const biggestFaller = slotted[slotted.length - 1];
+
+    // 2. Best/worst team = team with highest/lowest avg residual (require >= 2 picks)
+    const teamGroups = {};
+    picks.forEach(p => { (teamGroups[p.team] = teamGroups[p.team] || []).push(p.residual); });
+    let teamAggs = Object.entries(teamGroups).map(([team, rs]) => ({
+      team, n: rs.length, avg: rs.reduce((a,b)=>a+b,0)/rs.length
+    }));
+    let teamAggs2 = teamAggs.filter(t => t.n >= 2);
+    if (!teamAggs2.length) teamAggs2 = teamAggs;  // fallback to single-pick teams
+    teamAggs2.sort((a,b) => b.avg - a.avg);
+    const bestTeam = teamAggs2[0];
+    const worstTeam = teamAggs2[teamAggs2.length - 1];
+
+    // 3. Best/worst seed = seed with highest/lowest avg residual
+    const seedGroups = {};
+    picks.forEach(p => {
+      if (p.seed == null) return;
+      (seedGroups[p.seed] = seedGroups[p.seed] || []).push(p.residual);
+    });
+    let seedAggs = Object.entries(seedGroups).map(([seed, rs]) => ({
+      seed: parseInt(seed), n: rs.length, avg: rs.reduce((a,b)=>a+b,0)/rs.length
+    }));
+    let seedAggs2 = seedAggs.filter(s => s.n >= 2);
+    if (!seedAggs2.length) seedAggs2 = seedAggs;
+    seedAggs2.sort((a,b) => b.avg - a.avg);
+    const bestSeed = seedAggs2[0];
+    const worstSeed = seedAggs2[seedAggs2.length - 1];
+
+    return { entry, picks, bestPlayer, worstPlayer, bestTeam, worstTeam, bestSeed, worstSeed, biggestRiser, biggestFaller };
+  });
+
+  // Sort by total points descending
+  cards.sort((a,b) => (entryTotals[b.entry] || 0) - (entryTotals[a.entry] || 0));
+
+  function residClass(v) {
+    if (v > 0) return 'pos';
+    if (v < 0) return 'neg';
+    return '';
+  }
+  function fmtResid(v) {
+    if (v == null || isNaN(v)) return '';
+    const sign = v > 0 ? '+' : '';
+    return sign + (v.toFixed ? v.toFixed(1) : v);
+  }
+  function awardRow(icon, label, value, residual) {
+    return `<div class="award-row">` +
+      `<div class="award-label"><span class="award-icon">${icon}</span>${label}</div>` +
+      `<div class="award-value">${value}</div>` +
+      `<div class="award-resid ${residClass(residual)}">${fmtResid(residual)}</div>` +
+      `</div>`;
+  }
+
+  let html = '<div class="awards-grid">';
+  cards.forEach(c => {
+    const tot = entryTotals[c.entry] || 0;
+    html += `<div class="award-entry-card"><h4>${escapeHtml(c.entry)}<span class="actual-total">${tot} pts</span></h4>`;
+    if (c.bestPlayer) {
+      html += awardRow('💎', 'Best Pick', `<strong>${escapeHtml(c.bestPlayer.player)}</strong> ${teamIcon(c.bestPlayer.team)}`, c.bestPlayer.residual);
+    }
+    if (c.worstPlayer) {
+      html += awardRow('🪦', 'Worst Pick', `<strong>${escapeHtml(c.worstPlayer.player)}</strong> ${teamIcon(c.worstPlayer.team)}`, c.worstPlayer.residual);
+    }
+    if (c.biggestRiser) {
+      const r = c.biggestRiser;
+      html += `<div class="award-row"><div class="award-label"><span class="award-icon">📈</span>Best Value</div>` +
+        `<div class="award-value"><strong>${escapeHtml(r.player)}</strong> ${teamIcon(r.team)}<span class="dim" style="font-size:10px;"> pick ${r.pick}</span></div>` +
+        `<div class="award-resid pos">+${r.slots_change}</div></div>`;
+    }
+    if (c.biggestFaller) {
+      const r = c.biggestFaller;
+      html += `<div class="award-row"><div class="award-label"><span class="award-icon">📉</span>Worst Value</div>` +
+        `<div class="award-value"><strong>${escapeHtml(r.player)}</strong> ${teamIcon(r.team)}<span class="dim" style="font-size:10px;"> pick ${r.pick}</span></div>` +
+        `<div class="award-resid neg">${r.slots_change}</div></div>`;
+    }
+    // Only show Best Team if it actually beat projection (avg > 0)
+    if (c.bestTeam && c.bestTeam.avg > 0) {
+      html += awardRow('🔥', 'Best Team', `${teamLabel(c.bestTeam.team)} <span class="dim" style="font-size:10px;">(${c.bestTeam.n} pick${c.bestTeam.n>1?'s':''})</span>`, c.bestTeam.avg);
+    }
+    // Only show Worst Team if it actually missed projection (avg < 0)
+    if (c.worstTeam && c.worstTeam.avg < 0 && c.worstTeam.team !== (c.bestTeam && c.bestTeam.team)) {
+      html += awardRow('💀', 'Worst Team', `${teamLabel(c.worstTeam.team)} <span class="dim" style="font-size:10px;">(${c.worstTeam.n} pick${c.worstTeam.n>1?'s':''})</span>`, c.worstTeam.avg);
+    }
+    if (c.bestSeed && c.bestSeed.avg > 0) {
+      html += awardRow('⭐', 'Best Seed', `${c.bestSeed.seed}-seed <span class="dim" style="font-size:10px;">(${c.bestSeed.n} pick${c.bestSeed.n>1?'s':''})</span>`, c.bestSeed.avg);
+    }
+    if (c.worstSeed && c.worstSeed.avg < 0 && c.worstSeed.seed !== (c.bestSeed && c.bestSeed.seed)) {
+      html += awardRow('🥶', 'Worst Seed', `${c.worstSeed.seed}-seed <span class="dim" style="font-size:10px;">(${c.worstSeed.n} pick${c.worstSeed.n>1?'s':''})</span>`, c.worstSeed.avg);
+    }
+    html += `</div>`;
+  });
+  html += '</div>';
   el.innerHTML = html;
 }
 
@@ -2803,19 +3309,30 @@ document.querySelectorAll('.history-tabs button').forEach(btn => {
   });
 });
 
-// Decide initial mode: respect saved preference, else default by date
-(function chooseInitialMode() {
-  let saved = null;
-  try { saved = localStorage.getItem('mode'); } catch(e){}
-  if (saved === 'history' || saved === 'draft') {
-    setMode(saved);
+// Decide initial tab: respect saved preference, else pick a sensible default.
+// Off-season: default to the most recent archive Summary.
+// In-season (post-Selection Sunday): default to the upcoming-year Draft.
+loadArchive().then(() => {
+  let savedYear = null, savedKind = null;
+  try {
+    const raw = localStorage.getItem('selected-tab');
+    if (raw && raw.includes(':')) {
+      const [y, k] = raw.split(':');
+      savedYear = parseInt(y); savedKind = k;
+    }
+  } catch(e){}
+  let targetYear, targetKind;
+  if (savedYear && savedKind && document.getElementById('year-tab-' + savedYear + '-' + savedKind)) {
+    targetYear = savedYear; targetKind = savedKind;
   } else if (Date.now() < SELECTION_SUNDAY.getTime()) {
-    // Off-season: default to History since there's something to look at
-    setMode('history');
+    const past = (archiveIndex && archiveIndex.years || []).map(y => y.year).filter(y => y !== UPCOMING_YEAR);
+    if (past.length) { targetYear = Math.max(...past); targetKind = 'summary'; }
+    else { targetYear = UPCOMING_YEAR; targetKind = 'draft'; }
   } else {
-    setMode('draft');
+    targetYear = UPCOMING_YEAR; targetKind = 'draft';
   }
-})();
+  selectTab(targetYear, targetKind);
+});
 
 // Mock draft button
 document.getElementById('mock-btn').addEventListener('click', () => {

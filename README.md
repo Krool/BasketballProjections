@@ -1,8 +1,10 @@
-# March Madness 2026 - Fantasy Draft Projections
+# March Madness Player Tourney
 
-Fantasy draft board for March Madness player pools. Projects which players will score the most total points across the NCAA tournament based on KenPom efficiency ratings, recent form, and injury data.
+Fantasy draft board and historical recap for March Madness player pools. Projects which players will score the most total points across the NCAA tournament based on KenPom efficiency ratings, recent form, and injury data. After each tournament, archives the projections + actuals for cross-year algorithm post-mortem analysis.
 
-**Live draft board**: [krool.github.io/BasketballProjections](https://krool.github.io/BasketballProjections/) or open `docs/index.html` locally.
+**Live site**: [krool.github.io/BasketballProjections](https://krool.github.io/BasketballProjections/) or open `docs/index.html` locally.
+
+The site has three kinds of tabs in the header — see [Website](#website-docsindexhtml) below.
 
 ## How to Reuse This for Next Year
 
@@ -173,29 +175,52 @@ Each draft year is frozen under `archive/<year>/` so the algorithm can be improv
 ```bash
 python src/snapshot_year.py 2027 --notes "tweaked surge factor"
 ```
-Copies `data/kenpom.csv`, `data/injuries_combined.csv`, `data/bracket.json`, and `output/projections.csv` into `archive/2027/`. Records the git SHA so you know which algorithm version produced the projections.
+Copies all projection inputs (kenpom.csv + raw + tournament filter, injuries_combined + injury_overrides, bracket.json, all_player_stats.csv, the per-team `data/player_stats/` cache, and `docs/insights.json`) plus `output/projections.csv` into `archive/2027/`. Records the git SHA + commit message so you know which algorithm version produced the projections.
 
-**After the tournament** (ingest results and analyze):
-1. Paste actual results into the conversation; Claude writes them to `archive/2027/actual/player_results.csv`, `draft_picks.csv`, `entry_totals.csv`, `bracket_outcome.json`.
-2. `python src/detect_injuries.py 2027` — flags ~2-5 players whose data smells like an in-tournament injury. Glance at the list, confirm real ones.
-3. Manually populate the `in_tournament_injury` column for confirmed cases (so they're excluded from algorithm calibration).
-4. `python src/analyze_year.py 2027` — produces residuals, calibration, bias-by-seed, draft value, and biggest misses, all written to `archive/2027/analysis/`.
-5. `python src/compare_years.py` — once 2+ years exist, tracks calibration trends across seasons.
+**After the tournament** (ingest results, detect injuries, analyze, build website JSON):
+1. Paste actual results into the conversation; Claude writes them to `archive/2027/actual/player_results.csv`, `draft_picks.csv`, `entry_totals.csv`, `bracket_outcome.json`. **IMPORTANT**: verify the champion against an external source (Wikipedia / NCAA) before trusting league-spreadsheet `alive=1` flags — in 2026 the spreadsheet's `alive` column was wrong and required a manual correction.
+2. `python src/detect_injuries.py 2027` — flags ~2-5 players whose data smells like an in-tournament injury (signals: DNP, sustained zero-cliff, massive underperformance vs projection). Glance at the list, confirm real ones.
+3. Manually populate the `in_tournament_injury` column in `player_results.csv` for confirmed cases. They get excluded from algorithm calibration AND get a 🤕 INJ tag in the website's history view.
+4. `python src/analyze_year.py 2027` — produces residuals, calibration, bias-by-seed, draft value, draft efficiency, entry post-mortem.
+5. `python src/build_archive_json.py 2027` — converts archive CSVs into bundled JSON for the website (`docs/archive/2027.json` + `2027_players.json` for the Re-Draft feature). Updates `docs/archive/index.json`.
+6. `python src/compare_years.py` — once 2+ years exist, tracks calibration trends across seasons.
+7. Bump `SELECTION_SUNDAY` constant in `docs/index.html` to next year's date so the upcoming-year tab labels and countdown work.
 
 ### Archive layout
 ```
 archive/<year>/
   algorithm_version.txt   # git SHA + methodology notes for the algo that produced these projections
-  projections_final.csv   # frozen pre-draft projection (do not modify)
-  inputs/                 # frozen kenpom, injuries, bracket
-  actual/                 # post-tournament: player_results, draft_picks, entry_totals, bracket_outcome, injury_candidates
-  analysis/               # generated post-mortem CSVs
+  projections_final.csv   # frozen pre-draft projection (DO NOT MODIFY)
+  inputs/                 # frozen pipeline inputs:
+    kenpom.csv, kenpom_raw.txt, kenpom_tournament.csv
+    injuries.csv (was injuries_combined), injury_overrides.csv
+    bracket.json
+    all_player_stats.csv
+    player_stats/         # per-team JSON cache
+    insights.json         # pre-draft scouting notes
+  actual/                 # post-tournament:
+    player_results.csv    # round-by-round actual + alive + in_tournament_injury
+    draft_picks.csv       # full draft order with espn_ids
+    entry_totals.csv      # per-entry round totals + final standings
+    bracket_outcome.json  # round-by-round survivors + games[] with scores
+    injury_candidates.csv # output of detect_injuries.py for review
+  analysis/               # generated post-mortem CSVs:
+    player_residuals.csv, calibration.csv, bias_by_seed.csv,
+    bias_by_injury.csv, team_round_vs_projection.csv,
+    draft_value.csv, draft_efficiency.csv, entry_post_mortem.csv
 ```
 
 ### Why this matters
 Without archives, every algorithm change is unfalsifiable. With them you can answer: "Did my new injury model actually reduce error, or did I just tune to noise?" One year is a sample size of 1 — meaningful pattern recognition needs at least 3 years of frozen data to compare against.
 
 See `docs/post_tournament_workflow.md` for the full step-by-step.
+
+### Player aliases
+`data/player_aliases.csv` records known name variants between league spreadsheets and the project's canonical names (e.g., `Patrick Ngongba` → `Patrick Ngongba II`, `UConn` → `Connecticut`). New normalizations should be appended here so future ingests don't repeat the work.
+
+### Known data gaps (2026)
+- **RJ Johnson (Kennesaw St.)** — drafted in 2026 but missing from the ESPN player scrape entirely. Cannot be joined to projections. Investigate `src/scrape_players_espn.py` before 2027 to ensure all rostered players are captured.
+- **The original "alive" column** in the league spreadsheet had UConn marked as the survivor when Michigan actually won. Verify externally on ingest.
 
 ## Project Structure
 ```
@@ -247,14 +272,33 @@ docs/
   icon-192.png, icon-512.png
 ```
 
-## Website modes
+## Website (`docs/index.html`)
 
-The SPA at `docs/index.html` has two modes, switchable from the header:
+Single SPA with three kinds of tabs in the header:
 
-- **📋 Draft Mode** — the live draft board (loads `players.json`). Off-season (before Selection Sunday) it shows a countdown clock instead, with buttons to view the 2026 recap or load 2026 projections into the board for a replay draft.
-- **📊 History Mode** — archive viewer for past seasons. Year selector + tabs for standings, draft replay, top performers, steals & busts, bracket, and algorithm post-mortem.
+- **{Year} Draft** (e.g., `2027 Draft`) — the upcoming season. Pre-Selection-Sunday shows a countdown clock + a Re-Draft CTA. Post-Selection-Sunday it becomes the live draft board powered by `players.json`.
+- **{Year} Summary** (one per archived year, e.g., `2026 Summary`) — the History view. Sub-tabs: **Standings**, **Draft Replay**, **Top Performers**, **Steals & Busts**, **Pick Value**, **Bracket**, **Awards**, **Algorithm**.
+- **{Year} Redraft** (one per archived year) — loads that year's archived projections into the live draft board so you can run a mock or live draft against historical values. Resets any in-progress current draft state.
 
-The "↻ 2026" button (live draft controls) and "Re-Draft 2026" CTA (countdown view) both call `loadArchiveDraft(2026)` which swaps the players array with the archived projections so the existing draft UI works against historical data.
+Tabs are generated dynamically from `docs/archive/index.json`. Adding a new year is just: snapshot → analyze → `build_archive_json.py YEAR` → bump `SELECTION_SUNDAY` constant.
+
+### History view sub-tabs
+
+| Tab | What it shows |
+|---|---|
+| **Standings** | Final entry leaderboard with per-round point breakdown |
+| **Draft Replay** | Every pick in order, sortable, filterable by entry. Color-coded vs projection. Includes a banner listing all in-tournament injuries. |
+| **Top Performers** | Top 50 players by actual points (regardless of draft position) |
+| **Steals & Busts** | Top 15 each by residual (excludes injuries) |
+| **Pick Value** | Model-independent: top 20 risers and fallers by `draft_pick − actual_rank` |
+| **Bracket** | Full 4-region visual bracket with logos, seeds, scores, plus Final Four + Championship card |
+| **Awards** | 8 per-entry awards: Best Pick, Worst Pick, Best Value (riser), Worst Value (faller), Best Team, Worst Team, Best Seed, Worst Seed. Best/Worst Team and Seed only display when the average residual matches the label (no negative "best"). |
+| **Algorithm** | Top-N calibration, bias by seed, draft efficiency (actual vs algo-following vs rank-baseline), entry post-mortem (MAE, hit rate) |
+
+### Visual details
+- **Team logos**: every team name in History view is iconified via ESPN's CDN (`a.espncdn.com/i/teamlogos/ncaa/500/<id>.png`). The team-id map lives in `docs/index.html` as `TEAM_LOGO_IDS` and is kept in sync with `src/scrape_players_espn.py`.
+- **Injury indicators**: confirmed in-tournament injuries get a red `🤕 INJ` tag inline, a faint red row tint, and appear in a banner at the top of Draft Replay. They are excluded from Steals/Busts, Awards calculations, and all calibration aggregates.
+- **Countdown landing** (Draft tab off-season): live ticking clock to next Selection Sunday + a Re-Draft button.
 
 ## Dependencies
 ```
