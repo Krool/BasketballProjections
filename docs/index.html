@@ -44,6 +44,20 @@
     min-height: 100vh;
     min-height: 100dvh;
     -webkit-text-size-adjust: 100%;
+    font-feature-settings: "tnum" 1, "lnum" 1;
+  }
+  .num, td.num, th.num { font-variant-numeric: tabular-nums; }
+
+  .history-footer {
+    margin-top: 32px; padding: 18px 20px; text-align: center;
+    border-top: 1px solid var(--border); color: var(--text-dim); font-size: 11px;
+  }
+  .history-footer a { color: var(--accent); text-decoration: none; }
+  .history-footer a:hover { text-decoration: underline; }
+  .history-footer kbd {
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 3px; padding: 1px 5px; font-size: 10px;
+    font-family: ui-monospace, monospace;
   }
 
   .header {
@@ -59,11 +73,22 @@
     z-index: 100;
   }
 
+  .header-tabs-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+
   .header-top {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 10px;
+    gap: 16px;
+    flex-wrap: wrap;
   }
 
   .header h1 {
@@ -645,9 +670,17 @@
       padding-left: max(12px, env(safe-area-inset-left));
       padding-right: max(12px, env(safe-area-inset-right));
     }
+    .header-tabs-row { gap: 8px; margin-bottom: 8px; }
+    .header h1 { font-size: 14px; }
+    .mode-toggle { padding: 3px; gap: 3px; }
+    .mode-toggle button { padding: 7px 12px; font-size: 11px; letter-spacing: 0.2px; }
     .stats-bar { gap: 12px; flex-wrap: wrap; }
     .controls { gap: 5px; }
     .search-box { width: 140px; }
+    .league-awards-card h3 { font-size: 13px; }
+    .award-row { grid-template-columns: 90px 1fr auto; gap: 6px; font-size: 11px; }
+    .history-tabs button { padding: 8px 10px; font-size: 11px; }
+    .history-table td, .history-table th { padding: 6px 6px; font-size: 11px; }
 
     /* Hide columns and footer on mobile */
     .col-team, .col-region, .col-seed { display: none; }
@@ -1049,6 +1082,9 @@
   .history-tabs {
     display: flex; gap: 4px; background: var(--surface); border: 1px solid var(--border);
     border-radius: 8px; padding: 4px; margin-bottom: 20px; overflow-x: auto;
+    position: -webkit-sticky; position: sticky;
+    top: 0; z-index: 50;
+    backdrop-filter: blur(8px);
   }
   .history-tabs button {
     background: transparent; color: var(--text-dim); border: none; padding: 10px 16px;
@@ -1057,6 +1093,10 @@
   }
   .history-tabs button.active { background: var(--accent); color: white; }
   .history-tabs button:hover:not(.active) { color: var(--text); background: var(--surface2); }
+  .history-tabs button .kbd-hint {
+    display: inline-block; margin-left: 6px; font-size: 9px; opacity: 0.5;
+    font-weight: 400; vertical-align: middle;
+  }
 
   .history-section { display: none; }
   .history-section.active { display: block; }
@@ -1144,6 +1184,23 @@
   .award-row .award-resid.neg { color: var(--red); }
   .award-icon { font-size: 14px; margin-right: 4px; }
 
+  .league-awards-card {
+    background: linear-gradient(135deg, rgba(251,191,36,0.08) 0%, rgba(79,140,255,0.06) 100%);
+    border: 1px solid rgba(251,191,36,0.3);
+    border-radius: 10px; padding: 18px 20px; margin-bottom: 24px;
+  }
+  .league-awards-card h3 {
+    font-size: 15px; font-weight: 800; color: var(--orange);
+    margin-bottom: 14px; text-transform: uppercase; letter-spacing: 1px;
+    text-align: center;
+  }
+  .league-awards-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px 20px;
+  }
+  @media (max-width: 700px) {
+    .league-awards-grid { grid-template-columns: 1fr; }
+  }
+
   .history-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
   @media (max-width: 800px) {
     .history-grid-2 { grid-template-columns: 1fr; }
@@ -1181,11 +1238,13 @@
   }
   .bracket-rounds {
     display: flex; gap: 0; align-items: stretch; min-height: 320px;
-    overflow-x: auto;
   }
   .bracket-round-col {
     display: flex; flex-direction: column; justify-content: space-around;
-    flex: 1; min-width: 140px; padding: 0 8px; position: relative;
+    flex: 1 1 0; min-width: 0; padding: 0 6px; position: relative;
+  }
+  .bracket-round-col .bkt-game .team .name {
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0;
   }
   .bracket-round-col .round-label {
     position: absolute; top: -22px; left: 8px; font-size: 9px;
@@ -1248,10 +1307,13 @@
   .bracket-trophy { text-align: center; font-size: 32px; margin: 8px 0; }
 
   @media (max-width: 800px) {
-    .bracket-viz { font-size: 10px; }
-    .bracket-rounds { min-height: 280px; }
-    .bracket-round-col { min-width: 120px; padding: 0 6px; }
-    .bkt-game { padding: 4px 6px; }
+    .bracket-viz { font-size: 9px; }
+    .bracket-rounds { min-height: 240px; }
+    .bracket-round-col { padding: 0 3px; }
+    .bkt-game { padding: 3px 4px; }
+    .bkt-game .team .seed { min-width: 12px; font-size: 9px; }
+    .bkt-game .team .score { min-width: 18px; font-size: 9px; }
+    .team-icon { width: 14px; height: 14px; }
     .bracket-finals-grid { grid-template-columns: 1fr; gap: 10px; }
   }
 
@@ -1260,9 +1322,11 @@
 <body>
 
 <div class="header">
-  <div class="header-top">
+  <div class="header-tabs-row">
     <h1>March Madness <span>Player Tourney</span></h1>
     <div class="mode-toggle" id="year-tabs" role="tablist" aria-label="Draft year"></div>
+  </div>
+  <div class="header-top">
     <div class="stats-bar draft-only">
       <div class="stat">
         <span class="stat-value green" id="available-count">0</span>
@@ -1584,6 +1648,13 @@
       <h3>Entry Post-Mortem <span class="sub">per-pick MAE and hit rate vs projection</span></h3>
       <table class="history-table" id="hist-entry-pm-table"></table>
     </div>
+  </div>
+
+  <div class="history-footer">
+    Data archived from <span id="hist-footer-year">2026</span> NCAA Tournament ·
+    Keyboard: <kbd>←</kbd> <kbd>→</kbd> switch year, <kbd>1</kbd>–<kbd>8</kbd> sub-tab ·
+    Built by Krool ·
+    <a href="https://github.com/Krool/BasketballProjections" target="_blank" rel="noopener">Source on GitHub</a>
   </div>
 </div>
 
@@ -2581,6 +2652,67 @@ toggleDraft = function(rank) {
 init();
 
 // ============================================================
+// URL HASH STATE
+// Hash format: #year=2026&kind=summary&section=bracket
+// (kind = draft|summary|redraft; section = standings|picks|performers|steals|pickvalue|bracket|awards|algo)
+// ============================================================
+function parseHash() {
+  const h = (location.hash || '').replace(/^#/, '');
+  if (!h) return {};
+  const out = {};
+  h.split('&').forEach(pair => {
+    const [k, v] = pair.split('=');
+    if (k && v != null) out[decodeURIComponent(k)] = decodeURIComponent(v);
+  });
+  if (out.year) out.year = parseInt(out.year);
+  return out;
+}
+let suppressHashWrite = false;
+function writeHash(state) {
+  if (suppressHashWrite) return;
+  const parts = [];
+  if (state.year) parts.push('year=' + state.year);
+  if (state.kind) parts.push('kind=' + state.kind);
+  if (state.section) parts.push('section=' + state.section);
+  const newHash = '#' + parts.join('&');
+  if (location.hash !== newHash) {
+    history.replaceState(null, '', newHash);
+  }
+}
+function currentHashState() {
+  return {
+    year: currentYear,
+    kind: (document.body.classList.contains('mode-history') ? 'summary'
+           : (forceLiveBoard ? 'redraft' : 'draft')),
+    section: currentHistorySection,
+  };
+}
+window.addEventListener('hashchange', () => {
+  const s = parseHash();
+  if (!s.year || !s.kind) return;
+  suppressHashWrite = true;
+  if (s.year !== currentYear || s.kind !== currentHashState().kind) {
+    selectTab(s.year, s.kind);
+  }
+  if (s.section) selectHistorySection(s.section);
+  suppressHashWrite = false;
+});
+
+let currentHistorySection = 'standings';
+function selectHistorySection(section) {
+  currentHistorySection = section;
+  document.querySelectorAll('.history-tabs button').forEach(b => {
+    b.classList.toggle('active', b.dataset.section === section);
+  });
+  document.querySelectorAll('.history-section').forEach(s => {
+    s.classList.toggle('active', s.id === 'hist-sec-' + section);
+  });
+  // Update hash with current section
+  writeHash({ year: currentYear, kind: 'summary', section });
+  if (typeof updatePageTitle === 'function') updatePageTitle();
+}
+
+// ============================================================
 // YEAR TAB SWITCHING
 // Each tab is a year. The "upcoming" year (= year of next Selection
 // Sunday) is the live draft board (or countdown). Past years are
@@ -2660,6 +2792,24 @@ function selectTab(year, kind) {
   const lbl = document.getElementById('hdr-mode-label');
   if (lbl) lbl.textContent = kind === 'summary' ? 'Summary' : (kind === 'redraft' ? 'Redraft' : 'Draft Board');
   try { localStorage.setItem('selected-tab', year + ':' + kind); } catch(e){}
+  // Write the URL hash (preserves section if we're staying in summary mode)
+  writeHash({ year, kind, section: kind === 'summary' ? currentHistorySection : null });
+  updatePageTitle();
+}
+
+function updatePageTitle() {
+  const SECTION_NAMES = {
+    standings:'Standings', picks:'Draft Replay', performers:'Top Performers',
+    steals:'Steals & Busts', pickvalue:'Pick Value', bracket:'Bracket',
+    awards:'Awards', algo:'Algorithm'
+  };
+  const KIND_NAMES = { draft:'Draft', summary:'Summary', redraft:'Redraft' };
+  const kind = (document.body.classList.contains('mode-history') ? 'summary'
+                : (forceLiveBoard ? 'redraft' : 'draft'));
+  let parts = [currentYear + ' ' + (KIND_NAMES[kind] || '')];
+  if (kind === 'summary') parts.push(SECTION_NAMES[currentHistorySection] || '');
+  parts.push('MM Player Tourney');
+  document.title = parts.filter(Boolean).join(' · ');
 }
 
 // Backwards-compat shim for any legacy callsites
@@ -2726,9 +2876,13 @@ function loadArchiveDraft(year, silent) {
       const ts = document.getElementById('generated-ts');
       if (ts) ts.textContent = 'Loaded ' + year + ' archive';
 
-      // Force draft mode regardless of date
+      // Force the live draft board view directly. Don't call setMode/selectTab
+      // here — the caller (selectTab 'redraft' branch) already handled tab
+      // active state, and routing through setMode would bounce back to the
+      // upcoming-year Draft tab.
       forceLiveBoard = true;
-      setMode('draft');
+      document.body.classList.remove('mode-history','mode-countdown');
+      document.body.classList.add('mode-draft');
       if (typeof render === 'function') render();
     })
     .catch(err => {
@@ -2807,9 +2961,12 @@ function renderArchive() {
   const finalist = (d.finalists || []).find(t => t !== champ) || '?';
   document.getElementById('hist-headline').innerHTML =
     `<span class="pill gold">🏆 ${teamLabel(champ)}</span> beat <strong>${teamLabel(finalist)}</strong> in the championship` +
-    ` &nbsp;·&nbsp; <span class="pill green">${escapeHtml(winner)}</span> won the league with <strong>${winScore}</strong> pts` +
+    ` &nbsp;·&nbsp; <span class="pill green">${escapeHtml(winner)}</span> won the league with <strong>${winScore.toLocaleString()}</strong> pts` +
     ` &nbsp;·&nbsp; ${d.n_drafted} players drafted` +
     (d.n_in_tournament_injuries ? ` &nbsp;·&nbsp; ${d.n_in_tournament_injuries} in-tournament injury` : '');
+  // Footer year
+  const footerYear = document.getElementById('hist-footer-year');
+  if (footerYear) footerYear.textContent = d.year || '';
 
   renderStandings();
   renderPicks();
@@ -3034,8 +3191,32 @@ function renderBracket() {
       `</div>`;
   }
 
-  // Render each region as 4 columns: R64, R32, S16, E8
+  // Render the Final Four + Championship FIRST (above the regions), then each region.
   let html = '<div class="bracket-viz">';
+
+  // Final Four + Championship at the top
+  const f4Games = games.filter(g => g.round === 'f4');
+  const champGame = games.find(g => g.round === 'championship');
+  if (f4Games.length) {
+    html += `<div class="bracket-finals"><h4>Final Four & Championship</h4>`;
+    html += `<div class="bracket-finals-grid">`;
+    html += `<div>${gameHTML(f4Games[0])}<div style="text-align:center;color:var(--text-dim);font-size:10px;margin-top:4px;">${escapeHtml(f4Games[0].region||'')}</div></div>`;
+    html += `<div>`;
+    if (champGame) {
+      html += `<div class="bkt-game bracket-champ-game winner-top">` +
+        `<div class="team winner"><span class="seed">${champGame.winner_seed||''}</span><span class="name">${teamLabel(champGame.winner)}</span><span class="score">${champGame.winner_score||''}</span></div>` +
+        `<div class="team loser"><span class="seed">${champGame.loser_seed||''}</span><span class="name">${teamLabel(champGame.loser)}</span><span class="score">${champGame.loser_score||''}</span></div>` +
+        `</div>`;
+      html += `<div class="bracket-trophy">🏆</div>`;
+      html += `<div style="text-align:center;color:var(--orange);font-weight:700;font-size:13px;">${teamLabel(champGame.winner,'lg')}</div>`;
+      html += `<div style="text-align:center;color:var(--text-dim);font-size:11px;">National Champion</div>`;
+    }
+    html += `</div>`;
+    if (f4Games[1]) {
+      html += `<div>${gameHTML(f4Games[1])}<div style="text-align:center;color:var(--text-dim);font-size:10px;margin-top:4px;">${escapeHtml(f4Games[1].region||'')}</div></div>`;
+    }
+    html += `</div></div>`;
+  }
 
   // Sort regions by name for consistent display
   const regionOrder = Object.keys(regions).sort();
@@ -3056,32 +3237,6 @@ function renderBracket() {
     html += `</div></div>`;
   });
 
-  // Final Four + Championship
-  const f4Games = games.filter(g => g.round === 'f4');
-  const champGame = games.find(g => g.round === 'championship');
-  if (f4Games.length) {
-    html += `<div class="bracket-finals"><h4>Final Four & Championship</h4>`;
-    html += `<div class="bracket-finals-grid">`;
-    // Left semifinal
-    html += `<div>${gameHTML(f4Games[0])}<div style="text-align:center;color:var(--text-dim);font-size:10px;margin-top:4px;">${escapeHtml(f4Games[0].region||'')}</div></div>`;
-    // Championship in middle
-    html += `<div>`;
-    if (champGame) {
-      html += `<div class="bkt-game bracket-champ-game winner-top">` +
-        `<div class="team winner"><span class="seed">${champGame.winner_seed||''}</span><span class="name">${teamLabel(champGame.winner)}</span><span class="score">${champGame.winner_score||''}</span></div>` +
-        `<div class="team loser"><span class="seed">${champGame.loser_seed||''}</span><span class="name">${teamLabel(champGame.loser)}</span><span class="score">${champGame.loser_score||''}</span></div>` +
-        `</div>`;
-      html += `<div class="bracket-trophy">🏆</div>`;
-      html += `<div style="text-align:center;color:var(--orange);font-weight:700;font-size:13px;">${teamLabel(champGame.winner,'lg')}</div>`;
-      html += `<div style="text-align:center;color:var(--text-dim);font-size:11px;">National Champion</div>`;
-    }
-    html += `</div>`;
-    // Right semifinal
-    if (f4Games[1]) {
-      html += `<div>${gameHTML(f4Games[1])}<div style="text-align:center;color:var(--text-dim);font-size:10px;margin-top:4px;">${escapeHtml(f4Games[1].region||'')}</div></div>`;
-    }
-    html += `</div></div>`;
-  }
   html += '</div>';
   el.innerHTML = html;
 }
@@ -3127,7 +3282,7 @@ function renderAwards() {
     const seed = parseInt(r.seed) || null;
     if (!byEntry[p.entry]) byEntry[p.entry] = [];
     byEntry[p.entry].push({
-      player: p.player, team: p.team, seed,
+      player: p.player, team: p.team, seed, entry: p.entry,
       proj: parseFloat(r.proj_total), actual: p.actual_pts, residual: resid,
       pick: p.pick, slots_change: p.slots_change,
     });
@@ -3201,7 +3356,88 @@ function renderAwards() {
       `</div>`;
   }
 
-  let html = '<div class="awards-grid">';
+  // ===== League-wide awards (across all entries) =====
+  // Flatten all picks (already injury-filtered + matched)
+  const allPicks = Object.values(byEntry).flat();
+
+  // Best/worst pick by residual
+  const allByResid = allPicks.slice().sort((a,b) => b.residual - a.residual);
+  const lgBestPick = allByResid[0];
+  const lgWorstPick = allByResid[allByResid.length - 1];
+
+  // Best/worst value by slot change
+  const allBySlots = allPicks.filter(p => p.slots_change != null)
+    .slice().sort((a,b) => b.slots_change - a.slots_change);
+  const lgBestValue = allBySlots[0];
+  const lgWorstValue = allBySlots[allBySlots.length - 1];
+
+  // Best/worst team across the league
+  const lgTeamGroups = {};
+  allPicks.forEach(p => { (lgTeamGroups[p.team] = lgTeamGroups[p.team] || []).push(p); });
+  const lgTeamAggs = Object.entries(lgTeamGroups)
+    .filter(([t, arr]) => arr.length >= 2)  // require ≥2 picks for league level
+    .map(([team, arr]) => ({
+      team, n: arr.length,
+      avg: arr.reduce((s,x) => s + x.residual, 0) / arr.length,
+    }));
+  lgTeamAggs.sort((a,b) => b.avg - a.avg);
+  const lgBestTeam = lgTeamAggs[0];
+  const lgWorstTeam = lgTeamAggs[lgTeamAggs.length - 1];
+
+  // Best/worst seed across the league
+  const lgSeedGroups = {};
+  allPicks.forEach(p => {
+    if (p.seed == null) return;
+    (lgSeedGroups[p.seed] = lgSeedGroups[p.seed] || []).push(p);
+  });
+  const lgSeedAggs = Object.entries(lgSeedGroups).map(([seed, arr]) => ({
+    seed: parseInt(seed), n: arr.length,
+    avg: arr.reduce((s,x) => s + x.residual, 0) / arr.length,
+  }));
+  lgSeedAggs.sort((a,b) => b.avg - a.avg);
+  const lgBestSeed = lgSeedAggs[0];
+  const lgWorstSeed = lgSeedAggs[lgSeedAggs.length - 1];
+
+  let html = '<div class="league-awards-card"><h3>🏆 League-Wide Awards</h3><div class="league-awards-grid">';
+  // Helper for league-wide player rows: stacks player name + (team · meta) sub-line
+  function lgPlayerCell(p, meta) {
+    const sub = `${teamIcon(p.team)}${escapeHtml(p.team || '')}` +
+                (meta ? ` · ${escapeHtml(meta)}` : '');
+    return `<div><strong>${escapeHtml(p.player)}</strong>` +
+      `<div class="dim" style="font-size:10px;margin-top:2px;">${sub}</div></div>`;
+  }
+  if (lgBestPick) {
+    html += awardRow('💎', 'Best Pick', lgPlayerCell(lgBestPick, lgBestPick.entry), lgBestPick.residual);
+  }
+  if (lgWorstPick) {
+    html += awardRow('🪦', 'Worst Pick', lgPlayerCell(lgWorstPick, lgWorstPick.entry), lgWorstPick.residual);
+  }
+  if (lgBestValue) {
+    html += `<div class="award-row"><div class="award-label"><span class="award-icon">📈</span>Best Value</div>` +
+      `<div class="award-value">${lgPlayerCell(lgBestValue, 'pick ' + lgBestValue.pick + ' · ' + lgBestValue.entry)}</div>` +
+      `<div class="award-resid pos">+${lgBestValue.slots_change}</div></div>`;
+  }
+  if (lgWorstValue) {
+    html += `<div class="award-row"><div class="award-label"><span class="award-icon">📉</span>Worst Value</div>` +
+      `<div class="award-value">${lgPlayerCell(lgWorstValue, 'pick ' + lgWorstValue.pick + ' · ' + lgWorstValue.entry)}</div>` +
+      `<div class="award-resid neg">${lgWorstValue.slots_change}</div></div>`;
+  }
+  if (lgBestTeam && lgBestTeam.avg > 0) {
+    html += awardRow('🔥', 'Best Team', `${teamLabel(lgBestTeam.team)} <span class="dim" style="font-size:10px;">(${lgBestTeam.n} picks)</span>`, lgBestTeam.avg);
+  }
+  if (lgWorstTeam && lgWorstTeam.avg < 0) {
+    html += awardRow('💀', 'Worst Team', `${teamLabel(lgWorstTeam.team)} <span class="dim" style="font-size:10px;">(${lgWorstTeam.n} picks)</span>`, lgWorstTeam.avg);
+  }
+  if (lgBestSeed && lgBestSeed.avg > 0) {
+    html += awardRow('⭐', 'Best Seed', `${lgBestSeed.seed}-seed <span class="dim" style="font-size:10px;">(${lgBestSeed.n} picks)</span>`, lgBestSeed.avg);
+  }
+  if (lgWorstSeed && lgWorstSeed.avg < 0) {
+    html += awardRow('🥶', 'Worst Seed', `${lgWorstSeed.seed}-seed <span class="dim" style="font-size:10px;">(${lgWorstSeed.n} picks)</span>`, lgWorstSeed.avg);
+  }
+  html += '</div></div>';
+
+  // ===== Per-entry awards =====
+  html += '<div class="awards-grid">';
   cards.forEach(c => {
     const tot = entryTotals[c.entry] || 0;
     html += `<div class="award-entry-card"><h4>${escapeHtml(c.entry)}<span class="actual-total">${tot} pts</span></h4>`;
@@ -3299,39 +3535,78 @@ function renderAlgo() {
   pmT.innerHTML = html4;
 }
 
-// History sub-tab switching
+// History sub-tab switching — delegated to selectHistorySection so the URL hash stays in sync
 document.querySelectorAll('.history-tabs button').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.history-tabs button').forEach(b => b.classList.remove('active'));
-    document.querySelectorAll('.history-section').forEach(s => s.classList.remove('active'));
-    btn.classList.add('active');
-    document.getElementById('hist-sec-' + btn.dataset.section).classList.add('active');
-  });
+  btn.addEventListener('click', () => selectHistorySection(btn.dataset.section));
 });
 
-// Decide initial tab: respect saved preference, else pick a sensible default.
-// Off-season: default to the most recent archive Summary.
-// In-season (post-Selection Sunday): default to the upcoming-year Draft.
-loadArchive().then(() => {
-  let savedYear = null, savedKind = null;
-  try {
-    const raw = localStorage.getItem('selected-tab');
-    if (raw && raw.includes(':')) {
-      const [y, k] = raw.split(':');
-      savedYear = parseInt(y); savedKind = k;
+// ============================================================
+// KEYBOARD SHORTCUTS
+//   ← / →  : cycle year tabs
+//   1-8    : switch history sub-tabs (when in summary view)
+// Ignore when typing in inputs/selects/textareas
+// ============================================================
+document.addEventListener('keydown', (e) => {
+  const tag = (e.target.tagName || '').toUpperCase();
+  if (tag === 'INPUT' || tag === 'SELECT' || tag === 'TEXTAREA') return;
+  if (e.metaKey || e.ctrlKey || e.altKey) return;
+
+  const tabs = Array.from(document.querySelectorAll('#year-tabs button'));
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+    const cur = tabs.findIndex(b => b.classList.contains('active'));
+    if (cur < 0) return;
+    const next = e.key === 'ArrowLeft'
+      ? (cur - 1 + tabs.length) % tabs.length
+      : (cur + 1) % tabs.length;
+    tabs[next].click();
+    e.preventDefault();
+    return;
+  }
+
+  // Number keys 1-8: history sub-tabs (only when in summary view)
+  if (document.body.classList.contains('mode-history') && /^[1-8]$/.test(e.key)) {
+    const subtabs = Array.from(document.querySelectorAll('.history-tabs button'));
+    const idx = parseInt(e.key) - 1;
+    if (subtabs[idx]) {
+      subtabs[idx].click();
+      e.preventDefault();
     }
-  } catch(e){}
-  let targetYear, targetKind;
-  if (savedYear && savedKind && document.getElementById('year-tab-' + savedYear + '-' + savedKind)) {
-    targetYear = savedYear; targetKind = savedKind;
-  } else if (Date.now() < SELECTION_SUNDAY.getTime()) {
-    const past = (archiveIndex && archiveIndex.years || []).map(y => y.year).filter(y => y !== UPCOMING_YEAR);
-    if (past.length) { targetYear = Math.max(...past); targetKind = 'summary'; }
-    else { targetYear = UPCOMING_YEAR; targetKind = 'draft'; }
+  }
+});
+
+// Decide initial tab: priority is URL hash → localStorage → date-based default.
+loadArchive().then(() => {
+  const hashState = parseHash();
+  let targetYear, targetKind, targetSection;
+
+  if (hashState.year && hashState.kind &&
+      document.getElementById('year-tab-' + hashState.year + '-' + hashState.kind)) {
+    targetYear = hashState.year;
+    targetKind = hashState.kind;
+    targetSection = hashState.section;
   } else {
-    targetYear = UPCOMING_YEAR; targetKind = 'draft';
+    let savedYear = null, savedKind = null;
+    try {
+      const raw = localStorage.getItem('selected-tab');
+      if (raw && raw.includes(':')) {
+        const [y, k] = raw.split(':');
+        savedYear = parseInt(y); savedKind = k;
+      }
+    } catch(e){}
+    if (savedYear && savedKind && document.getElementById('year-tab-' + savedYear + '-' + savedKind)) {
+      targetYear = savedYear; targetKind = savedKind;
+    } else if (Date.now() < SELECTION_SUNDAY.getTime()) {
+      const past = (archiveIndex && archiveIndex.years || []).map(y => y.year).filter(y => y !== UPCOMING_YEAR);
+      if (past.length) { targetYear = Math.max(...past); targetKind = 'summary'; }
+      else { targetYear = UPCOMING_YEAR; targetKind = 'draft'; }
+    } else {
+      targetYear = UPCOMING_YEAR; targetKind = 'draft';
+    }
   }
   selectTab(targetYear, targetKind);
+  if (targetSection && targetKind === 'summary') {
+    selectHistorySection(targetSection);
+  }
 });
 
 // Mock draft button
