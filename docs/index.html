@@ -62,6 +62,12 @@
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
+  @keyframes pulse-loading {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+  .loading-pulse { animation: pulse-loading 1.5s ease-in-out infinite; }
+
   body {
     font-family: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
     background: var(--paper);
@@ -69,13 +75,13 @@
     min-height: 100vh;
     min-height: 100dvh;
     -webkit-text-size-adjust: 100%;
-    font-feature-settings: "tnum" 1, "lnum" 1, "ss01" 1;
+    font-feature-settings: "tnum" 1, "lnum" 1;
     background-image:
       radial-gradient(ellipse at top left, rgba(255,107,26,0.04) 0%, transparent 50%),
       radial-gradient(ellipse at bottom right, rgba(10,30,63,0.04) 0%, transparent 50%);
     background-attachment: fixed;
   }
-  .num, td.num, th.num { font-variant-numeric: tabular-nums; }
+  .num, td.num, th.num { font-variant-numeric: tabular-nums; font-feature-settings: "tnum" 1, "lnum" 1, "ss01" 1; }
 
   .history-footer {
     margin-top: 32px; padding: 18px 20px; text-align: center;
@@ -166,13 +172,16 @@
     background: var(--bg);
     border: 1px solid var(--border);
     border-radius: 6px;
-    padding: 6px 8px;
+    padding: 6px 28px 6px 8px;
     color: var(--text);
     font-size: 16px;
     outline: none;
     cursor: pointer;
     -webkit-appearance: none;
     appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%234A5568' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
   }
 
   .toggle-btn {
@@ -190,9 +199,9 @@
   }
 
   .toggle-btn.active {
-    background: var(--accent-dim);
+    background: var(--accent);
     border-color: var(--accent);
-    color: var(--text);
+    color: var(--cream-hi);
   }
 
   .btn {
@@ -210,6 +219,8 @@
   .btn:hover { background: var(--border); }
   .btn.danger { color: var(--red); }
   .btn.danger:hover { background: rgba(248, 113, 113, 0.15); }
+  .btn-live { color: var(--green); border-color: rgba(52, 211, 153, 0.3); }
+  .btn-mock { color: var(--orange); border-color: rgba(251, 191, 36, 0.3); }
 
   /* 3-column layout */
   .layout {
@@ -374,7 +385,7 @@
 
   .seed-1 { background: rgba(52, 211, 153, 0.2); color: var(--green); }
   .seed-2 { background: rgba(79, 140, 255, 0.2); color: var(--accent); }
-  .seed-3 { background: rgba(139, 92, 246, 0.2); color: #a78bfa; }
+  .seed-3 { background: rgba(139, 92, 246, 0.2); color: var(--purple); }
   .seed-4 { background: rgba(251, 191, 36, 0.2); color: var(--orange); }
 
   .pts-cell {
@@ -405,7 +416,7 @@
     font-size: 18px;
     padding: 2px 4px;
     line-height: 1;
-    color: #555;
+    color: var(--ink-faint);
     transition: all 0.15s;
     -webkit-tap-highlight-color: transparent;
   }
@@ -495,7 +506,7 @@
      Yellow = Sweet 16, Green = Elite 8 */
 
   .insight-diamond {
-    color: #60a5fa;
+    color: var(--accent);
     cursor: help;
     font-size: 12px;
     margin-left: 2px;
@@ -719,7 +730,7 @@
 
     /* Compact player names on mobile */
     .player-cell {
-      max-width: 80px;
+      max-width: 120px;
       overflow: hidden;
       text-overflow: ellipsis;
       font-size: 11px;
@@ -809,7 +820,7 @@
   .modal-actions .btn-primary {
     background: var(--accent);
     border-color: var(--accent);
-    color: #fff;
+    color: var(--cream-hi);
   }
 
   .modal-actions .btn-cancel {
@@ -1093,8 +1104,8 @@
     transition: all 0.15s;
   }
   .countdown-cta button:hover { background: var(--surface2); border-color: var(--accent); }
-  .countdown-cta button.primary { background: var(--accent); border-color: var(--accent); color: white; }
-  .countdown-cta button.primary:hover { background: #3a6fd1; }
+  .countdown-cta button.primary { background: var(--accent); border-color: var(--accent); color: var(--cream-hi); }
+  .countdown-cta button.primary:hover { background: var(--accent-dim); }
 
   /* ----- History view ----- */
   .history-container { max-width: 1200px; margin: 0 auto; padding: 20px; }
@@ -1221,7 +1232,7 @@
     display: grid; grid-template-columns: 110px 1fr auto; gap: 8px;
     padding: 6px 0; font-size: 12px; align-items: center;
   }
-  .award-row + .award-row { border-top: 1px solid rgba(255,255,255,0.04); }
+  .award-row + .award-row { border-top: 1px solid var(--border); }
   .award-row .award-label {
     color: var(--text-dim); font-size: 10px; text-transform: uppercase;
     letter-spacing: 0.5px; font-weight: 600;
@@ -1725,7 +1736,7 @@
     font-weight: 600;
   }
   .history-table tbody tr:hover { background: rgba(255,107,26,0.06); }
-  .history-table .pos { color: #2D7D2C; }
+  .history-table .pos { color: var(--green); }
   .history-table .neg { color: var(--red); }
   .history-table .dim { color: var(--ink-dim); }
   .history-table td .cell-sub {
@@ -1898,7 +1909,7 @@
     font-family: 'JetBrains Mono', monospace;
     font-weight: 800;
   }
-  .award-row .award-resid.pos { color: #2D7D2C; }
+  .award-row .award-resid.pos { color: var(--green); }
   .award-row .award-resid.neg { color: var(--red); }
 
   /* ----- Injury elements ----- */
@@ -1970,6 +1981,9 @@
   body[data-theme="dark"] .injury-banner {
     background: rgba(200,16,46,0.12);
   }
+  body[data-theme="dark"] select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239AA5B5' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  }
 
   /* Theme toggle button */
   .theme-toggle {
@@ -2023,8 +2037,8 @@
     <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
       <div class="mode-toggle" id="year-tabs" role="tablist" aria-label="Draft year"></div>
       <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">
-        <span class="icon-moon">☾</span>
-        <span class="icon-sun">☀</span>
+        <span class="icon-moon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></span>
+        <span class="icon-sun"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></span>
       </button>
     </div>
   </div>
@@ -2049,8 +2063,8 @@
         <span class="stat-label" id="generated-ts"></span>
       </div>
       <div class="stat">
-        <button class="btn" id="live-draft-btn" style="color:var(--green);border-color:rgba(52,211,153,0.3);">Live Draft</button>
-        <button class="btn" id="mock-btn" style="color:var(--orange);border-color:rgba(251,191,36,0.3);">Mock Draft</button>
+        <button class="btn btn-live" id="live-draft-btn">Live Draft</button>
+        <button class="btn btn-mock" id="mock-btn">Mock Draft</button>
       </div>
     </div>
   </div>
@@ -2234,7 +2248,7 @@
       <h2><span id="hist-year-display">2026</span> Draft Recap</h2>
       <select class="year-select" id="hist-year-select" style="display:none;"></select>
     </div>
-    <div class="history-headline" id="hist-headline">Loading...</div>
+    <div class="history-headline loading-pulse" id="hist-headline">Loading...</div>
   </div>
 
   <div class="history-tabs">
@@ -3111,7 +3125,7 @@ function init() {
     }
     if (e.key === 'Escape') {
       // Close any open modal
-      for (const id of ['analysis-modal', 'mock-modal']) {
+      for (const id of ['analysis-modal', 'mock-modal', 'live-draft-modal', 'team-names-modal', 'draft-summary-modal']) {
         const modal = document.getElementById(id);
         if (modal && modal.classList.contains('open')) {
           modal.classList.remove('open');
@@ -3656,6 +3670,7 @@ function loadArchive() {
       });
     })
     .catch(err => {
+      document.getElementById('hist-headline').classList.remove('loading-pulse');
       document.getElementById('hist-headline').textContent = 'No archive data available.';
       console.error('Failed to load archive index:', err);
     });
@@ -3663,6 +3678,7 @@ function loadArchive() {
 
 function loadArchiveYear(year) {
   document.getElementById('hist-year-display').textContent = year;
+  document.getElementById('hist-headline').classList.add('loading-pulse');
   document.getElementById('hist-headline').textContent = 'Loading...';
   fetch('archive/' + year + '.json')
     .then(r => r.json())
@@ -3671,6 +3687,7 @@ function loadArchiveYear(year) {
       renderArchive();
     })
     .catch(err => {
+      document.getElementById('hist-headline').classList.remove('loading-pulse');
       document.getElementById('hist-headline').textContent = 'Failed to load ' + year + '.';
       console.error(err);
     });
@@ -3684,7 +3701,9 @@ function renderArchive() {
   const winScore = d.winning_score || 0;
   const champ = d.champion || '?';
   const finalist = (d.finalists || []).find(t => t !== champ) || '?';
-  document.getElementById('hist-headline').innerHTML =
+  const headlineEl = document.getElementById('hist-headline');
+  headlineEl.classList.remove('loading-pulse');
+  headlineEl.innerHTML =
     `<span class="pill gold">🏆 ${teamLabel(champ)}</span> beat <strong>${teamLabel(finalist)}</strong>` +
     ` &nbsp;·&nbsp; <span class="pill green">${escapeHtml(winner)}</span> won with <strong>${winScore.toLocaleString()}</strong> pts`;
   // Footer year
@@ -4998,13 +5017,16 @@ function renderAnalysis(config) {
   content.innerHTML = html;
 }
 
-// Close analysis modal on overlay click
-document.getElementById('analysis-modal').addEventListener('click', function(e) {
-  if (e.target === this) this.classList.remove('open');
+// Close modals on overlay click
+['analysis-modal', 'mock-modal', 'live-draft-modal', 'team-names-modal', 'draft-summary-modal'].forEach(function(id) {
+  var el = document.getElementById(id);
+  if (el) el.addEventListener('click', function(e) {
+    if (e.target === this) this.classList.remove('open');
+  });
 });
 </script>
 <footer class="site-footer" style="position:fixed;bottom:0;left:0;right:0;padding:6px 0;border-top:1px solid var(--border);text-align:center;background:var(--bg);z-index:50;">
-  <p style="color:var(--text-dim);font-size:13px;margin:0;">Part of <a href="https://krool.github.io/" target="_blank" rel="noopener noreferrer" style="color:#4f8cff;text-decoration:none;display:inline-flex;align-items:center;gap:4px;">Krool World <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></p>
+  <p style="color:var(--text-dim);font-size:13px;margin:0;">Part of <a href="https://krool.github.io/" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:none;display:inline-flex;align-items:center;gap:4px;">Krool World <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></p>
 </footer>
 </body>
 </html>
