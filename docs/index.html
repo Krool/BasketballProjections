@@ -3789,20 +3789,20 @@ function renderStandings() {
   const t = document.getElementById('hist-standings-table');
   const rows = archiveData.standings;
   const max = Math.max(...rows.map(r => r.total));
-  let html = '<thead><tr><th class="col-rank">#</th><th>Entry</th><th class="num">Total</th>' +
-    '<th class="num hide-mobile">R64</th><th class="num hide-mobile">R32</th>' +
-    '<th class="num hide-mobile">S16</th><th class="num hide-mobile">E8</th>' +
-    '<th class="num hide-mobile">F4</th><th class="num hide-mobile">Final</th>' +
+  let html = '<thead><tr><th class="col-rank">#</th><th>Entry</th><th class="num col-pts">Total</th>' +
+    '<th class="num hide-mobile col-pts">R64</th><th class="num hide-mobile col-pts">R32</th>' +
+    '<th class="num hide-mobile col-pts">S16</th><th class="num hide-mobile col-pts">E8</th>' +
+    '<th class="num hide-mobile col-pts">F4</th><th class="num hide-mobile col-pts">Final</th>' +
     '</tr></thead><tbody>';
   rows.forEach(r => {
     const goldClass = r.rank === 1 ? 'gold' : '';
     html += `<tr><td class="col-rank"><span class="standings-rank ${goldClass}">${r.rank}</span></td>` +
       `<td><strong>${escapeHtml(r.entry)}</strong>` +
       `<div class="standings-bar"><div class="standings-bar-fill" style="width:${(r.total/max*100).toFixed(0)}%"></div></div></td>` +
-      `<td class="num"><strong>${r.total}</strong></td>` +
-      `<td class="num dim hide-mobile">${r.r64}</td><td class="num dim hide-mobile">${r.r32}</td>` +
-      `<td class="num dim hide-mobile">${r.s16}</td><td class="num dim hide-mobile">${r.e8}</td>` +
-      `<td class="num dim hide-mobile">${r.f4}</td><td class="num dim hide-mobile">${r.championship}</td>` +
+      `<td class="num col-pts"><strong>${r.total}</strong></td>` +
+      `<td class="num dim hide-mobile col-pts">${r.r64}</td><td class="num dim hide-mobile col-pts">${r.r32}</td>` +
+      `<td class="num dim hide-mobile col-pts">${r.s16}</td><td class="num dim hide-mobile col-pts">${r.e8}</td>` +
+      `<td class="num dim hide-mobile col-pts">${r.f4}</td><td class="num dim hide-mobile col-pts">${r.championship}</td>` +
       `</tr>`;
   });
   html += '</tbody>';
@@ -4318,50 +4318,50 @@ function renderAlgo() {
   // Calibration
   const calT = document.getElementById('hist-calibration-table');
   let html = '<thead><tr><th>Top N</th>' +
-    '<th class="num hide-mobile">Avg Proj</th>' +
-    '<th class="num">Avg Actual</th>' +
-    '<th class="num hide-mobile">Delta</th>' +
-    '<th class="num">Error %</th></tr></thead><tbody>';
+    '<th class="num hide-mobile col-pts">Avg Proj</th>' +
+    '<th class="num col-pts">Avg Actual</th>' +
+    '<th class="num hide-mobile col-resid">Delta</th>' +
+    '<th class="num col-resid">Error %</th></tr></thead><tbody>';
   archiveData.calibration.forEach(c => {
     const pe = parseFloat(c.pct_error);
     const cls = Math.abs(pe) < 2 ? 'dead-on' : '';
     html += `<tr class="${cls}"><td>${c.top_n}</td>` +
-      `<td class="num dim hide-mobile">${c.avg_projected}</td>` +
-      `<td class="num">${c.avg_actual}</td>` +
-      `<td class="num hide-mobile">${fmtSigned(c.delta)}</td>` +
-      `<td class="num">${fmtSigned(c.pct_error)}%</td></tr>`;
+      `<td class="num dim hide-mobile col-pts">${c.avg_projected}</td>` +
+      `<td class="num col-pts">${c.avg_actual}</td>` +
+      `<td class="num hide-mobile col-resid">${fmtSigned(c.delta)}</td>` +
+      `<td class="num col-resid">${fmtSigned(c.pct_error)}%</td></tr>`;
   });
   html += '</tbody>';
   calT.innerHTML = html;
 
   // Bias by seed
   const bsT = document.getElementById('hist-bias-seed-table');
-  let html2 = '<thead><tr><th>Seed</th><th class="num">N</th>' +
-    '<th class="num hide-mobile">Avg Proj</th>' +
-    '<th class="num hide-mobile">Avg Actual</th>' +
-    '<th class="num">Residual</th></tr></thead><tbody>';
+  let html2 = '<thead><tr><th class="col-rank">Seed</th><th class="num col-narrow">N</th>' +
+    '<th class="num hide-mobile col-pts">Avg Proj</th>' +
+    '<th class="num hide-mobile col-pts">Avg Actual</th>' +
+    '<th class="num col-resid">Residual</th></tr></thead><tbody>';
   archiveData.bias_by_seed.forEach(s => {
-    html2 += `<tr><td><strong>${s.seed}</strong></td>` +
-      `<td class="num dim">${s.n_players}</td>` +
-      `<td class="num dim hide-mobile">${s.avg_projected}</td>` +
-      `<td class="num hide-mobile">${s.avg_actual}</td>` +
-      `<td class="num">${fmtSigned(s.avg_residual)}</td></tr>`;
+    html2 += `<tr><td class="col-rank"><strong>${s.seed}</strong></td>` +
+      `<td class="num dim col-narrow">${s.n_players}</td>` +
+      `<td class="num dim hide-mobile col-pts">${s.avg_projected}</td>` +
+      `<td class="num hide-mobile col-pts">${s.avg_actual}</td>` +
+      `<td class="num col-resid">${fmtSigned(s.avg_residual)}</td></tr>`;
   });
   html2 += '</tbody>';
   bsT.innerHTML = html2;
 
   // Draft efficiency
   const effT = document.getElementById('hist-efficiency-table');
-  let html3 = '<thead><tr><th>Entry</th><th class="num">Actual</th>' +
-    '<th class="num hide-mobile">Algo</th>' +
-    '<th class="num">vs Algo</th>' +
-    '<th class="num hide-mobile">Rank Base</th></tr></thead><tbody>';
+  let html3 = '<thead><tr><th>Entry</th><th class="num col-pts">Actual</th>' +
+    '<th class="num hide-mobile col-pts">Algo</th>' +
+    '<th class="num col-resid">vs Algo</th>' +
+    '<th class="num hide-mobile col-pts">Rank Base</th></tr></thead><tbody>';
   archiveData.draft_efficiency.forEach(r => {
     html3 += `<tr><td><strong>${escapeHtml(r.entry)}</strong></td>` +
-      `<td class="num"><strong>${r.actual_score}</strong></td>` +
-      `<td class="num dim hide-mobile">${r.algo_score}</td>` +
-      `<td class="num">${fmtSigned(r.deviation_from_algo)}</td>` +
-      `<td class="num dim hide-mobile">${r.actual_rank_score}</td></tr>`;
+      `<td class="num col-pts"><strong>${r.actual_score}</strong></td>` +
+      `<td class="num dim hide-mobile col-pts">${r.algo_score}</td>` +
+      `<td class="num col-resid">${fmtSigned(r.deviation_from_algo)}</td>` +
+      `<td class="num dim hide-mobile col-pts">${r.actual_rank_score}</td></tr>`;
   });
   html3 += '</tbody>';
   effT.innerHTML = html3;
@@ -4369,16 +4369,16 @@ function renderAlgo() {
   // Entry post-mortem
   const pmT = document.getElementById('hist-entry-pm-table');
   let html4 = '<thead><tr><th>Entry</th>' +
-    '<th class="num hide-mobile">N</th>' +
-    '<th class="num">MAE</th>' +
-    '<th class="num hide-mobile">Mean Resid</th>' +
-    '<th class="num">Hit %</th></tr></thead><tbody>';
+    '<th class="num hide-mobile col-narrow">N</th>' +
+    '<th class="num col-pts">MAE</th>' +
+    '<th class="num hide-mobile col-resid">Mean Resid</th>' +
+    '<th class="num col-resid">Hit %</th></tr></thead><tbody>';
   archiveData.entry_post_mortem.forEach(r => {
     html4 += `<tr><td><strong>${escapeHtml(r.entry)}</strong></td>` +
-      `<td class="num dim hide-mobile">${r.n_picks}</td>` +
-      `<td class="num">${r.mae}</td>` +
-      `<td class="num hide-mobile">${fmtSigned(r.mean_residual)}</td>` +
-      `<td class="num">${r.hit_rate}%</td></tr>`;
+      `<td class="num dim hide-mobile col-narrow">${r.n_picks}</td>` +
+      `<td class="num col-pts">${r.mae}</td>` +
+      `<td class="num hide-mobile col-resid">${fmtSigned(r.mean_residual)}</td>` +
+      `<td class="num col-resid">${r.hit_rate}%</td></tr>`;
   });
   html4 += '</tbody>';
   pmT.innerHTML = html4;
