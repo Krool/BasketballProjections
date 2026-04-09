@@ -3863,6 +3863,9 @@ function renderPerformers() {
       `<td class="num col-pts"><strong>${r.actual_pts}</strong></td>` +
       `<td class="num dim hide-mobile col-pts">${r.proj_total != null ? r.proj_total : ''}</td></tr>`;
   });
+  // Note: Top Performers already shows team+entry+pick in the player cell-sub,
+  // so it doesn't have separate Team/Drafted by/Pick columns. The 4 columns
+  // (#, Player, Actual, Proj) all have widths and Player gets the remainder.
   html += '</tbody>';
   t.innerHTML = html;
 }
@@ -4314,7 +4317,7 @@ function renderAwards() {
 function renderAlgo() {
   // Calibration
   const calT = document.getElementById('hist-calibration-table');
-  let html = '<thead><tr><th>Top N</th>' +
+  let html = '<thead><tr><th class="col-narrow">Top N</th>' +
     '<th class="num hide-mobile col-pts">Avg Proj</th>' +
     '<th class="num col-pts">Avg Actual</th>' +
     '<th class="num hide-mobile col-resid">Delta</th>' +
@@ -4322,7 +4325,7 @@ function renderAlgo() {
   archiveData.calibration.forEach(c => {
     const pe = parseFloat(c.pct_error);
     const cls = Math.abs(pe) < 2 ? 'dead-on' : '';
-    html += `<tr class="${cls}"><td>${c.top_n}</td>` +
+    html += `<tr class="${cls}"><td class="col-narrow">${c.top_n}</td>` +
       `<td class="num dim hide-mobile col-pts">${c.avg_projected}</td>` +
       `<td class="num col-pts">${c.avg_actual}</td>` +
       `<td class="num hide-mobile col-resid">${fmtSigned(c.delta)}</td>` +
