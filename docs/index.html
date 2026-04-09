@@ -1159,9 +1159,9 @@
   .history-table tbody tr:hover { background: var(--surface2); }
   .history-table .num { text-align: right; font-variant-numeric: tabular-nums; }
   .history-table .col-rank { width: 36px; padding-left: 6px; padding-right: 6px; color: var(--text-dim); }
-  .history-table .col-narrow { width: 50px; }
-  .history-table .col-pts { width: 56px; }
-  .history-table .col-resid { width: 68px; }
+  .history-table .col-narrow { width: 60px; }
+  .history-table .col-pts { width: 60px; }
+  .history-table .col-resid { width: 72px; }
   .history-table td .cell-sub {
     font-size: 10px; color: var(--text-dim); margin-top: 2px;
     white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
@@ -1317,16 +1317,15 @@
   .bracket-rounds {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(8, minmax(36px, auto));
+    /* Row 1 = round labels (small), rows 2-9 = the 8 game-row slots */
+    grid-template-rows: 20px repeat(8, minmax(40px, 1fr));
     column-gap: 24px;
     row-gap: 0;
-    min-height: 360px;
-    padding-top: 8px;
+    min-height: 380px;
+    padding-top: 4px;
     position: relative;
   }
-  .bracket-round-col {
-    display: contents;
-  }
+  .bracket-round-col { display: contents; }
   .bracket-round-col .round-label {
     grid-row: 1;
     align-self: end;
@@ -1335,41 +1334,22 @@
     text-transform: uppercase;
     letter-spacing: 1px;
     white-space: nowrap;
-    padding-bottom: 4px;
+    padding-bottom: 2px;
     pointer-events: none;
   }
-  /* R64 column = column 1, each game spans 1 row */
-  .bracket-round-col[data-round="r64"] { grid-column: 1; }
+  /* Explicit column placement for labels and games */
   .bracket-round-col[data-round="r64"] .round-label { grid-column: 1; }
-  .bracket-round-col[data-round="r64"] .bkt-game {
-    grid-column: 1;
-    grid-row: span 1;
-    align-self: center;
-  }
-  /* R32 column = column 2, each game spans 2 rows (centered on a pair) */
-  .bracket-round-col[data-round="r32"] { grid-column: 2; }
   .bracket-round-col[data-round="r32"] .round-label { grid-column: 2; }
-  .bracket-round-col[data-round="r32"] .bkt-game {
-    grid-column: 2;
-    grid-row: span 2;
-    align-self: center;
-  }
-  /* S16 column = column 3, each game spans 4 rows */
-  .bracket-round-col[data-round="s16"] { grid-column: 3; }
   .bracket-round-col[data-round="s16"] .round-label { grid-column: 3; }
-  .bracket-round-col[data-round="s16"] .bkt-game {
-    grid-column: 3;
-    grid-row: span 4;
-    align-self: center;
-  }
-  /* E8 column = column 4, single game spans 8 rows */
-  .bracket-round-col[data-round="e8"] { grid-column: 4; }
-  .bracket-round-col[data-round="e8"] .round-label { grid-column: 4; }
-  .bracket-round-col[data-round="e8"] .bkt-game {
-    grid-column: 4;
-    grid-row: span 8;
-    align-self: center;
-  }
+  .bracket-round-col[data-round="e8"]  .round-label { grid-column: 4; }
+
+  .bracket-round-col[data-round="r64"] .bkt-game { grid-column: 1; align-self: center; }
+  .bracket-round-col[data-round="r32"] .bkt-game { grid-column: 2; align-self: center; }
+  .bracket-round-col[data-round="s16"] .bkt-game { grid-column: 3; align-self: center; }
+  .bracket-round-col[data-round="e8"]  .bkt-game { grid-column: 4; align-self: center; }
+
+  /* Each game element gets an inline style="grid-row: N" set by the renderer
+     (renderBracket in the JS section) — see ROUND_ROW_RULES there. */
   .bracket-svg-connectors {
     position: absolute;
     inset: 0;
@@ -3450,6 +3430,11 @@ function selectHistorySection(section) {
   // Update hash with current section
   writeHash({ year: currentYear, kind: 'summary', section });
   if (typeof updatePageTitle === 'function') updatePageTitle();
+  // The bracket SVG connectors can't be measured while the section is
+  // display:none — so always redraw when switching to it
+  if (section === 'bracket' && typeof drawBracketConnectors === 'function') {
+    requestAnimationFrame(drawBracketConnectors);
+  }
 }
 
 // ============================================================
@@ -3939,11 +3924,23 @@ function renderBracket() {
   // sound since all games in a round happen in the same region).
   function orderRound(arr) { return arr; }
 
-  function gameHTML(g) {
-    if (!g) return '<div class="bkt-game" style="opacity:0.3;">—</div>';
+  // Bracket grid row positions per round (1-indexed game position → grid-row value).
+  // Row 1 of the grid is the round-label header; game rows start at row 2.
+  // R64 has 8 games stacked one row each (rows 2-9). Each later round halves
+  // the count and doubles the row span so game centers align with pair midpoints.
+  const ROUND_ROWS = {
+    r64: i => `${2 + i}`,                  // i=0..7 → rows 2..9
+    r32: i => `${2 + i * 2} / span 2`,     // i=0..3 → 2/4/6/8 spanning 2
+    s16: i => `${2 + i * 4} / span 4`,     // i=0..1 → 2/6 spanning 4
+    e8:  i => `2 / span 8`,                // i=0     → spans all 8
+  };
+
+  function gameHTML(g, round, idx) {
+    const rowStyle = (round && ROUND_ROWS[round]) ? ` style="grid-row: ${ROUND_ROWS[round](idx)}"` : '';
+    if (!g) return `<div class="bkt-game" style="opacity:0.3;${rowStyle.replace(' style="','')}">—</div>`;
     const wScore = g.winner_score != null ? g.winner_score : '';
     const lScore = g.loser_score != null ? g.loser_score : '';
-    return `<div class="bkt-game winner-top">` +
+    return `<div class="bkt-game winner-top"${rowStyle}>` +
       `<div class="team winner"><span class="seed">${g.winner_seed||''}</span><span class="name">${teamLabel(g.winner)}</span><span class="score">${wScore}</span></div>` +
       `<div class="team loser"><span class="seed">${g.loser_seed||''}</span><span class="name">${teamLabel(g.loser)}</span><span class="score">${lScore}</span></div>` +
       `</div>`;
@@ -3988,10 +3985,10 @@ function renderBracket() {
     html += `<div class="bracket-region">`;
     html += `<h4>${escapeHtml(rname)} Region <span class="champ">→ ${teamLabel(champ)}</span></h4>`;
     html += `<div class="bracket-rounds">`;
-    html += `<div class="bracket-round-col" data-round="r64"><div class="round-label">${ROUND_LABELS.r64}</div>` + r64.map(gameHTML).join('') + `</div>`;
-    html += `<div class="bracket-round-col" data-round="r32"><div class="round-label">${ROUND_LABELS.r32}</div>` + r32.map(gameHTML).join('') + `</div>`;
-    html += `<div class="bracket-round-col" data-round="s16"><div class="round-label">${ROUND_LABELS.s16}</div>` + s16.map(gameHTML).join('') + `</div>`;
-    html += `<div class="bracket-round-col" data-round="e8"><div class="round-label">${ROUND_LABELS.e8}</div>` + e8.map(gameHTML).join('') + `</div>`;
+    html += `<div class="bracket-round-col" data-round="r64"><div class="round-label">${ROUND_LABELS.r64}</div>` + r64.map((g,i) => gameHTML(g,'r64',i)).join('') + `</div>`;
+    html += `<div class="bracket-round-col" data-round="r32"><div class="round-label">${ROUND_LABELS.r32}</div>` + r32.map((g,i) => gameHTML(g,'r32',i)).join('') + `</div>`;
+    html += `<div class="bracket-round-col" data-round="s16"><div class="round-label">${ROUND_LABELS.s16}</div>` + s16.map((g,i) => gameHTML(g,'s16',i)).join('') + `</div>`;
+    html += `<div class="bracket-round-col" data-round="e8"><div class="round-label">${ROUND_LABELS.e8}</div>` + e8.map((g,i) => gameHTML(g,'e8',i)).join('') + `</div>`;
     html += `</div></div>`;
   });
 
