@@ -2598,7 +2598,7 @@ function updateStats() {
   const baDraftBtn = document.getElementById('ba-draft-btn');
   if (best) {
     document.getElementById('ba-player').textContent = best.player;
-    document.getElementById('ba-details').textContent = `${best.team} (${best.seed}) | ${best.ppg} PPG | ${best.expected_games} exp. games`;
+    document.getElementById('ba-details').textContent = `${best.team} (${best.seed}) | ${(+best.ppg).toFixed(1)} PPG | ${(+best.expected_games).toFixed(2)} exp. games`;
     document.getElementById('ba-pts').textContent = Math.round(best.projected_points);
     // Show draft button on best available when it's our turn (mock or live)
     const showBtn = (mockActive && isMyMockPick() && !isMockComplete()) || (liveActive && isLiveMyPick() && !isLiveComplete());
