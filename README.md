@@ -243,16 +243,83 @@ Tabs are generated dynamically from `docs/archive/index.json`. Adding a new arch
 | **Awards** | League-Wide card on top (8 awards across all entries), then per-entry cards: Best Pick, Worst Pick, Best Value (slot riser), Worst Value (slot faller), Best Team, Worst Team, Best Seed, Worst Seed. Best/Worst Team and Seed only display when the average residual sign matches the label. |
 | **Algorithm** | Top-N calibration, bias by seed, draft efficiency (actual vs algo-following vs rank-baseline), entry post-mortem (MAE, hit rate) |
 
+### Theme & typography (Broadcast Graphics)
+- **Two themes** sharing one design language. Light is default: cream paper `#F4EEDF` + deep navy ink `#0A1E3F`. Dark flips paper↔ink to a midnight scoreboard variant. **The orange accent (`#FF6B1A`) and the red/gold semaphores stay constant in both themes** — only the paper/ink tones swap.
+- Toggle in header (☾/☀ button), persists via `localStorage["theme"]`, defaults to system `prefers-color-scheme` on first visit. Mobile address bar follows via `theme-color` meta tags.
+- **Typography**: `Bebas Neue` for huge display headlines (region titles, championship card, history h2). `Archivo Narrow` for medium display + nav (sub-tab labels, year tabs, card h3s). `Manrope` for body. `JetBrains Mono` for all stat numbers — tabular figures throughout.
+- Region brand colors as left-border accents on bracket sub-trees: East navy, Midwest orange, South green, West red.
+
+### Bracket
+- **CSS Grid layout** (4 columns × 9 rows: 1 label row + 8 game rows). Each game has an explicit `style="grid-row: N / span M"` emitted by the renderer (R64 spans 1, R32 spans 2, S16 spans 4, E8 spans 8) so each round's game vertical center aligns with the midpoint of its source pair.
+- **SVG-overlay connectors** drawn after layout via `drawBracketConnectors()`. Measures real `getBoundingClientRect` positions and draws 4-segment L-paths from each pair to its next-round destination. Re-runs on window resize (debounced 120ms) and on tab switch to bracket (since hidden sections have 0 dimensions).
+
 ### Polish features
 - **Team logos**: every team name is iconified via ESPN's CDN. The team-id map is fetched from `docs/team_logos.json` (single-sourced from `src/scrape_players_espn.py` via `build_team_logos.py`), with an inline copy in `index.html` as first-paint fallback.
 - **In-tournament injury indicators**: confirmed injuries get a red `🤕 INJ` tag inline, a faint red row tint, and appear in a banner at the top of Draft Replay. Excluded from Steals/Busts, Awards, and all calibration aggregates.
 - **URL hash routing**: `#year=2026&kind=summary&section=bracket` deep-links to a specific tab + section. Sharing/bookmarking works. Browser back/forward via `hashchange`.
 - **Keyboard shortcuts**: <kbd>←</kbd>/<kbd>→</kbd> cycle year tabs; <kbd>1</kbd>–<kbd>8</kbd> switch sub-tabs (in summary view).
 - **Browser tab title** updates per state (e.g., `2026 Summary · Bracket · MM Player Tourney`).
-- **Sticky sub-tab bar** so navigation doesn't scroll away on long pages.
 - **Tabular numerals** site-wide for clean number columns.
-- **Mobile responsive** — tabs, header, and tables all adapt to small screens.
+- **Mobile responsive** — tabs wrap, low-priority columns hide via `.hide-mobile`, tables tighten via `table-layout: fixed`, picks-style tables use stacked-cell layout (player on top, team + meta on a sub-line). Countdown clock stays on one line down to ~280px width.
 - **Service worker** caches static assets, players.json, and `archive/*.json` for offline access. `CACHE_NAME` versioning evicts stale caches on updates.
+
+### Frontend conventions (how to extend the SPA)
+
+The SPA is a single ~5,000-line `index.html` with no build step. Extension points are conventional, not framework-driven — read these patterns before adding features.
+
+**Adding a new history sub-tab**
+
+1. Add a button to the sub-tab nav near `<div class="history-tabs">`:
+   ```html
+   <button data-section="myview">My View</button>
+   ```
+2. Add the section markup right next to the existing `<div class="history-section" id="hist-sec-...">` blocks:
+   ```html
+   <div class="history-section" id="hist-sec-myview">
+     <div class="history-card">
+       <h3>My View <span class="sub">brief description</span></h3>
+       <table class="history-table" id="hist-myview-table"></table>
+     </div>
+   </div>
+   ```
+3. Write a `renderMyView()` function and call it from `renderArchive()` alongside the other render fns.
+4. Add the section name to `SECTION_NAMES` in `updatePageTitle()` so the browser tab title works.
+5. Append the section to the keyboard-shortcut count if you want a number-key binding (currently 1–8).
+6. URL hash routing works automatically — `#year=2026&kind=summary&section=myview` will deep-link.
+
+**Adding a new analysis CSV** (consumed by the new sub-tab)
+
+1. Add the field-name constants to `src/archive_schema.py` and use them from `src/analyze_year.py` when reading.
+2. Write the CSV to `archive/<year>/analysis/myview.csv` from `analyze_year.py`.
+3. Read it in `src/build_archive_json.py` and include it in the bundled `<year>.json`:
+   ```python
+   myview = load_csv(yroot / "analysis" / "myview.csv")
+   bundle["myview"] = myview
+   ```
+4. Re-run `python src/build_archive_json.py 2026` to regenerate the website data.
+5. Reference `archiveData.myview` in your JS render function.
+
+**Column-width class system** (tables under `.history-table`)
+
+Every numeric column should have an explicit width class, and **every table should have exactly one "label/text" column with no width class** that grabs the remainder. This prevents the table-layout-fixed runaway-column bug where an unsized column hoards horizontal space on mobile.
+
+| Class | Desktop | Mobile | For |
+|---|---|---|---|
+| `col-rank` | 36px | 28px | Tiny rank numbers (1–16, header up to 4 chars) |
+| `col-narrow` | 60px | 42px | Small numbers up to 3 chars + 4-char header |
+| `col-pts` | 60px | 42px | Point totals up to 3 chars |
+| `col-resid` | 72px | 54px | Signed values up to 4 chars (`+180`, `-12.3`, `+5.4%`) |
+| (no class) | flex | flex | The single label column (player name, entry name, etc.) |
+
+Pattern: in `<thead>`, set the class on `<th>`. In `<tbody>`, also set it on `<td>`. Mobile uses `table-layout: fixed` so widths matter.
+
+**Adding a new theme variable**
+
+Both themes use the same CSS variable names. Add the variable to `:root` (light defaults) and override it in `body[data-theme="dark"] { ... }`. The orange/red/gold semaphore colors stay constant — only paper/ink tones flip.
+
+**Adding a new year tab** — already automatic. Run the post-tournament workflow (`snapshot_year` → `analyze_year` → `build_archive_json`) and the new year auto-appears in the tab bar via `docs/archive/index.json`. Bump the `SELECTION_SUNDAY` constant in `index.html` for the upcoming-year tab.
+
+**Adding a new live draft feature** — the live draft board lives in the same file but uses legacy variable mappings (`--bg`, `--surface`, `--text`, etc.) that translate to the broadcast palette. New live-draft elements should reference the legacy variables, not the broadcast names directly, so they keep working in both themes.
 
 ### Live draft board
 - **Live Draft mode** — real-time draft tracking with turn awareness, snake/linear, custom team names. Shows "YOUR PICK!" on your turn.
